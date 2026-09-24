@@ -22,6 +22,7 @@ const APP_STATE = {
   rawGasData: null, // GASから取得した生データ
   lastUpdatedAt: null, // 最終更新時刻
   isSyncing: false, // API同期中フラグ
+  isUpdatingSheet: false, // スプレッドシートPOST更新中フラグ
   learningStats: {
     cycle: 1428,
     oddsDiff: -1.4,
@@ -196,6 +197,82 @@ async function fetchGasRaceData(isManual = false) {
     }
   } finally {
     APP_STATE.isSyncing = false;
+  }
+}
+
+// スプレッドシートから最新レースデータを取得して画面再描画 (エイリアス)
+async function loadRaceDataFromSheet(isManual = false) {
+  return await fetchGasRaceData(isManual);
+}
+
+// ⚡ 競馬データ更新: GAS API へ POST 送信してスプレッドシート更新を実行し、完了後に自動で最新データを再取得
+async function triggerKeibaDataUpdate() {
+  const btn = document.getElementById('btn-update-keiba-data');
+  const icon = document.getElementById('update-keiba-icon');
+  const text = document.getElementById('update-keiba-text');
+
+  if (APP_STATE.isUpdatingSheet) return;
+  APP_STATE.isUpdatingSheet = true;
+
+  // ボタンを「更新中...」に変えて連打を防止
+  if (btn) {
+    btn.disabled = true;
+    btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 text-amber-300 font-bold text-xs shadow-inner cursor-not-allowed opacity-85 border border-slate-700 flex-shrink-0";
+  }
+  if (icon) {
+    icon.textContent = '⏳';
+    icon.className = 'text-sm inline-block animate-spin';
+  }
+  if (text) {
+    text.textContent = '更新中...';
+  }
+
+  showToast('スプレッドシート側の出馬表・オッズ更新を実行中...', 'info');
+
+  try {
+    // 1. GAS API に対して POST リクエストを送信し、スプレッドシート側の出馬表・オッズ更新を実行
+    try {
+      await fetch(GAS_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          action: 'updateRaceData',
+          timestamp: new Date().toISOString()
+        })
+      });
+    } catch (postErr) {
+      console.warn('GAS POST trigger response (no-cors handled):', postErr);
+    }
+
+    // スプレッドシート側のスクレイピング・再計算反映のため待機
+    await new Promise(resolve => setTimeout(resolve, 2800));
+
+    // 2. 完了したら自動で最新データを再取得 (loadRaceDataFromSheet) して画面を再描画
+    await loadRaceDataFromSheet(true);
+
+    showToast('⚡ 出馬表・オッズを最新データに更新しました！', 'success');
+
+  } catch (err) {
+    console.error('Trigger update error:', err);
+    showToast('最新データの再取得に失敗しました', 'warning');
+  } finally {
+    APP_STATE.isUpdatingSheet = false;
+
+    // ボタンの通常復元
+    if (btn) {
+      btn.disabled = false;
+      btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black text-xs shadow-md transition-all flex-shrink-0 border border-amber-400/50";
+    }
+    if (icon) {
+      icon.textContent = '⚡';
+      icon.className = 'text-sm';
+    }
+    if (text) {
+      text.textContent = '競馬データ更新';
+    }
   }
 }
 
@@ -1616,7 +1693,13 @@ function setupEventListeners() {
   if (btmWin5) btmWin5.addEventListener('click', () => switchTab('win5'));
   if (btmDash) btmDash.addEventListener('click', () => switchTab('dashboard'));
 
-  // GAS手動更新ボタン
+  // ⚡ 競馬データ更新ボタン (POSTでスプレッドシート更新トリガー ＆ 自動再取得)
+  const btnUpdateKeiba = document.getElementById('btn-update-keiba-data');
+  if (btnUpdateKeiba) {
+    btnUpdateKeiba.addEventListener('click', triggerKeibaDataUpdate);
+  }
+
+  // GAS手動更新ボタン (レガシー互換)
   const btnRefreshGas = document.getElementById('btn-refresh-gas');
   if (btnRefreshGas) {
     btnRefreshGas.addEventListener('click', () => fetchGasRaceData(true));

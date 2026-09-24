@@ -108,18 +108,20 @@
         </button>
       </div>
 
-      <!-- Google Apps Script スプレッドシート連携ステータスバー -->
-      <div class="mt-2 px-2.5 py-1.5 rounded-xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-between text-[11px] shadow-sm">
-        <div class="flex items-center gap-1.5 min-w-0">
-          <span id="gas-sync-indicator" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
-          <span id="gas-sync-status" class="font-bold text-slate-200 truncate">スプレッドシート連携中</span>
-          <span id="gas-sync-time" class="text-[10px] text-emerald-400/90 font-mono flex-shrink-0">取得中...</span>
+      <!-- Google Apps Script スプレッドシート連携 ＆ データ最新化コントロールバー -->
+      <div class="mt-2 p-2 rounded-xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-between text-[11px] shadow-sm gap-2">
+        <div class="flex items-center gap-1.5 min-w-0 flex-1">
+          <span id="gas-sync-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+          <div class="truncate">
+            <div id="gas-sync-status" class="font-bold text-slate-200 truncate leading-tight">スプレッドシート連携中</div>
+            <div id="gas-sync-time" class="text-[9.5px] text-emerald-400/90 font-mono">取得中...</div>
+          </div>
         </div>
-        <button id="btn-refresh-gas" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold hover:bg-emerald-500/30 active:scale-95 transition-all flex-shrink-0">
-          <svg id="refresh-icon" class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-          </svg>
-          <span id="refresh-text">データ更新</span>
+
+        <!-- ⚡ 競馬データ最新化ボタン (POST送信 ＆ 自動再取得) -->
+        <button id="btn-update-keiba-data" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black text-xs shadow-md transition-all flex-shrink-0 border border-amber-400/50">
+          <span id="update-keiba-icon" class="text-sm">⚡</span>
+          <span id="update-keiba-text">競馬データ更新</span>
         </button>
       </div>
     </header>
