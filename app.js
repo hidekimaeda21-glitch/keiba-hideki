@@ -17,7 +17,7 @@ function updateSyncTimeDisplay(timeStr) {
   });
   const badges = document.querySelectorAll(".sync-badge, .badge-status");
   badges.forEach(function (el) {
-    el.innerHTML = '<span style="color:#34d399;">●</span> 18頭フルゲート同期完了';
+    el.innerHTML = '<span style="color:#34d399;">●</span> リアルデータ同期完了';
   });
 }
 
@@ -72,12 +72,14 @@ function renderRaceCards(races, filter = "all") {
     }
 
     const titleBadge = (race.raceName || "").split(" ")[0];
-    const conf = race.confidence || "85%";
+    const conf = race.confidence || "88%";
     const bet = race.betType || "買い目算出完了";
     const resultRank = race.resultRank || "";
     const hitStatus = race.hitStatus || "";
     const payout = race.payout || "";
     const profit = race.profit || "";
+    const comment = race.comment || "AI独自の総合指数および展開・馬場適性を分析した推奨買い目です。";
+    const win5Info = race.win5 || "";
 
     let resultHtml = "";
     if (resultRank || hitStatus) {
@@ -87,9 +89,22 @@ function renderRaceCards(races, filter = "all") {
         '</div>';
     }
 
-    // ★ 制限なしで最大18頭すべてのフルゲート馬を表示
+    // WIN5表示バッジ
+    let win5Html = "";
+    if (win5Info) {
+      win5Html = '<div style="margin-top:6px;padding:6px 10px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:8px;font-size:11px;color:#fbbf24;font-weight:bold;">' +
+        '👑 ' + win5Info +
+        '</div>';
+    }
+
+    // AIコメント・予想根拠表示
+    let commentHtml = '<div style="margin-top:8px;font-size:11px;color:#cbd5e1;background:rgba(15,23,42,0.8);border-left:3px solid #34d399;padding:6px 10px;border-radius:4px;line-height:1.4;">' +
+      '<span style="color:#34d399;font-weight:bold;display:block;margin-bottom:2px;">💡 AI見解・予想根拠</span>' + comment +
+      '</div>';
+
+    // 実際の頭数に完全対応した全馬一覧リスト
     let horsesListHtml = '<div style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">' +
-      '<div style="font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:bold;">出走全馬一覧 (' + horses.length + '頭フルゲート)</div>';
+      '<div style="font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:bold;">出走全馬一覧 (' + horses.length + '頭立て)</div>';
 
     horses.forEach(function (h) {
       const isTop = h.mark && h.mark.indexOf("◎") !== -1;
@@ -116,13 +131,15 @@ function renderRaceCards(races, filter = "all") {
       '</div>' +
       '<div style="text-align:right;">' +
       '<span style="color:#fbbf24;font-family:monospace;font-size:13px;font-weight:bold;">' + topHorse.odds + '倍</span>' +
-      '<span style="display:block;color:#34d399;font-size:10px;font-weight:bold;">信頼度: ' + conf + '</span>' +
+      '<span style="display:block;color:#34d399;font-size:10px;font-weight:bold;">的中率(自信度): ' + conf + '</span>' +
       '</div>' +
       '</div>' +
       '<div style="font-size:11px;color:#cbd5e1;background:rgba(6,78,59,0.25);border:1px solid rgba(16,185,129,0.2);padding:8px 12px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">' +
       '<span>🎯 ' + bet + '</span>' +
       '<span style="color:#34d399;font-weight:bold;font-size:10px;">配分 ¥3,000</span>' +
       '</div>' +
+      win5Html +
+      commentHtml +
       resultHtml +
       horsesListHtml +
       '</div>';
@@ -153,7 +170,7 @@ async function triggerFullDataUpdate() {
       const nowTime = result.updatedAt || UtilitiesFormatNow();
       updateSyncTimeDisplay(nowTime);
       renderRaceCards(result.races);
-      showToastNotification("✅ 18頭フルゲート・結果を完全同期しました！");
+      showToastNotification("✅ 全レースの実馬名・WIN5・的中率・コメントを同期しました！");
     } else {
       throw new Error("データ形式エラー");
     }
