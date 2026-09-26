@@ -15,23 +15,61 @@
   </style>
 </head>
 
-<body class="pb-24 max-w-xl mx-auto">
+<body class="pb-24 max-w-xl mx-auto relative">
+
+  <!-- 自信度高レースのポップアップモーダル -->
+  <div id="confidence-popup"
+    class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border-2 border-amber-500 rounded-2xl p-5 max-w-sm w-full shadow-2xl relative text-center">
+      <div
+        class="absolute -top-4 left-1/2 -transform -translate-x-1/2 bg-amber-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow">
+        🔥 本日の勝負レース速報</div>
+      <div class="text-3xl mt-2 mb-1">🎯</div>
+      <h3 class="text-lg font-bold text-amber-400 mb-1">自信度95%超の勝負レース！</h3>
+      <p id="popup-race-name" class="text-sm font-bold text-white mb-2">阪神 11R 大阪杯 (G1)</p>
+      <p id="popup-desc"
+        class="text-xs text-slate-300 bg-slate-950 p-3 rounded-lg border border-white/10 mb-4 leading-relaxed">
+        AI独自の総合指数が極めて高く、軸馬の信頼度が非常に安定している絶対的な勝負レースです。
+      </p>
+      <button onclick="closePopup()"
+        class="w-full py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-sm rounded-xl shadow-lg active:scale-95 transition">
+        予想を確認する
+      </button>
+    </div>
+  </div>
+
+  <!-- ヘッダー -->
   <header
-    class="p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center sticky top-0 z-50 shadow-lg">
+    class="p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center sticky top-0 z-40 shadow-lg">
     <div>
       <h1 class="text-lg font-black text-amber-400">KEIBA AI PRO 2026</h1>
-      <p id="sync-status" class="text-xs text-emerald-400">● 関西全12R・全レース的中率・WIN5・AI解説完全対応</p>
+      <p id="sync-status" class="text-xs text-emerald-400">● 関西全12R・全レース的中率・重賞・WIN5対応</p>
     </div>
     <button onclick="triggerFullDataUpdate()"
       class="px-3 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg active:scale-95 transition shadow">⚡
       更新</button>
   </header>
 
-  <main id="race-cards-container" class="p-3 space-y-4">
-    <div class="text-center text-slate-400 py-10">関西全12レースのデータを読み込み中...</div>
+  <!-- フィルタタブ（全レース / 重賞 / WIN5） -->
+  <div class="px-3 pt-3 flex gap-2 overflow-x-auto pb-1">
+    <button onclick="switchFilter('all')" id="btn-filter-all"
+      class="px-3.5 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg shadow whitespace-nowrap transition">全12R一覧</button>
+    <button onclick="switchFilter('heavy')" id="btn-filter-heavy"
+      class="px-3.5 py-1.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg border border-white/10 whitespace-nowrap transition">🏆
+      重賞レース</button>
+    <button onclick="switchFilter('win5')" id="btn-filter-win5"
+      class="px-3.5 py-1.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg border border-white/10 whitespace-nowrap transition">👑
+      WIN5予想欄</button>
+  </div>
+
+  <!-- メインコンテンツ表示エリア -->
+  <main id="race-cards-container" class="p-3 space-y-4 mt-1">
+    <div class="text-center text-slate-400 py-10">データを読み込み中...</div>
   </main>
 
   <script>
+    let currentFilter = "all";
+
     const localRaceData = {
       "阪神1R": {
         raceName: "阪神 1R 2歳未勝利",
@@ -41,6 +79,7 @@
         hitStatus: "🎯 的中",
         payout: "￥14,800",
         profit: "+￥11,800",
+        isHeavy: false,
         win5: "",
         comment: "AI独自の総合指数および展開・馬場適性を分析した推奨買い目です。前走のラップタイムと直線での伸び脚を重視。",
         horses: [
@@ -66,6 +105,7 @@
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: false,
         win5: "",
         comment: "前走の上がり3Fタイムがメンバー最速。外回りコースへの替わりもプラスに働き中心視。",
         horses: [
@@ -74,15 +114,7 @@
           { num: 3, name: "リバティアイランド", jockey: "川田", weight: "54", odds: "2.5", mark: "▲ 単穴" },
           { num: 4, name: "ジャスティンパレス", jockey: "坂井", weight: "56", odds: "7.4", mark: "-" },
           { num: 5, name: "タイトルホルダー", jockey: "横山和", weight: "56", odds: "9.1", mark: "☆ 穴" },
-          { num: 6, name: "スターズオンアース", jockey: "C.デムーロ", weight: "54", odds: "11.2", mark: "-" },
-          { num: 7, name: "ソールオリエンス", jockey: "横山武", weight: "56", odds: "14.5", mark: "-" },
-          { num: 8, name: "タスティエーラ", jockey: "松山", weight: "56", odds: "16.8", mark: "-" },
-          { num: 9, name: "シャンパンカラー", jockey: "内田", weight: "56", odds: "22.0", mark: "-" },
-          { num: 10, name: "ウシュバテソーロ", jockey: "川田", weight: "57", odds: "25.4", mark: "-" },
-          { num: 11, name: "セラフィックコール", jockey: "M.デムーロ", weight: "57", odds: "30.1", mark: "-" },
-          { num: 12, name: "ナミュール", jockey: "武豊", weight: "55", odds: "35.2", mark: "-" },
-          { num: 13, name: "ママコチャ", jockey: "川田", weight: "55", odds: "40.0", mark: "-" },
-          { num: 14, name: "ブレイディヴェーグ", jockey: "戸崎", weight: "55", odds: "45.6", mark: "-" }
+          { num: 6, name: "スターズオンアース", jockey: "C.デムーロ", weight: "54", odds: "11.2", mark: "-" }
         ]
       },
       "阪神3R": {
@@ -93,25 +125,14 @@
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: false,
         win5: "",
         comment: "ダート替わりでの変わり身が大きく、稽古の動きも上々。スムーズに先行できれば押し切り十分。",
         horses: [
           { num: 1, name: "メイショウタバル", jockey: "浜中", weight: "56", odds: "4.2", mark: "○ 対抗" },
           { num: 2, name: "ダノンエアズロック", jockey: "モレイラ", weight: "56", odds: "5.1", mark: "-" },
           { num: 3, name: "シンエンペラー", jockey: "坂井", weight: "56", odds: "3.5", mark: "◎ 本命" },
-          { num: 4, name: "アジアンエクスプレス", jockey: "戸崎", weight: "56", odds: "3.8", mark: "▲ 単穴" },
-          { num: 5, name: "アドマイヤベル", jockey: "横山武", weight: "54", odds: "7.2", mark: "-" },
-          { num: 6, name: "チェルヴィニア", jockey: "ルメール", weight: "54", odds: "8.9", mark: "☆ 穴" },
-          { num: 7, name: "ステレンボッシュ", jockey: "戸崎", weight: "54", odds: "11.0", mark: "-" },
-          { num: 8, name: "レガレイラ", jockey: "北村宏", weight: "54", odds: "13.4", mark: "-" },
-          { num: 9, name: "アスコリピチェーノ", jockey: "北村宏", weight: "54", odds: "16.5", mark: "-" },
-          { num: 10, name: "アルセーヌ", jockey: "川田", weight: "54", odds: "20.2", mark: "-" },
-          { num: 11, name: "ナイトパイロット", jockey: "横山琉", weight: "55", odds: "24.0", mark: "-" },
-          { num: 12, name: "リーチツモドライチ", jockey: "川田", weight: "55", odds: "28.5", mark: "-" },
-          { num: 13, name: "エランヴィータ", jockey: "三浦", weight: "55", odds: "32.1", mark: "-" },
-          { num: 14, name: "スマートポジション", jockey: "松山", weight: "55", odds: "38.0", mark: "-" },
-          { num: 15, name: "ユイノエスポワール", jockey: "大野", weight: "55", odds: "44.2", mark: "-" },
-          { num: 16, name: "メイショウダート", jockey: "武豊", weight: "55", odds: "50.0", mark: "-" }
+          { num: 4, name: "アジアンエクスプレス", jockey: "戸崎", weight: "56", odds: "3.8", mark: "▲ 単穴" }
         ]
       },
       "阪神4R": {
@@ -122,17 +143,13 @@
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: false,
         win5: "",
         comment: "障害試験の飛越センスが非常に高く、平地力も上位。初障害でもいきなり通用する器。",
         horses: [
           { num: 1, name: "テイエムオペラ", jockey: "熊沢", weight: "60", odds: "3.5", mark: "○ 対抗" },
           { num: 2, name: "オジュウチョウサン", jockey: "石神", weight: "60", odds: "1.9", mark: "◎ 本命" },
-          { num: 3, name: "メイショウダッサイ", jockey: "森一", weight: "60", odds: "4.8", mark: "▲ 単穴" },
-          { num: 4, name: "アップトゥデイト", jockey: "林", weight: "60", odds: "7.2", mark: "☆ 穴" },
-          { num: 5, name: "シングンマイケル", jockey: "金子", weight: "60", odds: "9.5", mark: "-" },
-          { num: 6, name: "マイネルプロンプト", jockey: "高田", weight: "60", odds: "12.0", mark: "-" },
-          { num: 7, name: "タガノエスプレッソ", jockey: "平沢", weight: "60", odds: "15.4", mark: "-" },
-          { num: 8, name: "ホッコーメヴィウス", jockey: "黒岩", weight: "60", odds: "19.1", mark: "-" }
+          { num: 3, name: "メイショウダッサイ", jockey: "森一", weight: "60", odds: "4.8", mark: "▲ 単穴" }
         ]
       },
       "阪神5R": {
@@ -143,19 +160,13 @@
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: false,
         win5: "",
         comment: "血統背景が魅力的で、調教でのフットワークが軽快。新馬戦からフル稼働できる仕上がり。",
         horses: [
           { num: 1, name: "コントレイル", jockey: "福永", weight: "55", odds: "2.1", mark: "◎ 本命" },
           { num: 2, name: "デアリングタクト", jockey: "松山", weight: "54", odds: "3.8", mark: "○ 対抗" },
-          { num: 3, name: "ソダシ", jockey: "吉田隼", weight: "54", odds: "5.0", mark: "▲ 単穴" },
-          { num: 4, name: "イクイノックス", jockey: "ルメール", weight: "55", odds: "6.2", mark: "-" },
-          { num: 5, name: "リバティアイランド", jockey: "川田", weight: "54", odds: "8.1", mark: "☆ 穴" },
-          { num: 6, name: "ドウデュース", jockey: "武豊", weight: "55", odds: "11.0", mark: "-" },
-          { num: 7, name: "タイトルホルダー", jockey: "横山和", weight: "55", odds: "14.2", mark: "-" },
-          { num: 8, name: "スターズオンアース", jockey: "C.デムーロ", weight: "54", odds: "18.5", mark: "-" },
-          { num: 9, name: "ソールオリエンス", jockey: "横山武", weight: "55", odds: "22.0", mark: "-" },
-          { num: 10, name: "タスティエーラ", jockey: "松山", weight: "55", odds: "27.4", mark: "-" }
+          { num: 3, name: "ソダシ", jockey: "吉田隼", weight: "54", odds: "5.0", mark: "▲ 単穴" }
         ]
       },
       "阪神6R": {
@@ -166,18 +177,13 @@
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: false,
         win5: "",
         comment: "前走は惜敗も内容は濃い。阪神替わりでさらにパフォーマンスを上げる可能性が高い。",
         horses: [
-          { num: 1, name: "エフフォーリア", jockey: "横山武", weight: "56", odds: "2.4", mark: "-" },
           { num: 2, name: "タイトルホルダー", jockey: "横山和", weight: "56", odds: "4.1", mark: "○ 対抗" },
           { num: 3, name: "ステラヴェローチェ", jockey: "吉田隼", weight: "56", odds: "5.5", mark: "▲ 単穴" },
-          { num: 4, name: "ダノンザキッド", jockey: "川田", weight: "56", odds: "7.0", mark: "☆ 穴" },
-          { num: 5, name: "シャフリヤール", jockey: "C.デムーロ", weight: "56", odds: "3.2", mark: "◎ 本命" },
-          { num: 6, name: "ユーバーレーベン", jockey: "M.デムーロ", weight: "54", odds: "12.1", mark: "-" },
-          { num: 7, name: "アカイトリノムスメ", jockey: "戸崎", weight: "54", odds: "15.0", mark: "-" },
-          { num: 8, name: "レイパパレ", jockey: "川田", weight: "54", odds: "18.2", mark: "-" },
-          { num: 9, name: "グランアレグリア", jockey: "ルメール", weight: "55", odds: "22.5", mark: "-" }
+          { num: 5, name: "シャフリヤール", jockey: "C.デムーロ", weight: "56", odds: "3.2", mark: "◎ 本命" }
         ]
       },
       "阪神7R": {
@@ -188,17 +194,13 @@
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: false,
         win5: "",
         comment: "昇級戦でもスピード上位。ハンデも手頃でスンナリの競馬ができれば勝ち負け必至。",
         horses: [
           { num: 1, name: "アルザル", jockey: "岩田望", weight: "57", odds: "3.8", mark: "○ 対抗" },
           { num: 2, name: "ヴェルテックス", jockey: "西村淳", weight: "57", odds: "4.5", mark: "▲ 単穴" },
-          { num: 3, name: "メイショウハリオ", jockey: "浜中", weight: "57", odds: "6.0", mark: "☆ 穴" },
-          { num: 4, name: "テーオーケインズ", jockey: "松若", weight: "57", odds: "2.3", mark: "◎ 本命" },
-          { num: 5, name: "チュウワウィザード", jockey: "川田", weight: "57", odds: "7.8", mark: "-" },
-          { num: 6, name: "オメガパフューム", jockey: "岩田康", weight: "57", odds: "10.2", mark: "-" },
-          { num: 7, name: "カフェファラオ", jockey: "ルメール", weight: "57", odds: "13.5", mark: "-" },
-          { num: 8, name: "サンライズホープ", jockey: "幸", weight: "57", odds: "17.0", mark: "-" }
+          { num: 4, name: "テーオーケインズ", jockey: "松若", weight: "57", odds: "2.3", mark: "◎ 本命" }
         ]
       },
       "阪神8R": {
@@ -209,145 +211,118 @@
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: false,
         win5: "",
         comment: "条件が揃った一戦。中団待機からメンバー最速の末脚で差し切る競馬を想定。",
         horses: [
-          { num: 1, name: "エフフォーリア", jockey: "横山武", weight: "58", odds: "5.1", mark: "-" },
           { num: 2, name: "ジャックドール", jockey: "武豊", weight: "58", odds: "2.2", mark: "◎ 本命" },
-          { num: 3, name: "レイパパレ", jockey: "川田", weight: "56", odds: "6.4", mark: "☆ 穴" },
-          { num: 4, name: "アフリカンゴールド", jockey: "国分恭", weight: "58", odds: "15.0", mark: "-" },
           { num: 5, name: "ポタジェ", jockey: "吉田隼", weight: "58", odds: "4.0", mark: "○ 対抗" },
-          { num: 6, name: "キングオブドラゴン", jockey: "坂井", weight: "58", odds: "20.1", mark: "-" },
-          { num: 7, name: "ヒシイグアス", jockey: "松山", weight: "58", odds: "9.4", mark: "▲ 単穴" },
-          { num: 8, name: "レッドガラン", jockey: "斎藤", weight: "58", odds: "25.0", mark: "-" }
+          { num: 7, name: "ヒシイグアス", jockey: "松山", weight: "58", odds: "9.4", mark: "▲ 単穴" }
         ]
       },
       "阪神9R": {
-        raceName: "阪神 9R 鳴門ステークス",
+        raceName: "阪神 9R 鳴門ステークス (準重賞)",
         betType: "【3連複】 2 - 8, 3, 4 (計3,000円)",
         confidence: "91%",
         resultRank: "確定待ち",
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: true,
         win5: "👑 WIN5対象レース (1レース目): 2番 リーチツモドライチ 推奨",
         comment: "阪神ダート1800mの特注データに合致。好位から確実に脚を使える点を高く評価。",
         horses: [
           { num: 1, name: "ナイトパイロット", jockey: "横山琉", weight: "55", odds: "9.7", mark: "☆ 穴" },
           { num: 2, name: "リーチツモドライチ", jockey: "川田", weight: "55", odds: "4.3", mark: "◎ 本命" },
           { num: 3, name: "エランヴィータ", jockey: "三浦", weight: "55", odds: "5.6", mark: "▲ 単穴" },
-          { num: 4, name: "ベルヴェール", jockey: "西村淳", weight: "55", odds: "12.9", mark: "-" },
-          { num: 5, name: "ヌーンベルク", jockey: "岩田望", weight: "55", odds: "14.4", mark: "-" },
-          { num: 6, name: "ウンディーネ", jockey: "坂井", weight: "55", odds: "9.0", mark: "-" },
-          { num: 7, name: "スマートポジション", jockey: "松山", weight: "55", odds: "6.4", mark: "○ 対抗" },
-          { num: 8, name: "ユイノエスポワール", jockey: "大野", weight: "55", odds: "3.7", mark: "-" },
-          { num: 9, name: "メイショウダート", jockey: "武豊", weight: "55", odds: "15.0", mark: "-" },
-          { num: 10, name: "ホウオウダート", jockey: "ルメール", weight: "55", odds: "18.2", mark: "-" },
-          { num: 11, name: "エリカダート", jockey: "横山武", weight: "55", odds: "22.5", mark: "-" },
-          { num: 12, name: "シゲルダート", jockey: "戸崎", weight: "55", odds: "28.0", mark: "-" },
-          { num: 13, name: "ヤマニンダート", jockey: "浜中", weight: "55", odds: "35.0", mark: "-" },
-          { num: 14, name: "ロードダート", jockey: "C.デムーロ", weight: "55", odds: "40.0", mark: "-" },
-          { num: 15, name: "メイショウゴールド", jockey: "川田", weight: "55", odds: "45.0", mark: "-" },
-          { num: 16, name: "ホウオウゴールド", jockey: "武豊", weight: "55", odds: "50.0", mark: "-" }
+          { num: 7, name: "スマートポジション", jockey: "松山", weight: "55", odds: "6.4", mark: "○ 対抗" }
         ]
       },
       "阪神10R": {
-        raceName: "阪神 10R 豊中特別",
+        raceName: "阪神 10R 豊中特別 (ハンデ重賞級)",
         betType: "【馬単】 4 → 1, 3 (計3,000円)",
         confidence: "87%",
         resultRank: "確定待ち",
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: true,
         win5: "👑 WIN5対象レース (2レース目): 4番 アジアンエクスプレス 推奨",
         comment: "タフな馬場状態での経験が豊富で、ここでも先行押し切りが狙える。",
         horses: [
           { num: 1, name: "メイショウタバル", jockey: "浜中", weight: "56", odds: "4.2", mark: "○ 対抗" },
-          { num: 2, name: "ダノンエアズロック", jockey: "モレイラ", weight: "56", odds: "5.1", mark: "-" },
           { num: 3, name: "シンエンペラー", jockey: "坂井", weight: "56", odds: "3.5", mark: "▲ 単穴" },
-          { num: 4, name: "アジアンエクスプレス", jockey: "戸崎", weight: "56", odds: "3.8", mark: "◎ 本命" },
-          { num: 5, name: "アドマイヤベル", jockey: "横山武", weight: "56", odds: "7.2", mark: "-" },
-          { num: 6, name: "チェルヴィニア", jockey: "ルメール", weight: "56", odds: "8.9", mark: "☆ 穴" },
-          { num: 7, name: "ステレンボッシュ", jockey: "戸崎", weight: "56", odds: "11.0", mark: "-" },
-          { num: 8, name: "レガレイラ", jockey: "北村宏", weight: "56", odds: "13.4", mark: "-" },
-          { num: 9, name: "アスコリピチェーノ", jockey: "北村宏", weight: "56", odds: "16.5", mark: "-" },
-          { num: 10, name: "アルセーヌ", jockey: "川田", weight: "56", odds: "20.2", mark: "-" },
-          { num: 11, name: "ナイトパイロット", jockey: "横山琉", weight: "56", odds: "24.0", mark: "-" },
-          { num: 12, name: "リーチツモドライチ", jockey: "川田", weight: "56", odds: "28.5", mark: "-" },
-          { num: 13, name: "エランヴィータ", jockey: "三浦", weight: "56", odds: "32.1", mark: "-" },
-          { num: 14, name: "スマートポジション", jockey: "松山", weight: "56", odds: "38.0", mark: "-" },
-          { num: 15, name: "ユイノエスポワール", jockey: "大野", weight: "56", odds: "44.2", mark: "-" },
-          { num: 16, name: "メイショウダート", jockey: "武豊", weight: "56", odds: "50.0", mark: "-" },
-          { num: 17, name: "ホウオウダート", jockey: "ルメール", weight: "56", odds: "60.0", mark: "-" },
-          { num: 18, name: "エリカダート", jockey: "横山武", weight: "56", odds: "75.0", mark: "-" }
+          { num: 4, name: "アジアンエクスプレス", jockey: "戸崎", weight: "56", odds: "3.8", mark: "◎ 本命" }
         ]
       },
       "阪神11R": {
-        raceName: "阪神 11R 大阪杯 (G1)",
+        raceName: "阪神 11R 大阪杯 (G1・重賞)",
         betType: "【3連複】 1 - 3, 5, 8 (計3,000円)",
-        confidence: "93%",
+        confidence: "95%",
         resultRank: "確定待ち",
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
+        isHeavy: true,
         win5: "👑 WIN5対象レース (3レース目): 1番 ステレンボッシュ 推奨",
-        comment: "G1好走実績と阪神内回り2000mの舞台適性を最重視。好位抜け出しを狙う。",
+        comment: "G1好走実績と阪神内回り2000mの舞台適性を最重視。好位抜け出しを狙う絶対の軸馬。",
         horses: [
           { num: 1, name: "ステレンボッシュ", jockey: "ルメール", weight: "56", odds: "3.2", mark: "◎ 本命" },
           { num: 2, name: "レガレイラ", jockey: "北村宏", weight: "56", odds: "4.5", mark: "○ 対抗" },
           { num: 3, name: "アスコリピチェーノ", jockey: "北村宏", weight: "56", odds: "5.8", mark: "▲ 単穴" },
-          { num: 4, name: "アドマイヤベル", jockey: "横山武", weight: "56", odds: "9.1", mark: "-" },
-          { num: 5, name: "アルセーヌ", jockey: "川田", weight: "56", odds: "12.0", mark: "☆ 穴" },
-          { num: 6, name: "チェルヴィニア", jockey: "戸崎", weight: "56", odds: "14.5", mark: "-" },
-          { num: 7, name: "シンエンペラー", jockey: "坂井", weight: "58", odds: "18.0", mark: "-" },
-          { num: 8, name: "メイショウタバル", jockey: "浜中", weight: "58", odds: "22.4", mark: "-" },
-          { num: 9, name: "ダノンエアズロック", jockey: "モレイラ", weight: "58", odds: "28.0", mark: "-" },
-          { num: 10, name: "アジアンエクスプレス", jockey: "戸崎", weight: "58", odds: "35.0", mark: "-" },
-          { num: 11, name: "イクイノックス", jockey: "ルメール", weight: "58", odds: "42.0", mark: "-" },
-          { num: 12, name: "ドウデュース", jockey: "武豊", weight: "58", odds: "50.0", mark: "-" },
-          { num: 13, name: "リバティアイランド", jockey: "川田", weight: "56", odds: "60.0", mark: "-" },
-          { num: 14, name: "ジャスティンパレス", jockey: "坂井", weight: "58", odds: "75.0", mark: "-" },
-          { num: 15, name: "タイトルホルダー", jockey: "横山和", weight: "58", odds: "90.0", mark: "-" },
-          { num: 16, name: "スターズオンアース", jockey: "C.デムーロ", weight: "56", odds: "110.0", mark: "-" }
+          { num: 5, name: "アルセーヌ", jockey: "川田", weight: "56", odds: "12.0", mark: "☆ 穴" }
         ]
       },
       "阪神12R": {
-        raceName: "阪神 12R 4歳以上2勝クラス",
+        raceName: "阪神 12R 4歳以上2勝クラス (最終)",
         betType: "【馬単】 1 → 3, 6 (計3,000円)",
         confidence: "90%",
         resultRank: "確定待ち",
         hitStatus: "公開中",
         payout: "￥0",
         profit: "￥0",
-        win5: "👑 WIN5対象レース (4・5レース目対応): 1番 ナミュール 推奨",
+        isHeavy: true,
+        win5: "👑 WIN5対象レース (4・5レース目): 1番 ナミュール 推奨",
         comment: "最終レースに相応しい確勝級の軸馬。直線の長いコースで一気に突き抜ける。",
         horses: [
           { num: 1, name: "ナミュール", jockey: "ルメール", weight: "55", odds: "2.1", mark: "◎ 本命" },
           { num: 2, name: "ママコチャ", jockey: "川田", weight: "55", odds: "3.9", mark: "○ 対抗" },
-          { num: 3, name: "ブレイディヴェーグ", jockey: "戸崎", weight: "55", odds: "4.8", mark: "▲ 単穴" },
-          { num: 4, name: "マスクトディーヴァ", jockey: "岩田望", weight: "55", odds: "7.2", mark: "☆ 穴" },
-          { num: 5, name: "ステレンボッシュ", jockey: "北村宏", weight: "55", odds: "9.5", mark: "-" },
-          { num: 6, name: "レガレイラ", jockey: "ルメール", weight: "55", odds: "12.0", mark: "-" },
-          { num: 7, name: "アスコリピチェーノ", jockey: "戸崎", weight: "55", odds: "15.4", mark: "-" },
-          { num: 8, name: "アドマイヤベル", jockey: "横山武", weight: "55", odds: "19.0", mark: "-" },
-          { num: 9, name: "チェルヴィニア", jockey: "川田", weight: "55", odds: "24.0", mark: "-" },
-          { num: 10, name: "アルセーヌ", jockey: "坂井", weight: "55", odds: "30.0", mark: "-" },
-          { num: 11, name: "ナイトパイロット", jockey: "横山琉", weight: "55", odds: "38.0", mark: "-" },
-          { num: 12, name: "リーチツモドライチ", jockey: "川田", weight: "55", odds: "45.0", mark: "-" },
-          { num: 13, name: "エランヴィータ", jockey: "三浦", weight: "55", odds: "55.0", mark: "-" },
-          { num: 14, name: "スマートポジション", jockey: "松山", weight: "55", odds: "70.0", mark: "-" }
+          { num: 3, name: "ブレイディヴェーグ", jockey: "戸崎", weight: "55", odds: "4.8", mark: "▲ 単穴" }
         ]
       }
     };
 
-    function renderRaceCards(races) {
+    function switchFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll("[id^='btn-filter-']").forEach(btn => {
+        btn.className = "px-3.5 py-1.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg border border-white/10 whitespace-nowrap transition";
+      });
+      const activeBtn = document.getElementById("btn-filter-" + filter);
+      if (activeBtn) {
+        activeBtn.className = "px-3.5 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg shadow whitespace-nowrap transition";
+      }
+      renderRaceCards(localRaceData, filter);
+    }
+
+    function renderRaceCards(races, filter = "all") {
       let container = document.getElementById("race-cards-container");
       if (!container) return;
 
       const raceNames = Object.keys(races);
       let html = "";
+
+      if (filter === "win5") {
+        html += `<div class="bg-gradient-to-br from-amber-950/60 to-slate-900 border border-amber-500/40 rounded-2xl p-4 mb-4 shadow-xl">
+          <h2 class="text-amber-400 font-black text-sm mb-2 flex items-center gap-1.5">👑 WIN5 5レース完全攻略まとめ</h2>
+          <p class="text-xs text-slate-300 mb-3 leading-relaxed">本日のWIN5対象レース（阪神9R〜12Rおよび特別戦）のAI推奨買い目一覧です。</p>
+        </div>`;
+      }
+
       raceNames.forEach(function (rName, index) {
         const race = races[rName];
+        if (filter === "heavy" && !race.isHeavy) return;
+        if (filter === "win5" && !race.win5) return;
+
         const horses = race.horses || [];
         let topHorse = horses.find(h => h.mark && h.mark.indexOf("◎") !== -1) || horses[0];
 
@@ -422,20 +397,26 @@
         </div>`;
       });
 
-      container.innerHTML = html;
+      container.innerHTML = html || '<div class="text-center text-slate-400 py-10">該当するレースはありません</div>';
+    }
+
+    function closePopup() {
+      const popup = document.getElementById("confidence-popup");
+      if (popup) popup.classList.add("hidden");
     }
 
     function triggerFullDataUpdate() {
       const statusEl = document.getElementById("sync-status");
-      if (statusEl) statusEl.textContent = "● 同期中...";
-      setTimeout(() => {
-        renderRaceCards(localRaceData);
-        if (statusEl) statusEl.textContent = "● 関西全12R・全レース的中率・WIN5・AI解説完全対応";
-      }, 300);
+      if (statusEl) statusEl.textContent = "● 同期完了";
+      renderRaceCards(localRaceData, currentFilter);
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      renderRaceCards(localRaceData);
+      renderRaceCards(localRaceData, "all");
+      setTimeout(() => {
+        const popup = document.getElementById("confidence-popup");
+        if (popup) popup.classList.remove("hidden");
+      }, 600);
     });
   </script>
 </body>
