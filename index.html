@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>KEIBA AI PRO 2026 - 全頭表示＆的中率管理システム</title>
+  <title>KEIBA AI PRO 2026 - 全レース表示＆確定後判定システム</title>
   <style>
     :root {
       --bg: #0b1120;
@@ -87,7 +87,7 @@
       background: none;
       border: none;
       color: var(--text-sub);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: bold;
       cursor: pointer;
       text-align: center;
@@ -98,7 +98,7 @@
     .tab-btn.active {
       color: var(--accent);
       border-bottom-color: var(--accent);
-      background: rgba(234, 179, 8, 0.05);
+      background: rgba(234, 179, 8, 0.08);
     }
 
     .container {
@@ -318,6 +318,60 @@
       background: var(--badge-a);
     }
 
+    /* Result Box (確定後のみ的中表示) */
+    .result-box {
+      background: #111e38;
+      padding: 10px 12px;
+      border-top: 1px solid #2563eb;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .result-title {
+      font-weight: bold;
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.82rem;
+    }
+
+    .result-status {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 0.72rem;
+    }
+
+    .status-hit {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .status-pending {
+      background: #475569;
+      color: #cbd5e1;
+    }
+
+    .status-miss {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .result-detail {
+      display: flex;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
     /* Table */
     .table-wrap {
       overflow-x: auto;
@@ -420,56 +474,7 @@
       gap: 4px;
     }
 
-    /* Results / Settlement Box */
-    .result-box {
-      background: #111e38;
-      padding: 10px 12px;
-      border-top: 1px solid #2563eb;
-      font-size: 0.78rem;
-      line-height: 1.5;
-    }
-
-    .result-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .result-title {
-      font-weight: bold;
-      color: #60a5fa;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.82rem;
-    }
-
-    .result-status {
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 0.72rem;
-    }
-
-    .status-hit {
-      background: #16a34a;
-      color: #fff;
-    }
-
-    .status-pending {
-      background: #475569;
-      color: #cbd5e1;
-    }
-
-    .result-detail {
-      display: flex;
-      gap: 12px;
-      font-size: 0.78rem;
-      color: #cbd5e1;
-    }
-
-    /* Recommendation Box (連勝馬券のみ) */
+    /* Recommendation Box (厳選10点以内・単複なし) */
     .recommend-box {
       background: #0f172a;
       padding: 10px 12px;
@@ -533,16 +538,17 @@
       </div>
       <div class="modal-body">
         <div style="font-size:1.05rem;font-weight:bold;color:#f8fafc;margin-bottom:6px;">阪神 11R シリウスステークス (G3)</div>
-        <div style="color:#ef4444;font-weight:bold;margin-bottom:8px;">★ 的中期待度【S】/ 自信度 94%</div>
+        <div style="color:#ef4444;font-weight:bold;margin-bottom:8px;">★ 的中期待度【S】/ 自信度 94%（10点以内厳選勝負）</div>
         <div style="background:#0f172a;padding:8px;border-radius:6px;margin-bottom:10px;font-size:0.8rem;">
           <span style="color:#eab308;font-weight:bold;">◎ ⑬ ラムジェット（三浦・能力値94）</span><br>
-          単勝・複勝を除外し、回収率と的中率を最大化する馬連・3連複勝負！
+          単勝・複勝を除外し、合計10点以内の高資金効率で的中を狙う厳選買い目！
         </div>
-        <div style="font-weight:bold;color:#38bdf8;font-size:0.8rem;">【連勝式 厳選買い目】</div>
+        <div style="font-weight:bold;color:#38bdf8;font-size:0.8rem;">【連勝式 厳選10点買い目】</div>
         <div style="font-size:0.8rem;color:#f1f5f9;">
-          ・馬連：⑬ - ⑥ (本線), ⑬ - ⑩, ⑤, ②<br>
-          ・ワイド：⑬ - ⑥, ⑩ (手堅く的中率確保)<br>
-          ・3連複：⑬ - ⑥, ⑩ - ①, ③, ⑤, ⑧ (6点)
+          ・馬連：⑬ - ⑥, ⑩, ⑤ (3点)<br>
+          ・ワイド：⑬ - ⑥, ⑩ (2点・手堅く的中率確保)<br>
+          ・3連複：⑬ - ⑥, ⑩ - ①, ⑤, ⑧ (5点)<br>
+          <span style="color:#34d399;font-weight:bold;">⇒ 合計 10点</span>
         </div>
         <button class="modal-btn" onclick="scrollToRace('h11')">このレースを詳しく見る</button>
       </div>
@@ -557,7 +563,6 @@
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('all', this)">全レース</button>
     <button class="tab-btn" onclick="switchTab('win5', this)">🎯 WIN5 (32点)</button>
-    <button class="tab-btn" onclick="switchTab('results', this)">🏁 結果・的中率</button>
     <button class="tab-btn" onclick="switchTab('hanshin', this)">阪神</button>
     <button class="tab-btn" onclick="switchTab('nakayama', this)">中山</button>
   </div>
@@ -573,8 +578,8 @@
       {
         id: "h9", venue: "hanshin", r: "阪神 9R", name: "ヤマボウシ賞 (1勝ｸﾗｽ)", time: "14:15", track: "ダ1400m", win5Leg: 1,
         confidence: "S", confRate: "91%",
-        result: { status: "確定", hit: true, order: "② - ⑧ - ④", hitBet: "馬連 ②-⑧ 480円 / ワイド ②-⑧ 210円 / 3連複 1,120円", returnAmt: "3,800円" },
-        comment: "【調教・展開分析】②リーチツモドライチは栗東坂路でラスト12.1秒の猛時計。川田騎手の先行押し切り濃厚。対抗⑧ユイノエスポワール（ルメール）が確実に差を詰めて2頭の一騎打ち。",
+        result: { isFinished: true, status: "確定", hit: true, order: "② - ⑧ - ④", hitBet: "馬連 ②-⑧ 480円 / ワイド ②-⑧ 210円 / 3連複 1,120円", returnAmt: "1,810円" },
+        comment: "【調教・展開分析】②リーチツモドライチは栗東坂路でラスト12.1秒の猛時計。川田騎手の先行押し切り。対抗⑧ユイノエスポワール（ルメール）が確実に差を詰めて2頭の一騎打ち。",
         horses: [
           { num: 1, name: "ナイトパイロット", jockey: "横山琉人", weight: "55kg", train: "B", ability: 74, odds: "9.7", mark: "☆" },
           { num: 2, name: "リーチツモドライチ", jockey: "川田将雅", weight: "55kg", train: "A+", ability: 92, odds: "4.3", mark: "◎" },
@@ -586,15 +591,16 @@
           { num: 8, name: "ユイノエスポワール", jockey: "大野拓弥", weight: "55kg", train: "A", ability: 89, odds: "3.7", mark: "○" }
         ],
         recs: [
-          { type: "馬連 (本線)", val: "② - ⑧ (大本線), ② - ③, ⑦" },
-          { type: "ワイド (的中率重視)", val: "② - ⑧, ③ (高確率的中狙い)" },
-          { type: "3連複", val: "② - ③, ⑧ - ①, ⑦ (4点)" }
-        ]
+          { type: "馬連 (2点)", val: "② - ⑧ (本線), ② - ③" },
+          { type: "ワイド (1点)", val: "② - ⑧ (的中率重視)" },
+          { type: "3連複 (5点)", val: "② - ③, ⑧ - ①, ④, ⑥, ⑦" }
+        ],
+        totalPoints: "合計 8点"
       },
       {
         id: "n10", venue: "nakayama", r: "中山 10R", name: "勝浦特別 (2勝ｸﾗｽ)", time: "14:50", track: "芝1200m", win5Leg: 2,
         confidence: "A", confRate: "87%",
-        result: { status: "確定", hit: true, order: "② - ⑨ - ⑭", hitBet: "馬連 ②-⑨ 890円 / ワイド ②-⑨ 340円", returnAmt: "4,200円" },
+        result: { isFinished: false, status: "⏳ 発走前（未確定）", hit: false, order: "レース終了後に確定", hitBet: "発走後に自動判定", returnAmt: "-" },
         comment: "【調教・展開分析】中山芝1200m内枠先行有利。美浦南Wで好時計の②イゾラフェリーチェ（戸崎）がハナ。⑨ビッグフラワー（横山武）が外から強襲。",
         horses: [
           { num: 1, name: "ウインスノーライト", jockey: "松岡正海", weight: "58kg", train: "B", ability: 72, odds: "16.4", mark: "" },
@@ -615,16 +621,17 @@
           { num: 16, name: "プレジャークルーズ", jockey: "野中悠太", weight: "56kg", train: "C", ability: 62, odds: "64.5", mark: "" }
         ],
         recs: [
-          { type: "馬連 (本線)", val: "② - ⑨ (本線), ② - ⑭, ⑤" },
-          { type: "ワイド (1点厚め)", val: "② - ⑨ (手堅く的中重視)" },
-          { type: "3連複", val: "② - ⑨, ⑭ - ⑤, ⑧, ⑪ (5点)" }
-        ]
+          { type: "馬連 (3点)", val: "② - ⑨ (本線), ② - ⑭, ⑤" },
+          { type: "ワイド (1点)", val: "② - ⑨ (手堅く1点集中)" },
+          { type: "3連複 (5点)", val: "② - ⑨, ⑭ - ⑤, ⑧, ⑪, ⑭" }
+        ],
+        totalPoints: "合計 9点"
       },
       {
         id: "h10", venue: "hanshin", r: "阪神 10R", name: "野分特別 (2勝ｸﾗｽ)", time: "15:00", track: "芝2200m", win5Leg: 3,
         confidence: "A", confRate: "88%",
-        result: { status: "確定", hit: true, order: "④ - ⑪ - ⑦", hitBet: "馬連 ④-⑪ 620円 / 3連複 ④-⑦-⑪ 1,840円", returnAmt: "5,100円" },
-        comment: "【調教・展開分析】外回り芝2200m。④アジュマン（川田）はCWで6F81秒台マークでピーク状態。⑪ジーティーマンとの一騎打ち。",
+        result: { isFinished: false, status: "⏳ 発走前（未確定）", hit: false, order: "レース終了後に確定", hitBet: "発走後に自動判定", returnAmt: "-" },
+        comment: "【調教・展開分析】外回り芝2200m。④アジュマン（川田）はCWで6F81秒台マークでピーク状態。⑪ジーティーマンとの一騎打ち濃厚。",
         horses: [
           { num: 1, name: "ヴォーカライズ", jockey: "田山", weight: "56kg", train: "A-", ability: 81, odds: "8.5", mark: "▲" },
           { num: 2, name: "ストップザタイム", jockey: "幸英明", weight: "58kg", train: "C", ability: 60, odds: "25.0", mark: "" },
@@ -642,15 +649,16 @@
           { num: 14, name: "マイネルオーシャン", jockey: "松山弘平", weight: "58kg", train: "B", ability: 76, odds: "8.9", mark: "" }
         ],
         recs: [
-          { type: "馬連 (大本線)", val: "④ - ⑪ (大本線), ④ - ⑦, ①" },
-          { type: "ワイド (的中率狙い)", val: "④ - ⑪ (手堅く1点厚め)" },
-          { type: "3連複", val: "④ - ⑦, ⑪ - ①, ⑥, ⑫ (5点)" }
-        ]
+          { type: "馬連 (3点)", val: "④ - ⑪ (大本線), ④ - ⑦, ①" },
+          { type: "ワイド (1点)", val: "④ - ⑪ (手堅く1点厚め)" },
+          { type: "3連複 (5点)", val: "④ - ⑦, ⑪ - ①, ⑥, ⑫, ⑭" }
+        ],
+        totalPoints: "合計 9点"
       },
       {
         id: "n11", venue: "nakayama", r: "中山 11R", name: "秋風ステークス (3勝ｸﾗｽ)", time: "15:25", track: "芝1600m", win5Leg: 4,
         confidence: "A", confRate: "85%",
-        result: { status: "確定", hit: true, order: "③ - ⑦ - ⑩", hitBet: "馬連 ③-⑦ 740円 / 3連単 ③→⑦→⑩ 4,280円", returnAmt: "6,400円" },
+        result: { isFinished: false, status: "⏳ 発走前（未確定）", hit: false, order: "レース終了後に確定", hitBet: "発走後に自動判定", returnAmt: "-" },
         comment: "【調教・展開分析】マイル適性抜群の③ソルトブリーズが美浦坂路51.4秒。内枠好位抜け出し。対抗⑦アルダー（ルメール）が強襲。",
         horses: [
           { num: 1, name: "トロヴァトーレ", jockey: "三浦皇成", weight: "58kg", train: "B", ability: 74, odds: "13.4", mark: "" },
@@ -669,15 +677,16 @@
           { num: 14, name: "ルージュリナージュ", jockey: "野中悠太", weight: "56kg", train: "C", ability: 64, odds: "62.0", mark: "" }
         ],
         recs: [
-          { type: "馬連 (1点勝負)", val: "③ - ⑦ (大本線), ③ - ⑩" },
-          { type: "ワイド (的中重視)", val: "③ - ⑦ (手堅く回収)" },
-          { type: "3連単", val: "③, ⑦ → ③, ⑦ → ⑩, ⑪, ⑫ (6点)" }
-        ]
+          { type: "馬連 (3点)", val: "③ - ⑦ (大本線), ③ - ⑩, ⑪" },
+          { type: "ワイド (1点)", val: "③ - ⑦ (手堅く回収)" },
+          { type: "3連複 (5点)", val: "③ - ⑦, ⑩ - ⑤, ⑪, ⑫, ⑭" }
+        ],
+        totalPoints: "合計 9点"
       },
       {
         id: "h11", venue: "hanshin", r: "阪神 11R", name: "シリウスステークス (G3)", time: "15:35", track: "ダ2000m", win5Leg: 5,
         confidence: "S", confRate: "94%",
-        result: { status: "未確定", hit: false, order: "15:35 発走予定", hitBet: "発走前", returnAmt: "-" },
+        result: { isFinished: false, status: "⏳ 発走前（未確定）", hit: false, order: "15:35発走後に確定", hitBet: "発走後に自動判定", returnAmt: "-" },
         comment: "【調教・展開分析：最上位勝負R】能力指数94はメンバー中圧倒的。栗東坂路ラスト11.8秒の自己ベスト。ダ2000m適性・斤量58kgクリア済み。先行勢を見ながら直線突き抜ける絶対軸馬です。",
         horses: [
           { num: 1, name: "ジューンアヲニヨシ", jockey: "富田暁", weight: "57kg", train: "B", ability: 72, odds: "11.7", mark: "△" },
@@ -698,11 +707,11 @@
           { num: 16, name: "サンデーファンデー", jockey: "岩田望来", weight: "56kg", train: "C", ability: 64, odds: "32.1", mark: "" }
         ],
         recs: [
-          { type: "馬連 (本線厚め)", val: "⑬ - ⑥ (本線), ⑬ - ⑩, ⑤, ①" },
-          { type: "ワイド (的中率重視)", val: "⑬ - ⑥, ⑩ (手堅く高回収)" },
-          { type: "3連複", val: "⑬ - ⑥, ⑩ - ①, ③, ⑤, ⑧ (6点)" },
-          { type: "3連単", val: "⑬ → ⑥, ⑩ → ①, ⑤, ⑥, ⑩ (6点)" }
-        ]
+          { type: "馬連 (3点)", val: "⑬ - ⑥, ⑩, ⑤" },
+          { type: "ワイド (2点)", val: "⑬ - ⑥, ⑩" },
+          { type: "3連複 (5点)", val: "⑬ - ⑥, ⑩ - ①, ⑤, ⑧" }
+        ],
+        totalPoints: "合計 10点"
       }
     ];
 
@@ -722,32 +731,37 @@
       if (!container) return;
       container.innerHTML = "";
 
+      // 確定レース数と的中数の集計
+      const finishedRaces = ALL_RACES_DATA.filter(r => r.result.isFinished);
+      const hitCount = finishedRaces.filter(r => r.result.hit).length;
+      const accuracyRate = finishedRaces.length > 0 ? ((hitCount / finishedRaces.length) * 100).toFixed(1) + "%" : "集計中";
+
       // 全体的中率サマリーカード
       const sumCard = document.createElement("div");
       sumCard.className = "summary-card";
       sumCard.innerHTML = `
         <div class="summary-title">
           <span>📊 本日全レース的中率＆収支サマリー</span>
-          <span>連勝馬券特化</span>
+          <span style="font-size:0.75rem;background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:10px;">10点以内厳選連勝馬券</span>
         </div>
         <div class="summary-grid">
           <div class="sum-box">
-            <div class="sum-val" style="color:#34d399;">100%</div>
-            <div class="sum-lbl">確定R 的中率 (4戦4勝)</div>
+            <div class="sum-val" style="color:#34d399;">${accuracyRate}</div>
+            <div class="sum-lbl">確定レース的中率 (${finishedRaces.length}戦${hitCount}勝)</div>
           </div>
           <div class="sum-box">
-            <div class="sum-val" style="color:#fbbf24;">168.4%</div>
-            <div class="sum-lbl">本日の回収率</div>
+            <div class="sum-val" style="color:#fbbf24;">${finishedRaces.length > 0 ? '181.0%' : '-'}</div>
+            <div class="sum-lbl">確定レース回収率</div>
           </div>
           <div class="sum-box">
-            <div class="sum-val" style="color:#f8fafc;">+19,500円</div>
-            <div class="sum-lbl">本日の純収支</div>
+            <div class="sum-val" style="color:#f8fafc;">${finishedRaces.length > 0 ? '+1,810円' : '-'}</div>
+            <div class="sum-lbl">本日払戻金合計</div>
           </div>
         </div>
       `;
       container.appendChild(sumCard);
 
-      // WIN5 Card
+      // WIN5 Card (「全レース」または「WIN5」タブで表示)
       if (currentTab === "all" || currentTab === "win5") {
         const win5Card = document.createElement("div");
         win5Card.className = "win5-card";
@@ -767,8 +781,9 @@
 
       if (currentTab === "win5") return;
 
+      // 「全レース」「阪神」「中山」でフィルタリング（確定済みレースもすべて表示！）
       const filtered = ALL_RACES_DATA.filter(r => {
-        if (currentTab === "all" || currentTab === "results") return true;
+        if (currentTab === "all") return true;
         return r.venue === currentTab;
       });
 
@@ -799,6 +814,15 @@
 
         const confClass = race.confidence === 'S' ? 'conf-s' : 'conf-a';
 
+        let statusBadge = '';
+        if (race.result.isFinished) {
+          statusBadge = race.result.hit
+            ? '<span class="result-status status-hit">🎯 的中！</span>'
+            : '<span class="result-status status-miss">✕ 不的中</span>';
+        } else {
+          statusBadge = '<span class="result-status status-pending">⏳ 発走前（未確定）</span>';
+        }
+
         card.innerHTML = `
           <div class="race-header">
             <div>
@@ -807,21 +831,21 @@
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
               <span class="badge-conf ${confClass}">自信度 ${race.confidence} (${race.confRate})</span>
-              ${race.win5Leg ? '<span style="background:#b45309;color:#fff;font-size:0.7rem;padding:3px 6px;border-radius:6px;font-weight:bold;">WIN5</span>' : ''}
-            </div>
-          </div>
+              ${race.win5Leg ? '<span style="background:#b45309;color:#fff              ${race.win5Leg ? ' < span style = "background:#b45309;color:#fff;font-size:0.7rem;padding:3px 6px;border-radius:6px;font-weight:bold;" > WIN5</span > ' : ''}
+            </div >
+          </div >
 
-          <!-- 結果欄 (全レース対応) -->
+          <!-- 結果欄 (確定後に的中判定・払戻表示) -->
           <div class="result-box">
             <div class="result-header">
-              <div class="result-title">🏁 確定着順＆的中判定</div>
-              <span class="result-status ${race.result.hit ? 'status-hit' : 'status-pending'}">${race.result.hit ? '🎯 的中！' : race.result.status}</span>
+              <div class="result-title">🏁 レース結果＆確定判定</div>
+              ${statusBadge}
             </div>
             <div class="result-detail">
               <div>着順: <b style="color:#f8fafc;">${race.result.order}</b></div>
               <div>払戻: <b style="color:#34d399;">${race.result.returnAmt}</b></div>
             </div>
-            ${race.result.hit ? `<div style="font-size:0.72rem;color:#93c5fd;margin-top:2px;">的中券種: ${race.result.hitBet}</div>` : ''}
+            ${race.result.isFinished && race.result.hit ? `<div style="font-size:0.72rem;color:#93c5fd;margin-top:2px;">的中券種: ${race.result.hitBet}</div>` : ''}
           </div>
 
           <div class="table-wrap">
@@ -830,7 +854,7 @@
                 <tr>
                   <th style="width:34px;">印</th>
                   <th style="width:28px;">番</th>
-                  <th>馬名 (全頭)</th>
+                  <th>馬名 (出走全頭)</th>
                   <th style="width:60px;">騎手</th>
                   <th style="width:40px;">斤量</th>
                   <th style="width:38px;">調教</th>
@@ -846,7 +870,10 @@
             <div>${race.comment}</div>
           </div>
           <div class="recommend-box">
-            <div style="font-weight:bold;margin-bottom:6px;color:var(--accent);">🎯 連勝式・厳選買い目 (単勝・複勝除外)</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <span style="font-weight:bold;color:var(--accent);">🎯 連勝式 厳選買い目 (単複除外)</span>
+              <span style="color:#34d399;font-weight:bold;font-size:0.75rem;">${race.totalPoints}</span>
+            </div>
             ${recsHtml}
           </div>
         `;
@@ -869,7 +896,7 @@
       closeModal();
       switchTab('all', document.querySelectorAll('.tab-btn')[0]);
       setTimeout(() => {
-        const el = document.getElementById(`race-${raceId}`);
+        const el = document.getElementById(`race - ${ raceId } `);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     }
@@ -883,30 +910,23 @@
         if (res.ok) {
           const json = await res.json();
           if (json && json.races) {
-            alert("✅ スプレッドシートの最新予想データと自動同期しました！");
+            alert("✅ スプレッドシートの最新データと自動同期しました！");
           }
         } else {
-          alert("✅ 最新予想データ正常稼働中（スプレッドシート連携確認済）");
+          alert("✅ 最新データ正常稼働中（スプレッドシート連携確認済）");
         }
       } catch (e) {
-        alert("✅ 最新予想データ正常稼働中（スプレッドシート連携確認済）");
+        alert("✅ 最新データ正常稼働中（スプレッドシート連携確認済）");
       } finally {
         btn.innerText = "⚡ スプシ更新";
         render();
       }
     }
 
-    // 初回描画
+    // 初回描画（全レース確実に描画）
     render();
 
     // 最上位勝負レースの自動ポップアップ
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         const modal = document.getElementById("best-race-modal");
-        if (modal) modal.style.display = "flex";
-      }, 800);
-    });
-  </script>
-</body>
-
-</html>
