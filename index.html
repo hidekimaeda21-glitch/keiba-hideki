@@ -1,94 +1,718 @@
 <!DOCTYPE html>
-<html lang="ja">
-
+<html lang="ja" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>KEIBA AI PRO 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="競馬AI PRO">
+  <meta name="application-name" content="競馬AI PRO">
+  <meta name="theme-color" content="#090d16">
+  <title>KEIBA AI PRO | 競馬予想・収支管理</title>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background-color: #0b0f19;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-  </style>
-</head>
-
-<body class="pb-24">
-  <header class="p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center sticky top-0 z-50">
-    <div>
-      <h1 class="text-lg font-black text-amber-400">KEIBA AI PRO 2026</h1>
-      <p id="sync-status" class="text-xs text-emerald-400">● 18頭フルゲート・結果同期完了</p>
-    </div>
-    <button onclick="loadData()"
-      class="px-3 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg active:scale-95 transition">⚡
-      競馬データ更新</button>
-  </header>
-
-  <main id="race-container" class="p-3 space-y-4">
-    <div class="text-center text-slate-400 py-10">出走データを読み込み中...</div>
-  </main>
-
   <script>
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwbGsrhWTNZ-uAiMVfvai3Dn0RtzAizHA1oVYk3ZDvvkfnOiQnJGhKg6dmPj0OBXEcX/exec";
-
-    async function loadData() {
-      const statusEl = document.getElementById("sync-status");
-      statusEl.textContent = "● 同期中...";
-      try {
-        const res = await fetch(GAS_API_URL + "?action=fetch&t=" + new Date().getTime());
-        const json = await res.json();
-        if (json && json.success && json.races) {
-          render(json.races);
-          statusEl.textContent = "● 18頭フルゲート・結果同期完了";
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              turf: '#10b981',
+              gold: '#f59e0b',
+              dark: '#090d16',
+              card: '#121826'
+            }
+          },
+          fontFamily: {
+            sans: ['"Noto Sans JP"', 'sans-serif'],
+            mono: ['"Outfit"', 'monospace']
+          }
         }
-      } catch (e) {
-        statusEl.textContent = "● オフライン表示中";
       }
     }
-
-    function render(races) {
-      const container = document.getElementById("race-container");
-      let html = "";
-      Object.keys(races).forEach((rName) => {
-        const race = races[rName];
-        const horses = race.horses || [];
-
-        let horsesHtml = "";
-        horses.forEach(h => {
-          const isTop = h.mark && h.mark.indexOf("◎") !== -1;
-          horsesHtml += `<div class="flex justify-between items-center p-2 mb-1 rounded text-xs ${isTop ? 'bg-amber-500/20 border border-amber-500/40' : 'bg-slate-900/60 border border-slate-800/40'}">
-            <div><span class="font-bold mr-2 ${isTop ? 'text-amber-400' : 'text-slate-300'}">${h.num}番</span> <span class="text-white font-medium">${h.name}</span> <span class="text-slate-400 text-[11px]">(${h.jockey} / ${h.weight}kg)</span></div>
-            <div><span class="font-mono text-amber-400 mr-2">${h.odds}倍</span><span class="font-bold text-emerald-400">${h.mark || '-'}</span></div>
-          </div>`;
-        });
-
-        let resultHtml = "";
-        if (race.resultRank || race.hitStatus) {
-          resultHtml = `<div class="mt-3 p-2.5 bg-emerald-950/40 border border-emerald-500/40 rounded-lg text-xs flex justify-between items-center">
-            <span class="text-emerald-400 font-bold">🎯 結果: ${race.hitStatus} (${race.resultRank})</span>
-            <span class="text-amber-400 font-bold">払戻: ${race.payout} (収支: ${race.profit})</span>
-          </div>`;
-        }
-
-        html += `<div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 shadow-lg mb-4">
-          <div class="flex justify-between items-center mb-2">
-            <span class="bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded text-xs font-bold border border-emerald-500/30">${race.raceName}</span>
-            <span class="text-xs text-slate-400 font-medium">出走全馬: ${horses.length}頭 (フルゲート)</span>
-          </div>
-          <div class="text-xs text-slate-400 mb-2 font-semibold">🎯 自信券種: ${race.betType}</div>
-          <div class="space-y-1 mt-2 max-h-72 overflow-y-auto pr-1">
-            ${horsesHtml}
-          </div>
-          ${resultHtml}
-        </div>`;
-      });
-      container.innerHTML = html;
-    }
-
-    window.onload = loadData;
   </script>
-</body>
 
+  <!-- Custom CSS (iPhone 17 & PWA Optimized) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#090d16] text-slate-100 antialiased selection:bg-emerald-500 selection:text-white">
+
+  <!-- ================= App Container (Max Mobile Width) ================= -->
+  <div class="max-w-md mx-auto min-h-screen relative flex flex-col">
+
+    <!-- ================= Top Fixed Header (Dynamic Island Compatible) ================= -->
+    <header class="sticky top-0 z-40 glass-panel-elevated app-header pb-2.5">
+      <!-- App Brand & Title -->
+      <div class="flex items-center justify-between mb-2.5">
+        <div class="flex items-center gap-2.5">
+          <img src="icons/apple-touch-icon.png" alt="KEIBA AI PRO Logo" class="w-9 h-9 rounded-xl shadow-md border border-emerald-500/30 object-cover">
+          <div>
+            <h1 class="text-sm font-black tracking-tight text-white flex items-center gap-1.5 font-mono">
+              KEIBA AI PRO
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 font-sans">
+                2026 最新AI
+              </span>
+            </h1>
+            <p class="text-[10px] text-slate-400">関西全12R ＋ 全国重賞予想・収支</p>
+          </div>
+        </div>
+        
+        <!-- Action Buttons (Install Guide & Status) -->
+        <div class="flex items-center gap-1.5">
+          <!-- Best Race Popup Trigger Button -->
+          <button id="btn-open-best-race" class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500/30 to-amber-600/20 border border-amber-500/50 text-[11px] text-amber-300 font-black hover:bg-amber-500/40 transition-all shadow-sm">
+            <span>👑</span>
+            <span>勝負R</span>
+          </button>
+
+          <!-- Install / Home Screen Guide Button -->
+          <button id="btn-open-install-guide" class="flex items-center gap-1 px-2 py-1 rounded-full bg-gradient-to-r from-emerald-600/30 to-teal-500/20 border border-emerald-500/50 text-[11px] text-emerald-300 font-bold hover:bg-emerald-600/40 transition-all">
+            <span>📲</span>
+            <span id="install-badge-text">アプリ化</span>
+          </button>
+
+          <!-- Mobile Connect QR Button -->
+          <button id="btn-open-qr-guide" title="iPhoneで開く" class="p-1.5 rounded-full bg-slate-800/80 border border-slate-700/60 text-slate-300 hover:text-emerald-400 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Segmented Tab Control (iOS Style) -->
+      <div class="grid grid-cols-3 p-1 bg-slate-950/80 rounded-xl border border-slate-800/80">
+        <button id="tab-btn-races" class="py-2 rounded-lg text-xs font-bold transition-all text-slate-400 flex items-center justify-center gap-1 tab-active">
+          <span>🏇</span>
+          <span>出馬表</span>
+        </button>
+        <button id="tab-btn-win5" class="py-2 rounded-lg text-xs font-bold transition-all text-slate-400 flex items-center justify-center gap-1">
+          <span>🎯</span>
+          <span>WIN5予想</span>
+        </button>
+        <button id="tab-btn-dashboard" class="py-2 rounded-lg text-xs font-bold transition-all text-slate-400 flex items-center justify-center gap-1">
+          <span>📊</span>
+          <span>収支管理</span>
+        </button>
+      </div>
+
+      <!-- Google Apps Script スプレッドシート連携 ＆ データ最新化コントロールバー -->
+      <div class="mt-2 p-2 rounded-xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-between text-[11px] shadow-sm gap-2">
+        <div class="flex items-center gap-1.5 min-w-0 flex-1">
+          <span id="gas-sync-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+          <div class="truncate">
+            <div id="gas-sync-status" class="font-bold text-slate-200 truncate leading-tight">スプレッドシート連携中</div>
+            <div id="gas-sync-time" class="text-[9.5px] text-emerald-400/90 font-mono">取得中...</div>
+          </div>
+        </div>
+
+        <!-- ⚡ 競馬データ最新化ボタン (POST送信 ＆ 自動再取得) -->
+        <button id="btn-update-keiba-data" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black text-xs shadow-md transition-all flex-shrink-0 border border-amber-400/50">
+          <span id="update-keiba-icon" class="text-sm">⚡</span>
+          <span id="update-keiba-text">競馬データ更新</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ================= Main Content View 1: レース一覧 (出馬表) ================= -->
+    <main id="view-races" class="flex-1 px-3.5 pt-3 pb-6">
+
+      <!-- iPhone アプリ化 案内バナー (未インストール時に表示) -->
+      <div id="pwa-install-banner" class="mb-3 p-2.5 rounded-2xl bg-gradient-to-r from-emerald-950/60 via-slate-900/90 to-emerald-950/60 border border-emerald-500/30 flex items-center justify-between shadow-md">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📲</span>
+          <div>
+            <div class="text-xs font-bold text-slate-100 flex items-center gap-1">
+              iPhoneのアプリとして使う
+              <span class="text-[9px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-1 rounded">簡単3秒</span>
+            </div>
+            <div class="text-[10px] text-slate-400">ホーム画面に追加で全画面アプリ化できます</div>
+          </div>
+        </div>
+        <button id="btn-banner-guide" class="px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs shadow-sm hover:bg-emerald-400 transition-all flex-shrink-0">
+          追加方法
+        </button>
+      </div>
+
+      <!-- 会場・カテゴリーフィルター -->
+      <div class="flex items-center gap-1.5 mb-3 overflow-x-auto no-scrollbar py-1">
+        <button id="filter-all" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm flex-shrink-0">
+          すべて (13R)
+        </button>
+        <button id="filter-hanshin" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-400 bg-slate-800/80 hover:bg-slate-700/80 transition-colors flex-shrink-0">
+          阪神 1R〜12R
+        </button>
+        <button id="filter-graded" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-400 bg-slate-800/80 hover:bg-slate-700/80 transition-colors flex items-center gap-1 flex-shrink-0">
+          <span>🏆</span>
+          <span>全国重賞</span>
+        </button>
+        <button id="filter-win5" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-amber-400/90 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors flex items-center gap-1 flex-shrink-0">
+          <span>🎯</span>
+          <span>WIN5対象 (5R)</span>
+        </button>
+      </div>
+
+      <!-- 一括シミュレーション クイックバナー -->
+      <div class="mb-4 p-3 rounded-2xl bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 border border-emerald-500/30 flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-sm font-bold">
+            ⚡
+          </div>
+          <div>
+            <div id="sim-all-title" class="text-xs font-black text-slate-100">全13レース 推奨買い目テスト</div>
+            <div class="text-[10px] text-slate-400">1Rあたり3,000円で即座に収支を計算</div>
+          </div>
+        </div>
+        <button id="btn-simulate-all" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs shadow-md transition-all">
+          一括反映
+        </button>
+      </div>
+
+      <!-- レースカード一覧リスト (動的生成) -->
+      <div id="races-container" class="space-y-3">
+        <!-- JSでレンダリングされます -->
+      </div>
+    </main>
+
+    <!-- ================= Main Content View 2: WIN5 AI予想 ================= -->
+    <main id="view-win5" class="flex-1 px-3.5 pt-3 pb-6 hidden">
+
+      <!-- WIN5 プレミアム メインヘッダーカード -->
+      <div class="glass-panel-elevated p-4 rounded-3xl border border-amber-500/30 mb-4 relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-8 -top-8 w-36 h-36 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -left-8 -bottom-8 w-36 h-36 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <div class="flex items-center gap-1.5 font-black text-amber-400 tracking-wide">
+            <span class="text-base">🎯</span>
+            <span>JRA WIN5 AI完全攻略</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">最高6億円</span>
+          </div>
+          <span id="win5-badge-source" class="text-[9px] bg-slate-800 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-bold">
+            スプレッドシート連動
+          </span>
+        </div>
+
+        <div class="mt-1 mb-3">
+          <div class="text-[11px] text-slate-400">本日の対象5レース AI厳選買い目</div>
+          <div class="flex items-baseline gap-2 mt-0.5">
+            <span id="win5-est-payout" class="text-2xl font-black text-amber-400 font-mono tracking-tight">
+              推定 ¥28,400,000
+            </span>
+            <span class="text-[10px] text-slate-400">狙い</span>
+          </div>
+        </div>
+
+        <!-- WIN5 戦略切り替えセレクター -->
+        <div class="p-1 bg-slate-950/80 rounded-xl border border-slate-800 flex items-center justify-between gap-1 mb-3">
+          <button id="win5-strat-balanced" class="flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all text-slate-300 bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm text-center">
+            ⚖️ バランス (32点)
+          </button>
+          <button id="win5-strat-solid" class="flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-slate-200 text-center">
+            🛡️ 鉄板絞り (8点)
+          </button>
+          <button id="win5-strat-jackpot" class="flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-slate-200 text-center">
+            💣 万馬券 (243点)
+          </button>
+        </div>
+
+        <!-- 買い目サマリー & 投票シミュレーションボタン -->
+        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 flex items-center justify-between gap-2">
+          <div>
+            <div class="text-[10px] text-slate-400">選択点数 / 投資額 (1点100円)</div>
+            <div class="flex items-baseline gap-1 mt-0.5">
+              <span id="win5-total-points" class="text-lg font-black text-emerald-400 font-mono">32</span>
+              <span class="text-xs text-slate-400">点</span>
+              <span class="text-slate-600 font-bold mx-1">/</span>
+              <span id="win5-total-cost" class="text-base font-black text-amber-400 font-mono">¥3,200</span>
+            </div>
+          </div>
+
+          <button id="btn-bet-win5" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs shadow-lg hover:from-amber-400 hover:to-amber-500 active:scale-95 transition-all flex items-center gap-1.5 flex-shrink-0">
+            <span>🎯</span>
+            <span id="btn-bet-win5-text">WIN5に投票</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- WIN5 対象5レースのAI推奨馬リスト (動的生成) -->
+      <div class="mb-2 flex items-center justify-between px-1">
+        <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+          <span>📋</span>
+          <span>対象5レース AI厳選指名馬</span>
+        </h2>
+        <span class="text-[10px] text-slate-400">馬番タップで買い目を自在にカスタマイズ</span>
+      </div>
+
+      <div id="win5-races-container" class="space-y-3">
+        <!-- JSでレンダリングされます -->
+      </div>
+    </main>
+
+    <!-- ================= Main Content View 3: 収支ダッシュボード ================= -->
+    <main id="view-dashboard" class="flex-1 px-3.5 pt-3 pb-6 hidden">
+
+      <!-- AI自己学習＆フィードバックエンジン ステータスカード -->
+      <div class="glass-panel-elevated p-4 rounded-3xl border border-teal-500/30 mb-4 relative overflow-hidden shadow-xl">
+        <div class="absolute -right-6 -top-6 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between text-xs mb-2">
+          <div class="flex items-center gap-1.5 font-black text-teal-300">
+            <span class="text-sm">🤖</span>
+            <span>AI自己学習＆予測乖離フィードバック</span>
+          </div>
+          <span class="text-[9px] bg-teal-950 text-teal-300 px-2 py-0.5 rounded-full border border-teal-500/40 font-mono font-bold">
+            v2026.4 Active
+          </span>
+        </div>
+
+        <div class="text-[11px] text-slate-400 mb-3">
+          実レース結果とAI予測の乖離を自動分析し、指数重み付けを自己進化・最適化しています。
+        </div>
+
+        <!-- 3分割フィードバック指標 -->
+        <div class="grid grid-cols-3 gap-2 mb-3">
+          <div class="p-2 bg-slate-900/80 rounded-xl border border-slate-800 text-center">
+            <div class="text-[9px] text-slate-400">オッズ乖離度</div>
+            <div id="ai-stat-odds-diff" class="text-xs font-black text-teal-400 font-mono mt-0.5">-1.4%</div>
+            <div class="text-[8px] text-emerald-400 font-medium">歪み補正済</div>
+          </div>
+          <div class="p-2 bg-slate-900/80 rounded-xl border border-slate-800 text-center">
+            <div class="text-[9px] text-slate-400">着順予測一致率</div>
+            <div id="ai-stat-accuracy" class="text-xs font-black text-amber-400 font-mono mt-0.5">91.4%</div>
+            <div class="text-[8px] text-amber-300/80 font-medium">上位3頭内</div>
+          </div>
+          <div class="p-2 bg-slate-900/80 rounded-xl border border-slate-800 text-center">
+            <div class="text-[9px] text-slate-400">展開バイアス補正</div>
+            <div id="ai-stat-bias" class="text-xs font-black text-emerald-400 font-mono mt-0.5">+3.8%</div>
+            <div class="text-[8px] text-slate-400 font-medium">前残り追従</div>
+          </div>
+        </div>
+
+        <!-- 自己学習プログレスバー -->
+        <div class="mb-3 p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
+          <div class="flex items-center justify-between text-[10px] mb-1">
+            <span class="text-slate-300 font-bold flex items-center gap-1">
+              <span>⚡</span> 学習収束・最適化スコア
+            </span>
+            <span class="font-mono text-teal-400 font-bold">96.8% (Loss: 0.028)</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div class="bg-gradient-to-r from-teal-500 via-emerald-400 to-amber-400 h-full rounded-full transition-all duration-1000" style="width: 96.8%"></div>
+          </div>
+        </div>
+
+        <!-- 直近自己学習フィードバックログ -->
+        <div class="p-2.5 bg-slate-950/70 rounded-xl border border-slate-800/80 text-[10px] space-y-1">
+          <div class="text-slate-400 font-bold flex items-center justify-between">
+            <span>📝 直近の自動調整ログ:</span>
+            <span id="ai-log-time" class="font-mono text-slate-400">本日 11:15 適用</span>
+          </div>
+          <div class="text-slate-300 flex items-start gap-1">
+            <span class="text-teal-400">•</span>
+            <span>前走タイムと当日の馬場差を再学習し、芝マイルの先行力指数を+5%自動補正</span>
+          </div>
+          <div class="text-slate-300 flex items-start gap-1">
+            <span class="text-teal-400">•</span>
+            <span>人気薄の過剰オッズ歪みを検知し、穴馬☆の推奨期待値をリアルタイム最適化</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- メインサマリーカード（損益 ＆ 回収率） -->
+      <div class="glass-panel-elevated p-4 rounded-3xl border border-slate-700/80 mb-4 relative overflow-hidden">
+        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -left-6 -top-6 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+          <span class="font-bold flex items-center gap-1">
+            <span>📈</span> 累計トータル収支
+          </span>
+          <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded-full text-slate-400">
+            レース＋WIN5合算
+          </span>
+        </div>
+
+        <!-- 損益 & 回収率 特大表示 -->
+        <div class="grid grid-cols-2 gap-3 my-2 pt-1 pb-2 border-b border-slate-800/80">
+          <div>
+            <div class="text-[11px] text-slate-400 font-medium">通算純損益</div>
+            <div id="dash-net-profit" class="text-2xl font-black text-emerald-400 font-mono tracking-tight">
+              +¥0
+            </div>
+          </div>
+          <div>
+            <div class="text-[11px] text-slate-400 font-medium">トータル回収率</div>
+            <div id="dash-recovery-rate" class="text-2xl font-black text-emerald-400 font-mono tracking-tight">
+              0.0%
+            </div>
+          </div>
+        </div>
+
+        <!-- サブ指標 4分割グリッド -->
+        <div class="grid grid-cols-2 gap-2.5 pt-2">
+          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
+            <div class="text-[10px] text-slate-400">参戦レース数</div>
+            <div id="dash-race-count" class="text-base font-black text-slate-200 font-mono">0 R</div>
+          </div>
+          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
+            <div class="text-[10px] text-slate-400">総的中率</div>
+            <div id="dash-hit-rate" class="text-base font-black text-amber-400 font-mono">0.0%</div>
+          </div>
+          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
+            <div class="text-[10px] text-slate-400">総投資額</div>
+            <div id="dash-total-bet" class="text-base font-bold text-slate-300 font-mono">¥0</div>
+          </div>
+          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
+            <div class="text-[10px] text-slate-400">総払戻額</div>
+            <div id="dash-total-payout" class="text-base font-bold text-emerald-400 font-mono">¥0</div>
+          </div>
+        </div>
+
+        <!-- ダッシュボード操作ボタン -->
+        <div class="mt-3.5 pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
+          <button id="btn-simulate-all-dash" class="flex-1 py-2 px-3 rounded-xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 font-bold text-xs hover:bg-emerald-600/30 transition-all flex items-center justify-center gap-1">
+            <span>⚡</span>
+            <span>全レースを一括反映</span>
+          </button>
+          <button id="btn-reset-data" class="py-2 px-3 rounded-xl bg-rose-600/10 border border-rose-500/30 text-rose-400 font-bold text-xs hover:bg-rose-600/20 transition-all">
+            リセット
+          </button>
+        </div>
+      </div>
+
+      <!-- 的中・不的中 履歴セクション -->
+      <div class="mb-3 flex items-center justify-between px-1">
+        <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+          <span>📋</span>
+          <span>投票・シミュレーション履歴</span>
+        </h2>
+        <span class="text-[10px] text-slate-500">確定済みレース</span>
+      </div>
+
+      <div id="dash-history-list" class="space-y-2">
+        <!-- JSでレンダリングされます -->
+      </div>
+    </main>
+
+    <!-- ================= Bottom Fixed Navigation (iPhone Style) ================= -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-lg border-t border-slate-800 max-w-md mx-auto app-nav flex items-center justify-around shadow-2xl">
+      <button id="btm-nav-races" class="flex flex-col items-center gap-0.5 text-emerald-400 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+        </svg>
+        <span class="text-[10px] font-bold">出馬表</span>
+      </button>
+
+      <button id="btm-nav-win5" class="flex flex-col items-center gap-0.5 text-slate-400 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        <span class="text-[10px] font-bold">WIN5予想</span>
+      </button>
+
+      <button id="btm-nav-dashboard" class="flex flex-col items-center gap-0.5 text-slate-400 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        <span class="text-[10px] font-bold">収支管理</span>
+      </button>
+    </nav>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+  </div>
+
+  <!-- ================= iOS Modal: iPhone ホーム画面追加ガイド ================= -->
+  <div id="modal-install-guide" class="ios-sheet-overlay">
+    <div class="ios-sheet-content">
+      <div class="ios-drag-handle"></div>
+      
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <img src="icons/apple-touch-icon.png" alt="Icon" class="w-8 h-8 rounded-xl shadow-md border border-emerald-500/30">
+          <div>
+            <h3 class="text-sm font-black text-white">iPhoneアプリとして追加</h3>
+            <p class="text-[10px] text-slate-400">ホーム画面に置いてワンタップで起動</p>
+          </div>
+        </div>
+        <button id="btn-close-install-guide" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
+          ✕
+        </button>
+      </div>
+
+      <div class="space-y-3 my-4">
+        <!-- Step 1 -->
+        <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
+            1
+          </div>
+          <div class="text-xs">
+            <div class="font-bold text-slate-200 flex items-center gap-1.5">
+              Safari下部の
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-600/30 text-blue-400 border border-blue-500/30 text-[11px]">
+                <svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>共有
+              </span>
+              をタップ
+            </div>
+            <p class="text-slate-400 text-[11px] mt-0.5">画面下部のツールバー中央にある四角から矢印が出たアイコンです。</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
+            2
+          </div>
+          <div class="text-xs">
+            <div class="font-bold text-slate-200 flex items-center gap-1.5">
+              メニューから
+              <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-800 text-amber-300 border border-slate-700 text-[11px]">
+                ＋ ホーム画面に追加
+              </span>
+              を選択
+            </div>
+            <p class="text-slate-400 text-[11px] mt-0.5">メニューを少し下にスクロールすると見つかります。</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
+          <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
+            3
+          </div>
+          <div class="text-xs">
+            <div class="font-bold text-slate-200">
+              右上の「追加」をタップで完了！
+            </div>
+            <p class="text-slate-400 text-[11px] mt-0.5">専用アイコンがホーム画面に置かれ、ブラウザ枠なしの全画面アプリとして起動できます。</p>
+          </div>
+        </div>
+      </div>
+
+      <button id="btn-ok-install-guide" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black text-xs shadow-md">
+        分かりました
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= Modal: iPhone 接続用 QRコード & アドレス ================= -->
+  <div id="modal-qr-guide" class="ios-sheet-overlay">
+    <div class="ios-sheet-content">
+      <div class="ios-drag-handle"></div>
+
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-sm font-black text-white flex items-center gap-1.5">
+          <span>📲</span> iPhone17 で開く
+        </h3>
+        <button id="btn-close-qr-guide" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
+          ✕
+        </button>
+      </div>
+      <p class="text-[11px] text-slate-400 mb-3">iPhoneの標準カメラで下のQRコードをかざしてください。自動的にSafariが開きます。</p>
+
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex flex-col items-center justify-center my-2">
+        <!-- QR Code Image (Direct local image - 100% reliable) -->
+        <div id="qrcode-box" class="w-52 h-52 bg-white p-3 rounded-2xl flex items-center justify-center shadow-xl border border-slate-700 overflow-hidden relative">
+          <img id="qrcode-img" src="iphone_qr.png" alt="iPhone 17 接続用QRコード" class="w-full h-full object-contain">
+        </div>
+        <div class="mt-3 text-center w-full px-2">
+          <span class="text-[10px] text-slate-400">接続URL (iPhone Safari用):</span>
+          <div id="app-current-url" class="text-xs font-mono font-bold text-emerald-400 break-all select-all mt-0.5">
+            読み込み中...
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2 mt-3">
+        <button id="btn-copy-url" class="flex-1 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-bold text-xs hover:bg-slate-700 transition-colors">
+          URLをコピー
+        </button>
+        <button id="btn-done-qr" class="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-500 transition-colors">
+          閉じる
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Modal: 本日の最上位勝負レース (bestRace) ポップアップ ================= -->
+  <div id="modal-best-race" class="ios-sheet-overlay">
+    <div class="ios-sheet-content max-h-[90vh] overflow-y-auto no-scrollbar">
+      <div class="ios-drag-handle"></div>
+
+      <!-- モーダルヘッダー -->
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg border border-amber-500/40">
+            👑
+          </span>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <h3 class="text-sm font-black text-amber-300">本日の最上位・特選勝負レース</h3>
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold">
+                勝率90%目標
+              </span>
+            </div>
+            <p class="text-[10px] text-slate-400">スプレッドシート連携 AI極限選定モデル</p>
+          </div>
+        </div>
+        <button id="btn-close-best-race" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
+          ✕
+        </button>
+      </div>
+
+      <!-- レースタイトル ＆ 自信度Sバナー -->
+      <div class="p-3 rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-amber-950/60 border border-amber-500/40 mb-3 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span id="best-race-venue-num" class="px-2.5 py-0.5 rounded-lg bg-amber-500 text-slate-950 font-black text-xs">
+              阪神 1R
+            </span>
+            <span id="best-race-name" class="text-sm font-black text-white truncate">
+              2歳未勝利
+            </span>
+          </div>
+          <span id="best-race-time" class="text-xs font-mono font-bold text-amber-300">
+            10:05 発走
+          </span>
+        </div>
+
+        <div class="mt-2 flex items-center justify-between text-[11px] text-slate-300">
+          <span id="best-race-track-dist">ダート 1400m / 晴・良</span>
+          <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-[10px]">
+            ⚡ 自信度 S (92%)
+          </span>
+        </div>
+      </div>
+
+      <!-- 本命馬 特大フィーチャーカード -->
+      <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-emerald-500/40 mb-3 relative overflow-hidden shadow-md">
+        <div class="text-[10px] text-slate-400 font-bold mb-1 flex items-center gap-1">
+          <span>🎯</span> 本日の絶対軸馬 (AI指数トップ)
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-black mark-honmei">
+              ◎
+            </span>
+            <div class="flex items-center gap-1">
+              <span id="best-race-horse-waku" class="w-4 h-4 rounded text-[10px] font-black flex items-center justify-center waku-3">3</span>
+              <span id="best-race-horse-num" class="w-5 font-mono font-black text-sm text-amber-300">3</span>
+            </div>
+            <div>
+              <div id="best-race-horse-name" class="font-black text-white text-sm">
+                アグネススピリット
+              </div>
+              <div class="text-[11px] text-slate-400">
+                <span id="best-race-jockey">川田 将雅</span>
+                <span id="best-race-weight" class="ml-1 text-slate-500">55.0kg</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <div class="text-[10px] text-slate-400">単勝オッズ</div>
+            <div id="best-race-odds" class="text-base font-black font-mono text-amber-400">1.8倍</div>
+            <div id="best-race-score" class="text-[10px] text-emerald-400 font-bold">AI指数 94.6</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 推奨買い目 -->
+      <div class="p-3 rounded-2xl bg-slate-900/70 border border-slate-800 mb-3">
+        <div class="flex items-center justify-between text-xs mb-1.5">
+          <div class="flex items-center gap-1.5">
+            <span id="best-race-bet-type" class="px-2 py-0.5 rounded text-[11px] font-black bg-emerald-500 text-slate-950">
+              馬連
+            </span>
+            <span id="best-race-formation" class="font-bold text-emerald-300 text-xs">
+              ◎ - ◯▲△ (3点配分)
+            </span>
+          </div>
+          <span class="text-[11px] text-amber-400 font-mono font-bold">推奨 3,000円</span>
+        </div>
+        <div id="best-race-breakdown" class="text-[11px] text-slate-300 space-y-0.5 border-t border-slate-800/80 pt-1.5 font-mono">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+
+      <!-- 勝率90%目標の選定根拠 -->
+      <div class="p-3 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-amber-500/30 mb-4">
+        <div class="text-xs font-black text-amber-300 flex items-center gap-1.5 mb-2">
+          <span>🧠</span>
+          <span>勝率90%目標・AI選定根拠</span>
+        </div>
+
+        <div class="space-y-2 text-[11px]">
+          <div class="flex items-start gap-2">
+            <span class="px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
+              指数突出
+            </span>
+            <p id="best-race-reason-score" class="text-slate-300">
+              2位馬と13.4ptの大差。過去10年で同等指数を記録した馬の連対率は92.8%を記録。
+            </p>
+          </div>
+
+          <div class="flex items-start gap-2">
+            <span class="px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
+              血統適性
+            </span>
+            <p id="best-race-reason-pedigree" class="text-slate-300">
+              阪神ダート1400mにおける父産駒勝率31.2%。湿気を含んだ高速馬場にも適性抜群。
+            </p>
+          </div>
+
+          <div class="flex items-start gap-2">
+            <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
+              調教猛時計
+            </span>
+            <p id="best-race-reason-training" class="text-slate-300">
+              栗東坂路でラスト11.8秒を馬なりで計時。追われてからの反応が極上で状態は今期最高。
+            </p>
+          </div>
+
+          <div class="flex items-start gap-2">
+            <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
+              展開有利
+            </span>
+            <p id="best-race-reason-pace" class="text-slate-300">
+              先行勢手薄でマイペースの好位追走が確定。直線のロスなく抜け出しが極めて濃厚。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- アクションボタン -->
+      <div class="flex gap-2">
+        <button id="btn-view-best-race-detail" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-1">
+          <span>🏇</span>
+          <span>このレースの出馬表を見る</span>
+        </button>
+        <button id="btn-close-best-race-modal" class="py-2.5 px-4 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs hover:bg-slate-700 transition-colors">
+          閉じる
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/mockData.js"></script>
+  <script src="js/app.js"></script>
+</body>
 </html>
