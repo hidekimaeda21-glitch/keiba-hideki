@@ -1,64 +1,90 @@
-/**
- * KEIBA AI PRO - サービスワーカー
- * Google Apps Script (GAS) 通信完全バイパス対応版
- */
-
-const CACHE_NAME = 'keiba-ai-v2.1';
-const STATIC_ASSETS = [
+const CACHE_NAME = 'keiba-ai-pro-v1';
+const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './css/style.css',
-  './js/app.js'
+  './js/app.js',
+  './js/mockData.js',
+  './icons/apple-touch-icon.png',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/favicon-32x32.png'
 ];
 
+// インストール時にコアアセットをキャッシュ
 self.addEventListener('install', (event) => {
-  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS).catch((err) => {
-        console.warn('キャッシュ初期化スキップ:', err);
-      });
+      return cache.addAll(ASSETS);
+    }).then(() => {
+      return self.skipWaiting();
     })
   );
 });
 
+// アクティベート時に古いキャッシュを整理
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
+        cacheNames.map((name) => {
+          if (name !== CACHE_NAME) {
+            return caches.delete(name);
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(() => {
+      return self.clients.claim();
+    })
   );
 });
 
+// フェッチ処理 (Stale-While-Revalidate / Cache First with fallback)
 self.addEventListener('fetch', (event) => {
-  const url = event.request.url;
+  // GETリクエスト以外はそのまま
+  if (event.request.method !== 'GET') return;
 
-  // Google Apps Script または Google内部サーバーへの通信は絶対にキャッシュせず、ネットワークへ直通させる
-  if (
-    url.includes('script.google.com') ||
-    url.includes('script.googleusercontent.com') ||
-    url.includes('google.com/macros')
-  ) {
-    // 割り込まずにそのままネットワーク通信を実行
-    return;
+  // 外部CDNやフォントはネットワーク優先、ローカルアセットはキャッシュ優先
+  const url = new URL(event.request.url);
+  if (url.origin === self.location.origin) {
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        if (cachedResponse) {
+          // バックグラウンドで更新確認
+          fetch(event.request).then((networkResponse) => {
+            if (networkResponse && networkResponse.status === 200) {
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(event.request, networkResponse);
+              });
+            }
+          }).catch(() => {});
+          return cachedResponse;
+        }
+        return fetch(event.request).then((response) => {
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+          return response;
+        });
+      })
+    );
+  } else {
+    // 外部CDN（Google Fonts, Tailwind CSS）など
+    event.respondWith(
+      caches.match(event.request).then((cachedResponse) => {
+        return cachedResponse || fetch(event.request).then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        }).catch(() => cachedResponse);
+      })
+    );
   }
-
-  // 静的ファイル（HTML, CSS, アイコンなど）のキャッシュ制御
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).catch(() => {
-        return caches.match('./index.html');
-      });
-    })
-  );
 });
