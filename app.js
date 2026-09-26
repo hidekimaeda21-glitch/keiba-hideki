@@ -17,7 +17,7 @@ function updateSyncTimeDisplay(timeStr) {
   });
   const badges = document.querySelectorAll(".sync-badge, .badge-status");
   badges.forEach(function (el) {
-    el.innerHTML = '<span style="color:#34d399;">●</span> 同期完了';
+    el.innerHTML = '<span style="color:#34d399;">●</span> 18頭フルゲート同期完了';
   });
 }
 
@@ -87,14 +87,14 @@ function renderRaceCards(races, filter = "all") {
         '</div>';
     }
 
-    // 全頭（制限なしで最大18頭すべて表示）
+    // ★ 制限なしで最大18頭すべてのフルゲート馬を表示
     let horsesListHtml = '<div style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">' +
       '<div style="font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:bold;">出走全馬一覧 (' + horses.length + '頭フルゲート)</div>';
 
     horses.forEach(function (h) {
       const isTop = h.mark && h.mark.indexOf("◎") !== -1;
       horsesListHtml += '<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;margin-bottom:3px;background:' + (isTop ? 'rgba(251,191,36,0.1)' : 'rgba(2,6,23,0.3)') + ';border-radius:6px;font-size:11px;">' +
-        '<div><span style="color:' + (isTop ? '#fbbf24' : '#cbd5e1') + ';font-weight:bold;margin-right:6px;">' + h.num + '番</span> <span style="color:#ffffff;">' + h.name + '</span> <span style="color:#94a3b8;">(' + h.jockey + ')</span></div>' +
+        '<div><span style="color:' + (isTop ? '#fbbf24' : '#cbd5e1') + ';font-weight:bold;margin-right:6px;">' + h.num + '番</span> <span style="color:#ffffff;">' + h.name + '</span> <span style="color:#94a3b8;">(' + h.jockey + ' / ' + h.weight + 'kg)</span></div>' +
         '<div><span style="color:#fbbf24;font-family:monospace;margin-right:8px;">' + h.odds + '倍</span><span style="color:#34d399;font-weight:bold;">' + (h.mark || "-") + '</span></div>' +
         '</div>';
     });
@@ -153,7 +153,7 @@ async function triggerFullDataUpdate() {
       const nowTime = result.updatedAt || UtilitiesFormatNow();
       updateSyncTimeDisplay(nowTime);
       renderRaceCards(result.races);
-      showToastNotification("✅ 全レース・結果データを完全更新しました！");
+      showToastNotification("✅ 18頭フルゲート・結果を完全同期しました！");
     } else {
       throw new Error("データ形式エラー");
     }
