@@ -1,126 +1,94 @@
-<script>
-  const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwbGsrhWTNZ-uAiMVfvai3Dn0RtzAizHA1oVYk3ZDvvkfnOiQnJGhKg6dmPj0OBXEcX/exec";
+<!DOCTYPE html>
+<html lang="ja">
 
-  // ネットワークエラー時や保険用の18頭フルゲート対応内蔵データ
-  let currentRaceData = {
-    "阪神1R": {
-      raceName: "阪神 1R (2歳未勝利)",
-      betType: "【馬単】 8 → 3, 5 (計3,000円配分)",
-      confidence: "92%",
-      resultRank: "1着: 8番 / 2着: 3番",
-      hitStatus: "🎯 的中",
-      payout: "￥14,800",
-      profit: "+￥11,800",
-      horses: [
-        { num: 1, name: "キングスピード1", jockey: "川田", weight: "55", odds: "15.4", mark: "-" },
-        { num: 2, name: "ロードスピード2", jockey: "ルメール", weight: "55", odds: "22.1", mark: "-" },
-        { num: 3, name: "スマートスピード3", jockey: "武豊", weight: "55", odds: "4.2", mark: "○ 対抗" },
-        { num: 4, name: "メイショウスピード4", jockey: "坂井", weight: "55", odds: "35.0", mark: "-" },
-        { num: 5, name: "アスクスピード5", jockey: "松山", weight: "55", odds: "8.6", mark: "▲ 単穴" },
-        { num: 6, name: "ホウオウスピード6", jockey: "岩田望", weight: "55", odds: "41.2", mark: "-" },
-        { num: 7, name: "ダノンスピード7", jockey: "横山武", weight: "55", odds: "18.3", mark: "-" },
-        { num: 8, name: "エリカスピード8", jockey: "戸崎", weight: "55", odds: "2.3", mark: "◎ 本命" },
-        { num: 9, name: "サンライズスピード9", jockey: "西村淳", weight: "55", odds: "50.1", mark: "-" },
-        { num: 10, name: "シゲルスピード10", jockey: "団野", weight: "55", odds: "12.4", mark: "-" },
-        { num: 11, name: "レッドスピード11", jockey: "鮫島駿", weight: "55", odds: "65.0", mark: "-" },
-        { num: 12, name: "ヤマニンスピード12", jockey: "永野", weight: "55", odds: "29.8", mark: "-" },
-        { num: 13, name: "グランスピード13", jockey: "田口", weight: "55", odds: "88.4", mark: "-" },
-        { num: 14, name: "ショウナンスピード14", jockey: "幸", weight: "55", odds: "105.2", mark: "-" },
-        { num: 15, name: "マイネルスピード15", jockey: "浜中", weight: "55", odds: "12.0", mark: "☆ 穴" },
-        { num: 16, name: "ウインスピード16", jockey: "川田", weight: "55", odds: "44.5", mark: "-" },
-        { num: 17, name: "ゴールドスピード17", jockey: "武豊", weight: "55", odds: "70.1", mark: "-" },
-        { num: 18, name: "トップスピード18", jockey: "ルメール", weight: "55", odds: "19.6", mark: "-" }
-      ]
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KEIBA AI PRO 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-  };
+  </style>
+</head>
 
-  function renderRaceCards(races) {
-    let container = document.getElementById("race-cards-container") ||
-      document.getElementById("race-list") ||
-      document.querySelector("#races-list") ||
-      document.querySelector(".race-container") ||
-      document.getElementById("race-container");
+<body class="pb-24">
+  <header class="p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center sticky top-0 z-50">
+    <div>
+      <h1 class="text-lg font-black text-amber-400">KEIBA AI PRO 2026</h1>
+      <p id="sync-status" class="text-xs text-emerald-400">● 18頭フルゲート・結果同期完了</p>
+    </div>
+    <button onclick="loadData()"
+      class="px-3 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg active:scale-95 transition">⚡
+      競馬データ更新</button>
+  </header>
 
-    if (!container) {
-      container = document.createElement("div");
-      container.id = "race-cards-container";
-      container.className = "space-y-4 pb-24 px-3";
-      document.body.appendChild(container);
-    }
+  <main id="race-container" class="p-3 space-y-4">
+    <div class="text-center text-slate-400 py-10">出走データを読み込み中...</div>
+  </main>
 
-    const raceNames = Object.keys(races);
-    if (raceNames.length === 0) return;
+  <script>
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwbGsrhWTNZ-uAiMVfvai3Dn0RtzAizHA1oVYk3ZDvvkfnOiQnJGhKg6dmPj0OBXEcX/exec";
 
-    let html = "";
-    raceNames.forEach(function (rName, index) {
-      const race = races[rName];
-      const horses = race.horses || [];
-      let topHorse = horses.find(h => h.mark && h.mark.indexOf("◎") !== -1) || horses[0];
-
-      let resultHtml = "";
-      if (race.resultRank || race.hitStatus) {
-        resultHtml = `<div style="margin-top:8px;padding:8px 12px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:8px;display:flex;justify-content:space-between;align-items:center;font-size:12px;">
-            <span style="color:#34d399;font-weight:bold;">🎯 結果: ${race.hitStatus || "的中"} (${race.resultRank})</span>
-            <span style="color:#fbbf24;font-weight:bold;">払戻: ${race.payout || "￥0"} (収支: ${race.profit || "￥0"})</span>
-          </div>`;
+    async function loadData() {
+      const statusEl = document.getElementById("sync-status");
+      statusEl.textContent = "● 同期中...";
+      try {
+        const res = await fetch(GAS_API_URL + "?action=fetch&t=" + new Date().getTime());
+        const json = await res.json();
+        if (json && json.success && json.races) {
+          render(json.races);
+          statusEl.textContent = "● 18頭フルゲート・結果同期完了";
+        }
+      } catch (e) {
+        statusEl.textContent = "● オフライン表示中";
       }
+    }
 
-      // 最大18頭フルゲートをすべて表示するリスト生成
-      let horsesListHtml = `<div style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
-          <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:bold;">出走全馬一覧 (${horses.length}頭フルゲート)</div>`;
+    function render(races) {
+      const container = document.getElementById("race-container");
+      let html = "";
+      Object.keys(races).forEach((rName) => {
+        const race = races[rName];
+        const horses = race.horses || [];
 
-      horses.forEach(function (h) {
-        const isTop = h.mark && h.mark.indexOf("◎") !== -1;
-        horsesListHtml += `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;margin-bottom:3px;background:${isTop ? 'rgba(251,191,36,0.1)' : 'rgba(2,6,23,0.3)'};border-radius:6px;font-size:11px;">
-            <div><span style="color:${isTop ? '#fbbf24' : '#cbd5e1'};font-weight:bold;margin-right:6px;">${h.num}番</span> <span style="color:#ffffff;">${h.name}</span> <span style="color:#94a3b8;">(${h.jockey})</span></div>
-            <div><span style="color:#fbbf24;font-family:monospace;margin-right:8px;">${h.odds}倍</span><span style="color:#34d399;font-weight:bold;">${h.mark || "-"}</span></div>
+        let horsesHtml = "";
+        horses.forEach(h => {
+          const isTop = h.mark && h.mark.indexOf("◎") !== -1;
+          horsesHtml += `<div class="flex justify-between items-center p-2 mb-1 rounded text-xs ${isTop ? 'bg-amber-500/20 border border-amber-500/40' : 'bg-slate-900/60 border border-slate-800/40'}">
+            <div><span class="font-bold mr-2 ${isTop ? 'text-amber-400' : 'text-slate-300'}">${h.num}番</span> <span class="text-white font-medium">${h.name}</span> <span class="text-slate-400 text-[11px]">(${h.jockey} / ${h.weight}kg)</span></div>
+            <div><span class="font-mono text-amber-400 mr-2">${h.odds}倍</span><span class="font-bold text-emerald-400">${h.mark || '-'}</span></div>
           </div>`;
-      });
-      horsesListHtml += `</div>`;
+        });
 
-      html += `<div style="background:rgba(15,23,42,0.75);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;margin-bottom:14px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-            <span style="background:rgba(16,185,129,0.2);color:#34d399;border:1px solid rgba(16,185,129,0.3);font-size:11px;font-weight:bold;padding:2px 8px;border-radius:6px;">${rName}</span>
-            <span style="color:#94a3b8;font-size:11px;">フルゲート ${horses.length}頭</span>
+        let resultHtml = "";
+        if (race.resultRank || race.hitStatus) {
+          resultHtml = `<div class="mt-3 p-2.5 bg-emerald-950/40 border border-emerald-500/40 rounded-lg text-xs flex justify-between items-center">
+            <span class="text-emerald-400 font-bold">🎯 結果: ${race.hitStatus} (${race.resultRank})</span>
+            <span class="text-amber-400 font-bold">払戻: ${race.payout} (収支: ${race.profit})</span>
+          </div>`;
+        }
+
+        html += `<div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 shadow-lg mb-4">
+          <div class="flex justify-between items-center mb-2">
+            <span class="bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded text-xs font-bold border border-emerald-500/30">${race.raceName}</span>
+            <span class="text-xs text-slate-400 font-medium">出走全馬: ${horses.length}頭 (フルゲート)</span>
           </div>
-          <div style="background:rgba(2,6,23,0.6);padding:10px;border-radius:10px;margin-bottom:8px;">
-            <span style="color:#fbbf24;font-size:10px;font-weight:bold;">本命推奨馬</span>
-            <div style="color:#ffffff;font-size:13px;font-weight:bold;">${topHorse.num}番 ${topHorse.name} (${topHorse.jockey})</div>
+          <div class="text-xs text-slate-400 mb-2 font-semibold">🎯 自信券種: ${race.betType}</div>
+          <div class="space-y-1 mt-2 max-h-72 overflow-y-auto pr-1">
+            ${horsesHtml}
           </div>
-          <div style="font-size:11px;color:#cbd5e1;background:rgba(6,78,59,0.25);padding:6px 10px;border-radius:6px;">🎯 ${race.betType}</div>
           ${resultHtml}
-          ${horsesListHtml}
         </div>`;
-    });
-
-    container.innerHTML = html;
-  }
-
-  async function triggerFullDataUpdate() {
-    const statusEl = document.querySelector("#sync-status, .sync-timestamp") || document.getElementById("sync-status");
-    if (statusEl) statusEl.textContent = "● 同期中...";
-
-    try {
-      const response = await fetch(GAS_API_URL + "?action=fetch&t=" + new Date().getTime());
-      const result = await response.json();
-      if (result && result.success && result.races) {
-        currentRaceData = result.races;
-        renderRaceCards(result.races);
-        if (statusEl) statusEl.textContent = "● 18頭フルゲート・結果同期完了";
-      } else {
-        renderRaceCards(currentRaceData);
-      }
-    } catch (e) {
-      // ネット接続できない場合は内蔵データで綺麗に表示
-      renderRaceCards(currentRaceData);
-      if (statusEl) statusEl.textContent = "● 18頭フルゲート表示中";
+      });
+      container.innerHTML = html;
     }
-  }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.querySelector("#btn-refresh-data, .btn-refresh") || document.querySelector("button");
-    if (btn) btn.addEventListener("click", triggerFullDataUpdate);
-    renderRaceCards(currentRaceData);
-    triggerFullDataUpdate();
-  });
-</script>
+    window.onload = loadData;
+  </script>
+</body>
+
+</html>
