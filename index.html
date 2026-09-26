@@ -1,718 +1,928 @@
 <!DOCTYPE html>
-<html lang="ja" class="dark">
+<html lang="ja">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="競馬AI PRO">
-  <meta name="application-name" content="競馬AI PRO">
-  <meta name="theme-color" content="#090d16">
-  <title>KEIBA AI PRO | 競馬予想・収支管理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>KEIBA AI PRO 2026 - 全レース出走全頭表示＆即PAT投票</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-sub: #94a3b8;
+      --accent: #eab308;
+      --win5-grad: linear-gradient(135deg, #b45309, #f59e0b, #eab308);
+      --rate-grad: linear-gradient(135deg, #065f46, #059669, #10b981);
+      --honmei: #ef4444;
+      --taiko: #3b82f6;
+      --kuro: #10b981;
+      --ren: #8b5cf6;
+      --ana: #ec4899;
+      --badge-s: #ef4444;
+      --badge-a: #f59e0b;
+    }
 
-  <!-- PWA Manifest & App Icons -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 85px;
+      line-height: 1.4;
+    }
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              turf: '#10b981',
-              gold: '#f59e0b',
-              dark: '#090d16',
-              card: '#121826'
-            }
-          },
-          fontFamily: {
-            sans: ['"Noto Sans JP"', 'sans-serif'],
-            mono: ['"Outfit"', 'monospace']
-          }
-        }
+    header {
+      background: #070d19;
+      padding: 12px 16px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-sync {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tabs {
+      display: flex;
+      background: #070d19;
+      border-bottom: 1px solid var(--card-border);
+      overflow-x: auto;
+      position: sticky;
+      top: 49px;
+      z-index: 99;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 80px;
+      padding: 12px 6px;
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-size: 0.82rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      background: rgba(234, 179, 8, 0.1);
+    }
+
+    .container {
+      padding: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Pop-up Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      background: #1e293b;
+      border: 2px solid #eab308;
+      border-radius: 16px;
+      max-width: 450px;
+      width: 100%;
+      padding: 18px;
+      box-shadow: 0 10px 25px rgba(234, 179, 8, 0.3);
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
       }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 8px;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #f59e0b;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .modal-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #eab308;
+      color: #000;
+      font-weight: 800;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 14px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Summary Bar */
+    .summary-card {
+      background: var(--rate-grad);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+    }
+
+    .summary-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #a7f3d0;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .sum-box {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 4px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .sum-val {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #f8fafc;
+    }
+
+    .sum-lbl {
+      font-size: 0.65rem;
+      color: #cbd5e1;
+    }
+
+    /* Jump Bar */
+    .jump-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .jump-pill {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 5px 11px;
+      border-radius: 14px;
+      font-size: 0.72rem;
+      font-weight: bold;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .jump-pill.finished {
+      border-color: #059669;
+      color: #34d399;
+    }
+
+    .jump-pill.upcoming {
+      border-color: #eab308;
+      color: #fef08a;
+    }
+
+    /* WIN5 Banner */
+    .win5-card {
+      background: var(--win5-grad);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+    }
+
+    .win5-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .win5-step {
+      background: rgba(0, 0, 0, 0.28);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .win5-picks {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: #fef08a;
+    }
+
+    /* Race Card */
+    .race-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .race-header {
+      background: #131d2e;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .race-info {
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .race-meta {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    .badge-conf {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .conf-s {
+      background: var(--badge-s);
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+    }
+
+    .conf-a {
+      background: var(--badge-a);
+    }
+
+    /* Result Box */
+    .result-box {
+      background: #111e38;
+      padding: 10px 12px;
+      border-top: 1px solid #2563eb;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .result-title {
+      font-weight: bold;
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.82rem;
+    }
+
+    .result-status {
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 0.72rem;
+    }
+
+    .status-hit {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .status-pending {
+      background: #475569;
+      color: #cbd5e1;
+    }
+
+    .result-detail {
+      display: flex;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    /* Table */
+    .table-wrap {
+      overflow-x: auto;
+      max-height: 480px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    th {
+      background: #0d1524;
+      color: var(--text-sub);
+      padding: 7px 4px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.72rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    td {
+      padding: 7px 4px;
+      border-bottom: 1px solid #243247;
+      text-align: center;
+    }
+
+    .td-horse {
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .td-ability {
+      font-size: 0.72rem;
+      color: #eab308;
+      font-weight: 800;
+    }
+
+    .td-training {
+      font-size: 0.72rem;
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    .td-weight {
+      font-size: 0.72rem;
+      color: #cbd5e1;
+    }
+
+    .mark-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 800;
+      line-height: 20px;
+      color: #fff;
+    }
+
+    .m-h {
+      background: var(--honmei);
+    }
+
+    .m-t {
+      background: var(--taiko);
+    }
+
+    .m-k {
+      background: var(--kuro);
+    }
+
+    .m-r {
+      background: var(--ren);
+    }
+
+    .m-a {
+      background: var(--ana);
+    }
+
+    /* Comment Box */
+    .comment-box {
+      background: #131d2e;
+      padding: 10px 12px;
+      border-top: 1px solid #243247;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .comment-title {
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Recommendation Box */
+    .recommend-box {
+      background: #0f172a;
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      border-top: 1px solid #243247;
+    }
+
+    .rec-item {
+      margin-bottom: 4px;
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+    }
+
+    .rec-tag {
+      background: #334155;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    /* 即購入投票ボタン */
+    .btn-quick-buy {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: #16a34a;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(22, 163, 74, 0.3);
+    }
+
+    .btn-quick-buy:active {
+      background: #15803d;
+    }
+
+    /* Quick PAT bar */
+    .pat-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #070d19;
+      border-top: 1px solid #1e293b;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .pat-link {
+      background: #16a34a;
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- キャッシュ破棄スクリプト -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        for (let r of regs) r.unregister();
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function (names) {
+        for (let name of names) caches.delete(name);
+      });
     }
   </script>
 
-  <!-- Custom CSS (iPhone 17 & PWA Optimized) -->
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body class="bg-[#090d16] text-slate-100 antialiased selection:bg-emerald-500 selection:text-white">
-
-  <!-- ================= App Container (Max Mobile Width) ================= -->
-  <div class="max-w-md mx-auto min-h-screen relative flex flex-col">
-
-    <!-- ================= Top Fixed Header (Dynamic Island Compatible) ================= -->
-    <header class="sticky top-0 z-40 glass-panel-elevated app-header pb-2.5">
-      <!-- App Brand & Title -->
-      <div class="flex items-center justify-between mb-2.5">
-        <div class="flex items-center gap-2.5">
-          <img src="icons/apple-touch-icon.png" alt="KEIBA AI PRO Logo" class="w-9 h-9 rounded-xl shadow-md border border-emerald-500/30 object-cover">
-          <div>
-            <h1 class="text-sm font-black tracking-tight text-white flex items-center gap-1.5 font-mono">
-              KEIBA AI PRO
-              <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 font-sans">
-                2026 最新AI
-              </span>
-            </h1>
-            <p class="text-[10px] text-slate-400">関西全12R ＋ 全国重賞予想・収支</p>
-          </div>
-        </div>
-        
-        <!-- Action Buttons (Install Guide & Status) -->
-        <div class="flex items-center gap-1.5">
-          <!-- Best Race Popup Trigger Button -->
-          <button id="btn-open-best-race" class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-500/30 to-amber-600/20 border border-amber-500/50 text-[11px] text-amber-300 font-black hover:bg-amber-500/40 transition-all shadow-sm">
-            <span>👑</span>
-            <span>勝負R</span>
-          </button>
-
-          <!-- Install / Home Screen Guide Button -->
-          <button id="btn-open-install-guide" class="flex items-center gap-1 px-2 py-1 rounded-full bg-gradient-to-r from-emerald-600/30 to-teal-500/20 border border-emerald-500/50 text-[11px] text-emerald-300 font-bold hover:bg-emerald-600/40 transition-all">
-            <span>📲</span>
-            <span id="install-badge-text">アプリ化</span>
-          </button>
-
-          <!-- Mobile Connect QR Button -->
-          <button id="btn-open-qr-guide" title="iPhoneで開く" class="p-1.5 rounded-full bg-slate-800/80 border border-slate-700/60 text-slate-300 hover:text-emerald-400 transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
-            </svg>
-          </button>
-        </div>
+  <!-- 本日の最上位勝負レース ポップアップモーダル -->
+  <div id="best-race-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">🔥 本日の最上位勝負レース！</div>
+        <button class="modal-close" onclick="closeModal()">×</button>
       </div>
-
-      <!-- Segmented Tab Control (iOS Style) -->
-      <div class="grid grid-cols-3 p-1 bg-slate-950/80 rounded-xl border border-slate-800/80">
-        <button id="tab-btn-races" class="py-2 rounded-lg text-xs font-bold transition-all text-slate-400 flex items-center justify-center gap-1 tab-active">
-          <span>🏇</span>
-          <span>出馬表</span>
-        </button>
-        <button id="tab-btn-win5" class="py-2 rounded-lg text-xs font-bold transition-all text-slate-400 flex items-center justify-center gap-1">
-          <span>🎯</span>
-          <span>WIN5予想</span>
-        </button>
-        <button id="tab-btn-dashboard" class="py-2 rounded-lg text-xs font-bold transition-all text-slate-400 flex items-center justify-center gap-1">
-          <span>📊</span>
-          <span>収支管理</span>
-        </button>
-      </div>
-
-      <!-- Google Apps Script スプレッドシート連携 ＆ データ最新化コントロールバー -->
-      <div class="mt-2 p-2 rounded-xl bg-slate-900/90 border border-emerald-500/30 flex items-center justify-between text-[11px] shadow-sm gap-2">
-        <div class="flex items-center gap-1.5 min-w-0 flex-1">
-          <span id="gas-sync-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
-          <div class="truncate">
-            <div id="gas-sync-status" class="font-bold text-slate-200 truncate leading-tight">スプレッドシート連携中</div>
-            <div id="gas-sync-time" class="text-[9.5px] text-emerald-400/90 font-mono">取得中...</div>
-          </div>
+      <div class="modal-body">
+        <div style="font-size:1.05rem;font-weight:bold;color:#f8fafc;margin-bottom:6px;">阪神 11R シリウスステークス (G3)</div>
+        <div style="color:#ef4444;font-weight:bold;margin-bottom:8px;">★ 的中期待度【S】/ 自信度 94%（10点以内厳選勝負）</div>
+        <div style="background:#0f172a;padding:8px;border-radius:6px;margin-bottom:10px;font-size:0.8rem;">
+          <span style="color:#eab308;font-weight:bold;">◎ ⑬ ラムジェット（三浦・能力値94）</span><br>
+          単勝・複勝を除外し、合計10点以内の高資金効率で的中を狙う厳選買い目！
         </div>
-
-        <!-- ⚡ 競馬データ最新化ボタン (POST送信 ＆ 自動再取得) -->
-        <button id="btn-update-keiba-data" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black text-xs shadow-md transition-all flex-shrink-0 border border-amber-400/50">
-          <span id="update-keiba-icon" class="text-sm">⚡</span>
-          <span id="update-keiba-text">競馬データ更新</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- ================= Main Content View 1: レース一覧 (出馬表) ================= -->
-    <main id="view-races" class="flex-1 px-3.5 pt-3 pb-6">
-
-      <!-- iPhone アプリ化 案内バナー (未インストール時に表示) -->
-      <div id="pwa-install-banner" class="mb-3 p-2.5 rounded-2xl bg-gradient-to-r from-emerald-950/60 via-slate-900/90 to-emerald-950/60 border border-emerald-500/30 flex items-center justify-between shadow-md">
-        <div class="flex items-center gap-2">
-          <span class="text-xl">📲</span>
-          <div>
-            <div class="text-xs font-bold text-slate-100 flex items-center gap-1">
-              iPhoneのアプリとして使う
-              <span class="text-[9px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-1 rounded">簡単3秒</span>
-            </div>
-            <div class="text-[10px] text-slate-400">ホーム画面に追加で全画面アプリ化できます</div>
-          </div>
+        <div style="font-weight:bold;color:#38bdf8;font-size:0.8rem;">【連勝式 厳選10点買い目】</div>
+        <div style="font-size:0.8rem;color:#f1f5f9;">
+          ・馬連：⑬ - ⑥, ⑩, ⑤ (3点)<br>
+          ・ワイド：⑬ - ⑥, ⑩ (2点・手堅く的中率確保)<br>
+          ・3連複：⑬ - ⑥, ⑩ - ①, ⑤, ⑧ (5点)<br>
+          <span style="color:#34d399;font-weight:bold;">⇒ 合計 10点</span>
         </div>
-        <button id="btn-banner-guide" class="px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs shadow-sm hover:bg-emerald-400 transition-all flex-shrink-0">
-          追加方法
-        </button>
-      </div>
-
-      <!-- 会場・カテゴリーフィルター -->
-      <div class="flex items-center gap-1.5 mb-3 overflow-x-auto no-scrollbar py-1">
-        <button id="filter-all" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow-sm flex-shrink-0">
-          すべて (13R)
-        </button>
-        <button id="filter-hanshin" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-400 bg-slate-800/80 hover:bg-slate-700/80 transition-colors flex-shrink-0">
-          阪神 1R〜12R
-        </button>
-        <button id="filter-graded" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-slate-400 bg-slate-800/80 hover:bg-slate-700/80 transition-colors flex items-center gap-1 flex-shrink-0">
-          <span>🏆</span>
-          <span>全国重賞</span>
-        </button>
-        <button id="filter-win5" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-amber-400/90 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-colors flex items-center gap-1 flex-shrink-0">
-          <span>🎯</span>
-          <span>WIN5対象 (5R)</span>
-        </button>
-      </div>
-
-      <!-- 一括シミュレーション クイックバナー -->
-      <div class="mb-4 p-3 rounded-2xl bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 border border-emerald-500/30 flex items-center justify-between shadow-lg">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 text-sm font-bold">
-            ⚡
-          </div>
-          <div>
-            <div id="sim-all-title" class="text-xs font-black text-slate-100">全13レース 推奨買い目テスト</div>
-            <div class="text-[10px] text-slate-400">1Rあたり3,000円で即座に収支を計算</div>
-          </div>
-        </div>
-        <button id="btn-simulate-all" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs shadow-md transition-all">
-          一括反映
-        </button>
-      </div>
-
-      <!-- レースカード一覧リスト (動的生成) -->
-      <div id="races-container" class="space-y-3">
-        <!-- JSでレンダリングされます -->
-      </div>
-    </main>
-
-    <!-- ================= Main Content View 2: WIN5 AI予想 ================= -->
-    <main id="view-win5" class="flex-1 px-3.5 pt-3 pb-6 hidden">
-
-      <!-- WIN5 プレミアム メインヘッダーカード -->
-      <div class="glass-panel-elevated p-4 rounded-3xl border border-amber-500/30 mb-4 relative overflow-hidden shadow-2xl">
-        <div class="absolute -right-8 -top-8 w-36 h-36 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="absolute -left-8 -bottom-8 w-36 h-36 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none"></div>
-
-        <div class="flex items-center justify-between text-xs mb-1.5">
-          <div class="flex items-center gap-1.5 font-black text-amber-400 tracking-wide">
-            <span class="text-base">🎯</span>
-            <span>JRA WIN5 AI完全攻略</span>
-            <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">最高6億円</span>
-          </div>
-          <span id="win5-badge-source" class="text-[9px] bg-slate-800 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-bold">
-            スプレッドシート連動
-          </span>
-        </div>
-
-        <div class="mt-1 mb-3">
-          <div class="text-[11px] text-slate-400">本日の対象5レース AI厳選買い目</div>
-          <div class="flex items-baseline gap-2 mt-0.5">
-            <span id="win5-est-payout" class="text-2xl font-black text-amber-400 font-mono tracking-tight">
-              推定 ¥28,400,000
-            </span>
-            <span class="text-[10px] text-slate-400">狙い</span>
-          </div>
-        </div>
-
-        <!-- WIN5 戦略切り替えセレクター -->
-        <div class="p-1 bg-slate-950/80 rounded-xl border border-slate-800 flex items-center justify-between gap-1 mb-3">
-          <button id="win5-strat-balanced" class="flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all text-slate-300 bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm text-center">
-            ⚖️ バランス (32点)
-          </button>
-          <button id="win5-strat-solid" class="flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-slate-200 text-center">
-            🛡️ 鉄板絞り (8点)
-          </button>
-          <button id="win5-strat-jackpot" class="flex-1 py-1.5 rounded-lg text-[11px] font-bold transition-all text-slate-400 hover:text-slate-200 text-center">
-            💣 万馬券 (243点)
-          </button>
-        </div>
-
-        <!-- 買い目サマリー & 投票シミュレーションボタン -->
-        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 flex items-center justify-between gap-2">
-          <div>
-            <div class="text-[10px] text-slate-400">選択点数 / 投資額 (1点100円)</div>
-            <div class="flex items-baseline gap-1 mt-0.5">
-              <span id="win5-total-points" class="text-lg font-black text-emerald-400 font-mono">32</span>
-              <span class="text-xs text-slate-400">点</span>
-              <span class="text-slate-600 font-bold mx-1">/</span>
-              <span id="win5-total-cost" class="text-base font-black text-amber-400 font-mono">¥3,200</span>
-            </div>
-          </div>
-
-          <button id="btn-bet-win5" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs shadow-lg hover:from-amber-400 hover:to-amber-500 active:scale-95 transition-all flex items-center gap-1.5 flex-shrink-0">
-            <span>🎯</span>
-            <span id="btn-bet-win5-text">WIN5に投票</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- WIN5 対象5レースのAI推奨馬リスト (動的生成) -->
-      <div class="mb-2 flex items-center justify-between px-1">
-        <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-          <span>📋</span>
-          <span>対象5レース AI厳選指名馬</span>
-        </h2>
-        <span class="text-[10px] text-slate-400">馬番タップで買い目を自在にカスタマイズ</span>
-      </div>
-
-      <div id="win5-races-container" class="space-y-3">
-        <!-- JSでレンダリングされます -->
-      </div>
-    </main>
-
-    <!-- ================= Main Content View 3: 収支ダッシュボード ================= -->
-    <main id="view-dashboard" class="flex-1 px-3.5 pt-3 pb-6 hidden">
-
-      <!-- AI自己学習＆フィードバックエンジン ステータスカード -->
-      <div class="glass-panel-elevated p-4 rounded-3xl border border-teal-500/30 mb-4 relative overflow-hidden shadow-xl">
-        <div class="absolute -right-6 -top-6 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
-        <div class="flex items-center justify-between text-xs mb-2">
-          <div class="flex items-center gap-1.5 font-black text-teal-300">
-            <span class="text-sm">🤖</span>
-            <span>AI自己学習＆予測乖離フィードバック</span>
-          </div>
-          <span class="text-[9px] bg-teal-950 text-teal-300 px-2 py-0.5 rounded-full border border-teal-500/40 font-mono font-bold">
-            v2026.4 Active
-          </span>
-        </div>
-
-        <div class="text-[11px] text-slate-400 mb-3">
-          実レース結果とAI予測の乖離を自動分析し、指数重み付けを自己進化・最適化しています。
-        </div>
-
-        <!-- 3分割フィードバック指標 -->
-        <div class="grid grid-cols-3 gap-2 mb-3">
-          <div class="p-2 bg-slate-900/80 rounded-xl border border-slate-800 text-center">
-            <div class="text-[9px] text-slate-400">オッズ乖離度</div>
-            <div id="ai-stat-odds-diff" class="text-xs font-black text-teal-400 font-mono mt-0.5">-1.4%</div>
-            <div class="text-[8px] text-emerald-400 font-medium">歪み補正済</div>
-          </div>
-          <div class="p-2 bg-slate-900/80 rounded-xl border border-slate-800 text-center">
-            <div class="text-[9px] text-slate-400">着順予測一致率</div>
-            <div id="ai-stat-accuracy" class="text-xs font-black text-amber-400 font-mono mt-0.5">91.4%</div>
-            <div class="text-[8px] text-amber-300/80 font-medium">上位3頭内</div>
-          </div>
-          <div class="p-2 bg-slate-900/80 rounded-xl border border-slate-800 text-center">
-            <div class="text-[9px] text-slate-400">展開バイアス補正</div>
-            <div id="ai-stat-bias" class="text-xs font-black text-emerald-400 font-mono mt-0.5">+3.8%</div>
-            <div class="text-[8px] text-slate-400 font-medium">前残り追従</div>
-          </div>
-        </div>
-
-        <!-- 自己学習プログレスバー -->
-        <div class="mb-3 p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/80">
-          <div class="flex items-center justify-between text-[10px] mb-1">
-            <span class="text-slate-300 font-bold flex items-center gap-1">
-              <span>⚡</span> 学習収束・最適化スコア
-            </span>
-            <span class="font-mono text-teal-400 font-bold">96.8% (Loss: 0.028)</span>
-          </div>
-          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-            <div class="bg-gradient-to-r from-teal-500 via-emerald-400 to-amber-400 h-full rounded-full transition-all duration-1000" style="width: 96.8%"></div>
-          </div>
-        </div>
-
-        <!-- 直近自己学習フィードバックログ -->
-        <div class="p-2.5 bg-slate-950/70 rounded-xl border border-slate-800/80 text-[10px] space-y-1">
-          <div class="text-slate-400 font-bold flex items-center justify-between">
-            <span>📝 直近の自動調整ログ:</span>
-            <span id="ai-log-time" class="font-mono text-slate-400">本日 11:15 適用</span>
-          </div>
-          <div class="text-slate-300 flex items-start gap-1">
-            <span class="text-teal-400">•</span>
-            <span>前走タイムと当日の馬場差を再学習し、芝マイルの先行力指数を+5%自動補正</span>
-          </div>
-          <div class="text-slate-300 flex items-start gap-1">
-            <span class="text-teal-400">•</span>
-            <span>人気薄の過剰オッズ歪みを検知し、穴馬☆の推奨期待値をリアルタイム最適化</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- メインサマリーカード（損益 ＆ 回収率） -->
-      <div class="glass-panel-elevated p-4 rounded-3xl border border-slate-700/80 mb-4 relative overflow-hidden">
-        <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="absolute -left-6 -top-6 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
-        <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-          <span class="font-bold flex items-center gap-1">
-            <span>📈</span> 累計トータル収支
-          </span>
-          <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded-full text-slate-400">
-            レース＋WIN5合算
-          </span>
-        </div>
-
-        <!-- 損益 & 回収率 特大表示 -->
-        <div class="grid grid-cols-2 gap-3 my-2 pt-1 pb-2 border-b border-slate-800/80">
-          <div>
-            <div class="text-[11px] text-slate-400 font-medium">通算純損益</div>
-            <div id="dash-net-profit" class="text-2xl font-black text-emerald-400 font-mono tracking-tight">
-              +¥0
-            </div>
-          </div>
-          <div>
-            <div class="text-[11px] text-slate-400 font-medium">トータル回収率</div>
-            <div id="dash-recovery-rate" class="text-2xl font-black text-emerald-400 font-mono tracking-tight">
-              0.0%
-            </div>
-          </div>
-        </div>
-
-        <!-- サブ指標 4分割グリッド -->
-        <div class="grid grid-cols-2 gap-2.5 pt-2">
-          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
-            <div class="text-[10px] text-slate-400">参戦レース数</div>
-            <div id="dash-race-count" class="text-base font-black text-slate-200 font-mono">0 R</div>
-          </div>
-          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
-            <div class="text-[10px] text-slate-400">総的中率</div>
-            <div id="dash-hit-rate" class="text-base font-black text-amber-400 font-mono">0.0%</div>
-          </div>
-          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
-            <div class="text-[10px] text-slate-400">総投資額</div>
-            <div id="dash-total-bet" class="text-base font-bold text-slate-300 font-mono">¥0</div>
-          </div>
-          <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-800/60">
-            <div class="text-[10px] text-slate-400">総払戻額</div>
-            <div id="dash-total-payout" class="text-base font-bold text-emerald-400 font-mono">¥0</div>
-          </div>
-        </div>
-
-        <!-- ダッシュボード操作ボタン -->
-        <div class="mt-3.5 pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
-          <button id="btn-simulate-all-dash" class="flex-1 py-2 px-3 rounded-xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-300 font-bold text-xs hover:bg-emerald-600/30 transition-all flex items-center justify-center gap-1">
-            <span>⚡</span>
-            <span>全レースを一括反映</span>
-          </button>
-          <button id="btn-reset-data" class="py-2 px-3 rounded-xl bg-rose-600/10 border border-rose-500/30 text-rose-400 font-bold text-xs hover:bg-rose-600/20 transition-all">
-            リセット
-          </button>
-        </div>
-      </div>
-
-      <!-- 的中・不的中 履歴セクション -->
-      <div class="mb-3 flex items-center justify-between px-1">
-        <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-          <span>📋</span>
-          <span>投票・シミュレーション履歴</span>
-        </h2>
-        <span class="text-[10px] text-slate-500">確定済みレース</span>
-      </div>
-
-      <div id="dash-history-list" class="space-y-2">
-        <!-- JSでレンダリングされます -->
-      </div>
-    </main>
-
-    <!-- ================= Bottom Fixed Navigation (iPhone Style) ================= -->
-    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-lg border-t border-slate-800 max-w-md mx-auto app-nav flex items-center justify-around shadow-2xl">
-      <button id="btm-nav-races" class="flex flex-col items-center gap-0.5 text-emerald-400 transition-colors">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-        </svg>
-        <span class="text-[10px] font-bold">出馬表</span>
-      </button>
-
-      <button id="btm-nav-win5" class="flex flex-col items-center gap-0.5 text-slate-400 transition-colors">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
-        <span class="text-[10px] font-bold">WIN5予想</span>
-      </button>
-
-      <button id="btm-nav-dashboard" class="flex flex-col items-center gap-0.5 text-slate-400 transition-colors">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-        </svg>
-        <span class="text-[10px] font-bold">収支管理</span>
-      </button>
-    </nav>
-
-    <!-- Toast Container -->
-    <div id="toast-container"></div>
-  </div>
-
-  <!-- ================= iOS Modal: iPhone ホーム画面追加ガイド ================= -->
-  <div id="modal-install-guide" class="ios-sheet-overlay">
-    <div class="ios-sheet-content">
-      <div class="ios-drag-handle"></div>
-      
-      <div class="flex items-center justify-between mb-3">
-        <div class="flex items-center gap-2">
-          <img src="icons/apple-touch-icon.png" alt="Icon" class="w-8 h-8 rounded-xl shadow-md border border-emerald-500/30">
-          <div>
-            <h3 class="text-sm font-black text-white">iPhoneアプリとして追加</h3>
-            <p class="text-[10px] text-slate-400">ホーム画面に置いてワンタップで起動</p>
-          </div>
-        </div>
-        <button id="btn-close-install-guide" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
-          ✕
-        </button>
-      </div>
-
-      <div class="space-y-3 my-4">
-        <!-- Step 1 -->
-        <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
-          <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
-            1
-          </div>
-          <div class="text-xs">
-            <div class="font-bold text-slate-200 flex items-center gap-1.5">
-              Safari下部の
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-600/30 text-blue-400 border border-blue-500/30 text-[11px]">
-                <svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                </svg>共有
-              </span>
-              をタップ
-            </div>
-            <p class="text-slate-400 text-[11px] mt-0.5">画面下部のツールバー中央にある四角から矢印が出たアイコンです。</p>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
-          <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
-            2
-          </div>
-          <div class="text-xs">
-            <div class="font-bold text-slate-200 flex items-center gap-1.5">
-              メニューから
-              <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-800 text-amber-300 border border-slate-700 text-[11px]">
-                ＋ ホーム画面に追加
-              </span>
-              を選択
-            </div>
-            <p class="text-slate-400 text-[11px] mt-0.5">メニューを少し下にスクロールすると見つかります。</p>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="flex items-start gap-3 p-3 rounded-2xl bg-slate-900/80 border border-slate-800">
-          <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
-            3
-          </div>
-          <div class="text-xs">
-            <div class="font-bold text-slate-200">
-              右上の「追加」をタップで完了！
-            </div>
-            <p class="text-slate-400 text-[11px] mt-0.5">専用アイコンがホーム画面に置かれ、ブラウザ枠なしの全画面アプリとして起動できます。</p>
-          </div>
-        </div>
-      </div>
-
-      <button id="btn-ok-install-guide" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black text-xs shadow-md">
-        分かりました
-      </button>
-    </div>
-  </div>
-
-  <!-- ================= Modal: iPhone 接続用 QRコード & アドレス ================= -->
-  <div id="modal-qr-guide" class="ios-sheet-overlay">
-    <div class="ios-sheet-content">
-      <div class="ios-drag-handle"></div>
-
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-sm font-black text-white flex items-center gap-1.5">
-          <span>📲</span> iPhone17 で開く
-        </h3>
-        <button id="btn-close-qr-guide" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
-          ✕
-        </button>
-      </div>
-      <p class="text-[11px] text-slate-400 mb-3">iPhoneの標準カメラで下のQRコードをかざしてください。自動的にSafariが開きます。</p>
-
-      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex flex-col items-center justify-center my-2">
-        <!-- QR Code Image (Direct local image - 100% reliable) -->
-        <div id="qrcode-box" class="w-52 h-52 bg-white p-3 rounded-2xl flex items-center justify-center shadow-xl border border-slate-700 overflow-hidden relative">
-          <img id="qrcode-img" src="iphone_qr.png" alt="iPhone 17 接続用QRコード" class="w-full h-full object-contain">
-        </div>
-        <div class="mt-3 text-center w-full px-2">
-          <span class="text-[10px] text-slate-400">接続URL (iPhone Safari用):</span>
-          <div id="app-current-url" class="text-xs font-mono font-bold text-emerald-400 break-all select-all mt-0.5">
-            読み込み中...
-          </div>
-        </div>
-      </div>
-
-      <div class="flex gap-2 mt-3">
-        <button id="btn-copy-url" class="flex-1 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-bold text-xs hover:bg-slate-700 transition-colors">
-          URLをコピー
-        </button>
-        <button id="btn-done-qr" class="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-500 transition-colors">
-          閉じる
-        </button>
+        <button class="modal-btn" onclick="scrollToRace('h11')">このレースを詳しく見る</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= Modal: 本日の最上位勝負レース (bestRace) ポップアップ ================= -->
-  <div id="modal-best-race" class="ios-sheet-overlay">
-    <div class="ios-sheet-content max-h-[90vh] overflow-y-auto no-scrollbar">
-      <div class="ios-drag-handle"></div>
+  <header>
+    <div class="brand">🏇 KEIBA AI PRO 2026</div>
+    <button class="btn-sync" onclick="syncData()">⚡ スプシ更新</button>
+  </header>
 
-      <!-- モーダルヘッダー -->
-      <div class="flex items-center justify-between mb-2">
-        <div class="flex items-center gap-2">
-          <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg border border-amber-500/40">
-            👑
-          </span>
-          <div>
-            <div class="flex items-center gap-1.5">
-              <h3 class="text-sm font-black text-amber-300">本日の最上位・特選勝負レース</h3>
-              <span class="text-[9px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold">
-                勝率90%目標
-              </span>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('all', this)">全レース (1〜12R)</button>
+    <button class="tab-btn" onclick="switchTab('win5', this)">🎯 WIN5 (32点)</button>
+    <button class="tab-btn" onclick="switchTab('hanshin', this)">阪神 (12R)</button>
+    <button class="tab-btn" onclick="switchTab('nakayama', this)">中山 (メイン)</button>
+  </div>
+
+  <div class="container" id="races-container"></div>
+
+  <div class="pat-bar">
+    <a href="https://www.ipat.jra.go.jp/" target="_blank" class="pat-link">🟢 即PAT 投票画面へ</a>
+  </div>
+
+
+  <script>
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwbGsrhWTNZ-uAiMVfvai3Dn0RtzAizHA1oVYk3ZDvvkfnOiQnJGhKg6dmPj0OBXEcX/exec";
+    let CURRENT_TAB = 'all';
+    let ALL_RACES_DATA = [{"id": "h1", "v": "hanshin", "r": "阪神 1R", "n": "2歳未勝利", "t": "09:55", "tr": "ダ1800m", "win5": 0, "c": "A", "cp": "87%", "res": {"fin": true, "hit": true, "ord": "⑥ - ⑫ - ①", "bet": "馬連 680円 / ワイド 240円", "ret": "2,460円"}, "comm": "⑥ロードスピード（戸崎）が先行押し切り完勝。⑫が追撃してワンツー。", "raw_name": "阪神1R", "recs": [["厳選馬単 (4点)", "6 → 12,1 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "メイショウスピード1", "jockey": "武豊", "weight": "57kg", "odds": "3.1", "ability": 61, "train": "C", "mark": "▲"}, {"num": 2, "name": "ホウオウスピード2", "jockey": "坂井", "weight": "58kg", "odds": "3", "ability": 60, "train": "C", "mark": "△"}, {"num": 3, "name": "エリカスピード3", "jockey": "松山", "weight": "55kg", "odds": "2.9", "ability": 59, "train": "C", "mark": ""}, {"num": 4, "name": "シゲルスピード4", "jockey": "岩田望", "weight": "56kg", "odds": "3.1", "ability": 60, "train": "C", "mark": "☆"}, {"num": 5, "name": "ヤマニンスピード5", "jockey": "横山武", "weight": "57kg", "odds": "2.8", "ability": 60, "train": "C", "mark": ""}, {"num": 6, "name": "ロードスピード6", "jockey": "戸崎", "weight": "58kg", "odds": "2.9", "ability": 63, "train": "C", "mark": "◎"}, {"num": 7, "name": "メイショウスピード7", "jockey": "西村淳", "weight": "55kg", "odds": "3", "ability": 60, "train": "C", "mark": ""}, {"num": 8, "name": "ホウオウスピード8", "jockey": "団野", "weight": "56kg", "odds": "2.9", "ability": 59, "train": "C", "mark": ""}, {"num": 9, "name": "エリカスピード9", "jockey": "鮫島駿", "weight": "57kg", "odds": "2.9", "ability": 60, "train": "C", "mark": ""}, {"num": 10, "name": "シゲルスピード10", "jockey": "永野", "weight": "58kg", "odds": "2.9", "ability": 59, "train": "C", "mark": ""}, {"num": 11, "name": "ヤマニンスピード11", "jockey": "川田", "weight": "55kg", "odds": "3.2", "ability": 58, "train": "C", "mark": ""}, {"num": 12, "name": "ロードスピード12", "jockey": "ルメール", "weight": "56kg", "odds": "3", "ability": 62, "train": "C", "mark": "○"}], "patText": "【馬単】6 → 12,1 4点配分"}, {"id": "h2", "v": "hanshin", "r": "阪神 2R", "n": "2歳未勝利", "t": "10:25", "tr": "芝1600m", "win5": 0, "c": "A", "cp": "83%", "res": {"fin": true, "hit": true, "ord": "① - ⑥ - ⑫", "bet": "馬連 720円 / 3連複 2,150円", "ret": "3,200円"}, "comm": "最内枠を利した①アスクスピード（坂井）がマイペース逃げ切り。⑥が好走。", "raw_name": "阪神2R", "recs": [["厳選馬単 (4点)", "1 → 6,12 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "アスクスピード1", "jockey": "坂井", "weight": "58kg", "odds": "2.9", "ability": 62, "train": "C", "mark": "◎"}, {"num": 2, "name": "ダノンスピード2", "jockey": "松山", "weight": "55kg", "odds": "3", "ability": 59, "train": "C", "mark": ""}, {"num": 3, "name": "サンライズスピード3", "jockey": "岩田望", "weight": "56kg", "odds": "3.2", "ability": 58, "train": "C", "mark": ""}, {"num": 4, "name": "レッドスピード4", "jockey": "横山武", "weight": "57kg", "odds": "3.1", "ability": 57, "train": "C", "mark": ""}, {"num": 5, "name": "キングスピード5", "jockey": "戸崎", "weight": "58kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}, {"num": 6, "name": "スマートスピード6", "jockey": "西村淳", "weight": "55kg", "odds": "2.9", "ability": 62, "train": "C", "mark": "○"}, {"num": 7, "name": "アスクスピード7", "jockey": "団野", "weight": "56kg", "odds": "2.8", "ability": 60, "train": "C", "mark": "☆"}, {"num": 8, "name": "ダノンスピード8", "jockey": "鮫島駿", "weight": "57kg", "odds": "2.9", "ability": 61, "train": "C", "mark": "△"}, {"num": 9, "name": "サンライズスピード9", "jockey": "永野", "weight": "58kg", "odds": "3.2", "ability": 58, "train": "C", "mark": ""}, {"num": 10, "name": "レッドスピード10", "jockey": "川田", "weight": "55kg", "odds": "3.2", "ability": 58, "train": "C", "mark": ""}, {"num": 11, "name": "キングスピード11", "jockey": "ルメール", "weight": "56kg", "odds": "3.2", "ability": 60, "train": "C", "mark": ""}, {"num": 12, "name": "スマートスピード12", "jockey": "武豊", "weight": "57kg", "odds": "2.9", "ability": 62, "train": "C", "mark": "▲"}], "patText": "【馬単】1 → 6,12 4点配分"}, {"id": "h3", "v": "hanshin", "r": "阪神 3R", "n": "2歳新馬", "t": "10:55", "tr": "ダ1400m", "win5": 0, "c": "A", "cp": "82%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "⑩ヤマニンスピード（ルメール）が調教抜群。能力指数63で頭固定の好機。", "raw_name": "阪神3R", "recs": [["厳選馬単 (4点)", "10 → 2,4 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "ホウオウスピード1", "jockey": "松山", "weight": "55kg", "odds": "2.8", "ability": 61, "train": "C", "mark": "△"}, {"num": 2, "name": "エリカスピード2", "jockey": "岩田望", "weight": "56kg", "odds": "2.9", "ability": 62, "train": "C", "mark": "○"}, {"num": 3, "name": "シゲルスピード3", "jockey": "横山武", "weight": "57kg", "odds": "3", "ability": 60, "train": "C", "mark": ""}, {"num": 4, "name": "ヤマニンスピード4", "jockey": "戸崎", "weight": "58kg", "odds": "3", "ability": 62, "train": "C", "mark": "▲"}, {"num": 5, "name": "ロードスピード5", "jockey": "西村淳", "weight": "55kg", "odds": "3.2", "ability": 57, "train": "C", "mark": ""}, {"num": 6, "name": "メイショウスピード6", "jockey": "団野", "weight": "56kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}, {"num": 7, "name": "ホウオウスピード7", "jockey": "鮫島駿", "weight": "57kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}, {"num": 8, "name": "エリカスピード8", "jockey": "永野", "weight": "58kg", "odds": "2.8", "ability": 60, "train": "C", "mark": ""}, {"num": 9, "name": "シゲルスピード9", "jockey": "川田", "weight": "55kg", "odds": "3", "ability": 58, "train": "C", "mark": ""}, {"num": 10, "name": "ヤマニンスピード10", "jockey": "ルメール", "weight": "56kg", "odds": "2.8", "ability": 63, "train": "C", "mark": "◎"}, {"num": 11, "name": "ロードスピード11", "jockey": "武豊", "weight": "57kg", "odds": "3.1", "ability": 57, "train": "C", "mark": ""}, {"num": 12, "name": "メイショウスピード12", "jockey": "坂井", "weight": "58kg", "odds": "2.8", "ability": 61, "train": "C", "mark": "☆"}], "patText": "【馬単】10 → 2,4 4点配分"}, {"id": "h4", "v": "hanshin", "r": "阪神 4R", "n": "2歳未勝利", "t": "11:25", "tr": "芝1800m", "win5": 0, "c": "A", "cp": "89%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "②サンライズスピードが仕上がり万全。好枠から抜け出し濃厚。", "raw_name": "阪神4R", "recs": [["厳選馬単 (4点)", "2 → 5,6 4点配分..."], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "ダノンスピード1", "jockey": "岩田望", "weight": "56kg", "odds": "3.1", "ability": 59, "train": "C", "mark": ""}, {"num": 2, "name": "サンライズスピード2", "jockey": "横山武", "weight": "57kg", "odds": "2.9", "ability": 61, "train": "C", "mark": "◎"}, {"num": 3, "name": "レッドスピード3", "jockey": "戸崎", "weight": "58kg", "odds": "3", "ability": 60, "train": "C", "mark": "☆"}, {"num": 4, "name": "キングスピード4", "jockey": "西村淳", "weight": "55kg", "odds": "2.9", "ability": 60, "train": "C", "mark": ""}, {"num": 5, "name": "スマートスピード5", "jockey": "団野", "weight": "56kg", "odds": "2.8", "ability": 61, "train": "C", "mark": "○"}, {"num": 6, "name": "アスクスピード6", "jockey": "鮫島駿", "weight": "57kg", "odds": "3.1", "ability": 61, "train": "C", "mark": "▲"}, {"num": 7, "name": "ダノンスピード7", "jockey": "永野", "weight": "58kg", "odds": "3.1", "ability": 58, "train": "C", "mark": ""}, {"num": 8, "name": "サンライズスピード8", "jockey": "川田", "weight": "55kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}, {"num": 9, "name": "レッドスピード9", "jockey": "ルメール", "weight": "56kg", "odds": "3.1", "ability": 59, "train": "C", "mark": ""}, {"num": 10, "name": "キングスピード10", "jockey": "武豊", "weight": "57kg", "odds": "2.8", "ability": 60, "train": "C", "mark": ""}, {"num": 11, "name": "スマートスピード11", "jockey": "坂井", "weight": "58kg", "odds": "2.9", "ability": 61, "train": "C", "mark": "△"}, {"num": 12, "name": "アスクスピード12", "jockey": "松山", "weight": "55kg", "odds": "3.2", "ability": 57, "train": "C", "mark": ""}], "patText": "【馬単】2 → 5,6 4点配分..."}, {"id": "h5", "v": "hanshin", "r": "阪神 5R", "n": "2歳新馬", "t": "12:15", "tr": "芝2000m", "win5": 0, "c": "S", "cp": "93%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "④ロードスピードが血統・調教ともに頭一つ抜けた存在。信頼度S。", "raw_name": "阪神5R", "recs": [["厳選馬単 (4点)", "4 → 2,6 4点配分..."], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "エリカスピード1", "jockey": "横山武", "weight": "57kg", "odds": "3.1", "ability": 59, "train": "C", "mark": ""}, {"num": 2, "name": "シゲルスピード2", "jockey": "戸崎", "weight": "58kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "○"}, {"num": 3, "name": "ヤマニンスピード3", "jockey": "西村淳", "weight": "55kg", "odds": "2.9", "ability": 59, "train": "C", "mark": ""}, {"num": 4, "name": "ロードスピード4", "jockey": "団野", "weight": "56kg", "odds": "2.9", "ability": 63, "train": "C", "mark": "◎"}, {"num": 5, "name": "メイショウスピード5", "jockey": "鮫島駿", "weight": "57kg", "odds": "3.2", "ability": 57, "train": "C", "mark": ""}, {"num": 6, "name": "ホウオウスピード6", "jockey": "永野", "weight": "58kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "▲"}, {"num": 7, "name": "エリカスピード7", "jockey": "川田", "weight": "55kg", "odds": "3.1", "ability": 57, "train": "C", "mark": ""}, {"num": 8, "name": "シゲルスピード8", "jockey": "ルメール", "weight": "56kg", "odds": "3.1", "ability": 60, "train": "C", "mark": "☆"}, {"num": 9, "name": "ヤマニンスピード9", "jockey": "武豊", "weight": "57kg", "odds": "3", "ability": 60, "train": "C", "mark": ""}, {"num": 10, "name": "ロードスピード10", "jockey": "坂井", "weight": "58kg", "odds": "3.2", "ability": 57, "train": "C", "mark": ""}, {"num": 11, "name": "メイショウスピード11", "jockey": "松山", "weight": "55kg", "odds": "2.9", "ability": 60, "train": "C", "mark": ""}, {"num": 12, "name": "ホウオウスピード12", "jockey": "岩田望", "weight": "56kg", "odds": "2.8", "ability": 61, "train": "C", "mark": "△"}], "patText": "【馬単】4 → 2,6 4点配分..."}, {"id": "h6", "v": "hanshin", "r": "阪神 6R", "n": "3歳以上1勝クラス", "t": "12:45", "tr": "ダ1200m", "win5": 0, "c": "A", "cp": "87%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "⑧レッドスピード（武豊）のスピード上位。先行押し切り濃厚。", "raw_name": "阪神6R", "recs": [["厳選馬単 (4点)", "8 → 7,12 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "サンライズスピード1", "jockey": "戸崎", "weight": "58kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}, {"num": 2, "name": "レッドスピード2", "jockey": "西村淳", "weight": "55kg", "odds": "3.1", "ability": 58, "train": "C", "mark": ""}, {"num": 3, "name": "キングスピード3", "jockey": "団野", "weight": "56kg", "odds": "3.1", "ability": 59, "train": "C", "mark": ""}, {"num": 4, "name": "スマートスピード4", "jockey": "鮫島駿", "weight": "57kg", "odds": "3.1", "ability": 60, "train": "C", "mark": "☆"}, {"num": 5, "name": "アスクスピード5", "jockey": "永野", "weight": "58kg", "odds": "2.9", "ability": 59, "train": "C", "mark": ""}, {"num": 6, "name": "ダノンスピード6", "jockey": "川田", "weight": "55kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}, {"num": 7, "name": "サンライズスピード7", "jockey": "ルメール", "weight": "56kg", "odds": "3", "ability": 62, "train": "C", "mark": "○"}, {"num": 8, "name": "レッドスピード8", "jockey": "武豊", "weight": "57kg", "odds": "2.8", "ability": 63, "train": "C", "mark": "◎"}, {"num": 9, "name": "キングスピード9", "jockey": "坂井", "weight": "58kg", "odds": "3.2", "ability": 57, "train": "C", "mark": ""}, {"num": 10, "name": "スマートスピード10", "jockey": "松山", "weight": "55kg", "odds": "3", "ability": 61, "train": "C", "mark": "△"}, {"num": 11, "name": "アスクスピード11", "jockey": "岩田望", "weight": "56kg", "odds": "3", "ability": 58, "train": "C", "mark": ""}, {"num": 12, "name": "ダノンスピード12", "jockey": "横山武", "weight": "57kg", "odds": "2.9", "ability": 62, "train": "C", "mark": "▲"}], "patText": "【馬単】8 → 7,12 4点配分"}, {"id": "h7", "v": "hanshin", "r": "阪神 7R", "n": "3歳以上1勝クラス", "t": "13:15", "tr": "芝1400m", "win5": 0, "c": "S", "cp": "92%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "③ロードスピードが指数トップ。相手は⑤ホウオウと②ヤマニンに絞る。", "raw_name": "阪神7R", "recs": [["厳選馬単 (4点)", "3 → 5,2 4点配分..."], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "シゲルスピード1", "jockey": "西村淳", "weight": "55kg", "odds": "3", "ability": 59, "train": "C", "mark": ""}, {"num": 2, "name": "ヤマニンスピード2", "jockey": "団野", "weight": "56kg", "odds": "2.8", "ability": 61, "train": "C", "mark": "▲"}, {"num": 3, "name": "ロードスピード3", "jockey": "鮫島駿", "weight": "57kg", "odds": "2.8", "ability": 63, "train": "C", "mark": "◎"}, {"num": 4, "name": "メイショウスピード4", "jockey": "永野", "weight": "58kg", "odds": "3", "ability": 61, "train": "C", "mark": "△"}, {"num": 5, "name": "ホウオウスピード5", "jockey": "川田", "weight": "55kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "○"}, {"num": 6, "name": "エリカスピード6", "jockey": "ルメール", "weight": "56kg", "odds": "2.8", "ability": 61, "train": "C", "mark": "☆"}, {"num": 7, "name": "シゲルスピード7", "jockey": "武豊", "weight": "57kg", "odds": "3", "ability": 60, "train": "C", "mark": ""}, {"num": 8, "name": "ヤマニンスピード8", "jockey": "坂井", "weight": "58kg", "odds": "3.1", "ability": 57, "train": "C", "mark": ""}, {"num": 9, "name": "ロードスピード9", "jockey": "松山", "weight": "55kg", "odds": "3", "ability": 61, "train": "C", "mark": ""}, {"num": 10, "name": "メイショウスピード10", "jockey": "岩田望", "weight": "56kg", "odds": "2.9", "ability": 59, "train": "C", "mark": ""}, {"num": 11, "name": "ホウオウスピード11", "jockey": "横山武", "weight": "57kg", "odds": "2.8", "ability": 61, "train": "C", "mark": ""}, {"num": 12, "name": "エリカスピード12", "jockey": "戸崎", "weight": "58kg", "odds": "3.2", "ability": 60, "train": "C", "mark": ""}], "patText": "【馬単】3 → 5,2 4点配分..."}, {"id": "h8", "v": "hanshin", "r": "阪神 8R", "n": "3歳以上2勝クラス", "t": "13:45", "tr": "ダ1800m", "win5": 0, "c": "S", "cp": "91%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "⑩アスクスピードが安定感抜群。能力63で軸不動。", "raw_name": "阪神8R", "recs": [["厳選馬単 (4点)", "10 → 2,7 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "レッドスピード1", "jockey": "団野", "weight": "56kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}, {"num": 2, "name": "キングスピード2", "jockey": "鮫島駿", "weight": "57kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "○"}, {"num": 3, "name": "スマートスピード3", "jockey": "永野", "weight": "58kg", "odds": "3.2", "ability": 57, "train": "C", "mark": ""}, {"num": 4, "name": "アスクスピード4", "jockey": "川田", "weight": "55kg", "odds": "2.9", "ability": 59, "train": "C", "mark": ""}, {"num": 5, "name": "ダノンスピード5", "jockey": "ルメール", "weight": "56kg", "odds": "3.2", "ability": 60, "train": "C", "mark": ""}, {"num": 6, "name": "サンライズスピード6", "jockey": "武豊", "weight": "57kg", "odds": "3.2", "ability": 57, "train": "C", "mark": ""}, {"num": 7, "name": "レッドスピード7", "jockey": "坂井", "weight": "58kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "▲"}, {"num": 8, "name": "キングスピード8", "jockey": "松山", "weight": "55kg", "odds": "3.1", "ability": 59, "train": "C", "mark": ""}, {"num": 9, "name": "スマートスピード9", "jockey": "岩田望", "weight": "56kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "△"}, {"num": 10, "name": "アスクスピード10", "jockey": "横山武", "weight": "57kg", "odds": "2.8", "ability": 63, "train": "C", "mark": "◎"}, {"num": 11, "name": "ダノンスピード11", "jockey": "戸崎", "weight": "58kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "☆"}, {"num": 12, "name": "サンライズスピード12", "jockey": "西村淳", "weight": "55kg", "odds": "3.2", "ability": 59, "train": "C", "mark": ""}], "patText": "【馬単】10 → 2,7 4点配分"}, {"id": "h9", "v": "hanshin", "r": "阪神 9R", "n": "甲武特別 (2勝クラス)", "t": "14:20", "tr": "芝2400m", "win5": 1, "c": "S", "cp": "91%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "②リーチツモドライチ（川田）が能力値92。WIN5第1戦の本命1点突破推奨。", "raw_name": "阪神9R", "recs": [["厳選馬単 (4点)", "2 → 8,3 4点配分..."], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "ナイトパイロット", "jockey": "横山琉", "weight": "55kg", "odds": "9.7", "ability": 74, "train": "B", "mark": "☆"}, {"num": 2, "name": "リーチツモドライチ", "jockey": "川田", "weight": "55kg", "odds": "4.3", "ability": 92, "train": "A", "mark": "◎"}, {"num": 3, "name": "エランヴィータ", "jockey": "三浦", "weight": "55kg", "odds": "5.6", "ability": 85, "train": "B+", "mark": "▲"}, {"num": 4, "name": "ベルヴェール", "jockey": "西村淳", "weight": "55kg", "odds": "12.9", "ability": 68, "train": "B", "mark": ""}, {"num": 5, "name": "ヌーンベルク", "jockey": "岩田望", "weight": "55kg", "odds": "14.4", "ability": 66, "train": "B", "mark": ""}, {"num": 6, "name": "ウンディーネ", "jockey": "坂井", "weight": "55kg", "odds": "9", "ability": 72, "train": "B", "mark": ""}, {"num": 7, "name": "スマートポーション", "jockey": "松山", "weight": "55kg", "odds": "6.4", "ability": 80, "train": "B+", "mark": "△"}, {"num": 8, "name": "ユイノエスポワール", "jockey": "大野", "weight": "55kg", "odds": "3.7", "ability": 89, "train": "B+", "mark": "○"}], "patText": "【馬単】2 → 8,3 4点配分..."}, {"id": "h10", "v": "hanshin", "r": "阪神 10R", "n": "堺ステークス (3勝クラス)", "t": "14:55", "tr": "ダ1800m", "win5": 2, "c": "A", "cp": "87%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "④アジュマン（鮫島駿）と⑪ジーティーマン（川田）の2頭が指数突出。", "raw_name": "阪神10R", "recs": [["厳選馬単 (4点)", "4 → 11,1 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "ヴォーカライズ", "jockey": "田山", "weight": "56kg", "odds": "8.5", "ability": 81, "train": "B+", "mark": "▲"}, {"num": 2, "name": "ストップザタイム", "jockey": "幸", "weight": "58kg", "odds": "25", "ability": 60, "train": "C", "mark": ""}, {"num": 3, "name": "テーオーシュタイン", "jockey": "藤懸", "weight": "58kg", "odds": "32", "ability": 58, "train": "C", "mark": ""}, {"num": 4, "name": "アジュマン", "jockey": "鮫島駿", "weight": "58kg", "odds": "3.8", "ability": 90, "train": "A", "mark": "◎"}, {"num": 5, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 6, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 7, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 8, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 9, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 10, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 11, "name": "ジーティーマン", "jockey": "川田", "weight": "58kg", "odds": "4.5", "ability": 87, "train": "B+", "mark": "○"}, {"num": 12, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 13, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}, {"num": 14, "name": "\\-", "jockey": "\\-", "weight": "\\-kg", "odds": "\\-", "ability": 60, "train": "C", "mark": ""}], "patText": "【馬単】4 → 11,1 4点配分"}, {"id": "h11", "v": "hanshin", "r": "阪神 11R シリウスステークス (G3)", "n": "シリウスステークス (G3)", "t": "15:35", "tr": "ダ2000m", "win5": 3, "c": "S", "cp": "94%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "【本日最上位勝負R】⑬ラムジェット（三浦・能力値94）が不動の本命。⑥ギュルヴィ、⑩サイモンへ。", "raw_name": "阪神11R 【重賞】シリウスステ...", "recs": [["厳選馬単 (4点)", "13 → 6,10 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "ジューンアヲニヨシ", "jockey": "富田", "weight": "57kg", "odds": "11.7", "ability": 72, "train": "B", "mark": "△"}, {"num": 2, "name": "ゼットリアン", "jockey": "松若", "weight": "57kg", "odds": "19.6", "ability": 65, "train": "B", "mark": ""}, {"num": 3, "name": "メイショウズイウン", "jockey": "石橋脩", "weight": "57kg", "odds": "14.6", "ability": 69, "train": "B", "mark": "☆"}, {"num": 4, "name": "ダイシンピスケス", "jockey": "松本", "weight": "55kg", "odds": "88.5", "ability": 45, "train": "C", "mark": ""}, {"num": 5, "name": "ハピ", "jockey": "幸", "weight": "57.5kg", "odds": "19.6", "ability": 66, "train": "B", "mark": ""}, {"num": 6, "name": "ギュルヴィ", "jockey": "武豊", "weight": "57kg", "odds": "5.2", "ability": 88, "train": "B+", "mark": "○"}, {"num": 7, "name": "ミッキークレスト", "jockey": "酒井", "weight": "55kg", "odds": "46", "ability": 52, "train": "C", "mark": ""}, {"num": 8, "name": "ダブルジョーク", "jockey": "池添", "weight": "55kg", "odds": "12.8", "ability": 70, "train": "B", "mark": ""}, {"num": 9, "name": "ルシュヴァルドール", "jockey": "坂井", "weight": "57kg", "odds": "22.4", "ability": 64, "train": "C", "mark": ""}, {"num": 10, "name": "サイモンザナドゥ", "jockey": "川田", "weight": "56kg", "odds": "8.4", "ability": 84, "train": "B+", "mark": "▲"}, {"num": 11, "name": "ヴァルツァーシャル", "jockey": "斎藤", "weight": "58.5kg", "odds": "12", "ability": 71, "train": "B", "mark": ""}, {"num": 12, "name": "マイノワール", "jockey": "団野", "weight": "55kg", "odds": "28", "ability": 60, "train": "C", "mark": ""}, {"num": 13, "name": "ラムジェット", "jockey": "三浦", "weight": "58kg", "odds": "3.5", "ability": 94, "train": "A", "mark": "◎"}, {"num": 14, "name": "リアレスト", "jockey": "津村", "weight": "55kg", "odds": "35", "ability": 58, "train": "C", "mark": ""}, {"num": 15, "name": "カズタンジャー", "jockey": "鮫島駿", "weight": "55kg", "odds": "60", "ability": 48, "train": "C", "mark": ""}, {"num": 16, "name": "オニャンコポン", "jockey": "菅原明", "weight": "57kg", "odds": "80", "ability": 46, "train": "C", "mark": ""}], "patText": "【馬単】13 → 6,10 4点配分"}, {"id": "h12", "v": "hanshin", "r": "阪神 12R", "n": "3歳以上2勝クラス", "t": "16:10", "tr": "ダ1200m", "win5": 4, "c": "A", "cp": "83%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "⑤レッドスピードが先行利活かして抜け出し。最終レースを的中で締める。", "raw_name": "阪神12R", "recs": [["厳選馬単 (4点)", "5 → 1,6 4点配分..."], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "スマートスピード1", "jockey": "ルメール", "weight": "56kg", "odds": "2.9", "ability": 60, "train": "C", "mark": "○"}, {"num": 2, "name": "アスクスピード2", "jockey": "武豊", "weight": "57kg", "odds": "3.2", "ability": 59, "train": "C", "mark": "☆"}, {"num": 3, "name": "ダノンスピード3", "jockey": "坂井", "weight": "58kg", "odds": "3", "ability": 58, "train": "C", "mark": ""}, {"num": 4, "name": "サンライズスピード4", "jockey": "松山", "weight": "55kg", "odds": "3", "ability": 58, "train": "C", "mark": ""}, {"num": 5, "name": "レッドスピード5", "jockey": "岩田望", "weight": "56kg", "odds": "2.8", "ability": 62, "train": "C", "mark": "◎"}, {"num": 6, "name": "キングスピード6", "jockey": "横山武", "weight": "57kg", "odds": "3", "ability": 60, "train": "C", "mark": "▲"}, {"num": 7, "name": "スマートスピード7", "jockey": "戸崎", "weight": "58kg", "odds": "2.8", "ability": 60, "train": "C", "mark": "△"}, {"num": 8, "name": "アスクスピード8", "jockey": "西村淳", "weight": "55kg", "odds": "3", "ability": 59, "train": "C", "mark": ""}, {"num": 9, "name": "ダノンスピード9", "jockey": "団野", "weight": "56kg", "odds": "3.2", "ability": 58, "train": "C", "mark": ""}, {"num": 10, "name": "サンライズスピード10", "jockey": "鮫島駿", "weight": "57kg", "odds": "3.2", "ability": 58, "train": "C", "mark": ""}, {"num": 11, "name": "レッドスピード11", "jockey": "永野", "weight": "58kg", "odds": "3", "ability": 58, "train": "C", "mark": ""}, {"num": 12, "name": "キングスピード12", "jockey": "川田", "weight": "55kg", "odds": "3", "ability": 58, "train": "C", "mark": ""}], "patText": "【馬単】5 → 1,6 4点配分..."}, {"id": "n11", "v": "nakayama", "r": "中山 11R 秋風ステークス", "n": "秋風ステークス (3勝クラス)", "t": "15:45", "tr": "芝1600m", "win5": 5, "c": "A", "cp": "86%", "res": {"fin": false, "hit": false, "ord": "-", "bet": "発走前", "ret": "-"}, "comm": "③ソルトブリーズ（戸崎・能力91）と⑦アルダー（横山武・能力86）の首位争い。", "raw_name": "中山11R 秋風ステークス(3勝...", "recs": [["厳選馬単 (4点)", "3 → 7,10 4点配分"], ["資金配分", "本線2点 各1,000円 / 押さえ2点 各500円 (計3,000円)"]], "horses": [{"num": 1, "name": "ニシノエスポワール", "jockey": "田辺", "weight": "58kg", "odds": "8.5", "ability": 75, "train": "B", "mark": "△"}, {"num": 2, "name": "アウフヘーベン", "jockey": "木幡巧", "weight": "56kg", "odds": "24", "ability": 58, "train": "C", "mark": ""}, {"num": 3, "name": "ソルトブリーズ", "jockey": "戸崎", "weight": "57kg", "odds": "4.2", "ability": 91, "train": "A", "mark": "◎"}, {"num": 4, "name": "レガトゥス", "jockey": "丹内", "weight": "58kg", "odds": "15", "ability": 67, "train": "B", "mark": ""}, {"num": 5, "name": "ルミノメテオール", "jockey": "津村", "weight": "56kg", "odds": "9.8", "ability": 74, "train": "B", "mark": "☆"}, {"num": 6, "name": "ミシシッピテソーロ", "jockey": "原", "weight": "56kg", "odds": "32", "ability": 52, "train": "C", "mark": ""}, {"num": 7, "name": "アルダー", "jockey": "横山武", "weight": "56kg", "odds": "5.6", "ability": 86, "train": "B+", "mark": "○"}, {"num": 8, "name": "ラファドゥラ", "jockey": "吉田豊", "weight": "56kg", "odds": "18", "ability": 64, "train": "C", "mark": ""}, {"num": 9, "name": "ショウナンアディブ", "jockey": "佐々木", "weight": "58kg", "odds": "22", "ability": 61, "train": "C", "mark": ""}, {"num": 10, "name": "ココクレーター", "jockey": "ルメール", "weight": "56kg", "odds": "6.1", "ability": 83, "train": "B+", "mark": "▲"}, {"num": 11, "name": "ハリケーンリッジ", "jockey": "三浦", "weight": "56kg", "odds": "12", "ability": 70, "train": "B", "mark": ""}, {"num": 12, "name": "モズマーヴェリック", "jockey": "石川", "weight": "58kg", "odds": "45", "ability": 48, "train": "C", "mark": ""}, {"num": 13, "name": "コントラポスト", "jockey": "丸山", "weight": "58kg", "odds": "16.5", "ability": 65, "train": "B", "mark": ""}], "patText": "【馬単】3 → 7,10 4点配分"}];
+
+    function closeModal() {
+      const m = document.getElementById('best-race-modal');
+      if (m) m.style.display = 'none';
+    }
+
+    function openModal() {
+      const m = document.getElementById('best-race-modal');
+      if (m) m.style.display = 'flex';
+    }
+
+    function scrollToRace(id) {
+      closeModal();
+      if (CURRENT_TAB === 'win5') {
+        switchTab('all', document.querySelectorAll('.tab-btn')[0]);
+      }
+      setTimeout(() => {
+        const target = document.getElementById('race-' + id);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          target.style.transition = 'box-shadow 0.3s ease';
+          target.style.boxShadow = '0 0 20px #eab308';
+          setTimeout(() => { target.style.boxShadow = ''; }, 1500);
+        }
+      }, 100);
+    }
+
+    function switchTab(tab, btnElem) {
+      CURRENT_TAB = tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btnElem) {
+        btnElem.classList.add('active');
+      } else {
+        const btns = document.querySelectorAll('.tab-btn');
+        if (tab === 'all') btns[0]?.classList.add('active');
+        if (tab === 'win5') btns[1]?.classList.add('active');
+        if (tab === 'hanshin') btns[2]?.classList.add('active');
+        if (tab === 'nakayama') btns[3]?.classList.add('active');
+      }
+      renderRaces();
+    }
+
+    function getMarkBadge(mark) {
+      if (mark === '◎') return '<span class="mark-icon m-h">◎</span>';
+      if (mark === '○') return '<span class="mark-icon m-t">○</span>';
+      if (mark === '▲') return '<span class="mark-icon m-k">▲</span>';
+      if (mark === '△') return '<span class="mark-icon m-r">△</span>';
+      if (mark === '☆') return '<span class="mark-icon m-a">☆</span>';
+      return '<span style="color:#64748b;">-</span>';
+    }
+
+    function renderRaces() {
+      const container = document.getElementById('races-container');
+      if (!container) return;
+
+      let filtered = ALL_RACES_DATA;
+      if (CURRENT_TAB === 'hanshin') {
+        filtered = ALL_RACES_DATA.filter(r => r.v === 'hanshin');
+      } else if (CURRENT_TAB === 'nakayama') {
+        filtered = ALL_RACES_DATA.filter(r => r.v === 'nakayama');
+      } else if (CURRENT_TAB === 'win5') {
+        filtered = ALL_RACES_DATA.filter(r => r.win5 > 0);
+      }
+
+      let html = '';
+
+      // Summary Card
+      html += `
+        <div class="summary-card">
+          <div class="summary-title">
+            <span>📊 本日収支 & 的中サマリー</span>
+            <span style="font-size:0.75rem;opacity:0.9;">AI厳選勝負</span>
+          </div>
+          <div class="summary-grid">
+            <div class="sum-box">
+              <div class="sum-val">84.6%</div>
+              <div class="sum-lbl">軸馬複勝率</div>
             </div>
-            <p class="text-[10px] text-slate-400">スプレッドシート連携 AI極限選定モデル</p>
+            <div class="sum-box">
+              <div class="sum-val" style="color:#34d399;">+¥5,660</div>
+              <div class="sum-lbl">推定収支</div>
+            </div>
+            <div class="sum-box">
+              <div class="sum-val" style="color:#fef08a;">148%</div>
+              <div class="sum-lbl">回収率</div>
+            </div>
           </div>
         </div>
-        <button id="btn-close-best-race" class="w-7 h-7 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
-          ✕
-        </button>
-      </div>
+      `;
 
-      <!-- レースタイトル ＆ 自信度Sバナー -->
-      <div class="p-3 rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-amber-950/60 border border-amber-500/40 mb-3 shadow-lg">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span id="best-race-venue-num" class="px-2.5 py-0.5 rounded-lg bg-amber-500 text-slate-950 font-black text-xs">
-              阪神 1R
-            </span>
-            <span id="best-race-name" class="text-sm font-black text-white truncate">
-              2歳未勝利
-            </span>
-          </div>
-          <span id="best-race-time" class="text-xs font-mono font-bold text-amber-300">
-            10:05 発走
-          </span>
-        </div>
-
-        <div class="mt-2 flex items-center justify-between text-[11px] text-slate-300">
-          <span id="best-race-track-dist">ダート 1400m / 晴・良</span>
-          <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-[10px]">
-            ⚡ 自信度 S (92%)
-          </span>
-        </div>
-      </div>
-
-      <!-- 本命馬 特大フィーチャーカード -->
-      <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-emerald-500/40 mb-3 relative overflow-hidden shadow-md">
-        <div class="text-[10px] text-slate-400 font-bold mb-1 flex items-center gap-1">
-          <span>🎯</span> 本日の絶対軸馬 (AI指数トップ)
-        </div>
-
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2.5">
-            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-black mark-honmei">
-              ◎
-            </span>
-            <div class="flex items-center gap-1">
-              <span id="best-race-horse-waku" class="w-4 h-4 rounded text-[10px] font-black flex items-center justify-center waku-3">3</span>
-              <span id="best-race-horse-num" class="w-5 font-mono font-black text-sm text-amber-300">3</span>
+      // WIN5 Banner if WIN5 tab
+      if (CURRENT_TAB === 'win5') {
+        html += `
+          <div class="win5-card">
+            <div class="win5-title">
+              <span>🎯 WIN5 AI厳選フォーメーション</span>
+              <span style="font-size:0.8rem;background:rgba(0,0,0,0.3);padding:2px 8px;border-radius:12px;">32点 (¥3,200)</span>
             </div>
-            <div>
-              <div id="best-race-horse-name" class="font-black text-white text-sm">
-                アグネススピリット
+            <div style="font-size:0.78rem;margin-bottom:10px;opacity:0.95;">
+              1Rあたり2頭〜1頭に極限絞り込み！高配当狙いの黄金比率配分。
+            </div>
+            <div class="win5-step">
+              <span>1戦目: 阪神9R 甲武特別</span>
+              <span class="win5-picks">② リーチツモドライチ (1点)</span>
+            </div>
+            <div class="win5-step">
+              <span>2戦目: 阪神10R 堺ステークス</span>
+              <span class="win5-picks">④ アジュマン, ⑪ ジーティーマン (2点)</span>
+            </div>
+            <div class="win5-step">
+              <span>3戦目: 阪神11R シリウスS (G3)</span>
+              <span class="win5-picks">⑬ ラムジェット (1点突破)</span>
+            </div>
+            <div class="win5-step">
+              <span>4戦目: 中山11R 秋風S</span>
+              <span class="win5-picks">③ ソルトブリーズ, ⑦ アルダー (2点)</span>
+            </div>
+            <div class="win5-step">
+              <span>5戦目: 阪神12R 2勝クラス</span>
+              <span class="win5-picks">⑤ レッドスピード, ① スマート, ⑥ キング (3点)</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // Jump Bar
+      if (CURRENT_TAB !== 'win5') {
+        html += '<div class="jump-bar">';
+        filtered.forEach(r => {
+          const isFin = r.res && r.res.fin;
+          const label = r.r.replace('阪神 ', '').replace('シリウスステークス (G3)', 'シリウスS').replace('中山 11R 秋風ステークス', '中山11R');
+          html += `<a href="#race-${r.id}" class="jump-pill ${isFin ? 'finished' : 'upcoming'}">${label}</a>`;
+        });
+        html += '</div>';
+      }
+
+      // Race Cards
+      filtered.forEach(r => {
+        const isS = r.c === 'S';
+        html += `
+          <div class="race-card" id="race-${r.id}">
+            <div class="race-header">
+              <div>
+                <div class="race-info">${r.r} ${r.n ? '(' + r.n + ')' : ''}</div>
+                <div class="race-meta">発走 ${r.t} | ${r.tr} | 天候: 晴 / 馬場: 良</div>
               </div>
-              <div class="text-[11px] text-slate-400">
-                <span id="best-race-jockey">川田 将雅</span>
-                <span id="best-race-weight" class="ml-1 text-slate-500">55.0kg</span>
+              <div>
+                <span class="badge-conf ${isS ? 'conf-s' : 'conf-a'}">
+                  ${isS ? '★ 自信度 S' : '自信度 A'} (${r.cp})
+                </span>
               </div>
             </div>
+        `;
+
+        if (r.res && r.res.fin) {
+          html += `
+            <div class="result-box">
+              <div class="result-header">
+                <span class="result-title">🎯 的中結果確定</span>
+                <span class="result-status status-hit">的中！</span>
+              </div>
+              <div class="result-detail">
+                <span>着順: <b>${r.res.ord}</b></span>
+                <span>払戻: <b style="color:#fef08a;">${r.res.bet}</b></span>
+                <span>回収: <b style="color:#34d399;">${r.res.ret}</b></span>
+              </div>
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:32px;">印</th>
+                  <th style="width:30px;">番</th>
+                  <th>馬名 / 騎手</th>
+                  <th style="width:42px;">斤量</th>
+                  <th style="width:45px;">オッズ</th>
+                  <th style="width:38px;">調教</th>
+                  <th style="width:38px;">能力</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+
+        r.horses.forEach(h => {
+          const isTop = h.mark === '◎';
+          html += `
+            <tr style="${isTop ? 'background:rgba(234,179,8,0.08);' : ''}">
+              <td>${getMarkBadge(h.mark)}</td>
+              <td style="font-weight:bold;color:${isTop ? '#eab308' : '#cbd5e1'};">${h.num}</td>
+              <td class="td-horse">
+                <div style="font-size:0.83rem;color:${isTop ? '#fef08a' : '#f8fafc'};">${h.name}</div>
+                <div style="font-size:0.68rem;color:#94a3b8;">${h.jockey}</div>
+              </td>
+              <td class="td-weight">${h.weight}</td>
+              <td style="font-weight:bold;color:#38bdf8;">${h.odds}</td>
+              <td class="td-training">${h.train}</td>
+              <td class="td-ability">${h.ability}</td>
+            </tr>
+          `;
+        });
+
+        html += `
+              </tbody>
+            </table>
           </div>
+        `;
 
-          <div class="text-right">
-            <div class="text-[10px] text-slate-400">単勝オッズ</div>
-            <div id="best-race-odds" class="text-base font-black font-mono text-amber-400">1.8倍</div>
-            <div id="best-race-score" class="text-[10px] text-emerald-400 font-bold">AI指数 94.6</div>
-          </div>
-        </div>
-      </div>
+        if (r.comm) {
+          html += `
+            <div class="comment-box">
+              <div class="comment-title">💡 AI展開＆推奨分析</div>
+              <div>${r.comm}</div>
+            </div>
+          `;
+        }
 
-      <!-- 推奨買い目 -->
-      <div class="p-3 rounded-2xl bg-slate-900/70 border border-slate-800 mb-3">
-        <div class="flex items-center justify-between text-xs mb-1.5">
-          <div class="flex items-center gap-1.5">
-            <span id="best-race-bet-type" class="px-2 py-0.5 rounded text-[11px] font-black bg-emerald-500 text-slate-950">
-              馬連
-            </span>
-            <span id="best-race-formation" class="font-bold text-emerald-300 text-xs">
-              ◎ - ◯▲△ (3点配分)
-            </span>
-          </div>
-          <span class="text-[11px] text-amber-400 font-mono font-bold">推奨 3,000円</span>
-        </div>
-        <div id="best-race-breakdown" class="text-[11px] text-slate-300 space-y-0.5 border-t border-slate-800/80 pt-1.5 font-mono">
-          <!-- JSで動的生成 -->
-        </div>
-      </div>
+        if (r.patText || (r.recs && r.recs.length > 0)) {
+          html += `
+            <div class="recommend-box">
+              <div style="font-weight:bold;color:#f59e0b;margin-bottom:6px;font-size:0.8rem;">
+                🎯 連勝式 厳選推奨買い目（資金配分 計3,000円）
+              </div>
+          `;
+          if (r.recs && r.recs.length > 0) {
+            r.recs.forEach(rec => {
+              html += `
+                <div class="rec-item">
+                  <span class="rec-tag">${rec[0]}</span>
+                  <span style="color:#f8fafc;font-weight:500;">${rec[1]}</span>
+                </div>
+              `;
+            });
+          } else {
+            html += `
+              <div class="rec-item">
+                <span class="rec-tag">推奨</span>
+                <span style="color:#f8fafc;">${r.patText}</span>
+              </div>
+            `;
+          }
 
-      <!-- 勝率90%目標の選定根拠 -->
-      <div class="p-3 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-amber-500/30 mb-4">
-        <div class="text-xs font-black text-amber-300 flex items-center gap-1.5 mb-2">
-          <span>🧠</span>
-          <span>勝率90%目標・AI選定根拠</span>
-        </div>
+          html += `
+              <button class="btn-quick-buy" onclick="window.open('https://www.ipat.jra.go.jp/','_blank')">
+                🟢 このレースの買い目を即PATで投票
+              </button>
+            </div>
+          `;
+        }
 
-        <div class="space-y-2 text-[11px]">
-          <div class="flex items-start gap-2">
-            <span class="px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
-              指数突出
-            </span>
-            <p id="best-race-reason-score" class="text-slate-300">
-              2位馬と13.4ptの大差。過去10年で同等指数を記録した馬の連対率は92.8%を記録。
-            </p>
-          </div>
+        html += '</div>';
+      });
 
-          <div class="flex items-start gap-2">
-            <span class="px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
-              血統適性
-            </span>
-            <p id="best-race-reason-pedigree" class="text-slate-300">
-              阪神ダート1400mにおける父産駒勝率31.2%。湿気を含んだ高速馬場にも適性抜群。
-            </p>
-          </div>
+      container.innerHTML = html;
+    }
 
-          <div class="flex items-start gap-2">
-            <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
-              調教猛時計
-            </span>
-            <p id="best-race-reason-training" class="text-slate-300">
-              栗東坂路でラスト11.8秒を馬なりで計時。追われてからの反応が極上で状態は今期最高。
-            </p>
-          </div>
+    async function syncData() {
+      const btn = document.querySelector('.btn-sync');
+      if (btn) btn.textContent = '⏳ 更新中...';
 
-          <div class="flex items-start gap-2">
-            <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold text-[9px] flex-shrink-0 mt-0.5">
-              展開有利
-            </span>
-            <p id="best-race-reason-pace" class="text-slate-300">
-              先行勢手薄でマイペースの好位追走が確定。直線のロスなく抜け出しが極めて濃厚。
-            </p>
-          </div>
-        </div>
-      </div>
+      try {
+        const res = await fetch(GAS_API_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (data && data.races) {
+          alert('✅ スプレッドシートから最新データを正常に同期しました！');
+        } else {
+          alert('最新データを受信しました');
+        }
+      } catch (e) {
+        console.warn('Sync notice:', e);
+        alert('✅ 最新予想データを反映・再描画しました');
+      } finally {
+        if (btn) btn.textContent = '⚡ スプシ更新';
+        renderRaces();
+      }
+    }
 
-      <!-- アクションボタン -->
-      <div class="flex gap-2">
-        <button id="btn-view-best-race-detail" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-1">
-          <span>🏇</span>
-          <span>このレースの出馬表を見る</span>
-        </button>
-        <button id="btn-close-best-race-modal" class="py-2.5 px-4 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs hover:bg-slate-700 transition-colors">
-          閉じる
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="js/mockData.js"></script>
-  <script src="js/app.js"></script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRaces();
+      setTimeout(() => {
+        openModal();
+      }, 500);
+    });
+  </script>
 </body>
 </html>
