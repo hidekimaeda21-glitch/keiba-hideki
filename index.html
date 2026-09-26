@@ -27,7 +27,7 @@
       <h3 class="text-lg font-bold text-amber-400 mb-1">自信度95%超の勝負レース！</h3>
       <p class="text-sm font-bold text-white mb-2">阪神 11R 大阪杯 (G1・全国重賞)</p>
       <p class="text-xs text-slate-300 bg-slate-950 p-3 rounded-lg border border-white/10 mb-4 leading-relaxed">
-        AI独自の総合指数・能力値がメンバー中圧倒的最高値を記録。軸馬の信頼度が極めて高い絶対的勝負レースです。
+        AI独自の総合指数・能力値がメンバー中圧倒的最高値を記録。人気順にとらわれない真の能力評価による絶対的勝負レースです。
       </p>
       <button onclick="closePopup()"
         class="w-full py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-sm rounded-xl shadow-lg active:scale-95 transition">
@@ -78,7 +78,7 @@
         profit: "+￥11,800",
         isHeavy: false,
         win5: false,
-        comment: "AI独自指数が最高値。前走のラップ分析および調教での抜群の手応えを評価し軸に推す。",
+        comment: "AI独自の総合指数が最高値。前走のラップ分析および調教での抜群の手応えを評価し軸に推す。",
         horses: [
           { num: 1, name: "メイショウゴールド", jockey: "武豊", weight: "57", odds: "3.1", score: "96.4", mark: "◎ 本命" },
           { num: 2, name: "ホウオウゴールド", jockey: "坂井", weight: "58", odds: "3.0", score: "91.2", mark: "○ 対抗" },
@@ -561,12 +561,26 @@
 
     function triggerFullDataUpdate() {
       const statusEl = document.getElementById("sync-status");
-      if (statusEl) statusEl.textContent = "● 同期完了";
+      if (statusEl) statusEl.textContent = "● 同期完了 (" + new Date().toLocaleTimeString() + ")";
       renderRaceCards(localRaceData, currentFilter);
+    }
+
+    // 開催日当日の朝7時に自動更新をチェック・実行するタイマー
+    function setupMorningAutoUpdate() {
+      setInterval(() => {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        // 毎日朝7時00分になった瞬間に自動更新を実行
+        if (hours === 7 && minutes === 0) {
+          triggerFullDataUpdate();
+        }
+      }, 60000); // 1分ごとにチェック
     }
 
     document.addEventListener("DOMContentLoaded", function () {
       renderRaceCards(localRaceData, "all");
+      setupMorningAutoUpdate();
       setTimeout(() => {
         const popup = document.getElementById("confidence-popup");
         if (popup) popup.classList.remove("hidden");
