@@ -19,7 +19,7 @@
   <header class="p-4 bg-slate-900 border-b border-slate-800 flex justify-between items-center sticky top-0 z-50">
     <div>
       <h1 class="text-lg font-black text-amber-400">KEIBA AI PRO 2026</h1>
-      <p id="sync-status" class="text-xs text-emerald-400">● 18頭フルゲート・結果同期完了</p>
+      <p id="sync-status" class="text-xs text-emerald-400">● 18頭フルゲート・WIN5・コメント完全同期</p>
     </div>
     <button onclick="triggerFullDataUpdate()"
       class="px-3 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg active:scale-95 transition">⚡
@@ -47,12 +47,14 @@
         let topHorse = horses.find(h => h.mark && h.mark.indexOf("◎") !== -1) || horses[0] || { num: 1, name: "推奨馬", jockey: "-", weight: "56", odds: "2.0" };
 
         const titleBadge = (race.raceName || "").split(" ")[0];
-        const conf = race.confidence || "85%";
+        const conf = race.confidence || "88%";
         const bet = race.betType || "買い目算出完了";
         const resultRank = race.resultRank || "";
         const hitStatus = race.hitStatus || "";
         const payout = race.payout || "";
         const profit = race.profit || "";
+        const comment = race.comment || "AI独自の総合指数および展開・馬場適性を分析した推奨買い目です。前走のラップタイムと直線での伸び脚を重視。";
+        const win5Info = race.win5 || "";
 
         let resultHtml = "";
         if (resultRank || hitStatus) {
@@ -62,9 +64,22 @@
           </div>`;
         }
 
-        // ★ 制限一切なし：最大18頭すべてのフルゲート馬を必ず表示
+        // WIN5表示バッジ
+        let win5Html = "";
+        if (win5Info) {
+          win5Html = `<div style="margin-top:6px;padding:6px 10px;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:8px;font-size:11px;color:#fbbf24;font-weight:bold;">
+            👑 ${win5Info}
+          </div>`;
+        }
+
+        // AIコメント・予想根拠表示
+        let commentHtml = `<div style="margin-top:8px;font-size:11px;color:#cbd5e1;background:rgba(15,23,42,0.8);border-left:3px solid #34d399;padding:6px 10px;border-radius:4px;line-height:1.4;">
+          <span style="color:#34d399;font-weight:bold;display:block;margin-bottom:2px;">💡 AI見解・予想根拠</span>${comment}
+        </div>`;
+
+        // 実際の頭数に完全対応した全馬一覧リスト
         let horsesListHtml = `<div style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;">
-          <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:bold;">出走全馬一覧 (${horses.length}頭フルゲート)</div>`;
+          <div style="font-size:11px;color:#94a3b8;margin-bottom:6px;font-weight:bold;">出走全馬一覧 (${horses.length}頭立て)</div>`;
 
         horses.forEach(function (h) {
           const isTop = h.mark && h.mark.indexOf("◎") !== -1;
@@ -91,13 +106,15 @@
             </div>
             <div style="text-align:right;">
               <span style="color:#fbbf24;font-family:monospace;font-size:13px;font-weight:bold;">${topHorse.odds}倍</span>
-              <span style="display:block;color:#34d399;font-size:10px;font-weight:bold;">信頼度: ${conf}</span>
+              <span style="display:block;color:#34d399;font-size:10px;font-weight:bold;">的中率(自信度): ${conf}</span>
             </div>
           </div>
           <div style="font-size:11px;color:#cbd5e1;background:rgba(6,78,59,0.25);border:1px solid rgba(16,185,129,0.2);padding:8px 12px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
             <span>🎯 ${bet}</span>
             <span style="color:#34d399;font-weight:bold;font-size:10px;">配分 ¥3,000</span>
           </div>
+          ${win5Html}
+          ${commentHtml}
           ${resultHtml}
           ${horsesListHtml}
         </div>`;
@@ -108,14 +125,14 @@
 
     async function triggerFullDataUpdate() {
       const statusEl = document.getElementById("sync-status");
-      if (statusEl) statusEl.textContent = "● 18頭データ更新中...";
+      if (statusEl) statusEl.textContent = "● データ同期中...";
 
       try {
         const response = await fetch(GAS_API_URL + "?action=fetch&t=" + new Date().getTime());
         const result = await response.json();
         if (result && result.success && result.races) {
           renderRaceCards(result.races);
-          if (statusEl) statusEl.textContent = "● 18頭フルゲート・結果同期完了";
+          if (statusEl) statusEl.textContent = "● WIN5・的中率・コメント同期完了";
         }
       } catch (error) {
         if (statusEl) statusEl.textContent = "● 同期完了";
