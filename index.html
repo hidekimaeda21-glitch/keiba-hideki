@@ -75,21 +75,20 @@
       const tabs = document.getElementById('venue-tabs');
       tabs.innerHTML = `<div class="text-xs text-amber-400 flex items-center gap-2 px-2"><div class="loader"></div> データを読み込み中...</div>`;
 
-      const script = document.createElement('script');
-      const callbackName = 'jsonpCallback_' + Math.round(100000 * Math.random());
-      
-      window[callbackName] = function(data) {
-        delete window[callbackName];
-        document.body.removeChild(script);
+      const oldScript = document.getElementById('jsonp-script');
+      if (oldScript) oldScript.remove();
 
+      const script = document.createElement('script');
+      script.id = 'jsonp-script';
+      
+      window.handleGasResponse = function(data) {
         try {
           if (data.error) throw new Error(data.error);
           
-          // オブジェクト型データを安全に配列に変換
           const racesArray = Array.isArray(data.races) ? data.races : Object.values(data.races);
 
           allRaces = processAiScores(racesArray); 
-          document.getElementById('last-update').innerHTML = `● 最終更新: ${data.updatedAt}`;
+          document.getElementById('last-update').innerHTML = `● 最終更新: ${data.updatedAt || '完了'}`;
           venues = [...new Set(allRaces.map(r => r.venue))];
           buildTabs();
           switchTab(venues[0]); 
@@ -98,7 +97,7 @@
         }
       };
 
-      script.src = GAS_API_URL + "?callback=" + callbackName;
+      script.src = GAS_API_URL + "?callback=handleGasResponse";
       document.body.appendChild(script);
     }
 
