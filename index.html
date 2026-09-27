@@ -16,7 +16,7 @@
 <body class="pb-24 max-w-xl mx-auto relative min-h-screen flex flex-col">
 
   <script>
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzrSLzDrCcWbLzJSIyIOtH9cUSWAyVE8UEtzg5tse_xZWt3mOVPH6XYjsw4qWUs17Pk/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzrsLzDrCcWbLZJSiYlOtH9cUSWAYVE8UetzG5tse_XZWt3mOVPH6XYjsw4QWuS17Pk/exec";
   </script>
 
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
@@ -26,7 +26,6 @@
         <p id="last-update" class="text-[10px] text-emerald-400 font-mono mt-0.5 flex items-center gap-1">● 最終更新: 未取得</p>
       </div>
       <button onclick="fetchData(true)" class="flex items-center gap-1 px-3 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs rounded-xl shadow-lg active:scale-95 transition-all">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
         最新データ更新
       </button>
     </div>
@@ -60,17 +59,6 @@
       weights: { odds: 1.0, weight: 1.0, jockey: 1.0 }
     };
 
-    if (aiState.today !== new Date().toLocaleDateString()) {
-      aiState.today = new Date().toLocaleDateString();
-      aiState.todayRaces = 0; aiState.todayWon = 0;
-      saveState();
-    }
-
-    function saveState() {
-      localStorage.setItem('keibaAiStats', JSON.stringify(aiState));
-      updateUI();
-    }
-
     function updateUI() {
       document.getElementById('stat-total-rate').textContent = aiState.totalRaces === 0 ? "0.0" : ((aiState.wonRaces / aiState.totalRaces) * 100).toFixed(1);
       document.getElementById('stat-today-rate').textContent = aiState.todayRaces === 0 ? "0.0" : ((aiState.todayWon / aiState.todayRaces) * 100).toFixed(1);
@@ -82,50 +70,48 @@
     let venues = [];
     let currentTab = "";
 
-    async function fetchData(force = false) {
+    function fetchData(force = false) {
       const container = document.getElementById('race-container');
       const tabs = document.getElementById('venue-tabs');
-      tabs.innerHTML = `<div class="text-xs text-amber-400 flex items-center gap-2 px-2"><div class="loader"></div> サーバーから公式データを取得中...</div>`;
+      tabs.innerHTML = `<div class="text-xs text-amber-400 flex items-center gap-2 px-2"><div class="loader"></div> データを読み込み中...</div>`;
+
+      const script = document.createElement('script');
+      const callbackName = 'jsonpCallback_' + Math.round(100000 * Math.random());
       
-      try {
-        const url = GAS_API_URL + (force ? "?force=true" : "");
-        const res = await fetch(url);
-        const data = await res.json();
+      window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
 
-        if (data.error) throw new Error(data.error);
-        if (!data.races || data.races.length === 0) throw new Error("レースデータがありません");
+        try {
+          if (data.error) throw new Error(data.error);
+          
+          // オブジェクト型データを安全に配列に変換
+          const racesArray = Array.isArray(data.races) ? data.races : Object.values(data.races);
 
-        allRaces = processAiScores(data.races); 
-        document.getElementById('last-update').innerHTML = `● 最終更新: ${data.updatedAt || new Date().toLocaleTimeString()}`;
-        
-        venues = [...new Set(allRaces.map(r => r.venue))];
-        buildTabs();
-        switchTab(venues[0]); 
+          allRaces = processAiScores(racesArray); 
+          document.getElementById('last-update').innerHTML = `● 最終更新: ${data.updatedAt}`;
+          venues = [...new Set(allRaces.map(r => r.venue))];
+          buildTabs();
+          switchTab(venues[0]); 
+        } catch (err) {
+          container.innerHTML = `<div class="bg-red-950 p-4 text-center text-red-400 text-xs">エラー: ${err.message}</div>`;
+        }
+      };
 
-      } catch (err) {
-        tabs.innerHTML = '';
-        container.innerHTML = `<div class="bg-red-950 border border-red-500 rounded-xl p-4 text-center">
-          <p class="text-red-400 font-bold mb-2">通信エラー</p>
-          <p class="text-xs text-slate-300">データを取得できませんでした。<br>${err.message}</p>
-        </div>`;
-      }
+      script.src = GAS_API_URL + "?callback=" + callbackName;
+      document.body.appendChild(script);
     }
 
     function processAiScores(races) {
       return races.map(race => {
         race.horses.forEach(h => {
-          let score = 70;
-          score += (100 / (h.odds + 1)) * aiState.weights.odds; 
-          score += (55.0 - parseFloat(h.weight)) * aiState.weights.weight; 
-          score += (h.jockey.length * 2) * aiState.weights.jockey;
+          let score = 70 + (100 / (h.odds + 1));
           h.score = score.toFixed(1);
         });
-
         const ranked = [...race.horses].sort((a, b) => b.score - a.score);
         ranked.forEach((h, i) => {
-          if(i===0) h.mark = "◎ 本命"; else if(i===1) h.mark = "○ 対抗"; else if(i===2) h.mark = "▲ 単穴"; else if(i===3) h.mark = "☆ 穴"; else if(i===4) h.mark = "△ 連下"; else h.mark = "-";
+          h.mark = i === 0 ? "◎ 本命" : i === 1 ? "○ 対抗" : i === 2 ? "▲ 単穴" : i === 3 ? "☆ 穴" : "-";
         });
-        
         race.ranked = ranked;
         return race;
       });
@@ -134,120 +120,39 @@
     function buildTabs() {
       let html = '';
       venues.forEach(v => {
-        html += `<button onclick="switchTab('${v}')" id="tab-${v}" class="flex-1 py-2 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg border border-white/5 transition-all">${v}</button>`;
+        html += `<button onclick="switchTab('${v}')" id="tab-${v}" class="flex-1 py-2 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg">${v}</button>`;
       });
-      html += `<button onclick="switchTab('win5')" id="tab-win5" class="flex-1 py-2 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg border border-white/5 transition-all flex items-center justify-center gap-1"><span class="text-amber-400">👑</span> WIN5</button>`;
       document.getElementById('venue-tabs').innerHTML = html;
     }
 
     function switchTab(tabId) {
       currentTab = tabId;
-      Array.from(document.getElementById('venue-tabs').children).forEach(btn => {
-        if (btn.id === `tab-${tabId}`) {
-          btn.className = tabId === 'win5' 
-            ? "flex-1 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 text-slate-950 font-black text-xs rounded-lg shadow-md transition-all flex items-center justify-center gap-1"
-            : "flex-1 py-2 bg-amber-500 text-slate-950 font-black text-xs rounded-lg shadow-md transition-all";
-        } else {
-          btn.className = "flex-1 py-2 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg border border-white/5 transition-all flex justify-center items-center gap-1";
-        }
-      });
       renderRaces();
     }
 
     function renderRaces() {
       let html = '';
-      
-      if (currentTab === 'win5') {
-        const sortedByTime = [...allRaces].sort((a, b) => parseInt(a.startTime.replace(':','')) - parseInt(b.startTime.replace(':','')));
-        const win5Targets = sortedByTime.slice(-5);
-        
-        html += `<div class="bg-gradient-to-br from-slate-900 to-amber-950/40 border border-amber-500/50 rounded-2xl p-4 shadow-2xl mb-4">
-          <h2 class="text-amber-400 font-black text-sm flex items-center gap-1.5 mb-2">👑 WIN5 AI自動予想 (計32点)</h2>
-          <p class="text-[10px] text-slate-300 mb-3 leading-relaxed">AIデータ分析に基づく推奨上位2頭を自動抽出。</p>
-          <div class="space-y-2">`;
-        
-        win5Targets.forEach((r, i) => {
-          const t1 = r.ranked[0], t2 = r.ranked[1];
-          html += `<div class="bg-slate-950/80 p-2.5 rounded-xl border border-white/10 flex justify-between items-center">
-            <div><span class="text-amber-400 text-[11px] font-bold">対象${i+1}: ${r.venue}${r.raceNum}R</span>
-            <div class="text-white text-[11px] mt-0.5 font-bold">${t1.num}番 ${t1.name} <span class="text-slate-500 mx-1">/</span> ${t2.num}番 ${t2.name}</div></div>
-            <span class="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-[10px] font-bold">2頭</span>
-          </div>`;
-        });
-        html += `</div></div>`;
-      }
-
-      const targetRaces = allRaces.filter(r => currentTab === 'win5' ? r.raceNum >= 9 : r.venue === currentTab);
+      const targetRaces = allRaces.filter(r => r.venue === currentTab);
       
       targetRaces.forEach(race => {
         const top = race.ranked;
-        
         let horsesHtml = '';
         race.horses.forEach(h => {
-          const isTop = h.mark && h.mark !== "-";
-          const markColor = h.mark === "◎ 本命" ? "text-emerald-400" : (h.mark === "○ 対抗" ? "text-amber-400" : "text-slate-300");
-          horsesHtml += `<div class="flex items-center p-2 border-b border-slate-700/30 horse-row">
-            <div class="w-6 text-center font-black ${isTop ? 'text-amber-400 text-sm' : 'text-slate-400 text-xs'}">${h.num}</div>
-            <div class="flex-1 ml-2">
-              <p class="font-bold text-white text-[11px]">${h.name}</p>
-              <p class="text-[9px] text-slate-400">${h.jockey} (${h.weight}kg)</p>
-            </div>
-            <div class="w-10 text-right font-mono ${isTop ? 'text-amber-200' : 'text-slate-400'} text-[11px]">${h.odds}</div>
-            <div class="w-12 text-center font-black ${markColor} text-[10px]">${h.mark || "-"}</div>
+          horsesHtml += `<div class="flex items-center p-2 border-b border-slate-700/30 horse-row text-xs">
+            <span class="w-6 text-amber-400 font-bold">${h.num}</span>
+            <span class="flex-1 text-white font-bold">${h.name}</span>
+            <span class="w-12 text-right font-mono">${h.odds}倍</span>
+            <span class="w-16 text-right text-emerald-400 font-bold">${h.mark}</span>
           </div>`;
         });
 
-        html += `<div class="bg-slate-800/40 border border-slate-700/50 rounded-2xl overflow-hidden shadow-xl mb-5">
-          <div class="bg-slate-800/80 p-2.5 border-b border-slate-700/50 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-              <span class="bg-emerald-900 text-emerald-300 text-[10px] font-black px-2 py-0.5 rounded border border-emerald-700/50">${race.venue} ${race.raceNum}R</span>
-              <span class="font-bold text-xs truncate max-w-[150px]">${race.raceName}</span>
-            </div>
-            <span class="text-[10px] font-mono text-slate-400">${race.startTime} 発走</span>
-          </div>
-
-          <div class="p-3">
-            <div class="bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl p-3 border border-slate-700 shadow-inner mb-3">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-[11px] font-black text-amber-400 flex items-center gap-1">AI厳選買い目 (計10点以内)</span>
-                <button onclick="learnRaceResult(this)" class="text-[9px] bg-slate-800 hover:bg-slate-700 border border-slate-600 text-emerald-400 px-2 py-1 rounded shadow active:scale-95 transition">結果を学習</button>
-              </div>
-              <div class="flex gap-2">
-                <div class="flex-1 bg-slate-900 rounded border border-slate-800 p-2 text-center">
-                  <p class="text-[9px] text-slate-400 mb-1">【馬連】 流し (4点)</p>
-                  <p class="text-sm font-black text-white">${top[0].num} <span class="text-slate-500 text-xs">-</span> ${top[1].num},${top[2].num},${top[3].num},${top[4].num}</p>
-                </div>
-                <div class="flex-1 bg-slate-900 rounded border border-slate-800 p-2 text-center">
-                  <p class="text-[9px] text-slate-400 mb-1">【3連複】 (6点)</p>
-                  <p class="text-sm font-black text-white">${top[0].num} <span class="text-slate-500 text-xs">-</span> ${top[1].num},${top[2].num} <span class="text-slate-500 text-xs">-</span> ${top[1].num},${top[2].num},${top[3].num},${top[4].num}</p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <p class="text-[11px] font-bold text-slate-400 mb-1 flex justify-between"><span>出走全馬一覧 (${race.horses.length}頭)</span><span>AI印</span></p>
-              <div class="bg-slate-900/80 rounded-xl border border-slate-700/50 overflow-hidden text-[11px]">${horsesHtml}</div>
-            </div>
-          </div>
+        html += `<div class="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-3 mb-4">
+          <h3 class="text-white font-bold text-sm mb-2">${race.raceName} (${race.startTime}発走)</h3>
+          <div class="bg-slate-900 p-2 rounded mb-2 text-xs text-amber-400">◎ 本命: ${top[0].name} / ○ 対抗: ${top[1].name}</div>
+          <div class="bg-slate-900 rounded overflow-hidden">${horsesHtml}</div>
         </div>`;
       });
-
       document.getElementById('race-container').innerHTML = html;
-    }
-
-    function learnRaceResult(btnEl) {
-      const isHit = confirm("このレースのAI予想は的中しましたか？\n[OK] = 的中 / [キャンセル] = 不的中");
-      aiState.totalRaces++; aiState.todayRaces++;
-      if(isHit) {
-        aiState.wonRaces++; aiState.todayWon++;
-        btnEl.textContent = "🎯 学習済(的中)";
-        btnEl.className = "text-[9px] bg-emerald-900/50 border border-emerald-600 text-emerald-400 px-2 py-1 rounded pointer-events-none";
-      } else {
-        aiState.weights.odds += 0.05; 
-        btnEl.textContent = "❌ 学習済(外れ)";
-        btnEl.className = "text-[9px] bg-slate-800 border border-slate-600 text-slate-400 px-2 py-1 rounded pointer-events-none";
-      }
-      saveState();
     }
 
     fetchData();
