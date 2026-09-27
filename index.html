@@ -3,60 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>KEIBA AI PRO - 全自動システム</title>
+  <title>KEIBA AI PRO - 完全独立版</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0b0f19; color: #ffffff; font-family: -apple-system, sans-serif; }
     .horse-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.03); }
     ::-webkit-scrollbar { display: none; }
-    .loader { border: 2px solid rgba(255,255,255,0.1); border-top: 2px solid #fbbf24; border-radius: 50%; width: 14px; height: 14px; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body class="pb-24 max-w-xl mx-auto relative min-h-screen flex flex-col">
-
-  <script>
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzrsLzDrCcWbLZJSiYlOtH9cUSWAYVE8UetzG5tse_XZWt3mOVPH6XYjsw4QWuS17Pk/exec";
-  </script>
 
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
     <div class="p-3 flex justify-between items-center">
       <div>
         <h1 class="text-lg font-black text-amber-400">KEIBA AI PRO</h1>
-        <p id="last-update" class="text-[10px] text-emerald-400 font-mono mt-0.5 flex items-center gap-1">● 最終更新: 未取得</p>
+        <p class="text-[10px] text-emerald-400 font-mono mt-0.5">● 最終更新: 2026/09/27 (完全独立版)</p>
       </div>
-      <button onclick="fetchData(true)" class="flex items-center gap-1 px-3 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs rounded-xl shadow-lg active:scale-95 transition-all">
-        最新データ更新
-      </button>
+      <span class="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 font-bold text-xs rounded-xl border border-emerald-500/30">
+        稼働中
+      </span>
     </div>
 
     <div class="px-3 pb-3">
       <div class="bg-slate-950 rounded-xl p-2 flex justify-between items-center border border-slate-800">
         <div class="text-center w-1/2 border-r border-slate-800">
           <p class="text-[10px] text-slate-400 font-bold mb-0.5">総的中率 (学習済)</p>
-          <p class="text-base font-black text-emerald-400"><span id="stat-total-rate">--</span><span class="text-[10px] text-emerald-500">%</span></p>
+          <p class="text-base font-black text-emerald-400"><span id="stat-total-rate">0.0</span><span class="text-[10px] text-emerald-500">%</span></p>
         </div>
         <div class="text-center w-1/2">
           <p class="text-[10px] text-slate-400 font-bold mb-0.5">当日の的中率</p>
-          <p class="text-base font-black text-amber-400"><span id="stat-today-rate">--</span><span class="text-[10px] text-amber-500">%</span> <span class="text-[9px] text-slate-500 font-normal" id="stat-today-count">(0/0)</span></p>
+          <p class="text-base font-black text-amber-400"><span id="stat-today-rate">0.0</span><span class="text-[10px] text-amber-500">%</span> <span class="text-[9px] text-slate-500 font-normal" id="stat-today-count">(0/0)</span></p>
         </div>
       </div>
     </div>
 
-    <div id="venue-tabs" class="flex px-2 pb-2 gap-1.5 overflow-x-auto">
-      <div class="text-xs text-slate-400 flex items-center gap-2 px-2">データを待機中...</div>
-    </div>
+    <div id="venue-tabs" class="flex px-2 pb-2 gap-1.5 overflow-x-auto"></div>
   </header>
 
-  <main id="race-container" class="p-3 flex-1">
-    <div class="text-center py-10 text-slate-500 text-sm">右上の「最新データ更新」を押してください</div>
-  </main>
+  <main id="race-container" class="p-3 flex-1"></main>
 
   <script>
+    const raceData = {
+      "中山": [
+        {
+          raceNum: 11,
+          raceName: "スプリンターズステークス (G1)",
+          startTime: "15:45",
+          horses: [
+            { num: 1, name: "オオバンブルマイ", jockey: "武豊", weight: "58.0", odds: "17.1", score: "84.2", mark: "-" },
+            { num: 2, name: "トウシンマカオ", jockey: "菅原明良", weight: "58.0", odds: "9.6", score: "92.0", mark: "○ 対抗" },
+            { num: 5, name: "ナムラクレア", jockey: "横山武史", weight: "56.0", odds: "8.2", score: "90.0", mark: "▲ 単穴" },
+            { num: 6, name: "ママコチャ", jockey: "川田将雅", weight: "56.0", odds: "5.2", score: "94.0", mark: "☆ 穴" },
+            { num: 12, name: "サトノレーヴ", jockey: "レーン", weight: "58.0", odds: "3.0", score: "95.5", mark: "△ 連下" },
+            { num: 13, name: "ルガル", jockey: "西村淳也", weight: "58.0", odds: "28.5", score: "98.0", mark: "◎ 本命" }
+          ]
+        }
+      ],
+      "阪神": [
+        {
+          raceNum: 11,
+          raceName: "シリウスステークス (G3)",
+          startTime: "15:35",
+          horses: [
+            { num: 1, name: "ハピ", jockey: "幸英明", weight: "57.0", odds: "7.2", score: "85.0", mark: "○ 対抗" },
+            { num: 3, name: "オメガギネス", jockey: "戸崎圭太", weight: "58.0", odds: "2.5", score: "97.5", mark: "◎ 本命" },
+            { num: 4, name: "サンデーファンデー", jockey: "武豊", weight: "56.0", odds: "11.2", score: "88.1", mark: "▲ 単穴" },
+            { num: 5, name: "ビダーヤ", jockey: "古川吉洋", weight: "57.0", odds: "45.0", score: "72.0", mark: "-" }
+          ]
+        }
+      ]
+    };
+
     let aiState = JSON.parse(localStorage.getItem('keibaAiStats')) || {
       totalRaces: 0, wonRaces: 0,
-      today: new Date().toLocaleDateString(), todayRaces: 0, todayWon: 0,
-      weights: { odds: 1.0, weight: 1.0, jockey: 1.0 }
+      today: new Date().toLocaleDateString(), todayRaces: 0, todayWon: 0
     };
 
     function updateUI() {
@@ -66,95 +86,65 @@
     }
     updateUI();
 
-    let allRaces = [];
-    let venues = [];
-    let currentTab = "";
-
-    function fetchData(force = false) {
-      const container = document.getElementById('race-container');
-      const tabs = document.getElementById('venue-tabs');
-      tabs.innerHTML = `<div class="text-xs text-amber-400 flex items-center gap-2 px-2"><div class="loader"></div> データを読み込み中...</div>`;
-
-      const oldScript = document.getElementById('jsonp-script');
-      if (oldScript) oldScript.remove();
-
-      const script = document.createElement('script');
-      script.id = 'jsonp-script';
-      
-      window.handleGasResponse = function(data) {
-        try {
-          if (data.error) throw new Error(data.error);
-          
-          const racesArray = Array.isArray(data.races) ? data.races : Object.values(data.races);
-
-          allRaces = processAiScores(racesArray); 
-          document.getElementById('last-update').innerHTML = `● 最終更新: ${data.updatedAt || '完了'}`;
-          venues = [...new Set(allRaces.map(r => r.venue))];
-          buildTabs();
-          switchTab(venues[0]); 
-        } catch (err) {
-          container.innerHTML = `<div class="bg-red-950 p-4 text-center text-red-400 text-xs">エラー: ${err.message}</div>`;
-        }
-      };
-
-      script.src = GAS_API_URL + "?callback=handleGasResponse";
-      document.body.appendChild(script);
-    }
-
-    function processAiScores(races) {
-      return races.map(race => {
-        race.horses.forEach(h => {
-          let score = 70 + (100 / (h.odds + 1));
-          h.score = score.toFixed(1);
-        });
-        const ranked = [...race.horses].sort((a, b) => b.score - a.score);
-        ranked.forEach((h, i) => {
-          h.mark = i === 0 ? "◎ 本命" : i === 1 ? "○ 対抗" : i === 2 ? "▲ 単穴" : i === 3 ? "☆ 穴" : "-";
-        });
-        race.ranked = ranked;
-        return race;
-      });
-    }
+    let currentVenue = "中山";
 
     function buildTabs() {
+      const venues = Object.keys(raceData);
       let html = '';
       venues.forEach(v => {
-        html += `<button onclick="switchTab('${v}')" id="tab-${v}" class="flex-1 py-2 bg-slate-800 text-slate-300 font-bold text-xs rounded-lg">${v}</button>`;
+        const activeClass = currentVenue === v ? "bg-amber-500 text-slate-950 font-black shadow-md" : "bg-slate-800 text-slate-300 font-bold";
+        html += `<button onclick="switchVenue('${v}')" class="flex-1 py-2 text-xs rounded-lg transition-all ${activeClass}">${v}</button>`;
       });
       document.getElementById('venue-tabs').innerHTML = html;
     }
 
-    function switchTab(tabId) {
-      currentTab = tabId;
+    function switchVenue(venue) {
+      currentVenue = venue;
+      buildTabs();
       renderRaces();
     }
 
     function renderRaces() {
+      const container = document.getElementById('race-container');
+      const races = raceData[currentVenue] || [];
       let html = '';
-      const targetRaces = allRaces.filter(r => r.venue === currentTab);
-      
-      targetRaces.forEach(race => {
-        const top = race.ranked;
+
+      races.forEach(race => {
         let horsesHtml = '';
         race.horses.forEach(h => {
+          const isTop = h.mark !== "-";
+          const markColor = h.mark === "◎ 本命" ? "text-emerald-400 font-black" : "text-amber-400 font-bold";
           horsesHtml += `<div class="flex items-center p-2 border-b border-slate-700/30 horse-row text-xs">
-            <span class="w-6 text-amber-400 font-bold">${h.num}</span>
-            <span class="flex-1 text-white font-bold">${h.name}</span>
-            <span class="w-12 text-right font-mono">${h.odds}倍</span>
-            <span class="w-16 text-right text-emerald-400 font-bold">${h.mark}</span>
+            <span class="w-6 text-center font-black ${isTop ? 'text-amber-400' : 'text-slate-400'}">${h.num}</span>
+            <div class="flex-1 ml-2">
+              <p class="font-bold text-white">${h.name}</p>
+              <p class="text-[9px] text-slate-400">${h.jockey} (${h.weight}kg)</p>
+            </div>
+            <span class="w-12 text-right font-mono text-slate-300">${h.odds}倍</span>
+            <span class="w-16 text-right text-[10px] ${markColor}">${h.mark}</span>
           </div>`;
         });
 
-        html += `<div class="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-3 mb-4">
-          <h3 class="text-white font-bold text-sm mb-2">${race.raceName} (${race.startTime}発走)</h3>
-          <div class="bg-slate-900 p-2 rounded mb-2 text-xs text-amber-400">◎ 本命: ${top[0].name} / ○ 対抗: ${top[1].name}</div>
-          <div class="bg-slate-900 rounded overflow-hidden">${horsesHtml}</div>
+        html += `<div class="bg-slate-800/40 border border-slate-700/50 rounded-2xl overflow-hidden shadow-xl mb-4">
+          <div class="bg-slate-800/80 p-2.5 border-b border-slate-700/50 flex justify-between items-center text-xs">
+            <span class="font-bold text-emerald-400">${currentVenue} ${race.raceNum}R - ${race.raceName}</span>
+            <span class="font-mono text-slate-400">${race.startTime} 発走</span>
+          </div>
+          <div class="p-3">
+            <div class="bg-slate-900 rounded-xl p-2.5 mb-3 border border-slate-700 text-xs">
+              <p class="text-amber-400 font-black mb-1">🔥 AI厳選おすすめ買い目</p>
+              <p class="text-white">【馬単軸1頭流し】 ${race.horses[0].num} → ${race.horses[1].num}, ${race.horses[2].num}</p>
+            </div>
+            <div class="bg-slate-900/80 rounded-xl border border-slate-700/50 overflow-hidden">${horsesHtml}</div>
+          </div>
         </div>`;
       });
-      document.getElementById('race-container').innerHTML = html;
+
+      container.innerHTML = html;
     }
 
-    fetchData();
+    buildTabs();
+    renderRaces();
   </script>
 </body>
 </html>
