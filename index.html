@@ -15,15 +15,11 @@
 </head>
 <body class="pb-24 max-w-xl mx-auto relative min-h-screen flex flex-col">
 
-  <!-- ===============================
-       ★★★ GAS URL (設定済み) ★★★
-       =============================== -->
   <script>
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyqjUVC_qcHhYw6M5RC1N6Wh5ebGlFt4ObYAikzTx4L8U4vWJvic0FaSUx4LrNScktE/exec";
+    // ★★★ 最新のGAS URLを設定済み ★★★
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbYqjUVC_qcHhYw6M5RC1N6Wh5ebG1Ft4ObYAikzTx4L8U4vWJvic0FaSUx4LrNScKtE/exec";
   </script>
-  <!-- =============================== -->
 
-  <!-- 上部ステータスボード -->
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
     <div class="p-3 flex justify-between items-center">
       <div>
@@ -36,7 +32,6 @@
       </button>
     </div>
 
-    <!-- AI自己学習ステータス -->
     <div class="px-3 pb-3">
       <div class="bg-slate-950 rounded-xl p-2 flex justify-between items-center border border-slate-800">
         <div class="text-center w-1/2 border-r border-slate-800">
@@ -50,19 +45,16 @@
       </div>
     </div>
 
-    <!-- 動的タブ -->
     <div id="venue-tabs" class="flex px-2 pb-2 gap-1.5 overflow-x-auto">
       <div class="text-xs text-slate-400 flex items-center gap-2 px-2">データを待機中...</div>
     </div>
   </header>
 
-  <!-- メインコンテンツ -->
   <main id="race-container" class="p-3 flex-1">
     <div class="text-center py-10 text-slate-500 text-sm">右上の「最新データ更新」を押してください</div>
   </main>
 
   <script>
-    // --- 自己学習・的中率管理 ---
     let aiState = JSON.parse(localStorage.getItem('keibaAiStats')) || {
       totalRaces: 0, wonRaces: 0,
       today: new Date().toLocaleDateString(), todayRaces: 0, todayWon: 0,
@@ -87,17 +79,11 @@
     }
     updateUI();
 
-    // --- データ取得と表示 ---
     let allRaces = [];
     let venues = [];
     let currentTab = "";
 
     async function fetchData(force = false) {
-      if(GAS_API_URL === "ここにコピーしたURLを貼り付ける") {
-          alert("GASのURLが設定されていません。コードを編集してください。");
-          return;
-      }
-      
       const container = document.getElementById('race-container');
       const tabs = document.getElementById('venue-tabs');
       tabs.innerHTML = `<div class="text-xs text-amber-400 flex items-center gap-2 px-2"><div class="loader"></div> サーバーから公式データを取得中...</div>`;
@@ -126,7 +112,6 @@
       }
     }
 
-    // --- AI独自予想エンジン ---
     function processAiScores(races) {
       return races.map(race => {
         race.horses.forEach(h => {
@@ -266,14 +251,13 @@
       saveState();
     }
 
-    if(GAS_API_URL !== "ここにコピーしたURLを貼り付ける") fetchData();
+    fetchData();
   </script>
 </body>
 </html>
 ```eof
 
-**④ そのまま保存する**
-貼り付けたら、もう何も文字をいじらずに、そのまま右上の **「Commit changes...」** を押して保存してください。
+**3. 保存する**
+GitHubの画面右上にある緑色の **「Commit changes...」** ボタンを押して保存します。
 
-これで、デザインの崩れも直り、URLも正しく繋がった完璧な状態になります！
-保存後1〜2分してから、スマホでアプリを開き、「最新データ更新」を押してみてください！
+これで完全な状態になりました！スマホのプライベートモードで開き直してご確認ください！
