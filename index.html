@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>KEIBA AI PRO - 全自動システム</title>
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0b0f19; color: #ffffff; font-family: -apple-system, sans-serif; }
     .horse-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.03); }
@@ -16,7 +16,7 @@
 <body class="pb-24 max-w-xl mx-auto relative min-h-screen flex flex-col">
 
   <!-- ===============================
-       ★★★ 以下の行にGAS URLを貼り付けてください ★★★
+       ★★★ GAS URL (設定済み) ★★★
        =============================== -->
   <script>
     const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzeAKorsKXXnKaODaIsAkqagdmAfzVyoDgycCZEGOkQOew8mOY9SK4CRevXG07UbKHo/exec";
@@ -121,7 +121,7 @@
         tabs.innerHTML = '';
         container.innerHTML = `<div class="bg-red-950 border border-red-500 rounded-xl p-4 text-center">
           <p class="text-red-400 font-bold mb-2">通信エラー</p>
-          <p class="text-xs text-slate-300">GASのURLが正しいか確認してください。<br>${err.message}</p>
+          <p class="text-xs text-slate-300">データを取得できませんでした。<br>${err.message}</p>
         </div>`;
       }
     }
@@ -272,7 +272,8 @@
 </html>
 ```eof
 
-**手順4：URLを書き換えて保存する**
-貼り付け終わったら、先ほどと同じように **21〜23行目付近** にある `"ここにコピーしたURLを貼り付ける"` を、ご自身のGASのURL（`https://script.google.com/...`）に書き換えてください。
+**④ そのまま保存する**
+貼り付けたら、もう何も文字をいじらずに、そのまま右上の **「Commit changes...」** を押して保存してください。
 
-最後に、画面右上の緑色のボタン **「Commit changes...」** を押して完了です！
+これで、デザインの崩れも直り、URLも正しく繋がった完璧な状態になります！
+保存後1〜2分してから、スマホでアプリを開き、「最新データ更新」を押してみてください！
