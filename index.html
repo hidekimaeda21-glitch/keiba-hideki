@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>KEIBA AI PRO - 全自動システム</title>
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { background-color: #0b0f19; color: #ffffff; font-family: -apple-system, sans-serif; }
     .horse-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.03); }
@@ -16,7 +16,7 @@
 <body class="pb-24 max-w-xl mx-auto relative min-h-screen flex flex-col">
 
   <script>
-    const GAS_API_URL = "[https://script.google.com/macros/s/AKfycbYqjUVC_qcHhYw6M5RC1N6Wh5ebG1Ft4ObYAikzTx4L8U4vWJvic0FaSUx4LrNScKtE/exec](https://script.google.com/macros/s/AKfycbYqjUVC_qcHhYw6M5RC1N6Wh5ebG1Ft4ObYAikzTx4L8U4vWJvic0FaSUx4LrNScKtE/exec)";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbYqjUVC_qcHhYw6M5RC1N6Wh5ebG1Ft4ObYAikzTx4L8U4vWJvic0FaSUx4LrNScKtE/exec";
   </script>
 
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 shadow-xl">
@@ -236,7 +236,7 @@
     }
 
     function learnRaceResult(btnEl) {
-      const isHit = confirm("このレースのAI予想はdeepcopyしましたか？\n[OK] = 的中 / [キャンセル] = 不endish");
+      const isHit = confirm("このレースのAI予想は的中しましたか？\n[OK] = 的中 / [キャンセル] = 不的中");
       aiState.totalRaces++; aiState.todayRaces++;
       if(isHit) {
         aiState.wonRaces++; aiState.todayWon++;
@@ -256,8 +256,11 @@
 </html>
 ```eof
 
-**4. スマホで開き直す**
-保存後、1〜2分待ってからスマホのプライベートブラウズで以下のURLを再度開いてみてください。
-`https://hidekimaeda21-glitch.github.io/keiba-hideki/?reload=8888`
+**3. 保存する**
+右上の緑色のボタン **「Commit changes...」** を押して保存します。
 
-下部の変な文字も消え、ボタンを押すと正常にデータが取得できるようになります！
+**4. スマホで確認する**
+1〜2分待ってから、スマホのプライベートブラウズで以下のURLを再度開いてみてください。
+`[https://hidekimaeda21-glitch.github.io/keiba-hideki/?reload=7777](https://hidekimaeda21-glitch.github.io/keiba-hideki/?reload=7777)`
+
+これで余計な文字もエラーも消え、綺麗に動くようになります！
