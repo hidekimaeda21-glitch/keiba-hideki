@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
-import google.generativeai as genai
+from google import genai
 
 os.makedirs("data", exist_ok=True)
 now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -14,19 +14,18 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# Gemini API の設定
+# 最新の Google GenAI クライアント初期化
 api_key = os.environ.get("GEMINI_API_KEY")
-if api_key:
-    genai.configure(api_key=api_key)
+client = genai.Client(api_key=api_key) if api_key else None
 
 def ask_gemini_prediction(race_name, venue, horses):
-    """Geminiに展開・推奨買い目を推論させる"""
-    if not api_key or not horses:
+    """Gemini 2.5 Flash に展開・推奨買い目を推論させる"""
+    if not client or not horses:
         return {"summary": "APIキー未設定または出走馬なし", "recommendation": "単勝・複勝"}
 
-    horse_summary = "\n".join([f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, オッズ:{h['odds']}倍, 印:{h.get('mark', '-')})" for h in horses[:12]])
+    horse_summary = "\n".join([f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, 単勝:{h['odds']}倍, 印:{h.get('mark', '-')})" for h in horses[:12]])
     prompt = f"""
-あなたは競馬AI予想システム「ジェミ予想」です。
+あなたはプロの競馬AI予想家「ジェミ予想」です。
 以下のレース出走表を分析し、展開や有力馬・妙味馬の理由、および推奨買い目を提示してください。
 
 会場: {venue}
@@ -37,14 +36,16 @@ def ask_gemini_prediction(race_name, venue, horses):
 必ず以下のJSON形式のみを出力してください（Markdownコードブロックは不要です）:
 {{
   "summary": "展開予測と本命・穴馬を推奨する根拠（100〜140文字程度）",
-  "recommendation": "推奨買い目（例：馬連 13-1,2,5 / 3連複フォーメーションなど）"
+  "recommendation": "推奨買い目（例：馬連 13-1,2,5 / 3連複 13-2,5-1,2,5,6 など）"
 }}
 """
     try:
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(prompt)
+        # 最新の主力モデル gemini-2.5-flash を指定
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt,
+        )
         text = response.text.strip()
-        # ```json などの囲みがあれば除去
         text = re.sub(r"^```json\s*", "", text)
         text = re.sub(r"^```\s*", "", text)
         text = re.sub(r"\s*```$", "", text)
@@ -57,7 +58,7 @@ def ask_gemini_prediction(race_name, venue, horses):
         }
 
 def get_live_races():
-    url = "https://race.netkeiba.com/top/"
+    url = "[https://race.netkeiba.com/top/](https://race.netkeiba.com/top/)"
     try:
         res = requests.get(url, headers=headers, timeout=10)
         res.encoding = "EUC-JP"
@@ -106,7 +107,7 @@ def get_live_races():
     return target_races
 
 def scrape_shutuba(race_id):
-    url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+    url = f"[https://race.netkeiba.com/race/shutuba.html?race_id=](https://race.netkeiba.com/race/shutuba.html?race_id=){race_id}"
     horses = []
     try:
         res = requests.get(url, headers=headers, timeout=10)
