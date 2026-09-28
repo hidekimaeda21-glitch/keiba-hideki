@@ -14,12 +14,12 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# 最新の Google GenAI クライアント初期化
+# Google GenAI クライアント初期化
 api_key = os.environ.get("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key) if api_key else None
 
 def ask_gemini_prediction(race_name, venue, horses):
-    """Gemini 2.5 Flash に展開・推奨買い目を推論させる"""
+    """Gemini 3.8 Flash に展開・推奨買い目を推論させる"""
     if not client or not horses:
         return {"summary": "APIキー未設定または出走馬なし", "recommendation": "単勝・複勝"}
 
@@ -39,23 +39,30 @@ def ask_gemini_prediction(race_name, venue, horses):
   "recommendation": "推奨買い目（例：馬連 13-1,2,5 / 3連複 13-2,5-1,2,5,6 など）"
 }}
 """
-    try:
-        # 最新の主力モデル gemini-2.5-flash を指定
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt,
-        )
-        text = response.text.strip()
-        text = re.sub(r"^```json\s*", "", text)
-        text = re.sub(r"^```\s*", "", text)
-        text = re.sub(r"\s*```$", "", text)
-        return json.loads(text)
-    except Exception as e:
-        print(f"Gemini API Error: {e}")
-        return {
-            "summary": f"AI推論エラー: {str(e)[:80]}",
-            "recommendation": "オッズ確定後算出"
-        }
+    # 2026年9月現在の最新モデルを優先指定
+    candidate_models = ['gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite']
+    last_error = ""
+
+    for model_name in candidate_models:
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+            )
+            text = response.text.strip()
+            text = re.sub(r"^```json\s*", "", text)
+            text = re.sub(r"^```\s*", "", text)
+            text = re.sub(r"\s*```$", "", text)
+            return json.loads(text)
+        except Exception as e:
+            last_error = str(e)
+            continue
+
+    print(f"Gemini API All Models Failed: {last_error}")
+    return {
+        "summary": f"AI推論エラー: {last_error[:80]}",
+        "recommendation": "オッズ確定後算出"
+    }
 
 def get_live_races():
     url = "[https://race.netkeiba.com/top/](https://race.netkeiba.com/top/)"
