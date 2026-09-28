@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28 07:54",
+  "updatedAt": "2026-09-28 08:00",
   "races": [
     {
       "venue": "中山",
@@ -56,8 +56,8 @@
           "mark": "◎ 本命"
         }
       ],
-      "aiSummary": "先行争いが鍵。オッズ妙味と直近適性を重視した構成です。",
-      "aiBuy": "馬連・ワイド流し"
+      "aiSummary": "AI推論エラー: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not suppo",
+      "aiBuy": "オッズ確定後算出"
     }
   ]
 }
