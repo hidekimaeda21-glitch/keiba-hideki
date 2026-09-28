@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28 08:00",
+  "updatedAt": "2026-09-28 08:06",
   "races": [
     {
       "venue": "中山",
@@ -56,7 +56,7 @@
           "mark": "◎ 本命"
         }
       ],
-      "aiSummary": "AI推論エラー: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not suppo",
+      "aiSummary": "AI推論エラー: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-",
       "aiBuy": "オッズ確定後算出"
     }
   ]
