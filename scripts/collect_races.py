@@ -1,0 +1,45 @@
+import os
+import json
+from datetime import datetime
+
+# 保存先ディレクトリの作成
+os.makedirs("data", exist_ok=True)
+
+# 今日の日付（日本時間）
+now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+sample_data = {
+    "updatedAt": now_str,
+    "races": [
+        {
+            "venue": "中山",
+            "raceName": "11R スプリンターズS (G1)",
+            "startTime": "15:45",
+            "horses": [
+                {"num": 1, "name": "オオバンブルマイ", "jockey": "武豊", "odds": 17.1, "score": 82.5, "mark": "▲ 単穴"},
+                {"num": 2, "name": "トウシンマカオ", "jockey": "菅原明良", "odds": 9.6, "score": 85.0, "mark": "○ 対抗"},
+                {"num": 5, "name": "ナムラクレア", "jockey": "横山武史", "odds": 8.2, "score": 84.1, "mark": "☆ 穴"},
+                {"num": 6, "name": "ママコチャ", "jockey": "川田将雅", "odds": 5.2, "score": 81.3, "mark": "-"},
+                {"num": 12, "name": "サトノレーヴ", "jockey": "D.レーン", "odds": 3.0, "score": 80.9, "mark": "△ 連下"},
+                {"num": 13, "name": "ルガル", "jockey": "西村淳也", "odds": 28.5, "score": 88.4, "mark": "◎ 本命"}
+            ]
+        },
+        {
+            "venue": "阪神",
+            "raceName": "11R 神戸新聞杯 (G2)",
+            "startTime": "15:35",
+            "horses": [
+                {"num": 1, "name": "ジューンテイク", "jockey": "藤岡佑介", "odds": 12.4, "score": 81.2, "mark": "☆ 穴"},
+                {"num": 2, "name": "バッデレイト", "jockey": "岩田望来", "odds": 7.5, "score": 83.5, "mark": "○ 対抗"},
+                {"num": 6, "name": "メリオーレム", "jockey": "川田将雅", "odds": 2.8, "score": 82.0, "mark": "▲ 単穴"},
+                {"num": 12, "name": "メイショウタバル", "jockey": "浜中俊", "odds": 5.1, "score": 87.0, "mark": "◎ 本命"}
+            ]
+        }
+    ]
+}
+
+# data/today.json として書き出し
+with open("data/today.json", "w", encoding="utf-8") as f:
+    json.dump(sample_data, f, ensure_ascii=False, indent=2)
+
+print("Saved race data successfully.")
