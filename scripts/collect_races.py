@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
-from google import genai
+import google.generativeai as genai
 
 os.makedirs("data", exist_ok=True)
 now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -14,43 +14,46 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# Gemini クライアント初期化
+# Gemini API の設定
 api_key = os.environ.get("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key) if api_key else None
+if api_key:
+    genai.configure(api_key=api_key)
 
 def ask_gemini_prediction(race_name, venue, horses):
     """Geminiに展開・推奨買い目を推論させる"""
-    if not client or not horses:
-        return {"summary": "AI接続待機中", "recommendation": "単勝・複勝中心"}
+    if not api_key or not horses:
+        return {"summary": "APIキー未設定または出走馬なし", "recommendation": "単勝・複勝"}
 
-    horse_summary = "\n".join([f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, 単勝:{h['odds']}倍)" for h in horses[:12]])
+    horse_summary = "\n".join([f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, オッズ:{h['odds']}倍, 印:{h.get('mark', '-')})" for h in horses[:12]])
     prompt = f"""
-あなたはプロの競馬AI予想家「ジェミ予想」です。
-以下のレース出走表を分析し、JSON形式でレース見解を出力してください。
+あなたは競馬AI予想システム「ジェミ予想」です。
+以下のレース出走表を分析し、展開や有力馬・妙味馬の理由、および推奨買い目を提示してください。
 
 会場: {venue}
 レース名: {race_name}
 出走馬情報:
 {horse_summary}
 
-【出力形式（必ずこのキーを持つ厳密なJSONのみを出力してください）】
+必ず以下のJSON形式のみを出力してください（Markdownコードブロックは不要です）:
 {{
-  "summary": "展開のポイント、本命・穴馬に指名した明確な理由を120文字程度で簡潔に",
-  "recommendation": "推奨する買い目（例：馬連 ◎-○▲、3連複フォーメーション等）"
+  "summary": "展開予測と本命・穴馬を推奨する根拠（100〜140文字程度）",
+  "recommendation": "推奨買い目（例：馬連 13-1,2,5 / 3連複フォーメーションなど）"
 }}
 """
     try:
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt,
-            config={'response_mime_type': 'application/json'}
-        )
-        return json.loads(response.text)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        text = response.text.strip()
+        # ```json などの囲みがあれば除去
+        text = re.sub(r"^```json\s*", "", text)
+        text = re.sub(r"^```\s*", "", text)
+        text = re.sub(r"\s*```$", "", text)
+        return json.loads(text)
     except Exception as e:
         print(f"Gemini API Error: {e}")
         return {
-            "summary": "先行争いが鍵。オッズ妙味と直近適性を重視した構成です。",
-            "recommendation": "馬連・ワイド流し"
+            "summary": f"AI推論エラー: {str(e)[:80]}",
+            "recommendation": "オッズ確定後算出"
         }
 
 def get_live_races():
@@ -94,6 +97,7 @@ def get_live_races():
                 if race_id_match:
                     target_races.append({
                         "venue": venue_name[:2],
+                        "raceNum": r_num,
                         "raceName": f"{r_num} {r_name}",
                         "startTime": r_time,
                         "isGraded": is_graded,
@@ -148,7 +152,7 @@ def scrape_shutuba(race_id):
             
     return sorted(horses, key=lambda x: x["num"])
 
-# メイン実行部
+# メイン処理
 print("Collecting race information...")
 live_meta = get_live_races()
 final_races = []
@@ -168,7 +172,7 @@ if live_meta:
                 "aiBuy": ai_insight.get("recommendation", "")
             })
 
-# 平日フォールバックデータ
+# 平日フォールバック
 if not final_races:
     fallback_horses = [
         {"num": 1, "name": "オオバンブルマイ", "jockey": "武豊", "odds": 17.1, "score": 82.5, "mark": "▲ 単穴"},
