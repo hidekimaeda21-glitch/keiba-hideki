@@ -15,7 +15,7 @@
   <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 p-3 shadow-lg">
     <div class="flex justify-between items-center mb-2">
       <h1 class="text-base font-black text-amber-400">KEIBA AI PRO</h1>
-      <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-400 font-bold">Actions自動連携</span>
+      <span class="px-2 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-400 font-bold border border-indigo-500/30">✨ Gemini頭脳連携</span>
     </div>
     <p id="last-update" class="text-[10px] text-slate-400 font-mono mb-2">● 最終更新: 読込中...</p>
     <div id="venue-tabs" class="flex gap-2"></div>
@@ -31,9 +31,8 @@
 
     async function loadData() {
       try {
-        // キャッシュを防ぎつつリポジトリ内の today.json を直接取得
         const res = await fetch('./data/today.json?t=' + Date.now());
-        if (!res.ok) throw new Error("データファイルが見つかりません");
+        if (!res.ok) throw new Error("データがありません");
         const data = await res.json();
 
         document.getElementById('last-update').textContent = `● 最終更新: ${data.updatedAt}`;
@@ -45,7 +44,7 @@
       } catch (err) {
         document.getElementById('race-container').innerHTML = `
           <div class="bg-red-950/60 border border-red-800 p-4 rounded-xl text-center text-xs text-red-300">
-            データがまだ生成されていません。<br>GitHub Actionsの初回実行（Run workflow）を行ってください。
+            データがまだ生成されていません。ActionsのRun workflowを実行してください。
           </div>`;
       }
     }
@@ -82,10 +81,22 @@
               <div class="text-white font-bold">${h.name}</div>
               <div class="text-[10px] text-slate-400">${h.jockey}</div>
             </div>
-            <span class="w-14 text-right font-mono text-slate-300 mr-2">${h.odds}倍</span>
-            <span class="w-12 text-right font-bold ${h.mark.includes('◎') ? 'text-emerald-400' : h.mark.includes('○') ? 'text-amber-400' : 'text-slate-400'}">${h.mark}</span>
+            <span class="w-14 text-right font-mono text-slate-300 mr-2">${h.odds > 0 ? h.odds + '倍' : '-'}</span>
+            <span class="w-14 text-right font-bold ${h.mark.includes('◎') ? 'text-emerald-400' : h.mark.includes('○') ? 'text-amber-400' : h.mark.includes('☆') ? 'text-yellow-300' : 'text-slate-400'}">${h.mark}</span>
           </div>
         `).join('');
+
+        const aiBlock = race.aiSummary ? `
+          <div class="mb-3 p-3 rounded-lg bg-gradient-to-r from-indigo-950/60 to-slate-900 border border-indigo-800/50 shadow-inner">
+            <div class="flex items-center gap-1.5 mb-1.5 text-indigo-400 font-bold text-xs">
+              <span>🧠 ジェミ予想 AI見解</span>
+            </div>
+            <p class="text-xs text-slate-200 leading-relaxed mb-2">${race.aiSummary}</p>
+            <div class="text-[11px] bg-slate-950/60 p-2 rounded border border-indigo-900/40 text-amber-300 font-mono">
+              <span class="text-slate-400">推奨買い目:</span> ${race.aiBuy || 'オッズ確定後算出'}
+            </div>
+          </div>
+        ` : '';
 
         return `
           <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-md">
@@ -93,6 +104,7 @@
               <h2 class="text-xs font-bold text-white">${race.venue} ${race.raceName}</h2>
               <span class="text-[10px] text-slate-400 font-mono">${race.startTime} 発走</span>
             </div>
+            ${aiBlock}
             <div class="rounded-lg overflow-hidden border border-slate-800/80 bg-slate-950/40">
               ${rows}
             </div>
