@@ -2,8 +2,10 @@ name: Daily Keiba AI Predictor
 
 on:
   schedule:
-    # 毎朝6:30(JST) = UTC 21:30 に自動実行
+    # 毎朝6:30(JST) = UTC 21:30 に予想生成
     - cron: '30 21 * * *'
+    # 毎週土日 17:45(JST) = UTC 8:45 に結果収集・的中判定
+    - cron: '45 8 * * 0,6'
   workflow_dispatch:
 
 permissions:
@@ -27,15 +29,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 pandas google-genai
 
-      - name: ジェミ予想・データ収集スクリプトの実行
+      - name: 朝のジェミ予想・データ収集スクリプトの実行
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python scripts/collect_races.py
 
+      - name: 夕方の結果収集・成績集計スクリプトの実行
+        run: |
+          python scripts/collect_results.py
+
       - name: 生成データをコミット＆プッシュ
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/today.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update AI prediction [skip ci]" && git push)
+          git add data/today.json data/history.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update AI prediction and history [skip ci]" && git push)
