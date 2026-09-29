@@ -4,44 +4,201 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>KEIBA AI PRO</title>
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
   <style>
-    body { background-color: #0b0f19; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-    .horse-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.03); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f19;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding-bottom: 80px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #1e293b;
+      padding: 12px;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .app-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fbbf24;
+      letter-spacing: 0.5px;
+    }
+    .gemini-badge {
+      font-size: 10px;
+      font-weight: bold;
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    /* 成績ダッシュボード */
+    .stats-card {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #030712;
+      border: 1px solid #1f2937;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .stats-item { flex: 1; }
+    .stats-divider { width: 1px; height: 24px; background-color: #1f2937; }
+    .stats-label { font-size: 9px; color: #94a3b8; margin-bottom: 2px; }
+    .stats-value-green { font-size: 14px; font-weight: 900; color: #34d399; font-family: monospace; }
+    .stats-value-amber { font-size: 14px; font-weight: 900; color: #fbbf24; font-family: monospace; }
+    .stats-value-white { font-size: 12px; font-weight: bold; color: #f1f5f9; font-family: monospace; }
+
+    .last-update {
+      font-size: 10px;
+      color: #94a3b8;
+      font-family: monospace;
+      margin-bottom: 8px;
+    }
+    .tabs-container { display: flex; gap: 8px; }
+    .tab-btn {
+      flex: 1;
+      padding: 6px 0;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+      border: none;
+      background-color: #1e293b;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background-color: #f59e0b;
+      color: #020617;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    main { padding: 12px; }
+    .race-card {
+      background-color: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+    }
+    .race-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .race-name { font-size: 13px; font-weight: bold; color: #ffffff; }
+    .race-time { font-size: 11px; color: #94a3b8; font-family: monospace; }
+
+    /* AI見解ブロック */
+    .ai-box {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.6), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+    .ai-header {
+      font-size: 11px;
+      font-weight: bold;
+      color: #a5b4fc;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ai-text {
+      font-size: 11px;
+      line-height: 1.5;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+    .ai-buy {
+      background: rgba(3, 7, 18, 0.7);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #fde047;
+      font-family: monospace;
+    }
+    .ai-buy-label { color: #94a3b8; margin-right: 4px; }
+
+    /* 出走馬リスト */
+    .horse-table {
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #030712;
+    }
+    .horse-row {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+      font-size: 12px;
+    }
+    .horse-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.02); }
+    .horse-row:last-child { border-bottom: none; }
+    .horse-num { width: 24px; font-weight: bold; color: #fbbf24; }
+    .horse-main { flex: 1; padding-right: 8px; }
+    .horse-name { font-weight: bold; color: #ffffff; }
+    .horse-sub { font-size: 10px; color: #94a3b8; margin-top: 1px; }
+    .horse-recent { color: #64748b; font-size: 9px; font-family: monospace; margin-left: 2px; }
+    .horse-odds { width: 55px; text-align: right; font-family: monospace; color: #cbd5e1; margin-right: 8px; }
+    .horse-mark { width: 55px; text-align: right; font-weight: bold; }
+    .mark-honmei { color: #34d399; }
+    .mark-taiko { color: #fbbf24; }
+    .mark-ana { color: #fde047; }
+    .mark-other { color: #94a3b8; }
   </style>
 </head>
-<body class="pb-20 max-w-md mx-auto min-h-screen flex flex-col">
+<body>
 
-  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 p-3 shadow-lg">
-    <div class="flex justify-between items-center mb-2">
-      <h1 class="text-base font-black text-amber-400">KEIBA AI PRO</h1>
-      <span class="px-2 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-400 font-bold border border-indigo-500/30">✨ Gemini頭脳連携</span>
+  <header>
+    <div class="header-top">
+      <h1 class="app-title">KEIBA AI PRO</h1>
+      <span class="gemini-badge">✨ Gemini頭脳連携</span>
     </div>
 
     <!-- 通算成績ダッシュボード -->
-    <div id="stats-card" class="mb-2 p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex justify-around text-center shadow-inner">
-      <div>
-        <div class="text-[9px] text-slate-400">的中率</div>
-        <div id="hit-rate" class="text-sm font-black text-emerald-400 font-mono">--%</div>
+    <div class="stats-card">
+      <div class="stats-item">
+        <div class="stats-label">的中率</div>
+        <div id="hit-rate" class="stats-value-green">--%</div>
       </div>
-      <div class="border-r border-slate-800"></div>
-      <div>
-        <div class="text-[9px] text-slate-400">回収率</div>
-        <div id="return-rate" class="text-sm font-black text-amber-400 font-mono">--%</div>
+      <div class="stats-divider"></div>
+      <div class="stats-item">
+        <div class="stats-label">回収率</div>
+        <div id="return-rate" class="stats-value-amber">--%</div>
       </div>
-      <div class="border-r border-slate-800"></div>
-      <div>
-        <div class="text-[9px] text-slate-400">通算戦績</div>
-        <div id="record-summary" class="text-[11px] font-bold text-slate-300 font-mono mt-0.5">--戦--勝</div>
+      <div class="stats-divider"></div>
+      <div class="stats-item">
+        <div class="stats-label">通算戦績</div>
+        <div id="record-summary" class="stats-value-white">--戦--勝</div>
       </div>
     </div>
 
-    <p id="last-update" class="text-[10px] text-slate-400 font-mono mb-2">● 最終更新: 読込中...</p>
-    <div id="venue-tabs" class="flex gap-2"></div>
+    <p id="last-update" class="last-update">● 最終更新: 読込中...</p>
+    <div id="venue-tabs" class="tabs-container"></div>
   </header>
 
-  <main id="race-container" class="p-3 flex-1 space-y-4">
-    <div class="text-center text-xs text-slate-500 py-10">データを読み込んでいます...</div>
+  <main id="race-container">
+    <div style="text-align:center; font-size:12px; color:#64748b; padding:40px 0;">データを読み込んでいます...</div>
   </main>
 
   <script>
@@ -50,7 +207,7 @@
 
     async function loadData() {
       try {
-        // 成績データの読み込み
+        // 通算成績データの取得
         try {
           const hRes = await fetch('./data/history.json?t=' + Date.now());
           if (hRes.ok) {
@@ -71,7 +228,7 @@
           console.log("History fetch error:", e);
         }
 
-        // 本日のレース予想読み込み
+        // レースデータの取得
         const res = await fetch('./data/today.json?t=' + Date.now());
         if (!res.ok) throw new Error("データがありません");
         const data = await res.json();
@@ -84,8 +241,8 @@
         selectVenue(venues[0]);
       } catch (err) {
         document.getElementById('race-container').innerHTML = `
-          <div class="bg-red-950/60 border border-red-800 p-4 rounded-xl text-center text-xs text-red-300">
-            データがまだ生成されていません。ActionsのRun workflowを実行してください。
+          <div style="background:rgba(127,29,29,0.5); border:1px solid #991b1b; padding:16px; border-radius:12px; text-align:center; font-size:12px; color:#fca5a5;">
+            データを読み込めませんでした。
           </div>`;
       }
     }
@@ -93,7 +250,7 @@
     function renderTabs(venues) {
       const container = document.getElementById('venue-tabs');
       container.innerHTML = venues.map(v => `
-        <button onclick="selectVenue('${v}')" id="tab-${v}" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 transition-all">
+        <button onclick="selectVenue('${v}')" id="tab-${v}" class="tab-btn">
           ${v}
         </button>
       `).join('');
@@ -101,11 +258,9 @@
 
     function selectVenue(v) {
       currentVenue = v;
-      document.querySelectorAll('#venue-tabs button').forEach(b => {
-        b.className = "flex-1 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-400";
-      });
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       const activeBtn = document.getElementById(`tab-${v}`);
-      if (activeBtn) activeBtn.className = "flex-1 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 shadow";
+      if (activeBtn) activeBtn.classList.add('active');
 
       renderRaces();
     }
@@ -115,38 +270,43 @@
       const container = document.getElementById('race-container');
 
       container.innerHTML = filtered.map(race => {
-        const rows = race.horses.map(h => `
-          <div class="flex items-center p-2 border-b border-slate-800/60 horse-row text-xs">
-            <span class="w-6 font-bold text-amber-400">${h.num}</span>
-            <div class="flex-1">
-              <div class="text-white font-bold">${h.name}</div>
-              <div class="text-[10px] text-slate-400">${h.jockey} <span class="text-slate-500 font-mono">(${h.recent || '-'})</span></div>
+        const rows = race.horses.map(h => {
+          let markClass = "mark-other";
+          if (h.mark.includes('◎')) markClass = "mark-honmei";
+          else if (h.mark.includes('○')) markClass = "mark-taiko";
+          else if (h.mark.includes('☆') || h.mark.includes('▲')) markClass = "mark-ana";
+
+          return `
+            <div class="horse-row">
+              <span class="horse-num">${h.num}</span>
+              <div class="horse-main">
+                <div class="horse-name">${h.name}</div>
+                <div class="horse-sub">${h.jockey} <span class="horse-recent">(${h.recent || '-'})</span></div>
+              </div>
+              <span class="horse-odds">${h.odds > 0 ? h.odds + '倍' : '-'}</span>
+              <span class="horse-mark ${markClass}">${h.mark}</span>
             </div>
-            <span class="w-14 text-right font-mono text-slate-300 mr-2">${h.odds > 0 ? h.odds + '倍' : '-'}</span>
-            <span class="w-14 text-right font-bold ${h.mark.includes('◎') ? 'text-emerald-400' : h.mark.includes('○') ? 'text-amber-400' : h.mark.includes('☆') ? 'text-yellow-300' : 'text-slate-400'}">${h.mark}</span>
-          </div>
-        `).join('');
+          `;
+        }).join('');
 
         const aiBlock = race.aiSummary ? `
-          <div class="mb-3 p-3 rounded-lg bg-gradient-to-r from-indigo-950/60 to-slate-900 border border-indigo-800/50 shadow-inner">
-            <div class="flex items-center gap-1.5 mb-1.5 text-indigo-400 font-bold text-xs">
-              <span>🧠 ジェミ予想 AI見解</span>
-            </div>
-            <p class="text-xs text-slate-200 leading-relaxed mb-2">${race.aiSummary}</p>
-            <div class="text-[11px] bg-slate-950/60 p-2 rounded border border-indigo-900/40 text-amber-300 font-mono">
-              <span class="text-slate-400">推奨買い目:</span> ${race.aiBuy || 'オッズ確定後算出'}
+          <div class="ai-box">
+            <div class="ai-header">🧠 ジェミ予想 AI見解</div>
+            <p class="ai-text">${race.aiSummary}</p>
+            <div class="ai-buy">
+              <span class="ai-buy-label">推奨買い目:</span> ${race.aiBuy || 'オッズ確定後算出'}
             </div>
           </div>
         ` : '';
 
         return `
-          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-md">
-            <div class="flex justify-between items-center mb-2">
-              <h2 class="text-xs font-bold text-white">${race.venue} ${race.raceName}</h2>
-              <span class="text-[10px] text-slate-400 font-mono">${race.startTime} 発走</span>
+          <div class="race-card">
+            <div class="race-header">
+              <h2 class="race-name">${race.venue} ${race.raceName}</h2>
+              <span class="race-time">${race.startTime} 発走</span>
             </div>
             ${aiBlock}
-            <div class="rounded-lg overflow-hidden border border-slate-800/80 bg-slate-950/40">
+            <div class="horse-table">
               ${rows}
             </div>
           </div>
