@@ -1,0 +1,19 @@
+{
+  "totalInvest": 1000,
+  "totalPayout": 2850,
+  "totalRaces": 1,
+  "hitRaces": 1,
+  "records": [
+    {
+      "date": "2026-09-27",
+      "venue": "中山",
+      "raceName": "11R スプリンターズS (G1)",
+      "honmei": {"num": 13, "name": "ルガル"},
+      "recommendation": "単勝 13",
+      "invest": 1000,
+      "payout": 2850,
+      "isHit": true,
+      "settled": true
+    }
+  ]
+}
