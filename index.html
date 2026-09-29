@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>KEIBA AI PRO</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
   <style>
     body { background-color: #0b0f19; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
     .horse-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.03); }
@@ -17,6 +17,25 @@
       <h1 class="text-base font-black text-amber-400">KEIBA AI PRO</h1>
       <span class="px-2 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-400 font-bold border border-indigo-500/30">✨ Gemini頭脳連携</span>
     </div>
+
+    <!-- 通算成績ダッシュボード -->
+    <div id="stats-card" class="mb-2 p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex justify-around text-center shadow-inner">
+      <div>
+        <div class="text-[9px] text-slate-400">的中率</div>
+        <div id="hit-rate" class="text-sm font-black text-emerald-400 font-mono">--%</div>
+      </div>
+      <div class="border-r border-slate-800"></div>
+      <div>
+        <div class="text-[9px] text-slate-400">回収率</div>
+        <div id="return-rate" class="text-sm font-black text-amber-400 font-mono">--%</div>
+      </div>
+      <div class="border-r border-slate-800"></div>
+      <div>
+        <div class="text-[9px] text-slate-400">通算戦績</div>
+        <div id="record-summary" class="text-[11px] font-bold text-slate-300 font-mono mt-0.5">--戦--勝</div>
+      </div>
+    </div>
+
     <p id="last-update" class="text-[10px] text-slate-400 font-mono mb-2">● 最終更新: 読込中...</p>
     <div id="venue-tabs" class="flex gap-2"></div>
   </header>
@@ -31,6 +50,28 @@
 
     async function loadData() {
       try {
+        // 成績データの読み込み
+        try {
+          const hRes = await fetch('./data/history.json?t=' + Date.now());
+          if (hRes.ok) {
+            const hData = await hRes.json();
+            const invest = hData.totalInvest || 0;
+            const payout = hData.totalPayout || 0;
+            const total = hData.totalRaces || 0;
+            const hits = hData.hitRaces || 0;
+
+            const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : "0.0";
+            const returnRate = invest > 0 ? ((payout / invest) * 100).toFixed(1) : "0.0";
+
+            document.getElementById('hit-rate').textContent = `${hitRate}%`;
+            document.getElementById('return-rate').textContent = `${returnRate}%`;
+            document.getElementById('record-summary').textContent = `${total}戦${hits}勝`;
+          }
+        } catch (e) {
+          console.log("History fetch error:", e);
+        }
+
+        // 本日のレース予想読み込み
         const res = await fetch('./data/today.json?t=' + Date.now());
         if (!res.ok) throw new Error("データがありません");
         const data = await res.json();
@@ -79,7 +120,7 @@
             <span class="w-6 font-bold text-amber-400">${h.num}</span>
             <div class="flex-1">
               <div class="text-white font-bold">${h.name}</div>
-              <div class="text-[10px] text-slate-400">${h.jockey}</div>
+              <div class="text-[10px] text-slate-400">${h.jockey} <span class="text-slate-500 font-mono">(${h.recent || '-'})</span></div>
             </div>
             <span class="w-14 text-right font-mono text-slate-300 mr-2">${h.odds > 0 ? h.odds + '倍' : '-'}</span>
             <span class="w-14 text-right font-bold ${h.mark.includes('◎') ? 'text-emerald-400' : h.mark.includes('○') ? 'text-amber-400' : h.mark.includes('☆') ? 'text-yellow-300' : 'text-slate-400'}">${h.mark}</span>
