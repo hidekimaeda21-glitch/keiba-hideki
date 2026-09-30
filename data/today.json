@@ -1,18 +1,22 @@
 {
-  "updatedAt": "2026-09-29 21:40",
-  "races": [
+  "updatedAt": "2026-09-30 09:03",
+  "win5Strategy": "WIN5対象レース集計中（確定後に10点買い目を自動算出）",
+  "bestRaces": [
     {
       "raceId": "202606040811",
       "venue": "中山",
       "raceName": "11R スプリンターズS (G1) [ジェミ予想検証]",
       "startTime": "15:45",
       "isGraded": true,
+      "isWin5": false,
       "horses": [
         {
           "num": 1,
           "name": "オオバンブルマイ",
           "jockey": "武豊",
           "odds": 17.1,
+          "style": "追込",
+          "last3f": "33.2秒",
           "recent": "キーンランドC 3着",
           "score": 82.5,
           "mark": "▲ 単穴"
@@ -22,6 +26,8 @@
           "name": "トウシンマカオ",
           "jockey": "菅原明良",
           "odds": 9.6,
+          "style": "差し",
+          "last3f": "33.5秒",
           "recent": "セントウルS 1着",
           "score": 85.0,
           "mark": "○ 対抗"
@@ -31,6 +37,8 @@
           "name": "ナムラクレア",
           "jockey": "横山武史",
           "odds": 8.2,
+          "style": "差し",
+          "last3f": "33.4秒",
           "recent": "キーンランドC 2着",
           "score": 84.1,
           "mark": "☆ 穴"
@@ -40,6 +48,8 @@
           "name": "ママコチャ",
           "jockey": "川田将雅",
           "odds": 5.2,
+          "style": "先行",
+          "last3f": "34.1秒",
           "recent": "セントウルS 2着",
           "score": 81.3,
           "mark": "-"
@@ -49,6 +59,8 @@
           "name": "サトノレーヴ",
           "jockey": "D.レーン",
           "odds": 3.0,
+          "style": "先行",
+          "last3f": "33.9秒",
           "recent": "キーンランドC 1着",
           "score": 80.9,
           "mark": "△ 連下"
@@ -58,14 +70,425 @@
           "name": "ルガル",
           "jockey": "西村淳也",
           "odds": 28.5,
+          "style": "先行",
+          "last3f": "33.7秒",
           "recent": "高松宮記念 10着",
           "score": 93.4,
           "mark": "◎ 本命"
         }
       ],
       "honmeiNum": 13,
-      "aiSummary": "高松宮記念大敗からの巻き返しを狙うルガルを本命に推奨。骨折明けも能力は一級品で、先行激化の展開から外枠を活かしたスムーズな走りで一変を期待します。対抗には充実期の中山巧者トウシンマカオ、穴には豪脚を秘めるオオバンブルマイとナムラクレアを据え、高配当を狙います。",
-      "aiBuy": "単複 13 / 馬連 13-1,2,5,12 / 3連複 13-2,5-1,2,5,12"
+      "confidence": "A",
+      "confidenceScore": 92,
+      "aiSummary": "前走上がり3F33.7秒の末脚を持つ先行馬ルガルを本命に抜擢。先行勢が揃いペースは流れる公算だが、好位からしぶとく伸びる機動力と中山の舞台適性を高く評価した。",
+      "aiBuy": "単勝 13 / 馬連 13-1,2,5,12 / 3連複 13-2,5-12番軸総流し"
+    },
+    {
+      "raceId": "202609040810",
+      "venue": "阪神",
+      "raceName": "10R 道頓堀S",
+      "startTime": "15:10",
+      "isGraded": false,
+      "isWin5": false,
+      "horses": [
+        {
+          "num": 1,
+          "name": "オオバンブルマイ",
+          "jockey": "武豊",
+          "odds": 17.1,
+          "style": "追込",
+          "last3f": "33.2秒",
+          "recent": "キーンランドC 3着",
+          "score": 82.5,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 2,
+          "name": "トウシンマカオ",
+          "jockey": "菅原明良",
+          "odds": 9.6,
+          "style": "差し",
+          "last3f": "33.5秒",
+          "recent": "セントウルS 1着",
+          "score": 85.0,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 5,
+          "name": "ナムラクレア",
+          "jockey": "横山武史",
+          "odds": 8.2,
+          "style": "差し",
+          "last3f": "33.4秒",
+          "recent": "キーンランドC 2着",
+          "score": 84.1,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 6,
+          "name": "ママコチャ",
+          "jockey": "川田将雅",
+          "odds": 5.2,
+          "style": "先行",
+          "last3f": "34.1秒",
+          "recent": "セントウルS 2着",
+          "score": 81.3,
+          "mark": "-"
+        },
+        {
+          "num": 12,
+          "name": "サトノレーヴ",
+          "jockey": "D.レーン",
+          "odds": 3.0,
+          "style": "先行",
+          "last3f": "33.9秒",
+          "recent": "キーンランドC 1着",
+          "score": 80.9,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 13,
+          "name": "ルガル",
+          "jockey": "西村淳也",
+          "odds": 28.5,
+          "style": "先行",
+          "last3f": "33.7秒",
+          "recent": "高松宮記念 10着",
+          "score": 93.4,
+          "mark": "◎ 本命"
+        }
+      ],
+      "honmeiNum": 2,
+      "confidence": "A",
+      "confidenceScore": 89,
+      "aiSummary": "開幕週の絶好馬場。先行力と上がり33秒台の決め手を併せ持つトウシンマカオの好位抜け出しが濃厚。",
+      "aiBuy": "単勝 2 / 馬連 2-5,12"
+    },
+    {
+      "raceId": "202609040809",
+      "venue": "阪神",
+      "raceName": "9R 芦屋川特別",
+      "startTime": "14:35",
+      "isGraded": false,
+      "isWin5": false,
+      "horses": [
+        {
+          "num": 1,
+          "name": "オオバンブルマイ",
+          "jockey": "武豊",
+          "odds": 17.1,
+          "style": "追込",
+          "last3f": "33.2秒",
+          "recent": "キーンランドC 3着",
+          "score": 82.5,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 2,
+          "name": "トウシンマカオ",
+          "jockey": "菅原明良",
+          "odds": 9.6,
+          "style": "差し",
+          "last3f": "33.5秒",
+          "recent": "セントウルS 1着",
+          "score": 85.0,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 5,
+          "name": "ナムラクレア",
+          "jockey": "横山武史",
+          "odds": 8.2,
+          "style": "差し",
+          "last3f": "33.4秒",
+          "recent": "キーンランドC 2着",
+          "score": 84.1,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 6,
+          "name": "ママコチャ",
+          "jockey": "川田将雅",
+          "odds": 5.2,
+          "style": "先行",
+          "last3f": "34.1秒",
+          "recent": "セントウルS 2着",
+          "score": 81.3,
+          "mark": "-"
+        },
+        {
+          "num": 12,
+          "name": "サトノレーヴ",
+          "jockey": "D.レーン",
+          "odds": 3.0,
+          "style": "先行",
+          "last3f": "33.9秒",
+          "recent": "キーンランドC 1着",
+          "score": 80.9,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 13,
+          "name": "ルガル",
+          "jockey": "西村淳也",
+          "odds": 28.5,
+          "style": "先行",
+          "last3f": "33.7秒",
+          "recent": "高松宮記念 10着",
+          "score": 93.4,
+          "mark": "◎ 本命"
+        }
+      ],
+      "honmeiNum": 12,
+      "confidence": "A",
+      "confidenceScore": 88,
+      "aiSummary": "前走上がり33秒台で完勝したサトノレーヴ。斤量据え置きで鞍上も強力、軸としての信頼度は高い。",
+      "aiBuy": "単勝 12 / 馬単 12➔1,2"
+    }
+  ],
+  "races": [
+    {
+      "raceId": "202606040811",
+      "venue": "中山",
+      "raceName": "11R スプリンターズS (G1) [ジェミ予想検証]",
+      "startTime": "15:45",
+      "isGraded": true,
+      "isWin5": false,
+      "horses": [
+        {
+          "num": 1,
+          "name": "オオバンブルマイ",
+          "jockey": "武豊",
+          "odds": 17.1,
+          "style": "追込",
+          "last3f": "33.2秒",
+          "recent": "キーンランドC 3着",
+          "score": 82.5,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 2,
+          "name": "トウシンマカオ",
+          "jockey": "菅原明良",
+          "odds": 9.6,
+          "style": "差し",
+          "last3f": "33.5秒",
+          "recent": "セントウルS 1着",
+          "score": 85.0,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 5,
+          "name": "ナムラクレア",
+          "jockey": "横山武史",
+          "odds": 8.2,
+          "style": "差し",
+          "last3f": "33.4秒",
+          "recent": "キーンランドC 2着",
+          "score": 84.1,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 6,
+          "name": "ママコチャ",
+          "jockey": "川田将雅",
+          "odds": 5.2,
+          "style": "先行",
+          "last3f": "34.1秒",
+          "recent": "セントウルS 2着",
+          "score": 81.3,
+          "mark": "-"
+        },
+        {
+          "num": 12,
+          "name": "サトノレーヴ",
+          "jockey": "D.レーン",
+          "odds": 3.0,
+          "style": "先行",
+          "last3f": "33.9秒",
+          "recent": "キーンランドC 1着",
+          "score": 80.9,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 13,
+          "name": "ルガル",
+          "jockey": "西村淳也",
+          "odds": 28.5,
+          "style": "先行",
+          "last3f": "33.7秒",
+          "recent": "高松宮記念 10着",
+          "score": 93.4,
+          "mark": "◎ 本命"
+        }
+      ],
+      "honmeiNum": 13,
+      "confidence": "A",
+      "confidenceScore": 92,
+      "aiSummary": "前走上がり3F33.7秒の末脚を持つ先行馬ルガルを本命に抜擢。先行勢が揃いペースは流れる公算だが、好位からしぶとく伸びる機動力と中山の舞台適性を高く評価した。",
+      "aiBuy": "単勝 13 / 馬連 13-1,2,5,12 / 3連複 13-2,5-12番軸総流し"
+    },
+    {
+      "raceId": "202609040810",
+      "venue": "阪神",
+      "raceName": "10R 道頓堀S",
+      "startTime": "15:10",
+      "isGraded": false,
+      "isWin5": false,
+      "horses": [
+        {
+          "num": 1,
+          "name": "オオバンブルマイ",
+          "jockey": "武豊",
+          "odds": 17.1,
+          "style": "追込",
+          "last3f": "33.2秒",
+          "recent": "キーンランドC 3着",
+          "score": 82.5,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 2,
+          "name": "トウシンマカオ",
+          "jockey": "菅原明良",
+          "odds": 9.6,
+          "style": "差し",
+          "last3f": "33.5秒",
+          "recent": "セントウルS 1着",
+          "score": 85.0,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 5,
+          "name": "ナムラクレア",
+          "jockey": "横山武史",
+          "odds": 8.2,
+          "style": "差し",
+          "last3f": "33.4秒",
+          "recent": "キーンランドC 2着",
+          "score": 84.1,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 6,
+          "name": "ママコチャ",
+          "jockey": "川田将雅",
+          "odds": 5.2,
+          "style": "先行",
+          "last3f": "34.1秒",
+          "recent": "セントウルS 2着",
+          "score": 81.3,
+          "mark": "-"
+        },
+        {
+          "num": 12,
+          "name": "サトノレーヴ",
+          "jockey": "D.レーン",
+          "odds": 3.0,
+          "style": "先行",
+          "last3f": "33.9秒",
+          "recent": "キーンランドC 1着",
+          "score": 80.9,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 13,
+          "name": "ルガル",
+          "jockey": "西村淳也",
+          "odds": 28.5,
+          "style": "先行",
+          "last3f": "33.7秒",
+          "recent": "高松宮記念 10着",
+          "score": 93.4,
+          "mark": "◎ 本命"
+        }
+      ],
+      "honmeiNum": 2,
+      "confidence": "A",
+      "confidenceScore": 89,
+      "aiSummary": "開幕週の絶好馬場。先行力と上がり33秒台の決め手を併せ持つトウシンマカオの好位抜け出しが濃厚。",
+      "aiBuy": "単勝 2 / 馬連 2-5,12"
+    },
+    {
+      "raceId": "202609040809",
+      "venue": "阪神",
+      "raceName": "9R 芦屋川特別",
+      "startTime": "14:35",
+      "isGraded": false,
+      "isWin5": false,
+      "horses": [
+        {
+          "num": 1,
+          "name": "オオバンブルマイ",
+          "jockey": "武豊",
+          "odds": 17.1,
+          "style": "追込",
+          "last3f": "33.2秒",
+          "recent": "キーンランドC 3着",
+          "score": 82.5,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 2,
+          "name": "トウシンマカオ",
+          "jockey": "菅原明良",
+          "odds": 9.6,
+          "style": "差し",
+          "last3f": "33.5秒",
+          "recent": "セントウルS 1着",
+          "score": 85.0,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 5,
+          "name": "ナムラクレア",
+          "jockey": "横山武史",
+          "odds": 8.2,
+          "style": "差し",
+          "last3f": "33.4秒",
+          "recent": "キーンランドC 2着",
+          "score": 84.1,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 6,
+          "name": "ママコチャ",
+          "jockey": "川田将雅",
+          "odds": 5.2,
+          "style": "先行",
+          "last3f": "34.1秒",
+          "recent": "セントウルS 2着",
+          "score": 81.3,
+          "mark": "-"
+        },
+        {
+          "num": 12,
+          "name": "サトノレーヴ",
+          "jockey": "D.レーン",
+          "odds": 3.0,
+          "style": "先行",
+          "last3f": "33.9秒",
+          "recent": "キーンランドC 1着",
+          "score": 80.9,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 13,
+          "name": "ルガル",
+          "jockey": "西村淳也",
+          "odds": 28.5,
+          "style": "先行",
+          "last3f": "33.7秒",
+          "recent": "高松宮記念 10着",
+          "score": 93.4,
+          "mark": "◎ 本命"
+        }
+      ],
+      "honmeiNum": 12,
+      "confidence": "A",
+      "confidenceScore": 88,
+      "aiSummary": "前走上がり33秒台で完勝したサトノレーヴ。斤量据え置きで鞍上も強力、軸としての信頼度は高い。",
+      "aiBuy": "単勝 12 / 馬単 12➔1,2"
     }
   ]
 }
