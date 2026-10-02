@@ -9,7 +9,7 @@ from google import genai
 
 os.makedirs("data", exist_ok=True)
 now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-today_date = datetime.now().strftime("%Y-%m-%d")
+today_ymd = datetime.now().strftime("%Y%m%d")
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -19,7 +19,7 @@ api_key = os.environ.get("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key) if api_key else None
 
 def ask_gemini_prediction(race_name, venue, horses):
-    """Gemini 3.8 Flash に脚質・上がり3Fを加味した推論を行わせる"""
+    """Gemini 3.8 Flash に推論を行わせる"""
     if not client or not horses:
         return {
             "honmei_num": horses[0]["num"] if horses else 1,
@@ -81,8 +81,9 @@ def ask_gemini_prediction(race_name, venue, horses):
     }
 
 def get_live_races():
-    # 本日のレース一覧ページを直接取得
-    url = f"[https://race.netkeiba.com/top/race_list.html](https://race.netkeiba.com/top/race_list.html)"
+    # 当日の日付を指定して確実に一覧を取得
+    url = f"[https://race.netkeiba.com/top/race_list.html?kaisai_date=](https://race.netkeiba.com/top/race_list.html?kaisai_date=){today_ymd}"
+    print(f"Fetching race list from: {url}")
     try:
         res = requests.get(url, headers=headers, timeout=10)
         res.encoding = "EUC-JP"
@@ -92,52 +93,52 @@ def get_live_races():
         return []
 
     target_races = []
-    # レースリンクを一括抽出
-    race_links = soup.select("a[href*='shutuba.html?race_id=']")
+    # レースリンク（race_idを含むリンク）を網羅的に探索
+    race_links = soup.find_all("a", href=re.compile(r"race_id=(\d+)"))
     seen_ids = set()
 
     for a in race_links:
         href = a.get("href", "")
-        race_id_match = re.search(r"race_id=(\d+)", href)
-        if not race_id_match:
+        m = re.search(r"race_id=(\d+)", href)
+        if not m:
             continue
-        race_id = race_id_match.group(1)
+        race_id = m.group(1)
         if race_id in seen_ids:
             continue
         seen_ids.add(race_id)
 
-        # 親ブロックから会場名やレース名を取得
         parent = a.find_parent("li") or a.find_parent("tr") or a.find_parent("div")
         text_all = parent.text if parent else a.text
-        
-        # 会場名判定
-        venue = "京都" if "08" in race_id[4:6] or "京都" in text_all else "東京" if "05" in race_id[4:6] or "東京" in text_all else "阪神" if "阪神" in text_all else "中央"
-        
-        # レース番号（例: 11R）
-        r_num_match = re.search(r"(\d{1,2})R", text_all)
-        r_num = f"{r_num_match.group(1)}R" if r_num_match else "11R"
+
+        # 会場判定 (JRA競馬場コード: 05=東京, 08=京都, 09=阪神, 06=中山など)
+        venue_code = race_id[4:6]
+        venue_map = {"05": "東京", "08": "京都", "09": "阪神", "06": "中山", "07": "中京", "04": "新潟"}
+        venue = venue_map.get(venue_code, "中央")
+
+        # レース番号（末尾2桁）
+        r_num_val = int(race_id[-2:]) if race_id[-2:].isdigit() else 11
+        r_num = f"{r_num_val}R"
 
         # レース名
         name_tag = a.select_one(".RaceName") or a
-        r_name = name_tag.text.strip().split("\n")[0]
-        if not r_name or r_name == r_num:
-            r_name = f"{r_num} 特別競走"
+        r_name_clean = name_tag.text.strip().split("\n")[0]
+        if not r_name_clean or len(r_name_clean) > 30:
+            r_name_clean = f"{r_num} 特別競走"
 
-        # 重賞・メイン・関西レースを優先
-        is_graded = any(g in text_all for g in ["G1", "G2", "G3", "GI", "GII", "GIII", "重賞", "ステークス", "S"])
-        is_win5 = ("10R" in r_num or "11R" in r_num)
+        is_graded = any(g in text_all for g in ["G1", "G2", "G3", "GI", "GII", "GIII", "重賞", "ステークス", "S", "賞"])
+        is_win5 = (r_num_val in [10, 11])
 
         target_races.append({
             "venue": venue,
             "raceNum": r_num,
-            "raceName": f"{r_num} {r_name}",
+            "raceName": f"{r_num} {r_name_clean}",
             "startTime": "発走準備中",
             "isGraded": is_graded,
             "isWin5": is_win5,
             "raceId": race_id
         })
 
-    print(f"Discovered {len(target_races)} live races from netkeiba.")
+    print(f"Discovered {len(target_races)} live races for date {today_ymd}.")
     return target_races
 
 def scrape_shutuba(race_id):
@@ -214,8 +215,8 @@ live_meta = get_live_races()
 final_races = []
 
 if live_meta:
-    # メインレースおよび後半レースを中心に最大8レースを抽出してAI推論
-    target_subset = [r for r in live_meta if r["isGraded"] or "11R" in r["raceNum"] or "10R" in r["raceNum"]][:8]
+    # 9R〜12Rの後半メイン周辺を中心に最大8レースを抽出してAI推論
+    target_subset = [r for r in live_meta if r["isGraded"] or any(x in r["raceNum"] for x in ["11R", "10R", "9R"])][:8]
     if not target_subset:
         target_subset = live_meta[:8]
 
