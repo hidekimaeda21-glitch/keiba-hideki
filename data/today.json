@@ -1,6 +1,450 @@
 {
-  "updatedAt": "2026-10-02 23:22",
+  "updatedAt": "2026-10-02 23:25",
   "win5Strategy": "WIN5は日曜開催（本日は厳選勝負レースTOP3に集中）",
-  "bestRaces": [],
-  "races": []
+  "bestRaces": [
+    {
+      "raceId": "202608040110",
+      "venue": "京都",
+      "raceName": "10R 大山崎ステークス",
+      "startTime": "14:50",
+      "isGraded": false,
+      "isWin5": true,
+      "horses": [
+        {
+          "num": 2,
+          "name": "サトノフェイバー",
+          "jockey": "団野大成",
+          "odds": 3.5,
+          "style": "先行",
+          "last3f": "35.2秒",
+          "recent": "天満橋S 2着",
+          "score": 90.0,
+          "mark": "◎ 本命"
+        },
+        {
+          "num": 5,
+          "name": "イスラアネーロ",
+          "jockey": "西村淳也",
+          "odds": 5.1,
+          "style": "逃げ",
+          "last3f": "35.9秒",
+          "recent": "安芸S 3着",
+          "score": 86.5,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 8,
+          "name": "スマートアイ",
+          "jockey": "武豊",
+          "odds": 6.2,
+          "style": "好位",
+          "last3f": "35.5秒",
+          "recent": "播磨S 4着",
+          "score": 84.0,
+          "mark": "▲ 単穴"
+        }
+      ],
+      "honmeiNum": 2,
+      "confidence": "A",
+      "confidenceScore": 85,
+      "aiSummary": "イスラアネーロがハナを主張し、持久力勝負のよどみないペースを予想。好位でロスなく運べるサトノフェイバーが前を射程に入れ、直線メンバー最速の脚で抜け出す。",
+      "aiBuy": "単勝 2 / 馬連 2-5,8 / 3連複 2-5-8"
+    },
+    {
+      "raceId": "202608040111",
+      "venue": "京都",
+      "raceName": "11R オパールステークス (L)",
+      "startTime": "15:30",
+      "isGraded": true,
+      "isWin5": true,
+      "horses": [
+        {
+          "num": 1,
+          "name": "カルチャーデイ",
+          "jockey": "酒井学",
+          "odds": 17.0,
+          "style": "差し",
+          "last3f": "34.1秒",
+          "recent": "北九州記念 8着",
+          "score": 83.2,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 2,
+          "name": "ショウナンアビアス",
+          "jockey": "北村友一",
+          "odds": 58.8,
+          "style": "追込",
+          "last3f": "34.4秒",
+          "recent": "朱鷺S 12着",
+          "score": 75.0,
+          "mark": "-"
+        },
+        {
+          "num": 3,
+          "name": "タマモイカロス",
+          "jockey": "松山弘平",
+          "odds": 8.1,
+          "style": "先行",
+          "last3f": "33.8秒",
+          "recent": "セントウルS 4着",
+          "score": 93.5,
+          "mark": "◎ 本命"
+        },
+        {
+          "num": 4,
+          "name": "メイショウヨゾラ",
+          "jockey": "吉村誠之助",
+          "odds": 9.3,
+          "style": "逃げ",
+          "last3f": "34.6秒",
+          "recent": "佐世保S 1着",
+          "score": 88.0,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 5,
+          "name": "フィオライア",
+          "jockey": "松若風馬",
+          "odds": 20.4,
+          "style": "先行",
+          "last3f": "34.2秒",
+          "recent": "北九州短距離 3着",
+          "score": 84.5,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 6,
+          "name": "バースクライ",
+          "jockey": "岩田望来",
+          "odds": 6.5,
+          "style": "差し",
+          "last3f": "33.5秒",
+          "recent": "CBC賞 3着",
+          "score": 86.8,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 7,
+          "name": "エイシンフェンサー",
+          "jockey": "川須栄彦",
+          "odds": 12.8,
+          "style": "先行",
+          "last3f": "34.0秒",
+          "recent": "鞍馬S 2着",
+          "score": 82.0,
+          "mark": "-"
+        },
+        {
+          "num": 8,
+          "name": "ビッグシーザー",
+          "jockey": "田口貫太",
+          "odds": 4.8,
+          "style": "先行",
+          "last3f": "33.9秒",
+          "recent": "青函S 1着",
+          "score": 87.5,
+          "mark": "△ 連下"
+        }
+      ],
+      "honmeiNum": 3,
+      "confidence": "B",
+      "confidenceScore": 75,
+      "aiSummary": "メイショウヨゾラが逃げを主張し平均ペースを想定。先行力と前走優秀な上がり3Fを駆使できるタマモイカロスを本命に抜擢。好位からの抜け出しに期待する。",
+      "aiBuy": "単勝 3 / 馬連 3-4,6,8 / 3連複 3-4,6-1,4,5,6,8"
+    },
+    {
+      "raceId": "202605040111",
+      "venue": "東京",
+      "raceName": "11R グリーンチャンネルC (L)",
+      "startTime": "15:45",
+      "isGraded": true,
+      "isWin5": true,
+      "horses": [
+        {
+          "num": 1,
+          "name": "タマモロック",
+          "jockey": "永野猛蔵",
+          "odds": 4.2,
+          "style": "先行",
+          "last3f": "35.8秒",
+          "recent": "BSN賞 2着",
+          "score": 91.2,
+          "mark": "◎ 本命"
+        },
+        {
+          "num": 2,
+          "name": "ペリエール",
+          "jockey": "佐々木大輔",
+          "odds": 5.6,
+          "style": "好位",
+          "last3f": "36.1秒",
+          "recent": "エルムS 5着",
+          "score": 87.4,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 3,
+          "name": "デシエルト",
+          "jockey": "戸崎圭太",
+          "odds": 3.8,
+          "style": "逃げ",
+          "last3f": "36.5秒",
+          "recent": "三宮S 1着",
+          "score": 88.9,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 4,
+          "name": "キタノヴィジョン",
+          "jockey": "石川裕紀人",
+          "odds": 15.3,
+          "style": "追込",
+          "last3f": "35.2秒",
+          "recent": "名鉄杯 4着",
+          "score": 81.0,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 5,
+          "name": "オメガギネス",
+          "jockey": "杉原誠人",
+          "odds": 6.8,
+          "style": "先行",
+          "last3f": "36.0秒",
+          "recent": "阿波特別 1着",
+          "score": 85.5,
+          "mark": "△ 連下"
+        }
+      ],
+      "honmeiNum": 1,
+      "confidence": "B",
+      "confidenceScore": 75,
+      "aiSummary": "デシエルトがハナを主張し淀みのないペース。先行好位を見る形で進めるタマモロックが前走の堅実な上がり3Fを活かしてしぶとく差し切る。内枠利しぶとく粘り込むと見た。",
+      "aiBuy": "単勝 1 / 馬連 1-2,3,5 / 3連複 1-2,3-2,3,4,5"
+    }
+  ],
+  "races": [
+    {
+      "raceId": "202608040111",
+      "venue": "京都",
+      "raceName": "11R オパールステークス (L)",
+      "startTime": "15:30",
+      "isGraded": true,
+      "isWin5": true,
+      "horses": [
+        {
+          "num": 1,
+          "name": "カルチャーデイ",
+          "jockey": "酒井学",
+          "odds": 17.0,
+          "style": "差し",
+          "last3f": "34.1秒",
+          "recent": "北九州記念 8着",
+          "score": 83.2,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 2,
+          "name": "ショウナンアビアス",
+          "jockey": "北村友一",
+          "odds": 58.8,
+          "style": "追込",
+          "last3f": "34.4秒",
+          "recent": "朱鷺S 12着",
+          "score": 75.0,
+          "mark": "-"
+        },
+        {
+          "num": 3,
+          "name": "タマモイカロス",
+          "jockey": "松山弘平",
+          "odds": 8.1,
+          "style": "先行",
+          "last3f": "33.8秒",
+          "recent": "セントウルS 4着",
+          "score": 93.5,
+          "mark": "◎ 本命"
+        },
+        {
+          "num": 4,
+          "name": "メイショウヨゾラ",
+          "jockey": "吉村誠之助",
+          "odds": 9.3,
+          "style": "逃げ",
+          "last3f": "34.6秒",
+          "recent": "佐世保S 1着",
+          "score": 88.0,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 5,
+          "name": "フィオライア",
+          "jockey": "松若風馬",
+          "odds": 20.4,
+          "style": "先行",
+          "last3f": "34.2秒",
+          "recent": "北九州短距離 3着",
+          "score": 84.5,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 6,
+          "name": "バースクライ",
+          "jockey": "岩田望来",
+          "odds": 6.5,
+          "style": "差し",
+          "last3f": "33.5秒",
+          "recent": "CBC賞 3着",
+          "score": 86.8,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 7,
+          "name": "エイシンフェンサー",
+          "jockey": "川須栄彦",
+          "odds": 12.8,
+          "style": "先行",
+          "last3f": "34.0秒",
+          "recent": "鞍馬S 2着",
+          "score": 82.0,
+          "mark": "-"
+        },
+        {
+          "num": 8,
+          "name": "ビッグシーザー",
+          "jockey": "田口貫太",
+          "odds": 4.8,
+          "style": "先行",
+          "last3f": "33.9秒",
+          "recent": "青函S 1着",
+          "score": 87.5,
+          "mark": "△ 連下"
+        }
+      ],
+      "honmeiNum": 3,
+      "confidence": "B",
+      "confidenceScore": 75,
+      "aiSummary": "メイショウヨゾラが逃げを主張し平均ペースを想定。先行力と前走優秀な上がり3Fを駆使できるタマモイカロスを本命に抜擢。好位からの抜け出しに期待する。",
+      "aiBuy": "単勝 3 / 馬連 3-4,6,8 / 3連複 3-4,6-1,4,5,6,8"
+    },
+    {
+      "raceId": "202605040111",
+      "venue": "東京",
+      "raceName": "11R グリーンチャンネルC (L)",
+      "startTime": "15:45",
+      "isGraded": true,
+      "isWin5": true,
+      "horses": [
+        {
+          "num": 1,
+          "name": "タマモロック",
+          "jockey": "永野猛蔵",
+          "odds": 4.2,
+          "style": "先行",
+          "last3f": "35.8秒",
+          "recent": "BSN賞 2着",
+          "score": 91.2,
+          "mark": "◎ 本命"
+        },
+        {
+          "num": 2,
+          "name": "ペリエール",
+          "jockey": "佐々木大輔",
+          "odds": 5.6,
+          "style": "好位",
+          "last3f": "36.1秒",
+          "recent": "エルムS 5着",
+          "score": 87.4,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 3,
+          "name": "デシエルト",
+          "jockey": "戸崎圭太",
+          "odds": 3.8,
+          "style": "逃げ",
+          "last3f": "36.5秒",
+          "recent": "三宮S 1着",
+          "score": 88.9,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 4,
+          "name": "キタノヴィジョン",
+          "jockey": "石川裕紀人",
+          "odds": 15.3,
+          "style": "追込",
+          "last3f": "35.2秒",
+          "recent": "名鉄杯 4着",
+          "score": 81.0,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 5,
+          "name": "オメガギネス",
+          "jockey": "杉原誠人",
+          "odds": 6.8,
+          "style": "先行",
+          "last3f": "36.0秒",
+          "recent": "阿波特別 1着",
+          "score": 85.5,
+          "mark": "△ 連下"
+        }
+      ],
+      "honmeiNum": 1,
+      "confidence": "B",
+      "confidenceScore": 75,
+      "aiSummary": "デシエルトがハナを主張し淀みのないペース。先行好位を見る形で進めるタマモロックが前走の堅実な上がり3Fを活かしてしぶとく差し切る。内枠利しぶとく粘り込むと見た。",
+      "aiBuy": "単勝 1 / 馬連 1-2,3,5 / 3連複 1-2,3-2,3,4,5"
+    },
+    {
+      "raceId": "202608040110",
+      "venue": "京都",
+      "raceName": "10R 大山崎ステークス",
+      "startTime": "14:50",
+      "isGraded": false,
+      "isWin5": true,
+      "horses": [
+        {
+          "num": 2,
+          "name": "サトノフェイバー",
+          "jockey": "団野大成",
+          "odds": 3.5,
+          "style": "先行",
+          "last3f": "35.2秒",
+          "recent": "天満橋S 2着",
+          "score": 90.0,
+          "mark": "◎ 本命"
+        },
+        {
+          "num": 5,
+          "name": "イスラアネーロ",
+          "jockey": "西村淳也",
+          "odds": 5.1,
+          "style": "逃げ",
+          "last3f": "35.9秒",
+          "recent": "安芸S 3着",
+          "score": 86.5,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 8,
+          "name": "スマートアイ",
+          "jockey": "武豊",
+          "odds": 6.2,
+          "style": "好位",
+          "last3f": "35.5秒",
+          "recent": "播磨S 4着",
+          "score": 84.0,
+          "mark": "▲ 単穴"
+        }
+      ],
+      "honmeiNum": 2,
+      "confidence": "A",
+      "confidenceScore": 85,
+      "aiSummary": "イスラアネーロがハナを主張し、持久力勝負のよどみないペースを予想。好位でロスなく運べるサトノフェイバーが前を射程に入れ、直線メンバー最速の脚で抜け出す。",
+      "aiBuy": "単勝 2 / 馬連 2-5,8 / 3連複 2-5-8"
+    }
+  ]
 }
