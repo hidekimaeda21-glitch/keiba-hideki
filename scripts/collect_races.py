@@ -9,10 +9,11 @@ from google import genai
 
 os.makedirs("data", exist_ok=True)
 now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-today_ymd = datetime.now().strftime("%Y%m%d")
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "ja,en-US;q=0.9,en;q=0.8"
 }
 
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -80,88 +81,54 @@ def ask_gemini_prediction(race_name, venue, horses):
         "recommendation": "単勝・馬連流し"
     }
 
-def get_live_races():
-    # 当日の日付を指定して確実に一覧を取得
-    url = f"[https://race.netkeiba.com/top/race_list.html?kaisai_date=](https://race.netkeiba.com/top/race_list.html?kaisai_date=){today_ymd}"
-    print(f"Fetching race list from: {url}")
-    try:
-        res = requests.get(url, headers=headers, timeout=10)
-        res.encoding = "EUC-JP"
-        soup = BeautifulSoup(res.text, "html.parser")
-    except Exception as e:
-        print(f"Error fetching top: {e}")
-        return []
-
-    target_races = []
-    # レースリンク（race_idを含むリンク）を網羅的に探索
-    race_links = soup.find_all("a", href=re.compile(r"race_id=(\d+)"))
-    seen_ids = set()
-
-    for a in race_links:
-        href = a.get("href", "")
-        m = re.search(r"race_id=(\d+)", href)
-        if not m:
-            continue
-        race_id = m.group(1)
-        if race_id in seen_ids:
-            continue
-        seen_ids.add(race_id)
-
-        parent = a.find_parent("li") or a.find_parent("tr") or a.find_parent("div")
-        text_all = parent.text if parent else a.text
-
-        # 会場判定 (JRA競馬場コード: 05=東京, 08=京都, 09=阪神, 06=中山など)
-        venue_code = race_id[4:6]
-        venue_map = {"05": "東京", "08": "京都", "09": "阪神", "06": "中山", "07": "中京", "04": "新潟"}
-        venue = venue_map.get(venue_code, "中央")
-
-        # レース番号（末尾2桁）
-        r_num_val = int(race_id[-2:]) if race_id[-2:].isdigit() else 11
-        r_num = f"{r_num_val}R"
-
-        # レース名
-        name_tag = a.select_one(".RaceName") or a
-        r_name_clean = name_tag.text.strip().split("\n")[0]
-        if not r_name_clean or len(r_name_clean) > 30:
-            r_name_clean = f"{r_num} 特別競走"
-
-        is_graded = any(g in text_all for g in ["G1", "G2", "G3", "GI", "GII", "GIII", "重賞", "ステークス", "S", "賞"])
-        is_win5 = (r_num_val in [10, 11])
-
-        target_races.append({
-            "venue": venue,
-            "raceNum": r_num,
-            "raceName": f"{r_num} {r_name_clean}",
-            "startTime": "発走準備中",
-            "isGraded": is_graded,
-            "isWin5": is_win5,
-            "raceId": race_id
-        })
-
-    print(f"Discovered {len(target_races)} live races for date {today_ymd}.")
-    return target_races
-
 def scrape_shutuba(race_id):
-    url = f"[https://race.netkeiba.com/race/shutuba.html?race_id=](https://race.netkeiba.com/race/shutuba.html?race_id=){race_id}"
+    # 実画面に合わせたリファラパラメータ付きURL
+    url = f"[https://race.netkeiba.com/race/shutuba.html?race_id=](https://race.netkeiba.com/race/shutuba.html?race_id=){race_id}&rf=race_list"
     horses = []
+    race_title = ""
     try:
         res = requests.get(url, headers=headers, timeout=10)
         res.encoding = "EUC-JP"
         soup = BeautifulSoup(res.text, "html.parser")
 
-        rows = soup.select(".Shutuba_Table tbody tr")
-        for row in rows:
-            num_tag = row.select_one(".Umaban")
-            name_tag = row.select_one(".HorseName a")
-            jockey_tag = row.select_one(".Jockey a")
-            odds_tag = row.select_one(".Popular")
+        title_tag = soup.select_one(".RaceName")
+        if title_tag:
+            race_title = title_tag.text.strip()
 
-            if not (num_tag and name_tag):
+        # テーブル内の全tr要素を網羅的に走査
+        rows = soup.find_all("tr")
+        for row in rows:
+            # 馬番の取得（Umabanクラスまたはtd内の数字）
+            num_td = row.select_one(".Umaban") or (row.find_all("td")[1] if len(row.find_all("td")) > 2 else None)
+            if not num_td:
                 continue
+            num_text = num_td.text.strip()
+            if not num_text.isdigit():
+                continue
+
+            # 馬名の取得（リンクまたはテキスト）
+            name_a = row.select_one("a[href*='/horse/']") or row.select_one(".HorseName")
+            if not name_a:
+                continue
+            name = name_a.text.strip()
+            if not name or name == "馬名":
+                continue
+
+            # 騎手名
+            jockey_a = row.select_one("a[href*='/jockey/']") or row.select_one(".Jockey")
+            jockey = jockey_a.text.strip() if jockey_a else ""
+
+            # 単勝オッズ
+            odds_td = row.select_one(".Popular") or row.select_one(".Odds")
+            odds_str = odds_td.text.strip() if odds_td else "---"
+            try:
+                odds = float(odds_str)
+            except ValueError:
+                odds = 999.0
 
             row_text = row.text
             agari_match = re.search(r"(3[3-9]\.\d)", row_text)
-            last_3f = f"{agari_match.group(1)}秒" if agari_match else "34.6秒"
+            last_3f = f"{agari_match.group(1)}秒" if agari_match else "34.5秒"
 
             if any(p in row_text for p in ["1-1", "1-2"]):
                 style = "逃げ"
@@ -176,17 +143,8 @@ def scrape_shutuba(race_id):
             recents = [c.text.strip() for c in recent_cells[:2] if c.text.strip()]
             recent_str = "/".join(recents) if recents else "近走集計中"
 
-            num = num_tag.text.strip()
-            name = name_tag.text.strip()
-            jockey = jockey_tag.text.strip() if jockey_tag else ""
-            odds_str = odds_tag.text.strip() if odds_tag else "---"
-            try:
-                odds = float(odds_str)
-            except ValueError:
-                odds = 999.0
-
             horses.append({
-                "num": int(num) if num.isdigit() else 0,
+                "num": int(num_text),
                 "name": name,
                 "jockey": jockey,
                 "odds": odds if odds != 999.0 else 0.0,
@@ -198,7 +156,7 @@ def scrape_shutuba(race_id):
             })
         time.sleep(1)
     except Exception as e:
-        print(f"Error scraping shutuba {race_id}: {e}")
+        print(f"Error scraping {race_id}: {e}")
 
     if horses:
         valid_horses = [h for h in horses if h["odds"] > 0]
@@ -208,39 +166,44 @@ def scrape_shutuba(race_id):
             h["mark"] = marks[idx]
             h["score"] = round(92.0 - (idx * 2.8), 1)
 
-    return sorted(horses, key=lambda x: x["num"])
+    return sorted(horses, key=lambda x: x["num"]), race_title
 
-print("Collecting race information...")
-live_meta = get_live_races()
+# 2026年10月3日（土曜）の主要レース
+target_list = [
+    {"venue": "京都", "r_num": "11R", "raceId": "202608040111", "default_name": "11R オパールステークス (L)"},
+    {"venue": "京都", "r_num": "10R", "raceId": "202608040110", "default_name": "10R 大山崎ステークス"},
+    {"venue": "京都", "r_num": "9R",  "raceId": "202608040109", "default_name": "9R りんどう賞"},
+    {"venue": "東京", "r_num": "11R", "raceId": "202605040111", "default_name": "11R グリーンチャンネルC (L)"},
+    {"venue": "東京", "r_num": "10R", "raceId": "202605040110", "default_name": "10R 白秋ステークス"},
+    {"venue": "東京", "r_num": "9R",  "raceId": "202605040109", "default_name": "9R 南武特別"}
+]
+
+print("Starting analysis for today's races...")
 final_races = []
 
-if live_meta:
-    # 9R〜12Rの後半メイン周辺を中心に最大8レースを抽出してAI推論
-    target_subset = [r for r in live_meta if r["isGraded"] or any(x in r["raceNum"] for x in ["11R", "10R", "9R"])][:8]
-    if not target_subset:
-        target_subset = live_meta[:8]
+for item in target_list:
+    print(f"Scraping {item['venue']} {item['r_num']} ({item['raceId']})...")
+    h_list, actual_title = scrape_shutuba(item["raceId"])
+    
+    if h_list:
+        race_display = f"{item['r_num']} {actual_title}" if actual_title else item["default_name"]
+        print(f"Running Gemini AI for {race_display} ({len(h_list)} horses)...")
+        ai_insight = ask_gemini_prediction(race_display, item["venue"], h_list)
+        final_races.append({
+            "raceId": item["raceId"],
+            "venue": item["venue"],
+            "raceName": race_display,
+            "startTime": "発走準備中",
+            "isGraded": ("11R" in item["r_num"]),
+            "isWin5": ("11R" in item["r_num"] or "10R" in item["r_num"]),
+            "horses": h_list,
+            "honmeiNum": ai_insight.get("honmei_num"),
+            "confidence": ai_insight.get("confidence", "B"),
+            "confidenceScore": ai_insight.get("confidence_score", 75),
+            "aiSummary": ai_insight.get("summary", ""),
+            "aiBuy": ai_insight.get("recommendation", "")
+        })
 
-    for r in target_subset:
-        print(f"Analyzing {r['venue']} {r['raceName']} ({r['raceId']})...")
-        h_list = scrape_shutuba(r["raceId"])
-        if h_list:
-            ai_insight = ask_gemini_prediction(r["raceName"], r["venue"], h_list)
-            final_races.append({
-                "raceId": r["raceId"],
-                "venue": r["venue"],
-                "raceName": r["raceName"],
-                "startTime": r["startTime"],
-                "isGraded": r["isGraded"],
-                "isWin5": r["isWin5"],
-                "horses": h_list,
-                "honmeiNum": ai_insight.get("honmei_num"),
-                "confidence": ai_insight.get("confidence", "B"),
-                "confidenceScore": ai_insight.get("confidence_score", 75),
-                "aiSummary": ai_insight.get("summary", ""),
-                "aiBuy": ai_insight.get("recommendation", "")
-            })
-
-# 信頼度TOP3を勝負レースとして選出
 sorted_by_conf = sorted(final_races, key=lambda x: x.get("confidenceScore", 0), reverse=True)
 best_races = sorted_by_conf[:3]
 
@@ -254,4 +217,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"AI analysis completed. Total races: {len(final_races)}")
+print(f"Completed! Total live races saved: {len(final_races)}")
