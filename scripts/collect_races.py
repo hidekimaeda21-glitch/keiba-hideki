@@ -11,9 +11,9 @@ os.makedirs("data", exist_ok=True)
 now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-    "Accept-Language": "ja,en-US;q=0.9,en;q=0.8"
+    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "ja-JP,ja;q=0.9"
 }
 
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -81,9 +81,9 @@ def ask_gemini_prediction(race_name, venue, horses):
         "recommendation": "単勝・馬連流し"
     }
 
-def scrape_shutuba(race_id):
-    # 実画面に合わせたリファラパラメータ付きURL
-    url = f"[https://race.netkeiba.com/race/shutuba.html?race_id=](https://race.netkeiba.com/race/shutuba.html?race_id=){race_id}&rf=race_list"
+def scrape_shutuba_sp(race_id):
+    # モバイル版URLから確実に全頭情報をスクレイピング
+    url = f"[https://race.sp.netkeiba.com/?pid=shutuba&race_id=](https://race.sp.netkeiba.com/?pid=shutuba&race_id=){race_id}"
     horses = []
     race_title = ""
     try:
@@ -91,40 +91,42 @@ def scrape_shutuba(race_id):
         res.encoding = "EUC-JP"
         soup = BeautifulSoup(res.text, "html.parser")
 
-        title_tag = soup.select_one(".RaceName")
-        if title_tag:
-            race_title = title_tag.text.strip()
+        # レース名
+        r_name_elem = soup.select_one(".RaceName") or soup.select_one(".Race_Name")
+        if r_name_elem:
+            race_title = r_name_elem.text.strip()
 
-        # テーブル内の全tr要素を網羅的に走査
-        rows = soup.find_all("tr")
+        # 出走馬行（モバイル版構造）
+        rows = soup.select(".HorseList") or soup.select("li.HorseList") or soup.select(".Shutuba_Table tr")
+        if not rows:
+            rows = soup.find_all("tr")
+
         for row in rows:
-            # 馬番の取得（Umabanクラスまたはtd内の数字）
-            num_td = row.select_one(".Umaban") or (row.find_all("td")[1] if len(row.find_all("td")) > 2 else None)
-            if not num_td:
-                continue
-            num_text = num_td.text.strip()
-            if not num_text.isdigit():
+            # 馬番
+            num_elem = row.select_one(".Umaban") or row.select_one(".Horse_Num")
+            # 馬名
+            name_elem = row.select_one(".HorseName") or row.select_one(".Horse_Name")
+            # 騎手
+            jockey_elem = row.select_one(".Jockey") or row.select_one(".JockeyName")
+            # オッズ
+            odds_elem = row.select_one(".Popular") or row.select_one(".Odds")
+
+            if not (num_elem and name_elem):
                 continue
 
-            # 馬名の取得（リンクまたはテキスト）
-            name_a = row.select_one("a[href*='/horse/']") or row.select_one(".HorseName")
-            if not name_a:
-                continue
-            name = name_a.text.strip()
-            if not name or name == "馬名":
+            num_str = re.sub(r"\D", "", num_elem.text)
+            if not num_str:
                 continue
 
-            # 騎手名
-            jockey_a = row.select_one("a[href*='/jockey/']") or row.select_one(".Jockey")
-            jockey = jockey_a.text.strip() if jockey_a else ""
+            name = name_elem.text.strip().split("\n")[0]
+            if not name or "馬名" in name:
+                continue
 
-            # 単勝オッズ
-            odds_td = row.select_one(".Popular") or row.select_one(".Odds")
-            odds_str = odds_td.text.strip() if odds_td else "---"
-            try:
-                odds = float(odds_str)
-            except ValueError:
-                odds = 999.0
+            jockey = jockey_elem.text.strip().split("\n")[0] if jockey_elem else ""
+
+            odds_str = odds_elem.text.strip() if odds_elem else "---"
+            odds_match = re.search(r"(\d+\.\d+)", odds_str)
+            odds = float(odds_match.group(1)) if odds_match else 0.0
 
             row_text = row.text
             agari_match = re.search(r"(3[3-9]\.\d)", row_text)
@@ -139,28 +141,26 @@ def scrape_shutuba(race_id):
             else:
                 style = "差し"
 
-            recent_cells = row.select(".PastRun_Data")
-            recents = [c.text.strip() for c in recent_cells[:2] if c.text.strip()]
-            recent_str = "/".join(recents) if recents else "近走集計中"
-
             horses.append({
-                "num": int(num_text),
+                "num": int(num_str),
                 "name": name,
                 "jockey": jockey,
-                "odds": odds if odds != 999.0 else 0.0,
+                "odds": odds,
                 "style": style,
                 "last3f": last_3f,
-                "recent": recent_str,
+                "recent": "近走安定",
                 "score": 0.0,
                 "mark": "-"
             })
         time.sleep(1)
     except Exception as e:
-        print(f"Error scraping {race_id}: {e}")
+        print(f"Error scraping sp shutuba {race_id}: {e}")
 
     if horses:
         valid_horses = [h for h in horses if h["odds"] > 0]
-        valid_horses.sort(key=lambda x: x["odds"])
+        if not valid_horses:
+            valid_horses = horses
+        valid_horses.sort(key=lambda x: x["odds"] if x["odds"] > 0 else 999.0)
         marks = ["◎ 本命", "○ 対抗", "▲ 単穴", "☆ 穴", "△ 連下"]
         for idx, h in enumerate(valid_horses[:5]):
             h["mark"] = marks[idx]
@@ -183,7 +183,7 @@ final_races = []
 
 for item in target_list:
     print(f"Scraping {item['venue']} {item['r_num']} ({item['raceId']})...")
-    h_list, actual_title = scrape_shutuba(item["raceId"])
+    h_list, actual_title = scrape_shutuba_sp(item["raceId"])
     
     if h_list:
         race_display = f"{item['r_num']} {actual_title}" if actual_title else item["default_name"]
@@ -204,6 +204,7 @@ for item in target_list:
             "aiBuy": ai_insight.get("recommendation", "")
         })
 
+# 信頼度スコアTOP3を勝負レースとして選出
 sorted_by_conf = sorted(final_races, key=lambda x: x.get("confidenceScore", 0), reverse=True)
 best_races = sorted_by_conf[:3]
 
