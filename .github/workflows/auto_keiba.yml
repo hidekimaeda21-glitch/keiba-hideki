@@ -2,9 +2,9 @@ name: Daily Keiba AI Predictor
 
 on:
   schedule:
-    # 毎朝6:30(JST) = UTC 21:30 に予想生成
-    - cron: '30 21 * * *'
-    # 毎週土日 17:45(JST) = UTC 8:45 に結果収集・的中判定
+    # 毎週金曜日・土曜日 17:00(JST) = UTC 8:00 に翌日の予想を自動生成
+    - cron: '0 8 * * 5,6'
+    # 毎週土曜日・日曜日 17:45(JST) = UTC 8:45 に当日の結果収集・成績集計
     - cron: '45 8 * * 0,6'
   workflow_dispatch:
 
@@ -29,13 +29,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 pandas google-genai
 
-      - name: 朝のジェミ予想・データ収集スクリプトの実行
+      - name: ジェミ予想・データ収集スクリプトの実行
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python scripts/collect_races.py
 
-      - name: 夕方の結果収集・成績集計スクリプトの実行
+      - name: レース結果収集・成績集計スクリプトの実行
         run: |
           python scripts/collect_results.py
 
