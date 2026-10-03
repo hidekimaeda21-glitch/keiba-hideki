@@ -40,7 +40,7 @@ def fetch_content(target_url):
     """プロキシ経由および直接通信を統合した安全なデータ取得"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept": "*/*",
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8"
     }
     
@@ -49,7 +49,7 @@ def fetch_content(target_url):
             encoded_url = urllib.parse.quote(target_url, safe="")
             proxy_url = f"{proxy_base}/?url={encoded_url}"
             res = requests.get(proxy_url, headers=headers, timeout=20)
-            if res.status_code == 200 and len(res.text) > 100:
+            if res.status_code == 200 and len(res.text) > 50:
                 res.encoding = res.apparent_encoding if res.apparent_encoding else "euc-jp"
                 return res.text
         except Exception as e:
@@ -63,35 +63,28 @@ def fetch_content(target_url):
         print(f"[直接取得エラー] {target_url} : {e}")
         return ""
 
-def get_real_odds_from_page(race_id):
-    """netkeibaの単勝オッズ専用ページ (type=b1) から各馬の実オッズを直接スクレイピング"""
-    odds_url = f"https://race.netkeiba.com/odds/index.html?type=b1&race_id={race_id}"
-    html = fetch_content(odds_url)
+def get_real_odds_dict(race_id):
+    """netkeiba公式オッズAPIから全出走馬の実オッズ（単勝）を確実に取得"""
+    api_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?race_id={race_id}&type=1"
+    raw_text = fetch_content(api_url)
     odds_dict = {}
-    if not html:
+    if not raw_text:
         return odds_dict
 
-    soup = BeautifulSoup(html, "html.parser")
-    
-    # オッズテーブルの行を探索
-    for tr in soup.find_all("tr"):
-        td_umaban = tr.find("td", class_=re.compile(r"Umaban|umaban"))
-        td_odds = tr.find("td", class_=re.compile(r"Odds|odds"))
-        
-        if td_umaban and td_odds:
+    try:
+        data = json.loads(raw_text)
+        # JSON内のオッズ構造: data -> odds -> "1"(単勝)
+        tansho_map = data.get("data", {}).get("odds", {}).get("1", {})
+        for k, v in tansho_map.items():
             try:
-                num = int(td_umaban.get_text(strip=True))
-                # オッズ文字列（例: 2.3）
-                m = re.search(r"(\d{1,4}\.\d)", td_odds.get_text(strip=True))
-                if m:
-                    odds_dict[num] = float(m.group(1))
+                # v は [オッズ値, 人気順, ...] の配列
+                val = float(v[0]) if isinstance(v, list) else float(v)
+                odds_dict[int(k)] = val
             except Exception:
                 continue
-
-    # テーブルから取れなかった場合の正規表現スキャン
-    if not odds_dict:
-        # id="odds-1" や class="Odds" の周辺パターンを検索
-        matches = re.findall(r'id=["\']odds-?(\d+)["\'][^>]*>[\s\r\n]*([0-9\.]+)', html)
+    except Exception:
+        # 正規表現による直接抽出（フォールバック）
+        matches = re.findall(r'"(\d+)":\s*\["([0-9\.]+)"', raw_text)
         for num_s, o_s in matches:
             try:
                 odds_dict[int(num_s)] = float(o_s)
@@ -133,7 +126,7 @@ def collect_target_races_dynamically(target_yyyymmdd):
     return race_items
 
 def parse_race_details(race_info):
-    """レース出馬表と単勝オッズ専用ページを統合して出走表を作成"""
+    """レース出馬表とオッズAPIを統合して正確なレース情報を構築"""
     race_id = race_info["race_id"]
     html = fetch_content(race_info["url"])
     if not html:
@@ -141,18 +134,15 @@ def parse_race_details(race_info):
 
     soup = BeautifulSoup(html, "html.parser")
     
-    # レース名
     r_name_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
     r_name = r_name_elem.get_text(strip=True) if r_name_elem else f"{race_info['r_num']}R"
     
-    # コース形態・距離
     r_data_elem = soup.find("div", class_="RaceData01")
     r_data = r_data_elem.get_text(strip=True) if r_data_elem else ""
     
     dist_match = re.search(r"(芝|ダ|障)(\d{4}m)", r_data)
     dist_str = f" ({dist_match.group(0)})" if dist_match else ""
 
-    # 発走時刻
     time_match = re.search(r"(\d{2}:\d{2})発走", r_data)
     start_time = time_match.group(1) if time_match else "15:00"
 
@@ -166,8 +156,8 @@ def parse_race_details(race_info):
 
     full_race_title = f"{race_info['r_num']}R {r_name}{dist_str}"
 
-    # 単勝オッズ専用ページから実オッズを取得
-    real_odds_dict = get_real_odds_from_page(race_id)
+    # netkeiba公式オッズAPIから全頭の実オッズを取得
+    real_odds = get_real_odds_dict(race_id)
 
     horses = []
     table = soup.find("table", class_="RaceTable01") or soup.find("table", class_="Shutuba_Table")
@@ -189,11 +179,8 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
-            # 実オッズの適用（万が一専用ページで未反映の場合は推定オッズ）
-            if num in real_odds_dict:
-                odds_val = real_odds_dict[num]
-            else:
-                odds_val = 10.0 + (num * 1.5)
+            # APIから取得した実オッズ（未取得の場合は平均的な分散値）
+            odds_val = real_odds.get(num, 15.0)
 
             horses.append({
                 "num": num,
@@ -206,7 +193,7 @@ def parse_race_details(race_info):
                 "mark": "-"
             })
 
-    # 実オッズをもとに印を自動付与（ルール：◎1頭、○1頭、▲・☆・△）
+    # 実オッズをもとに印を自動付与（◎1頭、○1頭、▲・☆・△）
     if horses:
         horses_sorted = sorted(horses, key=lambda x: x["odds"])
         horses_sorted[0]["mark"] = "◎ 本命"
@@ -215,7 +202,6 @@ def parse_race_details(race_info):
         if len(horses_sorted) > 2:
             horses_sorted[2]["mark"] = "▲ 単穴"
         
-        # 10倍〜55倍の実力馬を「☆ 爆発期待穴」に設定
         ana_candidates = [h for h in horses if 10.0 <= h["odds"] <= 55.0]
         if ana_candidates:
             ana_candidates[0]["mark"] = "☆ 爆発期待穴"
@@ -235,7 +221,7 @@ def parse_race_details(race_info):
     }
 
 def get_fallback_prediction(horses):
-    """印に完全連動した論理的バックアップ買い目（重複防止・10点以内厳守）"""
+    """印に完全連動した論理的バックアップ買い目（10点以内厳守）"""
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = [h for h in horses if "▲" in h.get("mark", "")]
@@ -270,7 +256,7 @@ def get_fallback_prediction(horses):
         "honmei_num": h_num,
         "confidence": "B",
         "confidence_score": 85,
-        "summary": f"能力最上位の{h_num}番{honmei['name']}を軸に据える。相手には対抗格およびオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
+        "summary": f"能力最上位の{h_num}番{honmei['name']}（{honmei['odds']}倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
         "recommendation": recommendation_text
     }
 
@@ -280,7 +266,7 @@ def ask_gemini_prediction(race_name, venue, horses):
         return get_fallback_prediction(horses)
 
     horse_summary = "\n".join([
-        f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, オッズ:{h['odds']}倍, 印:{h.get('mark', '-')})"
+        f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, 単勝オッズ:{h['odds']}倍, 印:{h.get('mark', '-')})"
         for h in horses
     ])
 
@@ -289,10 +275,9 @@ def ask_gemini_prediction(race_name, venue, horses):
 
 【重要指示】
 1. 印のルール：
-   ・「◎ 本命」は必ず【1頭のみ】
-   ・「○ 対抗」は必ず【1頭のみ】
+   ・「◎ 本命」は必ず【1頭のみ】選定。
+   ・「○ 対抗」は必ず【1頭のみ】選定。
    ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成し、無印の馬は買わないでください。
-   ・ワイド等で同じ馬番同士（例: 1-1）を組み合わせるミスは絶対に避けてください。
 2. 【最重要：買い目点数は合計10点以内】
    ・無理に全券種を出さず、最も期待値の高い買い方に絞ってください。
    ・（例: 馬連 2〜3点 / 3連複フォーメーション 4〜6点 / 穴ワイド 1〜2点 など）
@@ -303,18 +288,21 @@ def ask_gemini_prediction(race_name, venue, horses):
 出走馬一覧:
 {horse_summary}
 
-必ず以下のJSON形式のみを出力してください:
+必ず以下のJSON形式のみを出力してください（Markdownコードブロックは不要です）:
 {{
   "honmei_num": 本命馬の馬番(半角数字),
-  "confidence": "レース信頼度(AまたはBまたはC)",
-  "confidence_score": 50から98までの信頼度数値(半角数字),
-  "summary": "◎本命の選定理由と爆発期待穴馬の狙い（100〜140文字程度）",
-  "recommendation": "推奨買い目（印に連動し、合計10点以内で具体的に記述）"
+  "confidence": "AまたはBまたはC",
+  "confidence_score": 80から96までの数値(半角数字),
+  "summary": "◎本命馬と相手穴馬の狙い（100〜140文字程度）",
+  "recommendation": "推奨買い目（合計10点以内で具体的に記述）"
 }}
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
         try:
-            res = client.models.generate_content(model=model_name, contents=prompt)
+            res = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+            )
             txt = res.text.strip()
             txt = re.sub(r"^```json\s*", "", txt)
             txt = re.sub(r"^```\s*", "", txt)
@@ -379,7 +367,7 @@ for r_info in detected_races:
     if detail and detail["horses"]:
         ai_res = ask_gemini_prediction(detail["raceName"], detail["venue"], detail["horses"])
         detail["honmeiNum"] = ai_res.get("honmei_num")
-        detail["confidence"] = ai_res.get("confidence", "B")
+        detail["confidence"] = ai_res.get("confidence", "A")
         detail["confidenceScore"] = ai_res.get("confidence_score", 85)
         detail["aiSummary"] = ai_res.get("summary", "")
         detail["aiBuy"] = ai_res.get("recommendation", "")
