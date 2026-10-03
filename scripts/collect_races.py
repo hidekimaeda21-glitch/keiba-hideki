@@ -231,6 +231,7 @@ def parse_race_details(race_info):
     if not horses:
         return None
 
+    # スピード指数最重視でソートして印付け
     horses_by_score = sorted(horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
     
     horses_by_score[0]["mark"] = "◎ 本命"
@@ -268,36 +269,41 @@ def parse_race_details(race_info):
         "raceName": full_race_title,
         "startTime": start_time,
         "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
-        "isWin5": race_info["r_num"] in [10, 11],
+        "isWin5": ("WIN5" in html) or (race_info["r_num"] in [10, 11]),
         "raceType": race_type,
         "horses": sorted(horses, key=lambda x: x["num"])
     }
 
 def ask_gemini_prediction(race_name, venue, race_type, horses):
+    """レース展開と波乱度に応じた多様な券種（合計10点以内）を推論"""
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = next((h for h in horses if "▲" in h.get("mark", "")), None)
     ana = next((h for h in horses if "☆" in h.get("mark", "")), None)
+    renge = [h for h in horses if "△" in h.get("mark", "")]
 
     h_num = honmei["num"]
-    rec_list = []
-    opps = [x["num"] for x in [taikou, tanana] if x and x["num"] != h_num]
-    if opps:
-        rec_list.append(f"【馬連】{h_num} - {', '.join(map(str, opps))} ({len(opps)}点)")
-    if ana and ana["num"] != h_num:
-        wide_targets = [str(h_num)]
-        if taikou and taikou["num"] != ana["num"]:
-            wide_targets.append(str(taikou["num"]))
-        rec_list.append(f"【穴ワイド】{ana['num']} - {', '.join(wide_targets)} ({len(wide_targets)}点)")
-    fallback_buy = " / ".join(rec_list) if rec_list else f"【単勝】{h_num}"
 
-    ana_desc = f"爆発力ある{ana['num']}番{ana['name']}を相手に絡め高回収率を狙う。" if ana else "上位指数馬へ絞り込んで効率良く回収を狙う。"
+    # レース波乱度に応じた多彩なフォールバック
+    if "本命信頼" in race_type and taikou:
+        # 堅いレース：馬連・馬単・3連単の少数点勝負
+        rec_str = f"【馬連】{h_num} - {taikou['num']}, {tanana['num'] if tanana else ''} (2点) / 【3連単F】{h_num} ➔ {taikou['num']} ➔ {', '.join([str(x['num']) for x in renge]) if renge else str(tanana['num']) if tanana else ''} (2点)"
+    else:
+        # 波乱レース：穴馬軸ワイド ＋ 3連複フォーメーション
+        wide_tar = [str(taikou['num'])] if taikou else []
+        if tanana: wide_tar.append(str(tanana['num']))
+        ana_str = f"【穴ワイド】{ana['num']} - {', '.join(wide_tar)} ({len(wide_tar)}点)" if ana and wide_tar else ""
+        h_tar = [str(x['num']) for x in [taikou, tanana] if x]
+        ren_tar = [str(x['num']) for x in renge]
+        trio_str = f"【3連複F】{h_num} - {', '.join(h_tar)} - {', '.join(h_tar + ren_tar)} (4点)" if h_tar and ren_tar else f"【馬連】{h_num} - {', '.join(h_tar)} (2点)"
+        rec_str = f"{trio_str} / {ana_str}" if ana_str else trio_str
+
     fallback_data = {
         "honmei_num": h_num,
         "confidence": "A" if "本命信頼" in race_type else "B",
         "confidence_score": 92 if "本命信頼" in race_type else 86,
-        "summary": f"独自スピード指数1位の{h_num}番{honmei['name']}（指数:{honmei['speedScore']}）を信頼。{ana_desc}",
-        "recommendation": fallback_buy
+        "summary": f"独自指数1位の{h_num}番{honmei['name']}（指数:{honmei['speedScore']}）を主軸に指名。{f'爆発力のある{ana[\"num\"]}番{ana[\"name\"]}を絡め' if ana else '上位指数馬へ絞り'}、回収期待値を最大化する。",
+        "recommendation": rec_str
     }
 
     if not client:
@@ -311,24 +317,23 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     prompt = f"""
 あなたは回収率を極限まで高める競馬AI「ジェミ予想」です。
 
-【レース性質】: {race_type}
-会場: {venue} / レース名: {race_name}
-
-【出走馬データ（独自スピード指数順）】
+レース: {venue} {race_name}
+性質: {race_type}
+出走馬（独自スピード指数順）:
 {horse_summary}
 
-【絶対厳守ルール】
-1. 印（◎・○・▲・☆・△）の馬番のみを使って買い目を構築してください。
-2. オッズの低さに流されず、独自スピード指数と爆発力を最優先してください。
-3. 【合計買い目点数は10点以内】を厳守してください。（例: 馬連2点＋ワイド2点＝計4点 など）
+【指示】
+1. 印（◎・○・▲・☆・△）の馬番のみを使ってください。
+2. レース性質に合わせて最適な券種（単勝、馬連、ワイド、3連複、3連単など）を柔軟に選定してください。毎回同じパターン（馬連2点＋ワイド2点など）に固定しないでください。
+3. 【合計買い目点数は必ず10点以内】を厳守してください。
 
-以下のJSONのみを出力してください（Markdown不可）:
+出力形式（JSONのみ、Markdown不要）:
 {{
-  "honmei_num": 本命馬の馬番,
+  "honmei_num": {h_num},
   "confidence": "AまたはBまたはC",
-  "confidence_score": 80〜96の数値,
-  "summary": "選定理由と爆発穴馬の狙い（100〜130文字程度）",
-  "recommendation": "推奨買い目（合計10点以内で明記）"
+  "confidence_score": 85〜95の数値,
+  "summary": "選定理由と狙い目（100〜130文字程度）",
+  "recommendation": "推奨買い目（券種と点数を明記、合計10点以内）"
 }}
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
@@ -339,45 +344,56 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
             txt = re.sub(r"^```\s*", "", txt)
             txt = re.sub(r"\s*```$", "", txt)
             data = json.loads(txt)
-            if data.get("honmei_num") in [h["num"] for h in horses] and data.get("recommendation"):
+            if data.get("recommendation"):
                 return data
         except Exception:
             continue
 
     return fallback_data
 
-def ask_gemini_win5_strategy(win5_races_info):
-    """GeminiによるWIN5厳選戦略（最大10点まで・予算1,000円以内）"""
-    default_text = "本日WIN5発売中！各レース指数最上位を中心に最大10点以内で厳選配信。"
-    if not client or len(win5_races_info) < 5:
-        return default_text
+def ask_gemini_win5_strategy(all_races):
+    """WIN5対象レースを自動選定し、具体的買い目（最大10点・1,000円以内）を生成"""
+    # 9〜11Rの中から後半5レースをWIN5候補として抽出
+    win5_candidates = [r for r in all_races if r.get("isWin5")]
+    if len(win5_candidates) < 5:
+        win5_candidates = sorted(all_races, key=lambda x: (x["startTime"], x["raceId"]))[-5:]
+
+    if len(win5_candidates) < 5:
+        return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 
     summary_text = ""
-    for idx, r in enumerate(win5_races_info[:5], 1):
-        top_h = ", ".join([f"{h['num']}番({h.get('speedScore', 90)}点/{h['odds']}倍)" for h in r['horses'][:3]])
-        summary_text += f"第{idx}戦 ({r['venue']} {r['raceName']}): 指数上位: {top_h}\n"
+    for idx, r in enumerate(win5_candidates[:5], 1):
+        top_h = ", ".join([f"{h['num']}番({h['name']}/指数:{h.get('speedScore', 90)})" for h in r['horses'][:2]])
+        summary_text += f"第{idx}戦 [{r['venue']} {r['raceName']}]: {top_h}\n"
 
     prompt = f"""
-本日のWIN5対象5レースの情報をもとに、買い目点数を【通常は最大10点まで（全体の組み合わせ数が10点以内、予算1,000円以内）】として各レースの選定頭数を割り振ってください。
+以下のWIN5対象5レースから、全体の合計買い目点数が【最大10点まで（予算1,000円以内）】となるように各レースの推奨馬番を選定してください。
 
 対象レース:
 {summary_text}
 
 出力フォーマット（この形式のみを出力）:
-本日WIN5発売中！【AI厳選○点戦略（予算○○○円 / 最大10点まで）】
-①: [馬番] ➔ ②: [馬番] ➔ ③: [馬番] ➔ ④: [馬番] ➔ ⑤: [馬番]
-理由: (30文字前後で選定の狙い)
+【AI厳選WIN5戦略】最大10点（予算1,000円以内）
+第1戦: [馬番]
+第2戦: [馬番]
+第3戦: [馬番]
+第4戦: [馬番]
+第5戦: [馬番]
+狙い: (30文字前後で選定方針を簡潔に)
 """
-    for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
-        try:
-            res = client.models.generate_content(model=model_name, contents=prompt)
-            txt = res.text.strip()
-            if "①" in txt and "➔" in txt:
-                return txt
-        except Exception:
-            continue
+    if client:
+        for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
+            try:
+                res = client.models.generate_content(model=model_name, contents=prompt)
+                txt = res.text.strip()
+                if "第1戦" in txt:
+                    return txt
+            except Exception:
+                continue
 
-    return "本日WIN5発売中！【AI厳選戦略】独自指数上位馬を中心に点数を10点以内に絞って配信中。"
+    # フォールバックWIN5買い目
+    picks = [str(r["horses"][0]["num"]) for r in win5_candidates[:5]]
+    return f"【AI厳選WIN5戦略】1点勝負（予算100円）\n第1戦: {picks[0]} ➔ 第2戦: {picks[1]} ➔ 第3戦: {picks[2]} ➔ 第4戦: {picks[3]} ➔ 第5戦: {picks[4]}\n狙い: 各レース独自スピード指数最上位馬を完全信頼した1点突破。"
 
 def select_top_recommended_race(final_races):
     best_candidate = None
@@ -483,9 +499,7 @@ for r_info in detected_races:
         time.sleep(1.2)
 
 top_recommended_race = select_top_recommended_race(final_races)
-
-win5_races_list = [r for r in final_races if r["isWin5"]]
-win5_strategy_text = ask_gemini_win5_strategy(win5_races_list)
+win5_strategy_text = ask_gemini_win5_strategy(final_races)
 
 output_data = {
     "updatedAt": now_str,
