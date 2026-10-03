@@ -15,7 +15,7 @@ now_utc = datetime.utcnow()
 now_jst = now_utc + timedelta(hours=9)
 now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
-# 夕方15時以降は「翌日の開催レース」、それ以前は「当日のレース」
+# 15時以降は翌日、それ以前は当日を自動対象
 if now_jst.hour >= 15:
     target_dt = now_jst + timedelta(days=1)
 else:
@@ -37,7 +37,7 @@ else:
 client = genai.Client(api_key=api_key) if api_key else None
 
 def fetch_html(target_url):
-    """プロキシ経由および直接通信を統合した安全なHTML取得"""
+    """プロキシ経由および直接通信による安全なHTML取得"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -96,7 +96,7 @@ def collect_target_races_dynamically(target_yyyymmdd):
     return race_items
 
 def parse_race_details(race_info):
-    """出馬表HTMLから出走馬・騎手・確定/予想オッズを同一行から直接パース"""
+    """10月3日の成功方式で出走馬・騎手・オッズを取得"""
     race_id = race_info["race_id"]
     html = fetch_html(race_info["url"])
     if not html:
@@ -104,11 +104,9 @@ def parse_race_details(race_info):
 
     soup = BeautifulSoup(html, "html.parser")
     
-    # レース名
     r_name_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
     r_name = r_name_elem.get_text(strip=True) if r_name_elem else f"{race_info['r_num']}R"
     
-    # コース形態・距離
     r_data_elem = soup.find("div", class_="RaceData01")
     r_data = r_data_elem.get_text(strip=True) if r_data_elem else ""
     
@@ -148,36 +146,31 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
-            # --- 出馬表の各行からオッズ数値を直接探索 ---
+            # --- 3日成功時のオッズ抽出ロジック ---
             odds_val = None
             
-            # 1. Popular または Odds クラス内のテキスト
-            for td_el in tr.find_all("td"):
-                td_cls = " ".join(td_el.get("class", []))
-                if any(k in td_cls for k in ["Popular", "Odds", "Popular_Num", "Txt_R"]):
-                    txt = td_el.get_text(strip=True)
-                    # "12.4" や "2.3" などの実数値を抽出
-                    m = re.search(r"(\d{1,3}\.\d)", txt)
+            # spanタグのID（odds-1, odds_1）またはテキスト
+            for sp in tr.find_all("span"):
+                sp_id = sp.get("id", "")
+                if "odds" in sp_id or "Popular" in " ".join(sp.get("class", [])):
+                    m = re.search(r"(\d{1,3}\.\d)", sp.get_text(strip=True))
                     if m:
-                        val = float(m.group(1))
-                        if 1.0 <= val <= 999.0:
-                            odds_val = val
-                            break
+                        odds_val = float(m.group(1))
+                        break
             
-            # 2. spanタグ内からの抽出（span id="odds_..." 等）
+            # tdタグのPopular/Odds
             if odds_val is None:
-                for span_el in tr.find_all("span"):
-                    txt = span_el.get_text(strip=True)
-                    m = re.search(r"(\d{1,3}\.\d)", txt)
-                    if m:
-                        val = float(m.group(1))
-                        if 1.0 <= val <= 999.0:
-                            odds_val = val
+                for td in tr.find_all("td"):
+                    td_cls = " ".join(td.get("class", []))
+                    if any(c in td_cls for c in ["Popular", "Odds"]):
+                        m = re.search(r"(\d{1,3}\.\d)", td.get_text(strip=True))
+                        if m:
+                            odds_val = float(m.group(1))
                             break
 
-            # 3. 万が一オッズ欄がまだ空（未設定）の場合でも、馬の並びから自然な差をつける
+            # 万が一前日発売前等でオッズが完全ブランクだった場合の自然な初期値
             if odds_val is None or odds_val <= 0:
-                odds_val = round(3.0 + ((num * 7) % 35) + (num * 0.8), 1)
+                odds_val = 10.0
 
             horses.append({
                 "num": num,
@@ -190,7 +183,7 @@ def parse_race_details(race_info):
                 "mark": "-"
             })
 
-    # 実オッズをもとに印を自動付与（◎1頭、○1頭、▲・☆・△）
+    # オッズ順にソートして印を自動付与
     if horses:
         horses_sorted = sorted(horses, key=lambda x: x["odds"])
         horses_sorted[0]["mark"] = "◎ 本命"
@@ -199,7 +192,6 @@ def parse_race_details(race_info):
         if len(horses_sorted) > 2:
             horses_sorted[2]["mark"] = "▲ 単穴"
         
-        # 10倍〜55倍の実力馬を「☆ 爆発期待穴」に設定
         ana_candidates = [h for h in horses if 10.0 <= h["odds"] <= 55.0]
         if ana_candidates:
             ana_candidates[0]["mark"] = "☆ 爆発期待穴"
@@ -219,7 +211,7 @@ def parse_race_details(race_info):
     }
 
 def get_fallback_prediction(horses):
-    """印に完全連動した論理的バックアップ買い目（10点以内厳守）"""
+    """印に連動した安全バックアップ買い目（10点以内）"""
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = [h for h in horses if "▲" in h.get("mark", "")]
@@ -254,7 +246,7 @@ def get_fallback_prediction(horses):
         "honmei_num": h_num,
         "confidence": "B",
         "confidence_score": 85,
-        "summary": f"能力最上位の{h_num}番{honmei['name']}（{honmei['odds']}倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
+        "summary": f"能力最上位の{h_num}番{honmei['name']}を軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
         "recommendation": recommendation_text
     }
 
@@ -275,11 +267,9 @@ def ask_gemini_prediction(race_name, venue, horses):
 1. 印のルール：
    ・「◎ 本命」は必ず【1頭のみ】選定。
    ・「○ 対抗」は必ず【1頭のみ】選定。
-   ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成し、無印の馬は買わないでください。
-   ・ワイド等で同じ馬番同士（例: 1-1）を組み合わせるミスは絶対に避けてください。
+   ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成してください。
 2. 【最重要：買い目点数は合計10点以内】
    ・無理に全券種を出さず、最も期待値の高い買い方に絞ってください。
-   ・（例: 馬連 2〜3点 / 3連複フォーメーション 4〜6点 / 穴ワイド 1〜2点 など）
    ・提示する買い目の合計点数は必ず【10点以内（10点以下）】を絶対厳守してください。
 
 会場: {venue}
@@ -287,7 +277,7 @@ def ask_gemini_prediction(race_name, venue, horses):
 出走馬一覧:
 {horse_summary}
 
-必ず以下のJSON形式のみを出力してください（Markdownコードブロックは不要です）:
+必ず以下のJSON形式のみを出力してください:
 {{
   "honmei_num": 本命馬の馬番(半角数字),
   "confidence": "AまたはBまたはC",
@@ -390,4 +380,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 完全自動処理完了: 計 {len(final_races)} レースの出馬表オッズ連動データを自動生成・保存しました ===")
+print(f"=== 完全自動処理完了: 計 {len(final_races)} レースのデータを自動生成・保存しました ===")
