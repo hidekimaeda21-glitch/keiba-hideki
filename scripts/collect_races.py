@@ -26,28 +26,43 @@ else:
 print(f"=== 実行日時(JST): {now_str} / 対象競馬開催日: {target_date_disp} ({target_date}) ===")
 
 api_key = os.environ.get("GEMINI_API_KEY")
-proxy_base = os.environ.get("PROXY_URL", "").rstrip("/")
+raw_proxy = os.environ.get("PROXY_URL", "").strip()
+
+# PROXY_URL のプロトコル補正（http/httpsが抜けていた場合のフェイルセーフ）
+if raw_proxy and not raw_proxy.startswith("http://") and not raw_proxy.startswith("https://"):
+    proxy_base = f"https://{raw_proxy}".rstrip("/")
+else:
+    proxy_base = raw_proxy.rstrip("/")
+
 client = genai.Client(api_key=api_key) if api_key else None
 
 def fetch_html(target_url):
-    """Cloudflare Worker経由、または直接HTMLを取得"""
+    """Cloudflare Worker経由、または直接安全にHTMLを取得（エラー回避と自動再試行）"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8"
     }
-    try:
-        if proxy_base:
+    
+    # 1. プロキシ経由での取得試行
+    if proxy_base and proxy_base.startswith("http"):
+        try:
             encoded_url = urllib.parse.quote(target_url, safe="")
             proxy_url = f"{proxy_base}/?url={encoded_url}"
             res = requests.get(proxy_url, headers=headers, timeout=20)
-        else:
-            res = requests.get(target_url, headers=headers, timeout=15)
-        
-        # 文字コード判定
+            if res.status_code == 200 and len(res.text) > 500:
+                res.encoding = res.apparent_encoding if res.apparent_encoding else "euc-jp"
+                return res.text
+        except Exception as e:
+            print(f"[プロキシ経由取得失敗、直接取得に切替] {target_url} : {e}")
+
+    # 2. 直接取得フォールバック
+    try:
+        res = requests.get(target_url, headers=headers, timeout=15)
         res.encoding = res.apparent_encoding if res.apparent_encoding else "euc-jp"
         return res.text
     except Exception as e:
-        print(f"[取得エラー] {target_url} : {e}")
+        print(f"[直接取得エラー] {target_url} : {e}")
         return ""
 
 def collect_target_races_dynamically(target_yyyymmdd):
@@ -61,14 +76,11 @@ def collect_target_races_dynamically(target_yyyymmdd):
     soup = BeautifulSoup(html, "html.parser")
     race_links = []
     
-    # レース一覧からレースURLを抽出
     for a in soup.find_all("a", href=True):
         href = a["href"]
         if "race_id=" in href and "shutuba.html" in href:
             full_url = urllib.parse.urljoin("https://race.netkeiba.com/", href)
-            # 重複除外
             if full_url not in [r["url"] for r in race_links]:
-                # 9R, 10R, 11R, 12Rのみを対象とする
                 m = re.search(r"race_id=(\d{12})", full_url)
                 if m:
                     race_id = m.group(1)
@@ -87,22 +99,18 @@ def parse_race_details(race_info):
 
     soup = BeautifulSoup(html, "html.parser")
     
-    # レース名と距離・条件
     r_name_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
     r_name = r_name_elem.get_text(strip=True) if r_name_elem else f"{race_info['r_num']}R"
     
     r_data_elem = soup.find("div", class_="RaceData01")
     r_data = r_data_elem.get_text(strip=True) if r_data_elem else ""
     
-    # 距離の抽出 (例: 芝1800m, ダ1400m)
     dist_match = re.search(r"(芝|ダ|障)(\d{4}m)", r_data)
     dist_str = f" ({dist_match.group(0)})" if dist_match else ""
 
-    # 発走時刻
     time_match = re.search(r"(\d{2}:\d{2})発走", r_data)
     start_time = time_match.group(1) if time_match else "15:00"
 
-    # 競馬場名
     venue_map = {"05": "東京", "08": "京都", "09": "阪神", "06": "中山", "03": "福島", "07": "中京", "10": "小倉", "04": "新潟", "01": "札幌", "02": "函館"}
     venue_code = race_info["race_id"][4:6]
     venue = venue_map.get(venue_code, "中央")
@@ -110,7 +118,6 @@ def parse_race_details(race_info):
     full_race_title = f"{race_info['r_num']}R {r_name}{dist_str}"
 
     horses = []
-    # 出走表テーブル
     table = soup.find("table", class_="RaceTable01") or soup.find("table", class_="Shutuba_Table")
     if table:
         rows = table.find_all("tr", class_=re.compile(r"HorseList"))
@@ -131,7 +138,6 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
-            # オッズ取得
             odds_text = odds_td.get_text(strip=True) if odds_td else "10.0"
             try:
                 odds_val = float(re.search(r"\d+\.\d+", odds_text).group(0))
@@ -149,7 +155,7 @@ def parse_race_details(race_info):
                 "mark": "-"
             })
 
-    # 印を自動付与（オッズとスコア基準：◎本命1頭、○対抗1頭、▲・☆・△）
+    # 印の自動付与（ルール：◎1頭、○1頭、▲・☆・△は制限なし）
     if horses:
         horses_sorted = sorted(horses, key=lambda x: x["odds"])
         horses_sorted[0]["mark"] = "◎ 本命"
@@ -158,12 +164,10 @@ def parse_race_details(race_info):
         if len(horses_sorted) > 2:
             horses_sorted[2]["mark"] = "▲ 単穴"
         
-        # オッズ10倍〜50倍で最もスコアの高い馬を「☆ 爆発期待穴」
         ana_candidates = [h for h in horses if 10.0 <= h["odds"] <= 55.0]
         if ana_candidates:
             ana_candidates[0]["mark"] = "☆ 爆発期待穴"
 
-        # 連下
         for h in horses_sorted[3:6]:
             if h.get("mark") == "-":
                 h["mark"] = "△ 連下"
@@ -185,14 +189,13 @@ def ask_gemini_prediction(race_name, venue, horses):
     tanana = [h for h in horses if "▲" in h.get("mark", "")]
     ana = [h for h in horses if "☆" in h.get("mark", "")]
 
-    # デフォルトの安全な買い目
     default_rec = f"【馬連】{honmei['num']} - {taikou['num'] if taikou else 2} (1点)"
     if not client or not horses:
         return {
             "honmei_num": honmei["num"],
             "confidence": "B",
             "confidence_score": 85,
-            "summary": f"能力上位の{honmei['num']}番{honmei['name']}を本命に推奨。オッズ妙味と展開から回収率重視で狙う。",
+            "summary": f"能力上位の{honmei['num']}番{honmei['name']}を軸に推奨。相手に対抗と穴馬を絡めて回収率を狙う。",
             "recommendation": default_rec
         }
 
@@ -208,11 +211,11 @@ def ask_gemini_prediction(race_name, venue, horses):
 1. 印のルール：
    ・「◎ 本命」は必ず【1頭のみ】
    ・「○ 対抗」は必ず【1頭のみ】
-   ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成してください。無印の馬は買わないでください。
+   ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成し、無印の馬は買わないでください。
 2. 【最重要：買い目点数は合計10点以内】
    ・無理に全券種を出さず、最も期待値の高い買い方に絞ってください。
    ・（例: 馬連 2〜3点 / 3連複フォーメーション 4〜6点 / 穴ワイド 1〜2点 など）
-   ・提示する買い目の合計点数は必ず【10点以内】に収めてください。
+   ・提示する買い目の合計点数は必ず【10点以内（10点以下）】に収めてください。
 
 会場: {venue}
 レース名: {race_name}
@@ -225,7 +228,7 @@ def ask_gemini_prediction(race_name, venue, horses):
   "confidence": "レース信頼度(AまたはBまたはC)",
   "confidence_score": 50から98までの信頼度数値(半角数字),
   "summary": "◎本命の選定理由と爆発期待穴馬の狙い（100〜140文字程度）",
-  "recommendation": "推奨買い目（合計10点以内で具体的に記述）"
+  "recommendation": "推奨買い目（印に連動し、合計10点以内で具体的に記述）"
 }}
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
@@ -289,7 +292,6 @@ def ask_gemini_win5_strategy(win5_races_info):
 print("=== 1. レース情報の動的クローリング開始 ===")
 detected_races = collect_target_races_dynamically(target_date)
 
-# 万が一当日/翌日のレース取得がゼロだった場合のフェイルセーフ（当日日付でも再試行）
 if not detected_races and target_date != now_jst.strftime("%Y%m%d"):
     print("翌日データが未公開のため、本日開催データで再試行します...")
     target_date = now_jst.strftime("%Y%m%d")
