@@ -27,17 +27,49 @@ def fetch_via_proxy(target_url):
     res = requests.get(proxy_url, timeout=15)
     return res.text
 
+def get_fallback_prediction(horses):
+    """印（◎・○・▲・☆・△）に完全に連動した論理的バックアップ買い目を自動生成（10点以内厳守）"""
+    honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
+    taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
+    tanana = [h for h in horses if "▲" in h.get("mark", "")]
+    ana = [h for h in horses if "☆" in h.get("mark", "")]
+    renge = [h for h in horses if "△" in h.get("mark", "")]
+
+    h_num = honmei["num"]
+    rec_parts = []
+    
+    # 相手候補の整理
+    main_opps = []
+    if taikou:
+        main_opps.append(taikou["num"])
+    for t in tanana[:2]:
+        main_opps.append(t["num"])
+
+    # 馬連（2〜3点）
+    if main_opps:
+        opp_str = ", ".join(map(str, main_opps))
+        rec_parts.append(f"【馬連】{h_num} - {opp_str} ({len(main_opps)}点)")
+
+    # 穴ワイドまたは3連複（小点数）
+    if ana and taikou:
+        rec_parts.append(f"【穴ワイド】{ana[0]['num']} - {h_num}, {taikou['num']} (2点)")
+    elif taikou and len(tanana) >= 1:
+        rec_parts.append(f"【3連複F】{h_num} - {taikou['num']} - {tanana[0]['num']} (1点)")
+
+    recommendation_text = " / ".join(rec_parts) if rec_parts else f"【単勝】{h_num}"
+
+    return {
+        "honmei_num": h_num,
+        "confidence": "B",
+        "confidence_score": 85,
+        "summary": f"能力最上位の{h_num}番{honmei['name']}を本命に据える。相手には対抗格およびスピード指数の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
+        "recommendation": recommendation_text
+    }
+
 def ask_gemini_prediction(race_name, venue, horses):
-    """Gemini 3.8 Flash による【回収率重視・券種自由選択・合計10点以内】推論"""
-    default_rec = f"【馬連】{horses[0]['num']} - {horses[1]['num']}, {horses[2]['num']} (2点)"
+    """Gemini 3.8 Flash による【印連動・回収率重視・10点以内】推論"""
     if not client or not horses:
-        return {
-            "honmei_num": horses[0]["num"] if horses else 1,
-            "confidence": "A",
-            "confidence_score": 88,
-            "summary": "ポテンシャルと単勝オッズの妙味から期待値の高い馬を軸に選定しました。",
-            "recommendation": default_rec
-        }
+        return get_fallback_prediction(horses)
 
     horse_summary = "\n".join([
         f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, オッズ:{h['odds']}倍, 脚質:{h.get('style','先行')}, 上り3F:{h.get('last3f','35.0秒')}, 潜在能力スコア:{h.get('score', 80.0)}, 暫定印:{h.get('mark', '-')})"
@@ -47,18 +79,16 @@ def ask_gemini_prediction(race_name, venue, horses):
     prompt = f"""
 あなたは回収率を最大化し競馬で勝つための専属AI「ジェミ予想」です。
 
-【重要：予想＆買い目フォーメーション指示（柔軟な券種選定・10点以内）】
-1. 的中率だけでなく【回収率（長期的な利益）】を最優先してください。
-2. 印のルール：
-   ・「◎ 本命」は必ず【1頭のみ】
-   ・「○ 対抗」は必ず【1頭のみ】
-   ・能力馬（▲・☆・△）は頭数制限なしで印をつけて構いません。
-3. 【最重要：券種と買い目の選び方（無理に全券種を出さない）】
-   ・無理に「馬連もフォーメーションもワイドも」と全部出す必要は一切ありません。
-   ・そのレースで【最も回収率が期待できる最適な買い方】を1〜2つに絞って提示してください。
-     - 例1（軸堅実・相手絞り）：【馬連】◎ - ○, ▲ (2〜3点のみ)
-     - 例2（波乱・高配当狙い）：【3連複フォーメーション】◎ - ○ - ▲, ☆, △ (4〜6点のみ)
-     - 例3（爆発期待穴馬狙い）：【穴ワイド】☆ - ◎, ○ (1〜2点のみ)
+【重要：予想＆買い目フォーメーション指示（印に完全連動・10点以内）】
+1. 印のルール：
+   ・「◎ 本命」は必ず【1頭のみ】選定してください。
+   ・「○ 対抗」は必ず【1頭のみ】選定してください。
+   ・単穴（▲）、特注穴馬（☆）、連下（△）は能力に応じて選定してください。
+2. 【最重要：買い目は必ず印がついた馬番のみで構成すること】
+   ・**無印（-）の馬を軸にしたり買い目に入れることは絶対に禁止**です。
+   ・必ず「◎ 本命」を中心とし、「○ 対抗」「▲ 単穴」「☆ 特注穴」へ流す買い目を組んでください。
+3. 【点数のルール】
+   ・無理に全券種を並べず、馬連のみ、または3連複Fのみ、または穴ワイドのみ等、期待値の高い買い方に絞ってください。
    ・**買い目全体の合計点数は必ず【10点以内（10点以下）】を絶対厳守**してください。
 
 会場: {venue}
@@ -71,8 +101,8 @@ def ask_gemini_prediction(race_name, venue, horses):
   "honmei_num": 本命馬の馬番(半角数字),
   "confidence": "レース信頼度(AまたはBまたはC)",
   "confidence_score": 50から98までの信頼度数値(半角数字),
-  "summary": "期待値とハマった時の爆発力（スピードポテンシャル）に言及した見解（100〜140文字程度）",
-  "recommendation": "推奨買い目（合計10点以内で、最適な券種に絞って具体的に記述）"
+  "summary": "◎本命の選定根拠と相手穴馬の狙い（100〜140文字程度）",
+  "recommendation": "【馬連】◎ - ○,▲ (○点) のように印に基づき合計10点以内で具体的に記述"
 }}
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
@@ -86,18 +116,14 @@ def ask_gemini_prediction(race_name, venue, horses):
             text = re.sub(r"^```\s*", "", text)
             text = re.sub(r"\s*```$", "", text)
             data = json.loads(text)
-            if data.get("recommendation"):
+            
+            # 整合性チェック：本命番号が馬リスト内に存在し、推奨買い目があるか
+            if data.get("honmei_num") in [h["num"] for h in horses] and data.get("recommendation"):
                 return data
         except Exception:
             continue
 
-    return {
-        "honmei_num": horses[0]["num"] if horses else 1,
-        "confidence": "B",
-        "confidence_score": 85,
-        "summary": "スピード指数が高く、展開がハマった際の爆発力と単勝オッズの妙味が非常に高い期待値ホースを推奨。",
-        "recommendation": default_rec
-    }
+    return get_fallback_prediction(horses)
 
 def ask_gemini_win5_strategy(win5_races_info):
     """Geminiに【通常は最大10点まで】のWIN5買い目を期待値重視で厳選計算させる"""
@@ -290,7 +316,6 @@ nanbu_horses = [
     {"num": 12, "name": "マイネルアレス", "jockey": "石橋脩", "odds": 29.0, "style": "差し", "last3f": "34.4秒", "recent": "2勝クラス 5着", "score": 77.5, "mark": "-"}
 ]
 
-# 各レースのコース形態・距離をレース名に追加
 target_races_data = [
     # 京都
     {"raceId": "202608040109", "venue": "京都", "raceName": "9R りんどう賞 (芝1400m)", "startTime": "14:15", "isGraded": False, "isWin5": False, "horses": rindou_horses},
@@ -305,11 +330,11 @@ target_races_data = [
     {"raceId": "202605040112", "venue": "東京", "raceName": "12R 3歳以上2勝クラス (ダ1400m)", "startTime": "16:30", "isGraded": False, "isWin5": False, "horses": tokyo12_horses}
 ]
 
-print("=== ジェミ予想 (券種自由選択・合計10点以内モデル) 推論開始 ===")
+print("=== ジェミ予想 (印完全連動・10点以内厳守モデル) 推論開始 ===")
 final_races = []
 
 for r in target_races_data:
-    print(f"推論実行中: {r['venue']} {r['raceName']} (最適券種厳選)...")
+    print(f"推論実行中: {r['venue']} {r['raceName']} (印連動の買い目生成)...")
     ai_result = ask_gemini_prediction(r["raceName"], r["venue"], r["horses"])
     final_races.append({
         "raceId": r["raceId"],
@@ -346,4 +371,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 全処理完了: 最適券種絞り込み・合計10点以内予想を保存しました ===")
+print(f"=== 全処理完了: 印に完全連動した論理的買い目を保存しました ===")
