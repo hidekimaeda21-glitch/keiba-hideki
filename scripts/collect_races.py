@@ -12,9 +12,7 @@ now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
 today_dt = datetime.now()
 year_str = today_dt.strftime("%Y")
 
-# JRA主要競馬場コード
-# 05: 東京, 08: 京都, 06: 中山, 09: 阪神, 07: 中京, 04: 新潟
-# 開催回次・日次は秋開催（4回1日目等）を想定し探索
+# JRA主要競馬場コード: 05=東京, 08=京都
 venues_config = [
     {"code": "05", "name": "東京", "kai": "04", "day": "01"},
     {"code": "08", "name": "京都", "kai": "04", "day": "01"}
@@ -86,16 +84,15 @@ def fetch_single_race(race_id, venue_name, r_num):
     """1レースごとに確定アドレスから直接出馬表を取得"""
     url = f"[https://race.netkeiba.com/race/shutuba.html?race_id=](https://race.netkeiba.com/race/shutuba.html?race_id=){race_id}&rf=race_list"
     try:
-        res = requests.get(url, headers=headers, timeout=8)
+        res = requests.get(url, headers=headers, timeout=10)
         if res.status_code != 200 or len(res.text) < 2000:
             return None
         res.encoding = "EUC-JP"
         soup = BeautifulSoup(res.text, "html.parser")
 
-        # レース名取得
         title_elem = soup.select_one(".RaceName")
         race_title = title_elem.text.strip() if title_elem else f"{r_num}R 特別"
-        
+
         # 新馬戦・未勝利戦の除外判定
         full_text = soup.text
         if any(w in race_title for w in ["新馬", "メイクデビュー", "未勝利"]):
@@ -116,7 +113,7 @@ def fetch_single_race(race_id, venue_name, r_num):
             if not name_elem:
                 continue
             name = name_elem.text.strip()
-            if not name or "馬名" in name:
+            if not name or name == "馬名":
                 continue
 
             jockey_elem = row.select_one("a[href*='/jockey/']") or row.select_one(".Jockey")
@@ -157,7 +154,6 @@ def fetch_single_race(race_id, venue_name, r_num):
         if not horses:
             return None
 
-        # 印・スコア付与
         valid_horses = sorted(horses, key=lambda x: x["odds"] if x["odds"] > 0 else 999.0)
         marks = ["◎ 本命", "○ 対抗", "▲ 単穴", "☆ 穴", "△ 連下"]
         for idx, h in enumerate(valid_horses[:5]):
@@ -185,15 +181,14 @@ print("=== フェーズ1: 午後レースデータの段階的収集開始 ===")
 collected_races = []
 
 for v in venues_config:
-    # 7R〜12R（午後発走レース）を1つずつ巡回
     for r in range(7, 13):
         race_id = f"{year_str}{v['code']}{v['kai']}{v['day']}{r:02d}"
         print(f"[{v['name']} {r}R] データ取得中 (ID: {race_id})...")
         race_data = fetch_single_race(race_id, v["name"], r)
         if race_data and len(race_data["horses"]) > 0:
-            print(f"  -> 成功: {len(race_data['horses'])}頭の出馬表を取得")
+            print(f"  -> 成功: {race_data['raceName']} ({len(race_data['horses'])}頭)")
             collected_races.append(race_data)
-        time.sleep(1.2)  # アクセス間隔をあけて確実に取得
+        time.sleep(1.2)
 
 print(f"フェーズ1完了: 午後対象レース計 {len(collected_races)} レースを収集")
 
@@ -214,7 +209,6 @@ for r in collected_races:
     final_races.append(r)
     time.sleep(1.0)
 
-# 信頼度スコアTOP3を勝負レースとして選出
 sorted_by_conf = sorted(final_races, key=lambda x: x.get("confidenceScore", 0), reverse=True)
 best_races = sorted_by_conf[:3]
 
