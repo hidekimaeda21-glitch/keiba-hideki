@@ -48,7 +48,6 @@ else:
 client = genai.Client(api_key=api_key) if api_key else None
 
 def fetch_data(target_url, referer_url=None):
-    """プロキシ経由および直接通信を統合した安全な通信（Referer付き）"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "Accept": "*/*",
@@ -77,7 +76,6 @@ def fetch_data(target_url, referer_url=None):
         return ""
 
 def get_real_odds_dict(race_id):
-    """Networkで確認されたJSONP形式のオッズAPIから各馬の実オッズを抽出"""
     ts = int(time.time() * 1000)
     api_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?race_id={race_id}&type=1&action=init&_={ts}"
     ref_url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
@@ -115,10 +113,6 @@ def get_real_odds_dict(race_id):
     return odds_map
 
 def calculate_speed_score(horse_name, odds, track_type, dist_m):
-    """
-    独自スピード指数計算
-    蓄積DBの過去走実績 ＋ 距離・馬場適性 ＋ 近走上昇度を総合評価
-    """
     history = horses_db.get(horse_name, {})
     past_scores = history.get("scores", [])
     
@@ -126,7 +120,6 @@ def calculate_speed_score(horse_name, odds, track_type, dist_m):
         max_s = max(past_scores)
         recent_s = past_scores[-1]
         base_score = round(max_s * 0.6 + recent_s * 0.4, 1)
-        
         fav_tracks = history.get("fav_tracks", [])
         if track_type in fav_tracks:
             base_score += 1.8
@@ -221,7 +214,6 @@ def parse_race_details(race_info):
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             odds_val = real_odds_dict.get(num, 15.0)
 
-            # スピード指数と爆発力の計算
             speed_score, is_explosive = calculate_speed_score(name, odds_val, track_type, dist_m)
 
             horses.append({
@@ -239,7 +231,6 @@ def parse_race_details(race_info):
     if not horses:
         return None
 
-    # スピード指数最重視でソートして印付け
     horses_by_score = sorted(horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
     
     horses_by_score[0]["mark"] = "◎ 本命"
@@ -283,13 +274,11 @@ def parse_race_details(race_info):
     }
 
 def ask_gemini_prediction(race_name, venue, race_type, horses):
-    """Gemini 3.8 Flash による【独自スピード指数・回収率重視・合計10点以内】推論"""
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = next((h for h in horses if "▲" in h.get("mark", "")), None)
     ana = next((h for h in horses if "☆" in h.get("mark", "")), None)
 
-    # 安全な買い目文字列作成（構文エラーを防止）
     h_num = honmei["num"]
     rec_list = []
     opps = [x["num"] for x in [taikou, tanana] if x and x["num"] != h_num]
@@ -357,8 +346,40 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
 
     return fallback_data
 
+def ask_gemini_win5_strategy(win5_races_info):
+    """GeminiによるWIN5厳選戦略（最大10点まで・予算1,000円以内）"""
+    default_text = "本日WIN5発売中！各レース指数最上位を中心に最大10点以内で厳選配信。"
+    if not client or len(win5_races_info) < 5:
+        return default_text
+
+    summary_text = ""
+    for idx, r in enumerate(win5_races_info[:5], 1):
+        top_h = ", ".join([f"{h['num']}番({h.get('speedScore', 90)}点/{h['odds']}倍)" for h in r['horses'][:3]])
+        summary_text += f"第{idx}戦 ({r['venue']} {r['raceName']}): 指数上位: {top_h}\n"
+
+    prompt = f"""
+本日のWIN5対象5レースの情報をもとに、買い目点数を【通常は最大10点まで（全体の組み合わせ数が10点以内、予算1,000円以内）】として各レースの選定頭数を割り振ってください。
+
+対象レース:
+{summary_text}
+
+出力フォーマット（この形式のみを出力）:
+本日WIN5発売中！【AI厳選○点戦略（予算○○○円 / 最大10点まで）】
+①: [馬番] ➔ ②: [馬番] ➔ ③: [馬番] ➔ ④: [馬番] ➔ ⑤: [馬番]
+理由: (30文字前後で選定の狙い)
+"""
+    for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
+        try:
+            res = client.models.generate_content(model=model_name, contents=prompt)
+            txt = res.text.strip()
+            if "①" in txt and "➔" in txt:
+                return txt
+        except Exception:
+            continue
+
+    return "本日WIN5発売中！【AI厳選戦略】独自指数上位馬を中心に点数を10点以内に絞って配信中。"
+
 def select_top_recommended_race(final_races):
-    """最も回収率が高く的中自信があるレースを1つ厳選（ポップアップ用）"""
     best_candidate = None
     best_value_score = -1.0
 
@@ -393,7 +414,6 @@ def select_top_recommended_race(final_races):
     return best_candidate
 
 def learn_and_update_results():
-    """レース結果を自動取得して horses_db.json を更新・成長させる"""
     today_res_url = f"[https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=](https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=){now_jst.strftime('%Y%m%d')}"
     html = fetch_data(today_res_url)
     if not html:
@@ -416,7 +436,6 @@ def learn_and_update_results():
         rows = table.find_all("tr")
         for tr in rows:
             name_td = tr.find("span", class_="Horse_Name") or tr.find("a", href=re.compile(r"/horse/"))
-            time_td = tr.find("span", class_="Time") or tr.find("td", class_="Time")
             rank_td = tr.find("td", class_=re.compile(r"Rank|Order"))
 
             if name_td and rank_td:
@@ -465,10 +484,14 @@ for r_info in detected_races:
 
 top_recommended_race = select_top_recommended_race(final_races)
 
+win5_races_list = [r for r in final_races if r["isWin5"]]
+win5_strategy_text = ask_gemini_win5_strategy(win5_races_list)
+
 output_data = {
     "updatedAt": now_str,
     "targetDate": target_date_disp,
     "topRecommendation": top_recommended_race,
+    "win5Strategy": win5_strategy_text,
     "bestRaces": sorted(final_races, key=lambda x: x.get("confidenceScore", 0), reverse=True)[:3],
     "races": final_races
 }
