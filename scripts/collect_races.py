@@ -28,11 +28,8 @@ def fetch_via_proxy(target_url):
     return res.text
 
 def ask_gemini_prediction(race_name, venue, horses):
-    """Gemini 3.8 Flash による【回収率重視・具体的フォーメーション買い目】推論"""
-    default_rec = (
-        f"【馬連】{horses[0]['num']} - {horses[1]['num']}, {horses[2]['num']} (2点)\n"
-        f"【3連複F】{horses[0]['num']} - {horses[1]['num']} - {horses[1]['num']}, {horses[2]['num']}, {horses[3]['num']} (3点)"
-    )
+    """Gemini 3.8 Flash による【回収率重視・券種自由選択・合計10点以内】推論"""
+    default_rec = f"【馬連】{horses[0]['num']} - {horses[1]['num']}, {horses[2]['num']} (2点)"
     if not client or not horses:
         return {
             "honmei_num": horses[0]["num"] if horses else 1,
@@ -50,16 +47,19 @@ def ask_gemini_prediction(race_name, venue, horses):
     prompt = f"""
 あなたは回収率を最大化し競馬で勝つための専属AI「ジェミ予想」です。
 
-【重要：予想＆買い目フォーメーション指示】
+【重要：予想＆買い目フォーメーション指示（柔軟な券種選定・10点以内）】
 1. 的中率だけでなく【回収率（長期的な利益）】を最優先してください。
-2. 軸馬と対抗格について：
-   ・「◎ 本命」は必ず【1頭のみ】選定
-   ・「○ 対抗」は必ず【1頭のみ】選定
-   ・単穴（▲）、特注穴馬（☆）、連下（△）については【頭数制限なし】で、爆発力や期待値のある馬を貪欲に拾い上げてください。
-3. 馬番を具体的に指定した【フォーメーション】や【券種別の組み合わせ（点数付き）】を出力してください。
-   ・本線：軸馬（◎）からの馬連（○や有力相手へ絞り込み）
-   ・回収率重視：ハマった時に跳ねる「3連複フォーメーション」（例: ◎ - ○,▲ - ○,▲,☆,△）
-   ・特注穴馬：期待値が高い穴馬（☆）からの妙味ある「穴ワイド」
+2. 印のルール：
+   ・「◎ 本命」は必ず【1頭のみ】
+   ・「○ 対抗」は必ず【1頭のみ】
+   ・能力馬（▲・☆・△）は頭数制限なしで印をつけて構いません。
+3. 【最重要：券種と買い目の選び方（無理に全券種を出さない）】
+   ・無理に「馬連もフォーメーションもワイドも」と全部出す必要は一切ありません。
+   ・そのレースで【最も回収率が期待できる最適な買い方】を1〜2つに絞って提示してください。
+     - 例1（軸堅実・相手絞り）：【馬連】◎ - ○, ▲ (2〜3点のみ)
+     - 例2（波乱・高配当狙い）：【3連複フォーメーション】◎ - ○ - ▲, ☆, △ (4〜6点のみ)
+     - 例3（爆発期待穴馬狙い）：【穴ワイド】☆ - ◎, ○ (1〜2点のみ)
+   ・**買い目全体の合計点数は必ず【10点以内（10点以下）】を絶対厳守**してください。
 
 会場: {venue}
 レース名: {race_name}
@@ -72,7 +72,7 @@ def ask_gemini_prediction(race_name, venue, horses):
   "confidence": "レース信頼度(AまたはBまたはC)",
   "confidence_score": 50から98までの信頼度数値(半角数字),
   "summary": "期待値とハマった時の爆発力（スピードポテンシャル）に言及した見解（100〜140文字程度）",
-  "recommendation": "【馬連】◎ - ○,相手(○点) / 【3連複F】◎ - ○,有力 - 相手全般(○点) / 【穴ワイド】☆ - ◎,○(○点) のように改行区切りで具体的に記述"
+  "recommendation": "推奨買い目（合計10点以内で、最適な券種に絞って具体的に記述）"
 }}
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
@@ -145,7 +145,6 @@ def ask_gemini_win5_strategy(win5_races_info):
 
 # ==========================================
 # 2026年10月3日（土曜）JRA公式確定出走馬データ
-# 【ルール】：◎は1頭のみ、○は1頭のみ。他（▲・☆・△）は制限なし
 # ==========================================
 
 # 京都12R（ダ1800m 14頭）
@@ -306,11 +305,11 @@ target_races_data = [
     {"raceId": "202605040112", "venue": "東京", "raceName": "12R 3歳以上2勝クラス (ダ1400m)", "startTime": "16:30", "isGraded": False, "isWin5": False, "horses": tokyo12_horses}
 ]
 
-print("=== ジェミ予想 (本命・対抗1頭限定＋相手制限なし版) 推論開始 ===")
+print("=== ジェミ予想 (券種自由選択・合計10点以内モデル) 推論開始 ===")
 final_races = []
 
 for r in target_races_data:
-    print(f"推論実行中: {r['venue']} {r['raceName']} (印整理＆買い目生成)...")
+    print(f"推論実行中: {r['venue']} {r['raceName']} (最適券種厳選)...")
     ai_result = ask_gemini_prediction(r["raceName"], r["venue"], r["horses"])
     final_races.append({
         "raceId": r["raceId"],
@@ -347,4 +346,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 全処理完了: 本命・対抗1頭＆相手能力馬制限なしで保存しました ===")
+print(f"=== 全処理完了: 最適券種絞り込み・合計10点以内予想を保存しました ===")
