@@ -49,13 +49,20 @@
       margin-top: 4px;
     }
 
-    /* WIN5 バナーカード */
+    /* WIN5 アコーディオンカード */
     .win5-card {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.15));
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(59, 130, 246, 0.12));
       border: 1px solid #8b5cf6;
       border-radius: 12px;
-      padding: 14px;
       margin-bottom: 14px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .win5-header {
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .win5-title {
       font-size: 13px;
@@ -64,16 +71,23 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 6px;
+    }
+    .win5-toggle-icon {
+      font-size: 12px;
+      color: #c084fc;
+      transition: transform 0.2s;
     }
     .win5-body {
+      padding: 0 14px 14px;
       font-size: 12px;
-      line-height: 1.5;
+      line-height: 1.6;
       color: #e2e8f0;
       white-space: pre-wrap;
+      border-top: 1px dashed rgba(139, 92, 246, 0.3);
+      padding-top: 10px;
     }
 
-    /* 会場切り替えタブ（関東・関西・すべて） */
+    /* 会場切り替えタブ */
     .venue-tabs {
       display: flex;
       gap: 8px;
@@ -265,10 +279,13 @@
     <div class="update-time" id="updateTime">データ読み込み中...</div>
   </header>
 
-  <!-- WIN5 厳選戦略バナーカード -->
-  <div class="win5-card" id="win5Card" style="display: none;">
-    <div class="win5-title">🎯 WIN5 AI厳選戦略（最大10点まで・予算1,000円以内）</div>
-    <div class="win5-body" id="win5Body"></div>
+  <!-- WIN5 アコーディオンカード -->
+  <div class="win5-card" id="win5Card" onclick="toggleWin5()" style="display: none;">
+    <div class="win5-header">
+      <div class="win5-title">🎯 WIN5 AI厳選戦略（最大10点まで・予算1,000円以内）</div>
+      <div class="win5-toggle-icon" id="win5ToggleIcon">▼ タップで展開</div>
+    </div>
+    <div class="win5-body" id="win5Body" style="display: none;"></div>
   </div>
 
   <!-- 会場切り替えタブ -->
@@ -296,6 +313,18 @@
 
     function closeModal() {
       document.getElementById('recommendModal').style.display = 'none';
+    }
+
+    function toggleWin5() {
+      const body = document.getElementById('win5Body');
+      const icon = document.getElementById('win5ToggleIcon');
+      if (body.style.display === 'none') {
+        body.style.display = 'block';
+        icon.textContent = '▲ 閉じる';
+      } else {
+        body.style.display = 'none';
+        icon.textContent = '▼ タップで展開';
+      }
     }
 
     function filterVenue(venue) {
@@ -393,7 +422,7 @@
 
         document.getElementById('updateTime').textContent = `${data.targetDate || ''} | 更新: ${data.updatedAt || '未更新'}`;
 
-        // 1. WIN5 戦略バナーの表示
+        // 1. WIN5 戦略の表示
         if (data.win5Strategy) {
           document.getElementById('win5Body').textContent = data.win5Strategy;
           document.getElementById('win5Card').style.display = 'block';
@@ -413,7 +442,7 @@
 
         globalRaces = data.races || [];
 
-        // 3. 会場切り替えタブの動的生成（東京・京都など）
+        // 3. 会場切り替えタブの動的生成
         const venues = [...new Set(globalRaces.map(r => r.venue))];
         const tabsContainer = document.getElementById('venueTabs');
         tabsContainer.innerHTML = '<div class="tab-btn active" onclick="filterVenue(\'ALL\')">全会場</div>';
