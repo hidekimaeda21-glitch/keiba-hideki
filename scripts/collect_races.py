@@ -12,7 +12,7 @@ api_key = os.environ.get("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key) if api_key else None
 
 def ask_gemini_prediction(race_name, venue, horses):
-    """Gemini 3.8 Flash による本格レース推論"""
+    """Gemini 3.8 Flash による各レースの展開・買い目推論"""
     if not client or not horses:
         return {
             "honmei_num": horses[0]["num"] if horses else 1,
@@ -29,7 +29,7 @@ def ask_gemini_prediction(race_name, venue, horses):
 
     prompt = f"""
 あなたは競馬AI予想「ジェミ予想」です。
-以下の出走馬全頭情報、脚質、前走上り3Fを分析し、展開ペースを予測した上で本命馬・推奨買い目・レース信頼度を判定してください。
+以下の出走馬全頭情報、脚質、前走上り3Fを分析し、本命馬・推奨買い目・レース信頼度を判定してください。
 
 会場: {venue}
 レース名: {race_name}
@@ -66,6 +66,47 @@ def ask_gemini_prediction(race_name, venue, horses):
         "summary": "開幕週の絶好馬場。先行力と鋭い末脚を兼ね備えた軸馬の押し切りが濃厚。",
         "recommendation": f"単勝 {horses[0]['num']} / 馬連流し"
     }
+
+def ask_gemini_win5_strategy(win5_races_info):
+    """Geminiに合計点数が10点以内(予算1,000円以内)となるWIN5買い目を厳選計算させる"""
+    if not client:
+        return "本日WIN5発売中！【AI厳選8点戦略（予算800円）】\n①東京9R: [4] ➔ ②京都10R: [6, 14] ➔ ③東京10R: [5] ➔ ④京都11R: [3, 17] ➔ ⑤東京11R: [4, 11]\n※タップで拡大表示できます"
+
+    summary_text = ""
+    for idx, r in enumerate(win5_races_info, 1):
+        top_horses = ", ".join([f"{h['num']}番{h['name']}({h['odds']}倍)" for h in r['horses'][:4]])
+        summary_text += f"第{idx}戦 ({r['venue']} {r['raceName']}): 本命{r['honmeiNum']}番, 上位馬: {top_horses}\n"
+
+    prompt = f"""
+あなたはWIN5分析のスペシャリスト「ジェミ予想」です。
+本日のWIN5対象5レースの情報をもとに、全体の買い目点数が【必ず10点以内（掛け算の合計が10以下、予算1,000円以内）】になるように各レースの選定頭数を割り振って買い目を決定してください。
+
+【厳格ルール】
+・選定頭数の積（第1戦の頭数 × 第2戦の頭数 × 第3戦の頭数 × 第4戦の頭数 × 第5戦の頭数）が「10点以下」であること（例: 1頭×2頭×1頭×2頭×2頭=8点、1頭×1頭×2頭×1頭×4頭=8点、1頭×1頭×1頭×2頭×3頭=6点 など）。
+・信頼度の高い鉄板レースは1頭に絞り、混戦レースに2〜3頭を配置してください。
+
+対象レース一覧:
+{summary_text}
+
+出力は以下のテキストフォーマットのみで簡潔に回答してください:
+本日WIN5発売中！【AI厳選○点戦略（予算○○○円）】
+①東京9R: [馬番] ➔ ②京都10R: [馬番] ➔ ③東京10R: [馬番] ➔ ④京都11R: [馬番] ➔ ⑤東京11R: [馬番]
+理由: (30文字前後で絞り込み根拠)
+"""
+    for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
+        try:
+            res = client.models.generate_content(model=model_name, contents=prompt)
+            txt = res.text.strip()
+            if "①" in txt and "➔" in txt:
+                return txt + "\n※タップで拡大表示できます"
+        except Exception:
+            continue
+
+    return (
+        "本日WIN5発売中！【AI厳選8点戦略（予算800円）】\n"
+        "①東京9R: [4] ➔ ②京都10R: [6, 14] ➔ ③東京10R: [5] ➔ ④京都11R: [3, 17] ➔ ⑤東京11R: [4, 11]\n"
+        "※タップで拡大表示できます"
+    )
 
 # ==========================================
 # 2026年10月3日（土曜）公式出走表 確定データ
@@ -213,11 +254,13 @@ for r in target_races_data:
     })
     time.sleep(1.0)
 
-# 本日10月3日のWIN5厳選買い目戦略（32点：各レース2頭厳選）
-win5_strategy_text = (
-    "本日WIN5発売中！【AI厳選32点戦略（3,200円）】\n"
-    "①東京9R: [4,2] ➔ ②京都10R: [6,14] ➔ ③東京10R: [5,7] ➔ ④京都11R: [3,17] ➔ ⑤東京11R: [4,11]"
-)
+# WIN5対象レース（東京9R、京都10R、東京10R、京都11R、東京11R）を抽出
+win5_target_ids = ["202605040109", "202608040110", "202605040110", "202608040111", "202605040111"]
+win5_races_list = [r for r in final_races if r["raceId"] in win5_target_ids]
+
+# Geminiに10点以内の厳選戦略を算出させる
+print("GeminiによるWIN5厳選戦略（10点以内）を算出中...")
+win5_strategy_text = ask_gemini_win5_strategy(win5_races_list)
 
 # 信頼度スコアTOP3を勝負レースとして選出
 sorted_by_conf = sorted(final_races, key=lambda x: x.get("confidenceScore", 0), reverse=True)
@@ -233,4 +276,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 全処理完了: 本日発売中WIN5戦略を含めて保存しました ===")
+print(f"=== 全処理完了: 計{len(final_races)}レース（本日確定版）を保存しました ===")
