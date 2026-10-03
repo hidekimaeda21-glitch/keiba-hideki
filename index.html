@@ -4,93 +4,149 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>KEIBA AI PRO - ジェミ予想</title>
-  <link rel="manifest" href="manifest.json">
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: #0b0f19;
       color: #f8fafc;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 12px;
+      padding-bottom: 90px;
+      max-width: 480px;
+      margin: 0 auto;
       -webkit-tap-highlight-color: transparent;
     }
-    .tap-zoomable {
-      cursor: pointer;
-      transition: transform 0.15s ease, background-color 0.15s ease;
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .header h1 { font-size: 20px; font-weight: 800; color: #fbbf24; letter-spacing: 1px; }
+    .badge-gemini { background: rgba(30, 27, 75, 0.8); border: 1px solid rgba(99, 102, 241, 0.6); padding: 4px 10px; border-radius: 999px; font-size: 11px; color: #a5b4fc; }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: rgba(15, 23, 42, 0.9); border: 1px solid #1e293b; border-radius: 12px; padding: 12px; margin-bottom: 12px; text-align: center; }
+    .stat-label { font-size: 11px; color: #94a3b8; }
+    .stat-val-green { font-size: 17px; font-weight: bold; color: #34d399; }
+    .stat-val-gold { font-size: 17px; font-weight: bold; color: #fbbf24; }
+    .stat-val-white { font-size: 17px; font-weight: bold; color: #f1f5f9; }
+
+    .tap-zoomable { cursor: pointer; transition: transform 0.1s ease; }
+    .tap-zoomable:active { transform: scale(0.98); }
+
+    .win5-card {
+      background: linear-gradient(135deg, rgba(88, 28, 135, 0.4), rgba(49, 46, 129, 0.4));
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
     }
-    .tap-zoomable:active {
-      transform: scale(0.98);
-      opacity: 0.9;
+    .win5-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .win5-title { font-size: 12px; font-weight: bold; color: #d8b4fe; }
+    .zoom-hint { font-size: 10px; background: rgba(88, 28, 135, 0.8); color: #f3e8ff; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(192, 132, 252, 0.4); }
+    .win5-text { font-size: 12px; color: #f3e8ff; line-height: 1.5; font-family: monospace; white-space: pre-wrap; }
+
+    .update-time { font-size: 11px; color: #94a3b8; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; }
+
+    .tab-bar { display: flex; background: #0f172a; border: 1px solid #1e293b; border-radius: 10px; padding: 4px; margin-bottom: 16px; }
+    .tab-btn { flex: 1; padding: 8px; font-size: 14px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; transition: 0.2s; }
+    .tab-active { background: #fbbf24; color: #0f172a; }
+    .tab-inactive { background: transparent; color: #94a3b8; }
+
+    .section-title { font-size: 12px; font-weight: bold; color: #fbbf24; margin-bottom: 8px; }
+    .best-card { background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(244, 63, 94, 0.4); border-radius: 12px; padding: 12px; margin-bottom: 8px; }
+    .best-badge { font-size: 10px; background: #4c0519; color: #fda4af; font-weight: bold; padding: 2px 6px; border-radius: 4px; border: 1px solid #9f1239; margin-right: 6px; }
+    
+    .race-card { background: rgba(15, 23, 42, 0.9); border: 1px solid #1e293b; border-radius: 14px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+    .race-header { background: rgba(30, 41, 59, 0.8); padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
+    .race-title { font-size: 14px; font-weight: bold; color: #f8fafc; }
+    .race-time { font-size: 12px; color: #94a3b8; }
+
+    .ai-box { background: rgba(49, 46, 129, 0.25); border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 10px; padding: 10px; margin: 10px; }
+    .ai-box-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .ai-label { font-size: 12px; font-weight: bold; color: #a5b4fc; }
+    .ai-score { font-size: 11px; font-weight: bold; color: #fbbf24; }
+    .ai-summary { font-size: 12px; color: #cbd5e1; line-height: 1.5; margin-bottom: 8px; }
+    .ai-buy { font-size: 12px; font-weight: bold; color: #fde047; background: rgba(15, 23, 42, 0.8); padding: 8px; border-radius: 6px; border: 1px solid #1e293b; }
+
+    .horse-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid rgba(30, 41, 59, 0.6); }
+    .horse-left { display: flex; align-items: center; gap: 8px; }
+    .horse-num { width: 22px; font-weight: bold; color: #fbbf24; font-size: 13px; text-align: center; }
+    .horse-name { font-size: 13px; font-weight: bold; color: #f1f5f9; }
+    .horse-sub { font-size: 10px; color: #94a3b8; margin-top: 2px; }
+    .horse-odds { font-size: 13px; font-weight: bold; color: #f8fafc; text-align: right; }
+    .horse-mark { font-size: 11px; font-weight: bold; text-align: right; }
+
+    /* モーダル表示 */
+    #zoom-modal {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
+      padding: 16px; justify-content: center; align-items: center;
+    }
+    .modal-content {
+      background: #0f172a; border: 2px solid #fbbf24; border-radius: 16px;
+      padding: 20px; max-width: 440px; width: 100%; max-height: 80vh; overflow-y: auto;
     }
   </style>
 </head>
-<body class="p-3 pb-24 max-w-md mx-auto min-h-screen">
+<body>
 
   <!-- ヘッダー -->
-  <header class="flex justify-between items-center mb-3 pt-1">
-    <h1 class="text-xl font-extrabold tracking-wider text-amber-400">KEIBA AI PRO</h1>
-    <div class="flex items-center space-x-1 bg-indigo-950/80 border border-indigo-700/60 px-2.5 py-1 rounded-full text-xs text-indigo-300">
-      <span>✨ Gemini頭脳連携</span>
-    </div>
-  </header>
+  <div class="header">
+    <h1>KEIBA AI PRO</h1>
+    <div class="badge-gemini">✨ Gemini頭脳連携</div>
+  </div>
 
-  <!-- 実績パネル -->
-  <div class="grid grid-cols-3 gap-2 bg-slate-900/90 border border-slate-800 rounded-xl p-3 mb-3 text-center shadow-lg">
+  <!-- 的中・回収率 -->
+  <div class="stats-grid">
     <div>
-      <div class="text-[10px] text-slate-400 font-medium">的中率</div>
-      <div class="text-lg font-bold text-emerald-400">100.0%</div>
+      <div class="stat-label">的中率</div>
+      <div class="stat-val-green">100.0%</div>
     </div>
     <div>
-      <div class="text-[10px] text-slate-400 font-medium">回収率</div>
-      <div class="text-lg font-bold text-amber-400">285.0%</div>
+      <div class="stat-label">回収率</div>
+      <div class="stat-val-gold">285.0%</div>
     </div>
     <div>
-      <div class="text-[10px] text-slate-400 font-medium">通算戦績</div>
-      <div class="text-lg font-bold text-slate-200">1戦1勝</div>
+      <div class="stat-label">通算戦績</div>
+      <div class="stat-val-white">1戦1勝</div>
     </div>
   </div>
 
   <!-- WIN5 厳選戦略枠（タップで拡大） -->
-  <div id="win5-card" class="tap-zoomable bg-gradient-to-r from-purple-950/60 to-indigo-950/60 border border-purple-500/50 rounded-xl p-3.5 mb-3 shadow-md relative">
-    <div class="flex items-center justify-between mb-1.5">
-      <div class="flex items-center space-x-1.5 text-xs font-bold text-purple-300">
-        <span>🎯 WIN5 厳選戦略 (10点以内)</span>
-      </div>
-      <span class="text-[10px] bg-purple-900/80 text-purple-200 px-2 py-0.5 rounded-full border border-purple-700/50">タップで拡大 🔍</span>
+  <div id="win5-card" class="win5-card tap-zoomable">
+    <div class="win5-header">
+      <span class="win5-title">🎯 WIN5 厳選戦略 (10点以内)</span>
+      <span class="zoom-hint">タップで拡大 🔍</span>
     </div>
-    <div id="win5-text" class="text-xs text-purple-100 leading-relaxed font-mono whitespace-pre-wrap">読み込み中...</div>
+    <div id="win5-text" class="win5-text">読み込み中...</div>
   </div>
 
-  <!-- 最終更新時刻 -->
-  <div class="text-[11px] text-slate-400 mb-3 flex items-center space-x-1 pl-1">
-    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+  <!-- 最終更新日時 -->
+  <div class="update-time">
+    <span class="pulse-dot"></span>
     <span>最終更新: <span id="updated-at">--</span></span>
   </div>
 
   <!-- 会場切替タブ -->
-  <div class="flex bg-slate-900 border border-slate-800 rounded-xl p-1 mb-4 shadow-inner">
-    <button id="tab-kyoto" class="flex-1 py-2 text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow">京都</button>
-    <button id="tab-tokyo" class="flex-1 py-2 text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">東京</button>
+  <div class="tab-bar">
+    <button id="tab-kyoto" class="tab-btn tab-active">京都</button>
+    <button id="tab-tokyo" class="tab-btn tab-inactive">東京</button>
   </div>
 
-  <!-- 勝負レースTOP3セクション -->
-  <div id="best-races-section" class="mb-4">
-    <div class="text-xs font-bold text-amber-400 mb-2 flex items-center space-x-1">
-      <span>🔥 本日の厳選勝負レース (信頼度TOP3)</span>
-    </div>
-    <div id="best-races-list" class="space-y-2"></div>
+  <!-- 勝負レースTOP3 -->
+  <div id="best-races-section" style="margin-bottom: 16px;">
+    <div class="section-title">🔥 本日の厳選勝負レース (信頼度TOP3)</div>
+    <div id="best-races-list"></div>
   </div>
 
   <!-- レース一覧コンテナ -->
-  <div id="races-container" class="space-y-4"></div>
+  <div id="races-container"></div>
 
-  <!-- 文字拡大表示用モーダル（タップで全面ポップアップ表示） -->
-  <div id="zoom-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm p-4 hidden justify-center items-center">
-    <div class="bg-slate-900 border-2 border-amber-400/80 rounded-2xl p-5 max-w-sm w-full max-h-[85vh] overflow-y-auto shadow-2xl flex flex-col">
-      <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-700">
-        <h3 id="zoom-modal-title" class="text-base font-bold text-amber-400">拡大表示</h3>
-        <button id="zoom-close-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1 rounded-full border border-slate-600">閉じる ×</button>
+  <!-- タップ拡大モーダル -->
+  <div id="zoom-modal">
+    <div class="modal-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #334155; padding-bottom:8px;">
+        <h3 id="zoom-modal-title" style="color:#fbbf24; font-size:16px; font-weight:bold;">拡大表示</h3>
+        <button id="zoom-close-btn" style="background:#1e293b; color:#cbd5e1; border:1px solid #475569; padding:4px 10px; border-radius:999px; font-size:12px;">閉じる ×</button>
       </div>
-      <div id="zoom-modal-content" class="text-white text-base leading-relaxed whitespace-pre-wrap font-sans"></div>
+      <div id="zoom-modal-content" style="color:#ffffff; font-size:16px; line-height:1.7; white-space:pre-wrap; word-break:break-all;"></div>
     </div>
   </div>
 
@@ -98,50 +154,47 @@
     let allRacesData = [];
     let currentVenue = "京都";
 
-    // モーダル操作関数
     const modal = document.getElementById("zoom-modal");
     const modalTitle = document.getElementById("zoom-modal-title");
     const modalContent = document.getElementById("zoom-modal-content");
     const closeBtn = document.getElementById("zoom-close-btn");
 
-    function showZoomModal(title, content) {
+    function showZoom(title, text) {
       modalTitle.textContent = title;
-      modalContent.textContent = content;
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
+      modalContent.textContent = text;
+      modal.style.display = "flex";
     }
 
-    function hideZoomModal() {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
+    function hideZoom() {
+      modal.style.display = "none";
     }
 
     modal.addEventListener("click", (e) => {
-      if (e.target === modal || e.target === closeBtn) hideZoomModal();
+      if (e.target === modal || e.target === closeBtn) hideZoom();
     });
-    closeBtn.addEventListener("click", hideZoomModal);
+    closeBtn.addEventListener("click", hideZoom);
 
-    // WIN5カードのタップ拡大登録
+    // WIN5タップ拡大
     document.getElementById("win5-card").addEventListener("click", () => {
-      const text = document.getElementById("win5-text").textContent;
-      showZoomModal("🎯 WIN5 厳選戦略 (拡大)", text);
+      const txt = document.getElementById("win5-text").textContent;
+      showZoom("🎯 WIN5 厳選戦略 (拡大)", txt);
     });
 
-    // タブ切り替え処理
+    // タブ切替
     const tabKyoto = document.getElementById("tab-kyoto");
     const tabTokyo = document.getElementById("tab-tokyo");
 
     tabKyoto.addEventListener("click", () => {
       currentVenue = "京都";
-      tabKyoto.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow";
-      tabTokyo.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200";
+      tabKyoto.className = "tab-btn tab-active";
+      tabTokyo.className = "tab-btn tab-inactive";
       renderRaces();
     });
 
     tabTokyo.addEventListener("click", () => {
       currentVenue = "東京";
-      tabTokyo.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow";
-      tabKyoto.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200";
+      tabTokyo.className = "tab-btn tab-active";
+      tabKyoto.className = "tab-btn tab-inactive";
       renderRaces();
     });
 
@@ -167,18 +220,20 @@
       container.innerHTML = "";
       bestRaces.forEach((r, idx) => {
         const card = document.createElement("div");
-        card.className = "tap-zoomable bg-slate-900/90 border border-rose-500/40 rounded-xl p-3 shadow-md";
+        card.className = "best-card tap-zoomable";
         card.innerHTML = `
-          <div class="flex justify-between items-center mb-1">
-            <span class="text-[10px] bg-rose-950 text-rose-300 font-bold px-1.5 py-0.5 rounded border border-rose-800">勝負第${idx+1}弾</span>
-            <span class="text-xs font-bold text-slate-200">${r.venue} ${r.raceName}</span>
-            <span class="text-[10px] text-amber-400 font-bold">信頼度: ${r.confidence} (${r.confidenceScore}点)</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <div>
+              <span class="best-badge">勝負第${idx+1}弾</span>
+              <span style="font-size:13px; font-weight:bold; color:#f1f5f9;">${r.venue} ${r.raceName}</span>
+            </div>
+            <span style="font-size:11px; font-weight:bold; color:#fbbf24;">信頼度: ${r.confidence} (${r.confidenceScore}点)</span>
           </div>
-          <div class="text-xs text-slate-300 line-clamp-2 mt-1">${r.aiSummary || ""}</div>
-          <div class="text-xs font-bold text-amber-300 mt-1">推奨: ${r.aiBuy || ""}</div>
+          <div style="font-size:12px; color:#94a3b8; line-height:1.4; margin-top:4px;">${r.aiSummary || ""}</div>
+          <div style="font-size:12px; font-weight:bold; color:#fde047; margin-top:4px;">推奨: ${r.aiBuy || ""}</div>
         `;
         card.addEventListener("click", () => {
-          showZoomModal(`🔥 勝負第${idx+1}弾 ${r.venue} ${r.raceName}`, `【信頼度】${r.confidence} (${r.confidenceScore}点)\n\n【ジェミ予想 AI見解】\n${r.aiSummary}\n\n【推奨買い目】\n${r.aiBuy}`);
+          showZoom(`🔥 勝負第${idx+1}弾 ${r.venue} ${r.raceName}`, `【信頼度】${r.confidence} (${r.confidenceScore}点)\n\n【ジェミ予想 AI見解】\n${r.aiSummary}\n\n【推奨買い目】\n${r.aiBuy}`);
         });
         container.appendChild(card);
       });
@@ -190,69 +245,60 @@
 
       const filtered = allRacesData.filter(r => r.venue === currentVenue);
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="text-center py-8 text-xs text-slate-500">該当レースはありません</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:30px; font-size:12px; color:#64748b;">該当レースはありません</div>`;
         return;
       }
 
       filtered.forEach(r => {
         const card = document.createElement("div");
-        card.className = "bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-lg";
+        card.className = "race-card";
 
-        // 出走馬一覧
         let horsesHtml = "";
         (r.horses || []).forEach(h => {
-          let markStyle = "text-slate-500";
-          if (h.mark.includes("◎")) markStyle = "text-emerald-400 font-bold";
-          else if (h.mark.includes("○")) markStyle = "text-amber-400 font-bold";
-          else if (h.mark.includes("▲")) markStyle = "text-rose-400 font-bold";
-          else if (h.mark.includes("☆")) markStyle = "text-purple-400 font-bold";
-          else if (h.mark.includes("△")) markStyle = "text-sky-400 font-bold";
+          let markColor = "#94a3b8";
+          if (h.mark.includes("◎")) markColor = "#34d399";
+          else if (h.mark.includes("○")) markColor = "#fbbf24";
+          else if (h.mark.includes("▲")) markColor = "#f43f5e";
+          else if (h.mark.includes("☆")) markColor = "#c084fc";
+          else if (h.mark.includes("△")) markColor = "#38bdf8";
 
           horsesHtml += `
-            <div class="flex items-center justify-between py-2 border-b border-slate-800/80 text-xs px-3">
-              <div class="flex items-center space-x-2">
-                <span class="w-5 text-center font-bold text-amber-400">${h.num}</span>
+            <div class="horse-row">
+              <div class="horse-left">
+                <span class="horse-num">${h.num}</span>
                 <div>
-                  <div class="font-bold text-slate-100">${h.name}</div>
-                  <div class="text-[10px] text-slate-400">${h.jockey} <span class="bg-slate-800 px-1 rounded text-slate-300">${h.style || ""}</span> 上り${h.last3f || ""}</div>
+                  <div class="horse-name">${h.name}</div>
+                  <div class="horse-sub">${h.jockey} | ${h.style || ""} | 上り${h.last3f || ""}</div>
                 </div>
               </div>
-              <div class="text-right">
-                <div class="font-mono text-slate-200">${h.odds ? h.odds + "倍" : "---"}</div>
-                <div class="text-[11px] ${markStyle}">${h.mark || "-"}</div>
+              <div>
+                <div class="horse-odds">${h.odds ? h.odds + "倍" : "---"}</div>
+                <div class="horse-mark" style="color:${markColor};">${h.mark || "-"}</div>
               </div>
             </div>
           `;
         });
 
         card.innerHTML = `
-          <div class="bg-slate-800/80 px-4 py-2.5 flex justify-between items-center border-b border-slate-700/60">
-            <span class="font-bold text-sm text-slate-100">${r.venue} ${r.raceName}</span>
-            <span class="text-xs text-slate-400 font-mono">${r.startTime} 発走</span>
+          <div class="race-header">
+            <span class="race-title">${r.venue} ${r.raceName}</span>
+            <span class="race-time">${r.startTime} 発走</span>
           </div>
-
-          <!-- AI見解枠（タップで拡大） -->
-          <div class="tap-zoomable m-3 p-3 bg-indigo-950/40 border border-indigo-500/30 rounded-xl relative">
-            <div class="flex justify-between items-center mb-1">
-              <span class="text-xs font-bold text-indigo-300">🧠 ジェミ予想 AI見解</span>
-              <span class="text-[10px] text-amber-400 font-bold">信頼度: ${r.confidence} (${r.confidenceScore}点)</span>
+          <div class="ai-box tap-zoomable">
+            <div class="ai-box-header">
+              <span class="ai-label">🧠 ジェミ予想 AI見解</span>
+              <span class="ai-score">信頼度: ${r.confidence} (${r.confidenceScore}点)</span>
             </div>
-            <p class="text-xs text-slate-300 leading-relaxed mb-2">${r.aiSummary || ""}</p>
-            <div class="text-xs font-bold text-amber-300 bg-slate-900/80 p-2 rounded border border-slate-800">
-              推奨買い目: ${r.aiBuy || ""}
-            </div>
-            <div class="text-right mt-1 text-[9px] text-indigo-400">タップで文字を拡大 🔍</div>
+            <div class="ai-summary">${r.aiSummary || ""}</div>
+            <div class="ai-buy">推奨買い目: ${r.aiBuy || ""}</div>
+            <div style="text-align:right; font-size:10px; color:#818cf8; margin-top:4px;">タップで拡大 🔍</div>
           </div>
-
-          <div class="divide-y divide-slate-800/60">
-            ${horsesHtml}
-          </div>
+          <div>${horsesHtml}</div>
         `;
 
-        // AI見解枠のタップ拡大イベント
-        const aiBox = card.querySelector(".tap-zoomable");
+        const aiBox = card.querySelector(".ai-box");
         aiBox.addEventListener("click", () => {
-          showZoomModal(
+          showZoom(
             `🧠 ${r.venue} ${r.raceName} AI見解`,
             `【レース信頼度】\nランク: ${r.confidence} (${r.confidenceScore}点)\n\n【展開予測・選定理由】\n${r.aiSummary}\n\n【推奨買い目】\n${r.aiBuy}`
           );
