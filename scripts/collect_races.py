@@ -282,21 +282,31 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     renge = [h for h in horses if "△" in h.get("mark", "")]
 
     h_num = honmei["num"]
+    h_name = honmei["name"]
 
+    # レースごとに異なる多様なフォールバック買い目
+    rec_items = []
     if "本命信頼" in race_type and taikou:
         t_num = taikou['num']
-        rec_str = f"【馬単】{h_num} ➔ {t_num} (1点) / 【馬連】{h_num} - {t_num} (1点) / 【3連単】{h_num} ➔ {t_num} ➔ {renge[0]['num'] if renge else (tanana['num'] if tanana else 1)} (1点) [計3点]"
+        rec_items.append(f"【馬単】{h_num} ➔ {t_num} (1点)")
+        rec_items.append(f"【馬連】{h_num} - {t_num} (1点)")
+        if tanana:
+            rec_items.append(f"【3連単】{h_num} ➔ {t_num} ➔ {tanana['num']} (1点)")
+        rec_str = " / ".join(rec_items) + f" [計{len(rec_items)}点]"
     else:
-        opp_list = [str(x["num"]) for x in [taikou, tanana] if x]
-        ren_list = [str(x["num"]) for x in renge]
-        trio_pts = len(opp_list) * len(ren_list) if opp_list and ren_list else 3
-        rec_str = f"【3連複F】{h_num} - {','.join(opp_list)} - {','.join(opp_list + ren_list)} ({trio_pts}点)"
+        opp_nums = [str(x["num"]) for x in [taikou, tanana] if x]
+        if opp_nums:
+            rec_items.append(f"【馬連】{h_num} - {', '.join(opp_nums)} ({len(opp_nums)}点)")
         if ana:
-            rec_str += f" / 【穴ワイド】{ana['num']} - {h_num} (1点)"
-        rec_str += f" [計{trio_pts + (1 if ana else 0)}点]"
+            rec_items.append(f"【穴ワイド】{ana['num']} - {h_num}{f', {taikou[\"num\"]}' if taikou else ''} (2点)")
+        if renge and opp_nums:
+            ren_nums = [str(x["num"]) for x in renge]
+            rec_items.append(f"【3連複F】{h_num} - {opp_nums[0]} - {', '.join(ren_nums)} ({len(ren_nums)}点)")
+        total_p = sum([int(re.search(r'\((\d+)点\)', s).group(1)) for s in rec_items if re.search(r'\((\d+)点\)', s)])
+        rec_str = " / ".join(rec_items) + f" [計{total_p}点]"
 
     ana_text = f"爆発力のある{ana['num']}番{ana['name']}を絡め" if ana else "上位指数馬へ絞り"
-    fallback_summary = f"独自指数1位の{h_num}番{honmei['name']}（指数:{honmei['speedScore']}）を主軸に指名。{ana_text}、回収期待値を最大化する。"
+    fallback_summary = f"独自指数1位の{h_num}番{h_name}（指数:{honmei['speedScore']}）を主軸に指名。{ana_text}、回収期待値を最大化する。"
 
     fallback_data = {
         "honmei_num": h_num,
@@ -318,36 +328,40 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
 あなたは回収率を極限まで高める競馬AI「ジェミ予想」です。
 
 レース: {venue} {race_name}
-性質: {race_type}
-出走馬（独自スピード指数順）:
+レース性質: {race_type}
+出走馬データ（独自スピード指数順）:
 {horse_summary}
 
 【指示】
 1. 印（◎・○・▲・☆・△）の馬番のみを使ってください。
-2. レース性質に合わせて最適な券種（単勝、馬単、3連単、3連複フォーメーション、ワイドなど）を柔軟に選定してください。
-3. 毎回同じパターンに固定せず、展開と波乱度に応じた買い目にしてください。
+2. レースの性質（本命信頼か波乱警戒か）に合わせて、多彩な券種（単勝、馬単、馬連、ワイド、3連複フォーメーション、3連単など）から最も回収率が期待できる組み合わせを柔軟に提案してください。
+3. すべてのレースで同じ買い目パターン（馬単1点＋馬連1点＋3連単1点など）に絶対固定しないでください。
 4. 【合計買い目点数は必ず10点以内】を厳守してください。
 
-以下のJSONのみを出力してください（Markdown不可）:
+出力フォーマット（必ず以下の有効なJSONのみを出力、コードブロック不要）:
 {{
   "honmei_num": {h_num},
   "confidence": "AまたはBまたはC",
   "confidence_score": 85〜95の数値,
-  "summary": "選定理由と狙い目（100〜130文字程度）",
-  "recommendation": "推奨買い目（券種と点数を明記、合計10点以内）"
+  "summary": "本命選定理由と相手・穴馬の狙い（100〜130文字程度）",
+  "recommendation": "推奨買い目（券種ごとの買い目と点数、最後に[計○点]と明記）"
 }}
 """
-    for model_name in ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-3.8-flash']:
+    # 確実に動作するモデル順でリトライ
+    for model_name in ['gemini-2.5-flash', 'gemini-2.0-flash']:
         try:
-            res = client.models.generate_content(model=model_name, contents=prompt)
+            res = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+                config={"response_mime_type": "application/json"}
+            )
             txt = res.text.strip()
-            txt = re.sub(r"^```json\s*", "", txt)
-            txt = re.sub(r"^```\s*", "", txt)
-            txt = re.sub(r"\s*```$", "", txt)
             data = json.loads(txt)
-            if data.get("recommendation") and str(h_num) in str(data.get("recommendation")):
+            if data.get("recommendation"):
+                print(f"[{venue}{race_name}] Gemini推論成功 ({model_name}): {data.get('recommendation')}")
                 return data
-        except Exception:
+        except Exception as e:
+            print(f"[{venue}{race_name}] 推論リトライ ({model_name}): {e}")
             continue
 
     return fallback_data
@@ -361,7 +375,6 @@ def ask_gemini_win5_strategy(all_races):
     if len(win5_candidates) < 5:
         return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 
-    # 各レースの【本命馬（◎）の実際の馬番】と【対抗馬（○）の実際の馬番】
     race_picks = []
     for r in win5_candidates:
         h_honmei = next((h for h in r["horses"] if "◎" in h.get("mark", "")), r["horses"][0])
@@ -374,7 +387,6 @@ def ask_gemini_win5_strategy(all_races):
             "taikou_name": h_taikou["name"] if h_taikou else ""
         })
 
-    # レース名とR数を明記したフォーメーション（前半3戦1点 ✕ 後半2戦2頭 ＝ 4点）
     strat_text = (
         f"【AI厳選WIN5戦略】計4点（予算400円 / 最大10点厳選）\n"
         f"第1戦 [{race_picks[0]['race']}]: {race_picks[0]['honmei_num']}番 {race_picks[0]['honmei_name']}\n"
@@ -407,7 +419,7 @@ def ask_gemini_win5_strategy(all_races):
 第5戦 [{race_picks[4]['race']}]: ○番, ○番
 狙い: (30文字前後で選定方針を簡潔に)
 """
-    for model_name in ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-3.8-flash']:
+    for model_name in ['gemini-2.5-flash', 'gemini-2.0-flash']:
         try:
             res = client.models.generate_content(model=model_name, contents=prompt)
             txt = res.text.strip()
@@ -453,7 +465,7 @@ def select_top_recommended_race(final_races):
     return best_candidate
 
 def learn_and_update_results():
-    today_res_url = f"[https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=](https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=){now_jst.strftime('%Y%m%d')}"
+    today_res_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={now_jst.strftime('%Y%m%d')}"
     html = fetch_data(today_res_url)
     if not html:
         return
@@ -462,7 +474,7 @@ def learn_and_update_results():
     updated_count = 0
 
     for rid in set(race_ids):
-        res_url = f"[https://race.netkeiba.com/race/result.html?race_id=](https://race.netkeiba.com/race/result.html?race_id=){rid}"
+        res_url = f"https://race.netkeiba.com/race/result.html?race_id={rid}"
         res_html = fetch_data(res_url)
         if not res_html:
             continue
