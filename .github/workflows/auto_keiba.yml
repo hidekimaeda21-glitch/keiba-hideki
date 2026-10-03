@@ -2,11 +2,13 @@ name: Daily Keiba AI Predictor
 
 on:
   schedule:
-    # 毎週金曜・土曜の日本時間 20:00 (UTC 11:00) ➔ 翌日レースの前日確定オッズで予想生成
+    # 1. 毎週金曜・土曜の日本時間 20:00 (UTC 11:00) ➔ 翌日レースの前日確定オッズ＆独自指数で予想生成
     - cron: '0 11 * * 5,6'
-    # 毎週土曜・日曜の日本時間 08:30 (UTC 前日23:30) ➔ 当日レースの最新オッズで直前更新
+    # 2. 毎週土曜・日曜の日本時間 08:30 (UTC 前日23:30) ➔ 当日最新オッズで直前アップデート
     - cron: '30 23 * * 5,6'
-  workflow_dispatch: # 手動実行ボタンも常時利用可能
+    # 3. 毎週土曜・日曜の日本時間 17:30 (UTC 08:30) ➔ 全レース結果を自動取得してhorses_dbに学習蓄積
+    - cron: '30 8 * * 6,0'
+  workflow_dispatch: # 手動実行ボタン
 
 jobs:
   build:
@@ -28,16 +30,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 google-genai
 
-      - name: レースデータ収集・Gemini推論の実行
+      - name: レースデータ収集・指数計算・Gemini推論・自動学習
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PROXY_URL: ${{ secrets.PROXY_URL }}
         run: |
           python scripts/collect_races.py
 
-      - name: 更新データの自動コミットとプッシュ
+      - name: 予想データおよび学習データベースの自動コミット
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/today.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update race predictions [skip ci]" && git push)
+          git add data/today.json data/horses_db.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update predictions & horse learning database [skip ci]" && git push)
