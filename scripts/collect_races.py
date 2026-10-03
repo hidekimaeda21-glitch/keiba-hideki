@@ -26,7 +26,6 @@ now_utc = datetime.utcnow()
 now_jst = now_utc + timedelta(hours=9)
 now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
-# 17時以降は「翌日の開催レース」、それ以前は「当日のレース」
 if now_jst.hour >= 17:
     target_dt = now_jst + timedelta(days=1)
 else:
@@ -264,8 +263,10 @@ def parse_race_details(race_info):
 
     return {
         "raceId": race_id,
+        "rNum": race_info["r_num"],
         "venue": venue,
         "raceName": full_race_title,
+        "rawRaceName": r_name,
         "startTime": start_time,
         "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
         "isWin5": ("WIN5" in html) or (race_info["r_num"] in [10, 11]),
@@ -324,7 +325,7 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
 【指示】
 1. 印（◎・○・▲・☆・△）の馬番のみを使ってください。
 2. レース性質に合わせて最適な券種（単勝、馬単、3連単、3連複フォーメーション、ワイドなど）を柔軟に選定してください。
-3. 毎回同じパターン（馬連2点＋ワイド2点など）に固定せず、展開と波乱度に応じた買い目にしてください。
+3. 毎回同じパターンに固定せず、展開と波乱度に応じた買い目にしてください。
 4. 【合計買い目点数は必ず10点以内】を厳守してください。
 
 以下のJSONのみを出力してください（Markdown不可）:
@@ -352,8 +353,7 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     return fallback_data
 
 def ask_gemini_win5_strategy(all_races):
-    """WIN5対象5レースの買い目（最大10点・1,000円以内）を確実に生成"""
-    # 後半のメインどころ5レースを抽出
+    """WIN5対象5レースの会場・R数・レース名・本命実馬番を正確に出力"""
     win5_candidates = sorted(all_races, key=lambda x: (x["startTime"], x["raceId"]))[-5:]
     if len(win5_candidates) < 5:
         win5_candidates = all_races[:5]
@@ -361,47 +361,57 @@ def ask_gemini_win5_strategy(all_races):
     if len(win5_candidates) < 5:
         return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 
-    # 各レースの指数1位と2位
-    p1 = [str(r["horses"][0]["num"]) for r in win5_candidates]
-    p2 = [str(r["horses"][1]["num"]) if len(r["horses"]) > 1 else str(r["horses"][0]["num"]) for r in win5_candidates]
+    # 各レースの【本命馬（◎）の実際の馬番】と【対抗馬（○）の実際の馬番】
+    race_picks = []
+    for r in win5_candidates:
+        h_honmei = next((h for h in r["horses"] if "◎" in h.get("mark", "")), r["horses"][0])
+        h_taikou = next((h for h in r["horses"] if "○" in h.get("mark", "")), None)
+        race_picks.append({
+            "race": f"{r['venue']}{r['rNum']}R {r['rawRaceName']}",
+            "honmei_num": h_honmei["num"],
+            "honmei_name": h_honmei["name"],
+            "taikou_num": h_taikou["num"] if h_taikou else None,
+            "taikou_name": h_taikou["name"] if h_taikou else ""
+        })
 
-    # デフォルトの10点以内フォーメーション（1頭×1頭×1頭×2頭×2頭 ＝ 4点〜8点）
-    strat_text = f"【AI厳選WIN5戦略】計4点（予算400円 / 最大10点厳選）\n" \
-                 f"第1戦 ({win5_candidates[0]['venue']}): {p1[0]}番\n" \
-                 f"第2戦 ({win5_candidates[1]['venue']}): {p1[1]}番\n" \
-                 f"第3戦 ({win5_candidates[2]['venue']}): {p1[2]}番\n" \
-                 f"第4戦 ({win5_candidates[3]['venue']}): {p1[3]}番, {p2[3]}番\n" \
-                 f"第5戦 ({win5_candidates[4]['venue']}): {p1[4]}番, {p2[4]}番\n" \
-                 f"狙い: 前半3戦は独自指数トップ馬で1点突破し、後半混戦の2重賞を2頭押さえて4点で仕留める。"
+    # レース名とR数を明記したフォーメーション（前半3戦1点 ✕ 後半2戦2頭 ＝ 4点）
+    strat_text = (
+        f"【AI厳選WIN5戦略】計4点（予算400円 / 最大10点厳選）\n"
+        f"第1戦 [{race_picks[0]['race']}]: {race_picks[0]['honmei_num']}番 {race_picks[0]['honmei_name']}\n"
+        f"第2戦 [{race_picks[1]['race']}]: {race_picks[1]['honmei_num']}番 {race_picks[1]['honmei_name']}\n"
+        f"第3戦 [{race_picks[2]['race']}]: {race_picks[2]['honmei_num']}番 {race_picks[2]['honmei_name']}\n"
+        f"第4戦 [{race_picks[3]['race']}]: {race_picks[3]['honmei_num']}番" + (f", {race_picks[3]['taikou_num']}番" if race_picks[3]['taikou_num'] else "") + "\n"
+        f"第5戦 [{race_picks[4]['race']}]: {race_picks[4]['honmei_num']}番" + (f", {race_picks[4]['taikou_num']}番" if race_picks[4]['taikou_num'] else "") + "\n"
+        f"狙い: 前半3戦は指数トップ馬で1点突破。混戦の後半2レースは本命・対抗の2頭を押さえて計4点で高配当を射止める。"
+    )
 
     if not client:
         return strat_text
 
     summary_text = ""
-    for idx, r in enumerate(win5_candidates, 1):
-        top_h = ", ".join([f"{h['num']}番({h['name']}/指数:{h.get('speedScore', 90)})" for h in r['horses'][:2]])
-        summary_text += f"第{idx}戦 [{r['venue']} {r['raceName']}]: {top_h}\n"
+    for idx, rp in enumerate(race_picks, 1):
+        summary_text += f"第{idx}戦 [{rp['race']}]: ◎本命 {rp['honmei_num']}番({rp['honmei_name']})" + (f", ○対抗 {rp['taikou_num']}番" if rp['taikou_num'] else "") + "\n"
 
     prompt = f"""
-以下のWIN5対象5レースから、全体の合計買い目点数が【最大10点まで（予算1,000円以内）】となるように各レースの推奨馬番を選定してください。
+以下のWIN5対象5レースから、全体の合計買い目点数が【最大10点まで（予算1,000円以内）】となるように推奨馬番を選定してください。
 
-対象レース:
+対象レースと推奨候補:
 {summary_text}
 
-出力フォーマット（この形式のみを出力）:
-【AI厳選WIN5戦略】○点（予算○○○円 / 最大10点まで）
-第1戦: [馬番]
-第2戦: [馬番]
-第3戦: [馬番]
-第4戦: [馬番]
-第5戦: [馬番]
+出力フォーマット（必ずレース名・R番号を入れてください）:
+【AI厳選WIN5戦略】○点（予算○○○円 / 最大10点厳選）
+第1戦 [{race_picks[0]['race']}]: ○番
+第2戦 [{race_picks[1]['race']}]: ○番
+第3戦 [{race_picks[2]['race']}]: ○番
+第4戦 [{race_picks[3]['race']}]: ○番, ○番
+第5戦 [{race_picks[4]['race']}]: ○番, ○番
 狙い: (30文字前後で選定方針を簡潔に)
 """
     for model_name in ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-3.8-flash']:
         try:
             res = client.models.generate_content(model=model_name, contents=prompt)
             txt = res.text.strip()
-            if "第1戦" in txt and "第5戦" in txt:
+            if "第1戦" in txt and "第5戦" in txt and "[" in txt:
                 return txt
         except Exception:
             continue
