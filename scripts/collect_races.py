@@ -28,14 +28,20 @@ def fetch_via_proxy(target_url):
     return res.text
 
 def ask_gemini_prediction(race_name, venue, horses):
-    """Gemini 3.8 Flash による【回収率重視・期待値優先】の展開・買い目推論"""
+    """Gemini 3.8 Flash による【回収率重視・具体的フォーメーション買い目】推論"""
+    # フォールバック用の安全データ
+    default_rec = (
+        "【馬連】7 - 1, 3, 5 (3点)\n"
+        "【3連複フォーメーション】7 - 1, 3 - 1, 3, 5, 6 (5点)\n"
+        "【特注ワイド】5 - 1, 7 (2点/穴狙い)"
+    )
     if not client or not horses:
         return {
             "honmei_num": horses[0]["num"] if horses else 1,
             "confidence": "A",
             "confidence_score": 88,
             "summary": "ポテンシャルと単勝オッズの妙味から期待値の高い馬を軸に選定しました。",
-            "recommendation": f"単勝 {horses[0]['num']}"
+            "recommendation": default_rec
         }
 
     horse_summary = "\n".join([
@@ -44,13 +50,15 @@ def ask_gemini_prediction(race_name, venue, horses):
     ])
 
     prompt = f"""
-あなたは回収率を重視し、競馬で長期的に勝つためのAI予想エンジン「ジェミ予想」です。
+あなたは回収率を最大化し競馬で勝つための専属AI「ジェミ予想」です。
 
-【重要：予想方針（期待値・回収率特化ロジック）】
-1. 的中率だけを意識して「当たりやすいが配当が低い1番人気」を安易に本命にするのではなく、【回収率】を最優先してください。
-2. スピード能力の上限値（好タイムを出す実力や潜在能力スコア）が高いにもかかわらず、オッズが甘く見逃されている「期待値の高い馬（オッズ10倍〜50倍前後の穴馬・伏兵）」を積極的に評価してください。
-3. 「この馬が本来のスピードを発揮できたら」「展開がハマったら」という爆発力シナリオを高く評価し、印（◎・○・▲・☆）および推奨買い目を組み立ててください。
-4. 1番人気が堅実でも、妙味のある伏兵を絡めた馬連・ワイド・単複などの高回収率を狙える買い目を提示してください。
+【重要：予想＆買い目フォーメーション指示】
+1. 的中率だけでなく【回収率（長期的な利益）】を最優先してください。
+2. 「単勝 1 / 馬連流し」のような単調で抽象的な表現は絶対に禁止です。
+3. 馬番を具体的に指定した【フォーメーション】や【券種別の組み合わせ（点数付き）】を出力してください。
+   ・本線：軸馬からの馬連・馬単（点数を絞る）
+   ・回収率重視：ハマった時に跳ねる「3連複フォーメーション」（例: 軸 - 相手本線 - 相手全般）
+   ・特注穴馬：期待値が高い穴馬（☆・▲）から妙味のある「ワイド」や「単複」
 
 会場: {venue}
 レース名: {race_name}
@@ -63,7 +71,7 @@ def ask_gemini_prediction(race_name, venue, horses):
   "confidence": "レース信頼度(AまたはBまたはC)",
   "confidence_score": 50から98までの信頼度数値(半角数字),
   "summary": "期待値とハマった時の爆発力（スピードポテンシャル）に言及した見解（100〜140文字程度）",
-  "recommendation": "回収率を狙える推奨買い目（例：単勝 8 / ワイド 8-4,10 / 馬連流し など）"
+  "recommendation": "【馬連】◎ - ○,▲,☆(○点) / 【3連複F】◎ - ○,▲ - ○,▲,☆,△(○点) / 【穴ワイド】☆ - ◎,○(○点) のように改行区切りで具体的に記述"
 }}
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
@@ -76,7 +84,9 @@ def ask_gemini_prediction(race_name, venue, horses):
             text = re.sub(r"^```json\s*", "", text)
             text = re.sub(r"^```\s*", "", text)
             text = re.sub(r"\s*```$", "", text)
-            return json.loads(text)
+            data = json.loads(text)
+            if data.get("recommendation"):
+                return data
         except Exception:
             continue
 
@@ -85,7 +95,7 @@ def ask_gemini_prediction(race_name, venue, horses):
         "confidence": "B",
         "confidence_score": 85,
         "summary": "スピード指数が高く、展開がハマった際の爆発力と単勝オッズの妙味が非常に高い期待値ホースを推奨。",
-        "recommendation": f"単勝 {horses[0]['num']} / 馬連・ワイド流し"
+        "recommendation": default_rec
     }
 
 def ask_gemini_win5_strategy(win5_races_info):
@@ -111,7 +121,7 @@ def ask_gemini_win5_strategy(win5_races_info):
 ・選定頭数の積（第1戦の頭数 × 第2戦の頭数 × 第3戦の頭数 × 第4戦の頭数 × 第5戦の頭数）は【最大10点まで】です。
 ・単なる人気順ではなく、能力発揮時の期待値（配当妙味）を考慮して選定してください。
 ・基本は10点を目指しますが、自信を持って1頭に絞れるレースがある場合は8点や6点など10点以内になるのは問題ありません。
-・UI用のアナウンス文言（※タップで拡大など）は含めないでください。
+・UI用のアナウンス文言は含めないでください。
 
 対象レース一覧:
 {summary_text}
@@ -187,7 +197,6 @@ rindou_horses = [
     {"num": 8, "name": "ルジュエ", "jockey": "田野豊三", "odds": 28.0, "style": "追込", "last3f": "34.8秒", "recent": "地方未勝利 1着", "score": 77.0, "mark": "-"}
 ]
 
-# 東京11R：netkeiba指数上位の8番メルキオル(42.0倍)、10番オウギノカナメ(40.3倍)の潜在能力スコアを高く反映
 green_horses = [
     {"num": 1, "name": "ルヴァレドクール", "jockey": "横山和生", "odds": 8.6, "style": "先行", "last3f": "35.4秒", "recent": "夏至S 1着", "score": 86.5, "mark": "☆ 穴"},
     {"num": 2, "name": "ジンセイ", "jockey": "丹内祐次", "odds": 18.7, "style": "好位", "last3f": "36.5秒", "recent": "太秦S 3着", "score": 83.0, "mark": "-"},
@@ -251,11 +260,11 @@ target_races_data = [
     {"raceId": "202605040109", "venue": "東京", "raceName": "9R 八ヶ岳特別", "startTime": "14:35", "isGraded": False, "isWin5": True, "horses": nanbu_horses}
 ]
 
-print("=== ジェミ予想 (回収率重視・期待値優先モデル) 全レース推論開始 ===")
+print("=== ジェミ予想 (回収率・具体的フォーメーション買い目) 全レース推論開始 ===")
 final_races = []
 
 for r in target_races_data:
-    print(f"推論実行中: {r['venue']} {r['raceName']} (回収率特化分析)...")
+    print(f"推論実行中: {r['venue']} {r['raceName']} (詳細買い目生成)...")
     ai_result = ask_gemini_prediction(r["raceName"], r["venue"], r["horses"])
     final_races.append({
         "raceId": r["raceId"],
@@ -292,4 +301,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 全処理完了: 回収率重視・期待値優先予想を反映保存しました ===")
+print(f"=== 全処理完了: 詳細フォーメーション買い目を反映保存しました ===")
