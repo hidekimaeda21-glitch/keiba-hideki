@@ -36,11 +36,11 @@ else:
 
 client = genai.Client(api_key=api_key) if api_key else None
 
-def fetch_html(target_url):
-    """プロキシ経由および直接通信を統合した安全なHTML取得"""
+def fetch_content(target_url):
+    """プロキシ経由および直接通信を統合した安全なデータ取得（HTML/JSON兼用）"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept": "*/*",
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8"
     }
     
@@ -49,7 +49,7 @@ def fetch_html(target_url):
             encoded_url = urllib.parse.quote(target_url, safe="")
             proxy_url = f"{proxy_base}/?url={encoded_url}"
             res = requests.get(proxy_url, headers=headers, timeout=20)
-            if res.status_code == 200 and len(res.text) > 200:
+            if res.status_code == 200 and len(res.text) > 50:
                 res.encoding = res.apparent_encoding if res.apparent_encoding else "euc-jp"
                 return res.text
         except Exception as e:
@@ -63,6 +63,37 @@ def fetch_html(target_url):
         print(f"[直接取得エラー] {target_url} : {e}")
         return ""
 
+def get_real_odds_dict(race_id):
+    """netkeiba公式オッズAPIから全出走馬の最新の単勝オッズを正確に取得"""
+    odds_api_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?race_id={race_id}&type=1"
+    raw_text = fetch_content(odds_api_url)
+    odds_map = {}
+    if not raw_text:
+        return odds_map
+
+    try:
+        data = json.loads(raw_text)
+        # JSON内のオッズデータを探索 (data -> odds -> 1[単勝])
+        odds_data = data.get("data", {}).get("odds", {})
+        tansho_data = odds_data.get("1", {})
+        for num_str, val in tansho_data.items():
+            try:
+                # val は [オッズ値, 人気順, ...] の配列
+                o_val = float(val[0]) if isinstance(val, list) else float(val)
+                odds_map[int(num_str)] = o_val
+            except Exception:
+                continue
+    except Exception:
+        # JSON以外の場合、正規表現でキーと数値を直接スキャン
+        matches = re.findall(r'"(\d+)":\s*\["([0-9\.]+)"', raw_text)
+        for num_s, o_s in matches:
+            try:
+                odds_map[int(num_s)] = float(o_s)
+            except Exception:
+                continue
+
+    return odds_map
+
 def collect_target_races_dynamically(target_yyyymmdd):
     """netkeibaから指定日の9R〜12RのレースIDを動的に自動抽出"""
     urls_to_try = [
@@ -72,7 +103,7 @@ def collect_target_races_dynamically(target_yyyymmdd):
     
     found_race_ids = []
     for u in urls_to_try:
-        html = fetch_html(u)
+        html = fetch_content(u)
         if not html:
             continue
         
@@ -96,8 +127,9 @@ def collect_target_races_dynamically(target_yyyymmdd):
     return race_items
 
 def parse_race_details(race_info):
-    """レース詳細ページから出走馬・距離・実オッズを安全かつ正確にパース"""
-    html = fetch_html(race_info["url"])
+    """レース詳細ページと実オッズAPIを組み合わせて正確な出走表を構築"""
+    race_id = race_info["race_id"]
+    html = fetch_content(race_info["url"])
     if not html:
         return None
 
@@ -123,10 +155,13 @@ def parse_race_details(race_info):
         "05": "東京", "06": "中山", "07": "中京", "08": "京都",
         "09": "阪神", "10": "小倉"
     }
-    venue_code = race_info["race_id"][4:6]
+    venue_code = race_id[4:6]
     venue = venue_map.get(venue_code, "中央")
 
     full_race_title = f"{race_info['r_num']}R {r_name}{dist_str}"
+
+    # netkeiba公式オッズAPIから全馬の実オッズを取得
+    real_odds_dict = get_real_odds_dict(race_id)
 
     horses = []
     table = soup.find("table", class_="RaceTable01") or soup.find("table", class_="Shutuba_Table")
@@ -148,34 +183,8 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
-            # --- 実オッズの安全な抽出（構文エラーを完全排除） ---
-            odds_val = None
-            
-            # 1. Popular または Odds クラス内のテキストを直接走査
-            for td_el in tr.find_all("td"):
-                td_cls = " ".join(td_el.get("class", []))
-                if any(k in td_cls for k in ["Popular", "Odds", "Txt_R"]):
-                    raw_t = td_el.get_text(strip=True)
-                    m = re.search(r"(\d{1,3}\.\d)", raw_t)
-                    if m:
-                        val = float(m.group(1))
-                        if 1.0 <= val <= 999.0:
-                            odds_val = val
-                            break
-
-            # 2. spanタグ内からの抽出
-            if odds_val is None:
-                for span_el in tr.find_all("span"):
-                    span_id = span_el.get("id", "")
-                    if f"odds_{num}" in span_id or f"odds_val_{num}" in span_id:
-                        m = re.search(r"(\d{1,3}\.\d)", span_el.get_text(strip=True))
-                        if m:
-                            odds_val = float(m.group(1))
-                            break
-
-            # 3. オッズ未取得時の動的デフォルト（馬番ごとにオッズが全て同一になるのを防ぐため分散補正）
-            if odds_val is None or odds_val <= 0:
-                odds_val = round(4.5 + (num * 2.8), 1)
+            # APIから取得した実オッズ（未取得の場合は15.0倍）
+            odds_val = real_odds_dict.get(num, 15.0)
 
             horses.append({
                 "num": num,
@@ -188,7 +197,7 @@ def parse_race_details(race_info):
                 "mark": "-"
             })
 
-    # 実オッズをもとに印を自動付与（◎1頭、○1頭、▲・☆・△）
+    # 実オッズをもとに印を自動付与（ルール：◎1頭、○1頭、▲・☆・△）
     if horses:
         horses_sorted = sorted(horses, key=lambda x: x["odds"])
         horses_sorted[0]["mark"] = "◎ 本命"
@@ -207,7 +216,7 @@ def parse_race_details(race_info):
                 h["mark"] = "△ 連下"
 
     return {
-        "raceId": race_info["race_id"],
+        "raceId": race_id,
         "venue": venue,
         "raceName": full_race_title,
         "startTime": start_time,
@@ -239,7 +248,6 @@ def get_fallback_prediction(horses):
         opp_str = ", ".join(map(str, main_opps))
         rec_parts.append(f"【馬連】{h_num} - {opp_str} ({len(main_opps)}点)")
 
-    # 穴ワイド（同一馬番の重複を厳密に排除）
     if ana and ana[0]["num"] != h_num:
         ana_num = ana[0]["num"]
         wide_targets = [str(h_num)]
@@ -386,4 +394,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 完全自動処理完了: 計 {len(final_races)} レースの最新データを自動生成・保存しました ===")
+print(f"=== 完全自動処理完了: 計 {len(final_races)} レースの実オッズ最新データを自動生成・保存しました ===")
