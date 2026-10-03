@@ -146,12 +146,12 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
-            # --- 開発者ツールで特定した実オッズ抽出ロジック ---
+            # --- 実オッズ抽出ロジック（文法エラーを完全修正） ---
             odds_val = None
-            num_2digit = f"{num:02d}"  # 2桁ゼロ埋め（例: 01, 02）
+            num_2digit = f"{num:02d}"
             
-            # 1. 画面で確認された正確なspanタグ (id="odds-1_02" 等)
-            target_span = tr.find("span", id=re.compile(rf"odds-\d+_{num_2digit}$\vert{}odds-\d+_{num}$"))
+            # 1. 画面で確認されたID構造 (id="odds-1_02" または "odds-1_2")
+            target_span = tr.find("span", id=re.compile(rf"^odds-\d+_(?:{num_2digit}|{num})$"))
             if target_span:
                 m = re.search(r"(\d{1,4}\.\d)", target_span.get_text(strip=True))
                 if m:
@@ -252,7 +252,7 @@ def get_fallback_prediction(horses):
         "honmei_num": h_num,
         "confidence": "B",
         "confidence_score": 85,
-        "summary": f"能力最上位の{h_num}番{honmei['name']}（単勝{honmei['odds']}倍）を本命に据える。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+        "summary": f"能力最上位の{h_num}番{honmei['name']}（単勝{honmei['odds']}倍）を軸に据える。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
         "recommendation": recommendation_text
     }
 
