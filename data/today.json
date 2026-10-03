@@ -1,220 +1,7 @@
 {
-  "updatedAt": "2026-10-03 04:21",
-  "win5Strategy": "WIN5は日曜開催（本日は午後厳選勝負レースTOP3に集中）",
+  "updatedAt": "2026-10-03 04:32",
+  "win5Strategy": "本日WIN5発売中！【AI厳選32点戦略（3,200円）】\n①東京9R: [4,2] ➔ ②京都10R: [6,14] ➔ ③東京10R: [5,7] ➔ ④京都11R: [3,17] ➔ ⑤東京11R: [4,11]",
   "bestRaces": [
-    {
-      "raceId": "202608040111",
-      "venue": "京都",
-      "raceName": "11R オパールステークス (L)",
-      "startTime": "15:30",
-      "isGraded": true,
-      "isWin5": true,
-      "horses": [
-        {
-          "num": 1,
-          "name": "カルチャーデイ",
-          "jockey": "酒井学",
-          "odds": 17.0,
-          "style": "差し",
-          "last3f": "34.1秒",
-          "recent": "朱鷺S 8着",
-          "score": 83.2,
-          "mark": "△ 連下"
-        },
-        {
-          "num": 2,
-          "name": "ショウナンアビアス",
-          "jockey": "北村友一",
-          "odds": 58.8,
-          "style": "追込",
-          "last3f": "34.4秒",
-          "recent": "ラジオ日本賞 5着",
-          "score": 75.0,
-          "mark": "-"
-        },
-        {
-          "num": 3,
-          "name": "タマモイカロス",
-          "jockey": "松山弘平",
-          "odds": 8.1,
-          "style": "先行",
-          "last3f": "33.8秒",
-          "recent": "葵ステークス 3着",
-          "score": 93.5,
-          "mark": "◎ 本命"
-        },
-        {
-          "num": 4,
-          "name": "メイショウヨゾラ",
-          "jockey": "吉村誠之助",
-          "odds": 9.3,
-          "style": "逃げ",
-          "last3f": "34.6秒",
-          "recent": "セントウルS 6着",
-          "score": 88.0,
-          "mark": "○ 対抗"
-        },
-        {
-          "num": 5,
-          "name": "フィオライア",
-          "jockey": "松若風馬",
-          "odds": 20.4,
-          "style": "先行",
-          "last3f": "34.2秒",
-          "recent": "CBC賞 13着",
-          "score": 84.5,
-          "mark": "▲ 単穴"
-        },
-        {
-          "num": 6,
-          "name": "リリージョワ",
-          "jockey": "浜中俊",
-          "odds": 6.9,
-          "style": "先行",
-          "last3f": "33.6秒",
-          "recent": "もみじS 1着",
-          "score": 86.8,
-          "mark": "☆ 穴"
-        },
-        {
-          "num": 7,
-          "name": "テーオーダヴィンチ",
-          "jockey": "菱田裕二",
-          "odds": 98.9,
-          "style": "追込",
-          "last3f": "34.5秒",
-          "recent": "安土城S 9着",
-          "score": 72.0,
-          "mark": "-"
-        },
-        {
-          "num": 8,
-          "name": "レッドエヴァンス",
-          "jockey": "西村淳也",
-          "odds": 14.2,
-          "style": "差し",
-          "last3f": "33.7秒",
-          "recent": "佐世保S 2着",
-          "score": 82.5,
-          "mark": "△ 連下"
-        },
-        {
-          "num": 9,
-          "name": "タマモブラックタイ",
-          "jockey": "幸英明",
-          "odds": 11.5,
-          "style": "先行",
-          "last3f": "34.3秒",
-          "recent": "米子城S 1着",
-          "score": 83.0,
-          "mark": "-"
-        },
-        {
-          "num": 10,
-          "name": "ヒシアイラ",
-          "jockey": "荻野極",
-          "odds": 15.8,
-          "style": "差し",
-          "last3f": "33.5秒",
-          "recent": "マーガレットS 2着",
-          "score": 81.5,
-          "mark": "-"
-        },
-        {
-          "num": 11,
-          "name": "オタルエバー",
-          "jockey": "角田大和",
-          "odds": 25.4,
-          "style": "先行",
-          "last3f": "34.8秒",
-          "recent": "バーデンバーデンC 4着",
-          "score": 79.0,
-          "mark": "-"
-        },
-        {
-          "num": 12,
-          "name": "デイトナモード",
-          "jockey": "斎藤新",
-          "odds": 33.0,
-          "style": "追込",
-          "last3f": "33.9秒",
-          "recent": "安土城S 6着",
-          "score": 78.5,
-          "mark": "-"
-        },
-        {
-          "num": 13,
-          "name": "クラスペディア",
-          "jockey": "小崎綾也",
-          "odds": 7.5,
-          "style": "先行",
-          "last3f": "33.6秒",
-          "recent": "小倉2歳S 2着",
-          "score": 87.0,
-          "mark": "△ 連下"
-        },
-        {
-          "num": 14,
-          "name": "ヤマニンアルリフラ",
-          "jockey": "M.デムーロ",
-          "odds": 18.2,
-          "style": "差し",
-          "last3f": "33.8秒",
-          "recent": "NST賞 3着",
-          "score": 81.0,
-          "mark": "-"
-        },
-        {
-          "num": 15,
-          "name": "タガノアラリア",
-          "jockey": "鮫島克駿",
-          "odds": 12.0,
-          "style": "先行",
-          "last3f": "34.0秒",
-          "recent": "橘S 2着",
-          "score": 82.0,
-          "mark": "-"
-        },
-        {
-          "num": 16,
-          "name": "フロムダスク",
-          "jockey": "中井裕二",
-          "odds": 10.5,
-          "style": "逃げ",
-          "last3f": "34.4秒",
-          "recent": "CBC賞 1着",
-          "score": 85.0,
-          "mark": "-"
-        },
-        {
-          "num": 17,
-          "name": "ヨシノイースター",
-          "jockey": "坂井瑠星",
-          "odds": 5.8,
-          "style": "先行",
-          "last3f": "33.5秒",
-          "recent": "北九州記念 2着",
-          "score": 89.2,
-          "mark": "○ 対抗"
-        },
-        {
-          "num": 18,
-          "name": "ディアナザール",
-          "jockey": "川田将雅",
-          "odds": 4.5,
-          "style": "差し",
-          "last3f": "33.3秒",
-          "recent": "毎日杯 4着",
-          "score": 91.0,
-          "mark": "▲ 単穴"
-        }
-      ],
-      "honmeiNum": 1,
-      "confidence": "B",
-      "confidenceScore": 85,
-      "aiSummary": "開幕週の絶好馬場。先行力と鋭い末脚を兼ね備えた軸馬の押し切りが濃厚。",
-      "aiBuy": "単勝 1 / 馬連流し"
-    },
     {
       "raceId": "202608040110",
       "venue": "京都",
@@ -508,6 +295,186 @@
       "confidenceScore": 85,
       "aiSummary": "開幕週の絶好馬場。先行力と鋭い末脚を兼ね備えた軸馬の押し切りが濃厚。",
       "aiBuy": "単勝 1 / 馬連流し"
+    },
+    {
+      "raceId": "202605040111",
+      "venue": "東京",
+      "raceName": "11R グリーンチャンネルC (L)",
+      "startTime": "15:45",
+      "isGraded": true,
+      "isWin5": true,
+      "horses": [
+        {
+          "num": 1,
+          "name": "ルヴァレドクール",
+          "jockey": "横山和生",
+          "odds": 9.3,
+          "style": "先行",
+          "last3f": "35.4秒",
+          "recent": "夏至S 1着",
+          "score": 86.5,
+          "mark": "☆ 穴"
+        },
+        {
+          "num": 2,
+          "name": "ジンセイ",
+          "jockey": "丹内祐次",
+          "odds": 14.6,
+          "style": "好位",
+          "last3f": "36.5秒",
+          "recent": "太秦S 3着",
+          "score": 83.0,
+          "mark": "-"
+        },
+        {
+          "num": 3,
+          "name": "スナッピードレッサ",
+          "jockey": "大野拓弥",
+          "odds": 11.2,
+          "style": "先行",
+          "last3f": "35.4秒",
+          "recent": "桶狭間S 1着",
+          "score": 85.0,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 4,
+          "name": "ヘニーガイスト",
+          "jockey": "横山武史",
+          "odds": 2.5,
+          "style": "好位",
+          "last3f": "35.1秒",
+          "recent": "ポプラS 1着",
+          "score": 93.0,
+          "mark": "◎ 本命"
+        },
+        {
+          "num": 5,
+          "name": "ドンエレクトス",
+          "jockey": "三浦皇成",
+          "odds": 6.5,
+          "style": "逃げ",
+          "last3f": "35.8秒",
+          "recent": "昇竜S 2着",
+          "score": 89.0,
+          "mark": "▲ 単穴"
+        },
+        {
+          "num": 6,
+          "name": "ヒルノドゴール",
+          "jockey": "戸崎圭太",
+          "odds": 54.2,
+          "style": "追込",
+          "last3f": "35.6秒",
+          "recent": "エニフS 8着",
+          "score": 76.0,
+          "mark": "-"
+        },
+        {
+          "num": 7,
+          "name": "トリリオンボーイ",
+          "jockey": "津村明秀",
+          "odds": 60.8,
+          "style": "追込",
+          "last3f": "35.8秒",
+          "recent": "麦秋S 6着",
+          "score": 75.0,
+          "mark": "-"
+        },
+        {
+          "num": 8,
+          "name": "メルキオル",
+          "jockey": "原優介",
+          "odds": 29.4,
+          "style": "先行",
+          "last3f": "36.2秒",
+          "recent": "阿波特別 3着",
+          "score": 80.0,
+          "mark": "-"
+        },
+        {
+          "num": 9,
+          "name": "ヴィヴァン",
+          "jockey": "佐々木大輔",
+          "odds": 39.6,
+          "style": "差し",
+          "last3f": "35.7秒",
+          "recent": "BSN賞 7着",
+          "score": 78.0,
+          "mark": "-"
+        },
+        {
+          "num": 10,
+          "name": "オウギノカナメ",
+          "jockey": "菊沢一樹",
+          "odds": 27.6,
+          "style": "差し",
+          "last3f": "35.5秒",
+          "recent": "アハルテケS 5着",
+          "score": 81.0,
+          "mark": "-"
+        },
+        {
+          "num": 11,
+          "name": "ジャスティンアース",
+          "jockey": "C.ルメール",
+          "odds": 6.3,
+          "style": "先行",
+          "last3f": "35.2秒",
+          "recent": "欅S 2着",
+          "score": 90.5,
+          "mark": "○ 対抗"
+        },
+        {
+          "num": 12,
+          "name": "マピュース",
+          "jockey": "田辺裕信",
+          "odds": 9.6,
+          "style": "差し",
+          "last3f": "35.3秒",
+          "recent": "NST賞 4着",
+          "score": 84.5,
+          "mark": "△ 連下"
+        },
+        {
+          "num": 13,
+          "name": "フリームファクシ",
+          "jockey": "M.ミシェル",
+          "odds": 48.1,
+          "style": "先行",
+          "last3f": "36.4秒",
+          "recent": "エルムS 11着",
+          "score": 77.0,
+          "mark": "-"
+        },
+        {
+          "num": 14,
+          "name": "オーブルクール",
+          "jockey": "石橋脩",
+          "odds": 110.8,
+          "style": "追込",
+          "last3f": "36.0秒",
+          "recent": "名鉄杯 9着",
+          "score": 72.0,
+          "mark": "-"
+        },
+        {
+          "num": 15,
+          "name": "ルージュスタニング",
+          "jockey": "岩田康誠",
+          "odds": 37.5,
+          "style": "先行",
+          "last3f": "36.1秒",
+          "recent": "ラジオ日本賞 6着",
+          "score": 79.0,
+          "mark": "-"
+        }
+      ],
+      "honmeiNum": 1,
+      "confidence": "B",
+      "confidenceScore": 85,
+      "aiSummary": "開幕週の絶好馬場。先行力と鋭い末脚を兼ね備えた軸馬の押し切りが濃厚。",
+      "aiBuy": "単勝 1 / 馬連流し"
     }
   ],
   "races": [
@@ -718,11 +685,11 @@
           "mark": "▲ 単穴"
         }
       ],
-      "honmeiNum": 1,
+      "honmeiNum": 3,
       "confidence": "B",
-      "confidenceScore": 85,
-      "aiSummary": "開幕週の絶好馬場。先行力と鋭い末脚を兼ね備えた軸馬の押し切りが濃厚。",
-      "aiBuy": "単勝 1 / 馬連流し"
+      "confidenceScore": 78,
+      "aiSummary": "4番や16番が逃げ、淀みのない平均からハイペースを想定。先行勢が揃う中、前走33.8秒の上がりをマークし好位から立ち回れる3番タマモイカロスを本命に推奨。内目の絶好枠からロスなく追走し、粘り強い末脚で抜け出す展開を期待。強力な差し・対抗勢の猛追を凌ぎきると分析します。",
+      "aiBuy": "単勝 3 / 馬連 3-4,6,17,18 / 3連複 3-4,17,18-1,4,5,6,8,13,17,18"
     },
     {
       "raceId": "202608040110",
@@ -1417,7 +1384,7 @@
       "raceName": "9R 八ヶ岳特別",
       "startTime": "14:35",
       "isGraded": false,
-      "isWin5": false,
+      "isWin5": true,
       "horses": [
         {
           "num": 1,
