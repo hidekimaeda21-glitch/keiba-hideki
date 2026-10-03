@@ -32,7 +32,7 @@
       text-align: center;
       padding: 16px 0 12px;
       border-bottom: 1px solid var(--border-color);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     h1 {
       font-size: 20px;
@@ -48,6 +48,59 @@
       color: var(--text-sub);
       margin-top: 4px;
     }
+
+    /* WIN5 バナーカード */
+    .win5-card {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.15));
+      border: 1px solid #8b5cf6;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .win5-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #c084fc;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .win5-body {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+    }
+
+    /* 会場切り替えタブ（関東・関西・すべて） */
+    .venue-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 9px 12px;
+      background: #1f202e;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-sub);
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+    }
+
+    /* バッジ */
     .badge {
       display: inline-block;
       padding: 2px 6px;
@@ -55,21 +108,15 @@
       font-size: 10px;
       font-weight: bold;
     }
-    .badge-win5 {
-      background: #8b5cf6;
-      color: #fff;
-    }
-    .badge-grade {
-      background: var(--red-color);
-      color: #fff;
-    }
+    .badge-win5 { background: #8b5cf6; color: #fff; }
+    .badge-grade { background: var(--red-color); color: #fff; }
     .badge-type {
       background: rgba(255, 215, 0, 0.15);
       color: var(--gold-color);
       border: 1px solid var(--gold-color);
     }
     
-    /* カード */
+    /* レースカード */
     .race-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -85,14 +132,8 @@
       justify-content: space-between;
       align-items: center;
     }
-    .race-title {
-      font-size: 15px;
-      font-weight: bold;
-    }
-    .race-meta {
-      font-size: 11px;
-      color: var(--text-sub);
-    }
+    .race-title { font-size: 15px; font-weight: bold; }
+    .race-meta { font-size: 11px; color: var(--text-sub); }
 
     /* AI見解エリア */
     .ai-box {
@@ -136,33 +177,13 @@
       font-size: 12px;
       border-bottom: 1px solid rgba(255,255,255,0.03);
     }
-    .horse-table th {
-      color: var(--text-sub);
-      font-size: 10px;
-    }
-    .horse-num {
-      font-weight: bold;
-      width: 24px;
-      text-align: center;
-    }
-    .horse-name {
-      font-weight: bold;
-      font-size: 13px;
-    }
-    .horse-sub {
-      font-size: 10px;
-      color: var(--text-sub);
-    }
-    .horse-odds {
-      text-align: right;
-      font-weight: bold;
-      font-size: 13px;
-    }
-    .horse-score {
-      font-size: 10px;
-      color: #60a5fa;
-      text-align: right;
-    }
+    .horse-table th { color: var(--text-sub); font-size: 10px; }
+    .horse-num { font-weight: bold; width: 24px; text-align: center; }
+    .horse-name { font-weight: bold; font-size: 13px; }
+    .horse-sub { font-size: 10px; color: var(--text-sub); }
+    .horse-odds { text-align: right; font-weight: bold; font-size: 13px; }
+    .horse-score { font-size: 10px; color: #60a5fa; text-align: right; }
+    
     .mark-honmei { color: #f87171; font-weight: bold; }
     .mark-taikou { color: #60a5fa; font-weight: bold; }
     .mark-tanana { color: #fbbf24; font-weight: bold; }
@@ -244,11 +265,25 @@
     <div class="update-time" id="updateTime">データ読み込み中...</div>
   </header>
 
+  <!-- WIN5 厳選戦略バナーカード -->
+  <div class="win5-card" id="win5Card" style="display: none;">
+    <div class="win5-title">🎯 WIN5 AI厳選戦略（最大10点まで・予算1,000円以内）</div>
+    <div class="win5-body" id="win5Body"></div>
+  </div>
+
+  <!-- 会場切り替えタブ -->
+  <div class="venue-tabs" id="venueTabs">
+    <div class="tab-btn active" onclick="filterVenue('ALL')">全会場</div>
+  </div>
+
   <main id="raceContainer">
     <!-- レースカードが動的に挿入されます -->
   </main>
 
   <script>
+    let globalRaces = [];
+    let currentFilter = 'ALL';
+
     function getMarkClass(mark) {
       if (!mark) return '';
       if (mark.includes('◎')) return 'mark-honmei';
@@ -263,6 +298,93 @@
       document.getElementById('recommendModal').style.display = 'none';
     }
 
+    function filterVenue(venue) {
+      currentFilter = venue;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.venue === venue || (venue === 'ALL' && btn.dataset.venue === undefined));
+      });
+      renderRaces();
+    }
+
+    function renderRaces() {
+      const container = document.getElementById('raceContainer');
+      container.innerHTML = '';
+
+      const filtered = currentFilter === 'ALL' 
+        ? globalRaces 
+        : globalRaces.filter(r => r.venue === currentFilter);
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="text-align:center; padding:40px; color:#888;">該当するレースはありません</div>';
+        return;
+      }
+
+      filtered.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'race-card';
+
+        const badges = [];
+        if (r.isGraded) badges.push('<span class="badge badge-grade">重賞</span>');
+        if (r.isWin5) badges.push('<span class="badge badge-win5">WIN5対象</span>');
+        if (r.raceType) badges.push(`<span class="badge badge-type">${r.raceType}</span>`);
+
+        let horseRows = '';
+        r.horses.forEach(h => {
+          const markClass = getMarkClass(h.mark);
+          horseRows += `
+            <tr>
+              <td class="horse-num">${h.num}</td>
+              <td>
+                <div class="horse-name">${h.name}</div>
+                <div class="horse-sub">${h.jockey} | ${h.style || '先行'}</div>
+              </td>
+              <td style="text-align:center;">
+                <span class="${markClass}">${h.mark || '-'}</span>
+              </td>
+              <td>
+                <div class="horse-odds">${h.odds ? h.odds.toFixed(1) + '倍' : '-'}</div>
+                <div class="horse-score">指数:${h.speedScore || '-'}</div>
+              </td>
+            </tr>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="race-header">
+            <div>
+              <div class="race-title">${r.venue} ${r.raceName}</div>
+              <div class="race-meta">${r.startTime} 発走</div>
+            </div>
+            <div>${badges.join(' ')}</div>
+          </div>
+
+          <div class="ai-box">
+            <div class="ai-box-title">
+              <span>🧠 ジェミ予想 AI見解</span>
+              <span>信頼度: ${r.confidence || 'B'} (${r.confidenceScore || 85}点)</span>
+            </div>
+            <div class="ai-summary">${r.aiSummary || '指数と展開から最適な買い目を導出しました。'}</div>
+            <div class="ai-buy">推奨買い目: ${r.aiBuy || 'データ準備中'}</div>
+          </div>
+
+          <table class="horse-table">
+            <thead>
+              <tr>
+                <th style="width:24px; text-align:center;">馬番</th>
+                <th>馬名 / 騎手</th>
+                <th style="width:70px; text-align:center;">印</th>
+                <th style="width:65px; text-align:right;">オッズ/指数</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${horseRows}
+            </tbody>
+          </table>
+        `;
+        container.appendChild(card);
+      });
+    }
+
     async function loadData() {
       try {
         const res = await fetch(`data/today.json?t=${new Date().getTime()}`);
@@ -271,7 +393,13 @@
 
         document.getElementById('updateTime').textContent = `${data.targetDate || ''} | 更新: ${data.updatedAt || '未更新'}`;
 
-        // 1. 最勝負レースのポップアップ表示
+        // 1. WIN5 戦略バナーの表示
+        if (data.win5Strategy) {
+          document.getElementById('win5Body').textContent = data.win5Strategy;
+          document.getElementById('win5Card').style.display = 'block';
+        }
+
+        // 2. 最勝負レースのポップアップ表示
         if (data.topRecommendation) {
           const top = data.topRecommendation;
           document.getElementById('modalRaceName').textContent = `${top.venue} ${top.raceName}`;
@@ -283,79 +411,22 @@
           document.getElementById('recommendModal').style.display = 'flex';
         }
 
-        // 2. レース一覧の描画
-        const container = document.getElementById('raceContainer');
-        container.innerHTML = '';
+        globalRaces = data.races || [];
 
-        if (!data.races || data.races.length === 0) {
-          container.innerHTML = '<div style="text-align:center; padding:40px; color:#888;">本日の対象レースデータはまだありません</div>';
-          return;
-        }
-
-        data.races.forEach(r => {
-          const card = document.createElement('div');
-          card.className = 'race-card';
-
-          const badges = [];
-          if (r.isGraded) badges.push('<span class="badge badge-grade">重賞</span>');
-          if (r.isWin5) badges.push('<span class="badge badge-win5">WIN5対象</span>');
-          if (r.raceType) badges.push(`<span class="badge badge-type">${r.raceType}</span>`);
-
-          let horseRows = '';
-          r.horses.forEach(h => {
-            const markClass = getMarkClass(h.mark);
-            horseRows += `
-              <tr>
-                <td class="horse-num">${h.num}</td>
-                <td>
-                  <div class="horse-name">${h.name}</div>
-                  <div class="horse-sub">${h.jockey} | ${h.style || '先行'}</div>
-                </td>
-                <td style="text-align:center;">
-                  <span class="${markClass}">${h.mark || '-'}</span>
-                </td>
-                <td>
-                  <div class="horse-odds">${h.odds ? h.odds.toFixed(1) + '倍' : '-'}</div>
-                  <div class="horse-score">指数:${h.speedScore || '-'}</div>
-                </td>
-              </tr>
-            `;
-          });
-
-          card.innerHTML = `
-            <div class="race-header">
-              <div>
-                <div class="race-title">${r.venue} ${r.raceName}</div>
-                <div class="race-meta">${r.startTime} 発走</div>
-              </div>
-              <div>${badges.join(' ')}</div>
-            </div>
-
-            <div class="ai-box">
-              <div class="ai-box-title">
-                <span>🧠 ジェミ予想 AI見解</span>
-                <span>信頼度: ${r.confidence || 'B'} (${r.confidenceScore || 85}点)</span>
-              </div>
-              <div class="ai-summary">${r.aiSummary || '指数と展開から最適な買い目を導出しました。'}</div>
-              <div class="ai-buy">推奨買い目: ${r.aiBuy || 'データ準備中'}</div>
-            </div>
-
-            <table class="horse-table">
-              <thead>
-                <tr>
-                  <th style="width:24px; text-align:center;">馬番</th>
-                  <th>馬名 / 騎手</th>
-                  <th style="width:70px; text-align:center;">印</th>
-                  <th style="width:65px; text-align:right;">オッズ/指数</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${horseRows}
-              </tbody>
-            </table>
-          `;
-          container.appendChild(card);
+        // 3. 会場切り替えタブの動的生成（東京・京都など）
+        const venues = [...new Set(globalRaces.map(r => r.venue))];
+        const tabsContainer = document.getElementById('venueTabs');
+        tabsContainer.innerHTML = '<div class="tab-btn active" onclick="filterVenue(\'ALL\')">全会場</div>';
+        venues.forEach(v => {
+          const btn = document.createElement('div');
+          btn.className = 'tab-btn';
+          btn.dataset.venue = v;
+          btn.textContent = v;
+          btn.onclick = () => filterVenue(v);
+          tabsContainer.appendChild(btn);
         });
+
+        renderRaces();
 
       } catch (e) {
         console.error(e);
