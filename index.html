@@ -33,6 +33,7 @@
       padding: 16px 0 12px;
       border-bottom: 1px solid var(--border-color);
       margin-bottom: 12px;
+      position: relative;
     }
     h1 {
       font-size: 20px;
@@ -47,6 +48,19 @@
       font-size: 11px;
       color: var(--text-sub);
       margin-top: 4px;
+    }
+    .reload-btn {
+      position: absolute;
+      right: 4px;
+      top: 18px;
+      background: #27273a;
+      color: #3b82f6;
+      border: 1px solid #3b82f6;
+      border-radius: 6px;
+      font-size: 11px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     /* WIN5 アコーディオンカード */
@@ -73,9 +87,11 @@
       gap: 6px;
     }
     .win5-toggle-icon {
-      font-size: 12px;
+      font-size: 11px;
       color: #c084fc;
-      transition: transform 0.2s;
+      background: rgba(139, 92, 246, 0.2);
+      padding: 3px 8px;
+      border-radius: 4px;
     }
     .win5-body {
       padding: 0 14px 14px;
@@ -277,6 +293,7 @@
   <header>
     <h1>🧠 ジェミ予想 AI Predictor</h1>
     <div class="update-time" id="updateTime">データ読み込み中...</div>
+    <button class="reload-btn" onclick="loadData()">更新 ⟳</button>
   </header>
 
   <!-- WIN5 アコーディオンカード -->
@@ -416,7 +433,10 @@
 
     async function loadData() {
       try {
-        const res = await fetch(`data/today.json?t=${new Date().getTime()}`);
+        // キャッシュを強制回避するランダムタイムスタンプ
+        const res = await fetch(`data/today.json?nocache=${new Date().getTime()}`, {
+          cache: 'no-store'
+        });
         if (!res.ok) throw new Error('データが見つかりません');
         const data = await res.json();
 
