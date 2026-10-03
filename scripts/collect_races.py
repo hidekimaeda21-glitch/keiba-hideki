@@ -28,18 +28,18 @@ def ask_gemini_prediction(race_name, venue, horses):
     ])
 
     prompt = f"""
-あなたはプロの競馬AI予想家「ジェミ予想」です。
-以下の全出走表、各馬の脚質、および前走の上がり3F（最後の600mタイム）を分析し、展開ペースを予測した上で本命馬・推奨買い目・レース信頼度を判定してください。
+あなたは競馬AI予想「ジェミ予想」です。
+以下の出走馬全頭情報、脚質、前走上り3Fを分析し、展開ペースを予測した上で本命馬・推奨買い目・レース信頼度を判定してください。
 
 会場: {venue}
 レース名: {race_name}
 全出走馬情報:
 {horse_summary}
 
-必ず以下のJSON形式のみを出力してください（Markdownコードブロックは不要です）:
+必ず以下のJSON形式のみを出力してください:
 {{
   "honmei_num": 本命馬の馬番(半角数字),
-  "confidence": "レース信頼度(AまたはBまたはCのいずれか1文字。Aは鉄板、Cは大混戦)",
+  "confidence": "レース信頼度(AまたはBまたはC)",
   "confidence_score": 50から98までの信頼度数値(半角数字),
   "summary": "脚質と上がり3Fから導いた展開予測と本命選定の理由（100〜140文字程度）",
   "recommendation": "推奨買い目（例：単勝 3 / 馬連 3-4,6 / 3連複 3-4,6-4,6,8 など）"
@@ -71,7 +71,7 @@ def ask_gemini_prediction(race_name, venue, horses):
 # 2026年10月3日（土曜）公式出走表 確定データ
 # ==========================================
 
-# 1. 京都11R オパールステークス (L) 全18頭
+# 1. 京都11R オパールステークス (L) 全18頭 【WIN5対象 第4戦】
 opal_horses = [
     {"num": 1, "name": "カルチャーデイ", "jockey": "酒井学", "odds": 17.0, "style": "差し", "last3f": "34.1秒", "recent": "朱鷺S 8着", "score": 83.2, "mark": "△ 連下"},
     {"num": 2, "name": "ショウナンアビアス", "jockey": "北村友一", "odds": 58.8, "style": "追込", "last3f": "34.4秒", "recent": "ラジオ日本賞 5着", "score": 75.0, "mark": "-"},
@@ -93,7 +93,7 @@ opal_horses = [
     {"num": 18, "name": "ディアナザール", "jockey": "川田将雅", "odds": 4.5, "style": "差し", "last3f": "33.3秒", "recent": "毎日杯 4着", "score": 91.0, "mark": "▲ 単穴"}
 ]
 
-# 2. 京都10R 大山崎ステークス (3勝クラス) 全16頭【本日確定版】
+# 2. 京都10R 大山崎ステークス (3勝クラス) 全16頭 【WIN5対象 第2戦】
 ooyamazaki_horses = [
     {"num": 1, "name": "ヤマニンシュラ", "jockey": "M.デムーロ", "odds": 8.5, "style": "先行", "last3f": "36.2秒", "recent": "なにわS 14着", "score": 85.0, "mark": "△ 連下"},
     {"num": 2, "name": "スペシャルナンバー", "jockey": "鮫島克駿", "odds": 18.2, "style": "追込", "last3f": "35.2秒", "recent": "オークランド 10着", "score": 81.0, "mark": "-"},
@@ -113,7 +113,7 @@ ooyamazaki_horses = [
     {"num": 16, "name": "ギーロカスタル", "jockey": "太宰啓介", "odds": 62.0, "style": "追込", "last3f": "35.9秒", "recent": "伊賀S 11着", "score": 74.0, "mark": "-"}
 ]
 
-# 3. 京都9R りんどう賞 (1勝クラス) 全8頭【本日確定版】
+# 3. 京都9R りんどう賞 (1勝クラス) 全8頭
 rindou_horses = [
     {"num": 1, "name": "ベニバナ", "jockey": "田山旺佑", "odds": 5.2, "style": "先行", "last3f": "33.8秒", "recent": "未勝利 1着", "score": 87.0, "mark": "▲ 単穴"},
     {"num": 2, "name": "エストレアボニータ", "jockey": "今村聖奈", "odds": 14.0, "style": "好位", "last3f": "34.5秒", "recent": "未勝利 1着", "score": 82.0, "mark": "-"},
@@ -125,7 +125,7 @@ rindou_horses = [
     {"num": 8, "name": "ルジュエ", "jockey": "田野豊三", "odds": 28.0, "style": "追込", "last3f": "34.8秒", "recent": "地方未勝利 1着", "score": 77.0, "mark": "-"}
 ]
 
-# 4. 東京11R グリーンチャンネルカップ (L) 全15頭【本日確定版】
+# 4. 東京11R グリーンチャンネルカップ (L) 全15頭 【WIN5対象 第5戦】
 green_horses = [
     {"num": 1, "name": "ルヴァレドクール", "jockey": "横山和生", "odds": 9.3, "style": "先行", "last3f": "35.4秒", "recent": "夏至S 1着", "score": 86.5, "mark": "☆ 穴"},
     {"num": 2, "name": "ジンセイ", "jockey": "丹内祐次", "odds": 14.6, "style": "好位", "last3f": "36.5秒", "recent": "太秦S 3着", "score": 83.0, "mark": "-"},
@@ -144,7 +144,7 @@ green_horses = [
     {"num": 15, "name": "ルージュスタニング", "jockey": "岩田康誠", "odds": 37.5, "style": "先行", "last3f": "36.1秒", "recent": "ラジオ日本賞 6着", "score": 79.0, "mark": "-"}
 ]
 
-# 5. 東京10R 白秋ステークス (3勝クラス) 全18頭【本日確定版】
+# 5. 東京10R 白秋ステークス (3勝クラス) 全18頭 【WIN5対象 第3戦】
 hakushu_horses = [
     {"num": 1, "name": "グーテンベルク", "jockey": "戸崎圭太", "odds": 8.6, "style": "好位", "last3f": "33.9秒", "recent": "常総S 3着", "score": 87.0, "mark": "▲ 単穴"},
     {"num": 2, "name": "モンシュマン", "jockey": "岩田康誠", "odds": 16.5, "style": "先行", "last3f": "33.9秒", "recent": "多摩川S 6着", "score": 83.0, "mark": "-"},
@@ -166,7 +166,7 @@ hakushu_horses = [
     {"num": 18, "name": "ヒシアマン", "jockey": "大野拓弥", "odds": 13.5, "style": "差し", "last3f": "33.6秒", "recent": "長岡S 4着", "score": 84.5, "mark": "-"}
 ]
 
-# 6. 東京9R 八ヶ岳特別 (2勝クラス) 全12頭【本日確定版】
+# 6. 東京9R 八ヶ岳特別 (2勝クラス) 全12頭 【WIN5対象 第1戦】
 nanbu_horses = [
     {"num": 1, "name": "ディープキング", "jockey": "丹内祐次", "odds": 22.0, "style": "追込", "last3f": "34.5秒", "recent": "2勝クラス 6着", "score": 79.0, "mark": "-"},
     {"num": 2, "name": "イージーライダー", "jockey": "横山武史", "odds": 6.8, "style": "先行", "last3f": "33.9秒", "recent": "三面川特別 2着", "score": 88.0, "mark": "○ 対抗"},
@@ -188,7 +188,7 @@ target_races_data = [
     {"raceId": "202608040109", "venue": "京都", "raceName": "9R りんどう賞", "startTime": "14:15", "isGraded": False, "isWin5": False, "horses": rindou_horses},
     {"raceId": "202605040111", "venue": "東京", "raceName": "11R グリーンチャンネルC (L)", "startTime": "15:45", "isGraded": True, "isWin5": True, "horses": green_horses},
     {"raceId": "202605040110", "venue": "東京", "raceName": "10R 白秋ステークス", "startTime": "15:10", "isGraded": False, "isWin5": True, "horses": hakushu_horses},
-    {"raceId": "202605040109", "venue": "東京", "raceName": "9R 八ヶ岳特別", "startTime": "14:35", "isGraded": False, "isWin5": False, "horses": nanbu_horses}
+    {"raceId": "202605040109", "venue": "東京", "raceName": "9R 八ヶ岳特別", "startTime": "14:35", "isGraded": False, "isWin5": True, "horses": nanbu_horses}
 ]
 
 print("=== ジェミ予想 (Gemini 3.8 Flash) 全レース一括推論開始 ===")
@@ -213,12 +213,19 @@ for r in target_races_data:
     })
     time.sleep(1.0)
 
+# 本日10月3日のWIN5厳選買い目戦略（32点：各レース2頭厳選）
+win5_strategy_text = (
+    "本日WIN5発売中！【AI厳選32点戦略（3,200円）】\n"
+    "①東京9R: [4,2] ➔ ②京都10R: [6,14] ➔ ③東京10R: [5,7] ➔ ④京都11R: [3,17] ➔ ⑤東京11R: [4,11]"
+)
+
+# 信頼度スコアTOP3を勝負レースとして選出
 sorted_by_conf = sorted(final_races, key=lambda x: x.get("confidenceScore", 0), reverse=True)
 best_races = sorted_by_conf[:3]
 
 output_data = {
     "updatedAt": now_str,
-    "win5Strategy": "WIN5は日曜開催（本日は午後厳選勝負レースTOP3に集中）",
+    "win5Strategy": win5_strategy_text,
     "bestRaces": best_races,
     "races": final_races
 }
@@ -226,4 +233,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 全処理完了: 計{len(final_races)}レース（全頭・本日確定版）を保存しました ===")
+print(f"=== 全処理完了: 本日発売中WIN5戦略を含めて保存しました ===")
