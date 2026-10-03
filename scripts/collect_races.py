@@ -251,9 +251,10 @@ def parse_race_details(race_info):
     if ana_horse:
         ana_horse["mark"] = "☆ 爆発期待穴"
 
+    # △連下を最大3頭まで選定（買い目の広がりを確保）
     sub_count = 0
     for h in horses_by_score:
-        if h["mark"] == "-" and sub_count < 2:
+        if h["mark"] == "-" and sub_count < 3:
             h["mark"] = "△ 連下"
             sub_count += 1
 
@@ -284,32 +285,42 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     h_num = honmei["num"]
     h_name = honmei["name"]
 
-    # 安全な文字列作成（エスケープエラーの完全防止）
+    # 合計8〜10点になるフォールバック設計
     rec_items = []
-    if "本命信頼" in race_type and taikou:
-        t_num = taikou['num']
-        rec_items.append(f"【馬単】{h_num} ➔ {t_num} (1点)")
-        rec_items.append(f"【馬連】{h_num} - {t_num} (1点)")
-        if tanana:
-            rec_items.append(f"【3連単】{h_num} ➔ {t_num} ➔ {tanana['num']} (1点)")
-        rec_str = " / ".join(rec_items) + f" [計{len(rec_items)}点]"
-    else:
-        opp_nums = [str(x["num"]) for x in [taikou, tanana] if x]
-        if opp_nums:
-            rec_items.append(f"【馬連】{h_num} - {', '.join(opp_nums)} ({len(opp_nums)}点)")
-        if ana:
-            wide_targets = [str(h_num)]
-            if taikou and taikou["num"] != ana["num"]:
-                wide_targets.append(str(taikou["num"]))
-            rec_items.append(f"【穴ワイド】{ana['num']} - {', '.join(wide_targets)} ({len(wide_targets)}点)")
-        if renge and opp_nums:
-            ren_nums = [str(x["num"]) for x in renge]
-            rec_items.append(f"【3連複F】{h_num} - {opp_nums[0]} - {', '.join(ren_nums)} ({len(ren_nums)}点)")
-        total_p = sum([int(re.search(r'\((\d+)点\)', s).group(1)) for s in rec_items if re.search(r'\((\d+)点\)', s)])
-        rec_str = " / ".join(rec_items) + f" [計{total_p}点]"
+    opp_nums = [str(x["num"]) for x in [taikou, tanana] if x]
+    ren_nums = [str(x["num"]) for x in renge]
 
-    ana_text = f"爆発力のある{ana['num']}番{ana['name']}を絡め" if ana else "上位指数馬へ絞り"
-    fallback_summary = f"独自指数1位の{h_num}番{h_name}（指数:{honmei['speedScore']}）を主軸に指名。{ana_text}、回収期待値を最大化する。"
+    if "本命信頼" in race_type and taikou:
+        t_num = str(taikou['num'])
+        rec_items.append(f"【馬単】{h_num} ➔ {t_num} (1点)")
+        rec_items.append(f"【馬連】{h_num} - {', '.join(opp_nums + ren_nums[:2])} ({len(opp_nums) + len(ren_nums[:2])}点)")
+        # 3連単フォーメーション（1頭 ➔ 1頭 ➔ 4頭 ＝ 4点）
+        third_nums = [x for x in (opp_nums + ren_nums) if x != t_num][:4]
+        if third_nums:
+            rec_items.append(f"【3連単F】{h_num} ➔ {t_num} ➔ {', '.join(third_nums)} ({len(third_nums)}点)")
+        if ana:
+            rec_items.append(f"【穴ワイド】{ana['num']} - {h_num} (1点)")
+    else:
+        # 波乱警戒：馬連3点 ＋ 穴ワイド2点 ＋ 3連複フォーメーション4〜5点 ＝ 計9〜10点
+        target_opps = opp_nums + ren_nums[:2]
+        if target_opps:
+            rec_items.append(f"【馬連】{h_num} - {', '.join(target_opps)} ({len(target_opps)}点)")
+        if ana:
+            wide_tar = [str(h_num)]
+            if taikou and taikou["num"] != ana["num"]:
+                wide_tar.append(str(taikou["num"]))
+            rec_items.append(f"【穴ワイド】{ana['num']} - {', '.join(wide_tar)} ({len(wide_tar)}点)")
+        if opp_nums and ren_nums:
+            # 3連複フォーメーション (1頭 ✕ 2頭 ✕ 4頭)
+            all_third = list(dict.fromkeys(opp_nums + ren_nums))[:4]
+            rec_items.append(f"【3連複F】{h_num} - {opp_nums[0]} - {', '.join(all_third)} ({len(all_third)}点)")
+
+    # 合計点数を正確に計算
+    total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点\)', s)] if m])
+    rec_str = " / ".join(rec_items) + f" [計{total_pts}点]"
+
+    ana_text = f"爆発力のある{ana['num']}番{ana['name']}を絡め" if ana else "上位指数馬へ手広く流し"
+    fallback_summary = f"独自指数1位の{h_num}番{h_name}（指数:{honmei['speedScore']}）を主軸に指名。{ana_text}、8〜10点の充実した買い目で取りこぼしを防ぎ回収期待値を最大化する。"
 
     fallback_data = {
         "honmei_num": h_num,
@@ -337,9 +348,8 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
 
 【指示】
 1. 印（◎・○・▲・☆・△）の馬番のみを使ってください。
-2. レースの性質（本命信頼か波乱警戒か）に合わせて、多彩な券種（単勝、馬単、馬連、ワイド、3連複フォーメーション、3連単など）から最も回収率が期待できる組み合わせを柔軟に提案してください。
-3. すべてのレースで同じ買い目パターン（馬単1点＋馬連1点＋3連単1点など）に絶対固定しないでください。
-4. 【合計買い目点数は必ず10点以内】を厳守してください。
+2. 買い目点数は【合計8点〜10点】を必ず目標に組んでください。3点や6点など少なすぎる買い目にせず、10点の枠をフル活用して馬連・ワイド・3連複フォーメーションなどを組み合わせて手広く高配当・的中を狙ってください。
+3. 【合計買い目点数は必ず10点以内】を厳守してください。
 
 出力フォーマット（必ず以下の有効なJSONのみを出力、コードブロック不要）:
 {{
@@ -347,7 +357,7 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
   "confidence": "AまたはBまたはC",
   "confidence_score": 85〜95の数値,
   "summary": "本命選定理由と相手・穴馬の狙い（100〜130文字程度）",
-  "recommendation": "推奨買い目（券種ごとの買い目と点数、最後に[計○点]と明記）"
+  "recommendation": "推奨買い目（券種ごとの買い目と点数、最後に[計○点]と明記、8点〜10点必須）"
 }}
 """
     for model_name in ['gemini-2.5-flash', 'gemini-2.0-flash']:
@@ -369,7 +379,7 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     return fallback_data
 
 def ask_gemini_win5_strategy(all_races):
-    """WIN5対象5レースの会場・R数・レース名・本命実馬番を正確に出力"""
+    """WIN5対象5レースの会場・R数・レース名・本命実馬番を正確に出力（合計8〜10点戦略）"""
     win5_candidates = sorted(all_races, key=lambda x: (x["startTime"], x["raceId"]))[-5:]
     if len(win5_candidates) < 5:
         win5_candidates = all_races[:5]
@@ -381,22 +391,29 @@ def ask_gemini_win5_strategy(all_races):
     for r in win5_candidates:
         h_honmei = next((h for h in r["horses"] if "◎" in h.get("mark", "")), r["horses"][0])
         h_taikou = next((h for h in r["horses"] if "○" in h.get("mark", "")), None)
+        h_tanana = next((h for h in r["horses"] if "▲" in h.get("mark", "")), None)
         race_picks.append({
             "race": f"{r['venue']}{r['rNum']}R {r['rawRaceName']}",
             "honmei_num": h_honmei["num"],
             "honmei_name": h_honmei["name"],
             "taikou_num": h_taikou["num"] if h_taikou else None,
-            "taikou_name": h_taikou["name"] if h_taikou else ""
+            "taikou_name": h_taikou["name"] if h_taikou else "",
+            "tanana_num": h_tanana["num"] if h_tanana else None
         })
 
+    # 合計8点（1頭 ✕ 1頭 ✕ 2頭 ✕ 2頭 ✕ 2頭 ＝ 8点 / 予算800円）の厚め配分
+    p3_sub = f", {race_picks[2]['taikou_num']}番" if race_picks[2]['taikou_num'] else ""
+    p4_sub = f", {race_picks[3]['taikou_num']}番" if race_picks[3]['taikou_num'] else ""
+    p5_sub = f", {race_picks[4]['taikou_num']}番" if race_picks[4]['taikou_num'] else ""
+
     strat_text = (
-        f"【AI厳選WIN5戦略】計4点（予算400円 / 最大10点厳選）\n"
+        f"【AI厳選WIN5戦略】計8点（予算800円 / 最大10点厳選）\n"
         f"第1戦 [{race_picks[0]['race']}]: {race_picks[0]['honmei_num']}番 {race_picks[0]['honmei_name']}\n"
         f"第2戦 [{race_picks[1]['race']}]: {race_picks[1]['honmei_num']}番 {race_picks[1]['honmei_name']}\n"
-        f"第3戦 [{race_picks[2]['race']}]: {race_picks[2]['honmei_num']}番 {race_picks[2]['honmei_name']}\n"
-        f"第4戦 [{race_picks[3]['race']}]: {race_picks[3]['honmei_num']}番" + (f", {race_picks[3]['taikou_num']}番" if race_picks[3]['taikou_num'] else "") + "\n"
-        f"第5戦 [{race_picks[4]['race']}]: {race_picks[4]['honmei_num']}番" + (f", {race_picks[4]['taikou_num']}番" if race_picks[4]['taikou_num'] else "") + "\n"
-        f"狙い: 前半3戦は指数トップ馬で1点突破。混戦の後半2レースは本命・対抗の2頭を押さえて計4点で高配当を射止める。"
+        f"第3戦 [{race_picks[2]['race']}]: {race_picks[2]['honmei_num']}番{p3_sub}\n"
+        f"第4戦 [{race_picks[3]['race']}]: {race_picks[3]['honmei_num']}番{p4_sub}\n"
+        f"第5戦 [{race_picks[4]['race']}]: {race_picks[4]['honmei_num']}番{p5_sub}\n"
+        f"狙い: 前半2戦を指数トップ1頭で突破し、波乱含みの後半3戦を2頭ずつ手厚く押さえて計8点で的中を狙う。"
     )
 
     if not client:
@@ -407,7 +424,7 @@ def ask_gemini_win5_strategy(all_races):
         summary_text += f"第{idx}戦 [{rp['race']}]: ◎本命 {rp['honmei_num']}番({rp['honmei_name']})" + (f", ○対抗 {rp['taikou_num']}番" if rp['taikou_num'] else "") + "\n"
 
     prompt = f"""
-以下のWIN5対象5レースから、全体の合計買い目点数が【最大10点まで（予算1,000円以内）】となるように推奨馬番を選定してください。
+以下のWIN5対象5レースから、全体の合計買い目点数が【8点〜10点（予算800円〜1,000円以内）】となるように推奨馬番を選定してください。点数を4点など少なくしすぎず、混戦レースに2頭〜3頭を割り振って8〜10点にしてください。
 
 対象レースと推奨候補:
 {summary_text}
@@ -416,7 +433,7 @@ def ask_gemini_win5_strategy(all_races):
 【AI厳選WIN5戦略】○点（予算○○○円 / 最大10点厳選）
 第1戦 [{race_picks[0]['race']}]: ○番
 第2戦 [{race_picks[1]['race']}]: ○番
-第3戦 [{race_picks[2]['race']}]: ○番
+第3戦 [{race_picks[2]['race']}]: ○番, ○番
 第4戦 [{race_picks[3]['race']}]: ○番, ○番
 第5戦 [{race_picks[4]['race']}]: ○番, ○番
 狙い: (30文字前後で選定方針を簡潔に)
