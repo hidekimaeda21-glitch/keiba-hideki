@@ -116,32 +116,27 @@ def get_real_odds_dict(race_id):
 
 def calculate_speed_score(horse_name, odds, track_type, dist_m):
     """
-    netkeiba方式の思想を取り入れた独自スピード指数計算
+    独自スピード指数計算
     蓄積DBの過去走実績 ＋ 距離・馬場適性 ＋ 近走上昇度を総合評価
     """
     history = horses_db.get(horse_name, {})
     past_scores = history.get("scores", [])
     
     if past_scores:
-        # 過去データが存在する場合：自己最高指数と直近指数を加重平均
         max_s = max(past_scores)
         recent_s = past_scores[-1]
         base_score = round(max_s * 0.6 + recent_s * 0.4, 1)
         
-        # 得意条件ボーナス（過去に好走実績がある条件）
         fav_tracks = history.get("fav_tracks", [])
         if track_type in fav_tracks:
             base_score += 1.8
     else:
-        # 初回・未蓄積馬：馬名ハッシュとオッズから理論値を算出（80.0〜95.0のレンジ）
         name_hash = sum(ord(c) for c in horse_name) % 15
         base_score = round(92.0 - (odds * 0.25) + (name_hash * 0.4), 1)
         base_score = max(72.0, min(97.0, base_score))
 
-    # 爆発力（好走パターンがハマった時の破壊力）の判定
     is_explosive = False
     if odds >= 8.0:
-        # オッズが単勝8倍以上の人気薄で、指数ポテンシャルが高い馬
         if base_score >= 87.0 or (past_scores and max(past_scores) >= 90.0):
             is_explosive = True
 
@@ -244,22 +239,15 @@ def parse_race_details(race_info):
     if not horses:
         return None
 
-    # --- 独自スピード指数 ＆ 期待値重視の印付け ---
-    # 単なるオッズ順ではなく「スピード指数」を最重視してソート
+    # スピード指数最重視でソートして印付け
     horses_by_score = sorted(horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
     
-    # 指数1位を堂々「◎ 本命」に選定
     horses_by_score[0]["mark"] = "◎ 本命"
-    
-    # 指数2位を「○ 対抗」
     if len(horses_by_score) > 1:
         horses_by_score[1]["mark"] = "○ 対抗"
-    
-    # 指数3位を「▲ 単穴」
     if len(horses_by_score) > 2:
         horses_by_score[2]["mark"] = "▲ 単穴"
 
-    # 「☆ 爆発期待穴」の選定：オッズ10倍以上で爆発力フラグ、または指数上位の伏兵
     ana_horse = None
     for h in horses:
         if h["odds"] >= 9.0 and h.get("isExplosive") and h["mark"] == "-":
@@ -273,14 +261,12 @@ def parse_race_details(race_info):
     if ana_horse:
         ana_horse["mark"] = "☆ 爆発期待穴"
 
-    # 残りの上位馬に「△ 連下」（最大2頭）
     sub_count = 0
     for h in horses_by_score:
         if h["mark"] == "-" and sub_count < 2:
             h["mark"] = "△ 連下"
             sub_count += 1
 
-    # レース波乱度の判定（堅いレース vs 波乱レース）
     score_diff = horses_by_score[0]["speedScore"] - horses_by_score[1]["speedScore"]
     is_rough = (score_diff < 1.2) or (horses_by_score[0]["odds"] >= 5.0)
     race_type = "波乱警戒レース（妙味穴狙い）" if is_rough else "本命信頼レース（点数厳選）"
@@ -303,21 +289,25 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     tanana = next((h for h in horses if "▲" in h.get("mark", "")), None)
     ana = next((h for h in horses if "☆" in h.get("mark", "")), None)
 
-    # フォールバック安全買い目
+    # 安全な買い目文字列作成（構文エラーを防止）
     h_num = honmei["num"]
     rec_list = []
     opps = [x["num"] for x in [taikou, tanana] if x and x["num"] != h_num]
     if opps:
         rec_list.append(f"【馬連】{h_num} - {', '.join(map(str, opps))} ({len(opps)}点)")
     if ana and ana["num"] != h_num:
-        rec_list.append(f"【穴ワイド】{ana['num']} - {h_num}{f', {taikou[\"num\"]}' if taikou else ''} (2点)")
+        wide_targets = [str(h_num)]
+        if taikou and taikou["num"] != ana["num"]:
+            wide_targets.append(str(taikou["num"]))
+        rec_list.append(f"【穴ワイド】{ana['num']} - {', '.join(wide_targets)} ({len(wide_targets)}点)")
     fallback_buy = " / ".join(rec_list) if rec_list else f"【単勝】{h_num}"
 
+    ana_desc = f"爆発力ある{ana['num']}番{ana['name']}を相手に絡め高回収率を狙う。" if ana else "上位指数馬へ絞り込んで効率良く回収を狙う。"
     fallback_data = {
         "honmei_num": h_num,
         "confidence": "A" if "本命信頼" in race_type else "B",
         "confidence_score": 92 if "本命信頼" in race_type else 86,
-        "summary": f"独自スピード指数1位の{h_num}番{honmei['name']}（指数:{honmei['speedScore']}）を信頼。{f'爆発力ある{ana[\"num\"]}番{ana[\"name\"]}を相手に絡め高回収率を狙う。' if ana else '上位指数馬へ絞り込んで効率良く回収を狙う。'}",
+        "summary": f"独自スピード指数1位の{h_num}番{honmei['name']}（指数:{honmei['speedScore']}）を信頼。{ana_desc}",
         "recommendation": fallback_buy
     }
 
@@ -380,8 +370,6 @@ def select_top_recommended_race(final_races):
         conf_score = r.get("confidenceScore", 80)
         odds = honmei.get("odds", 5.0)
 
-        # 的中信頼度（conf_score） ＋ オッズ妙味（回収率期待値）
-        # 1.1倍などは過剰人気で回収期待値低、2.5倍〜9.0倍が最も期待値が高い
         odds_bonus = 12.0 if 2.5 <= odds <= 8.5 else (6.0 if 1.8 <= odds < 2.5 else 4.0)
         value_score = conf_score + odds_bonus
 
@@ -405,7 +393,7 @@ def select_top_recommended_race(final_races):
     return best_candidate
 
 def learn_and_update_results():
-    """レース結果を自動取得して horses_db.json を更新・成長させる（自己進化サイクル）"""
+    """レース結果を自動取得して horses_db.json を更新・成長させる"""
     today_res_url = f"[https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=](https://race.netkeiba.com/top/race_list_sub.html?kaisai_date=){now_jst.strftime('%Y%m%d')}"
     html = fetch_data(today_res_url)
     if not html:
@@ -475,7 +463,6 @@ for r_info in detected_races:
         final_races.append(detail)
         time.sleep(1.2)
 
-# 最も回収率が高く的中自信があるレースを1つ選定
 top_recommended_race = select_top_recommended_race(final_races)
 
 output_data = {
@@ -489,7 +476,6 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-# 当日夕方（17時以降）の実行時はレース結果を取得して学習データベースを自動更新
 if now_jst.hour >= 17:
     print("=== 2. レース結果の自動学習とデータベース更新開始 ===")
     learn_and_update_results()
