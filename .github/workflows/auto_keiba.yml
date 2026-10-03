@@ -2,16 +2,18 @@ name: Daily Keiba AI Predictor
 
 on:
   schedule:
-    # 毎日 日本時間 17:15（UTC 08:15）に自動実行
-    - cron: '15 8 * * *'
-  workflow_dispatch:
-
-permissions:
-  contents: write
+    # 毎週金曜・土曜の日本時間 20:00 (UTC 11:00) ➔ 翌日レースの前日確定オッズで予想生成
+    - cron: '0 11 * * 5,6'
+    # 毎週土曜・日曜の日本時間 08:30 (UTC 前日23:30) ➔ 当日レースの最新オッズで直前更新
+    - cron: '30 23 * * 5,6'
+  workflow_dispatch: # 手動実行ボタンも常時利用可能
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: リポジトリのチェックアウト
         uses: actions/checkout@v4
@@ -23,7 +25,8 @@ jobs:
 
       - name: 必要なライブラリのインストール
         run: |
-          pip install google-genai requests beautifulsoup4
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 google-genai
 
       - name: レースデータ収集・Gemini推論の実行
         env:
@@ -37,4 +40,4 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add data/today.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto Update: 本日・翌日レース予想データ更新" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update race predictions [skip ci]" && git push)
