@@ -15,7 +15,7 @@ now_utc = datetime.utcnow()
 now_jst = now_utc + timedelta(hours=9)
 now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
-# 15時以降は翌日、それ以前は当日を自動対象
+# 15時以降は「翌日の開催レース」、それ以前は「当日のレース」
 if now_jst.hour >= 15:
     target_dt = now_jst + timedelta(days=1)
 else:
@@ -37,7 +37,7 @@ else:
 client = genai.Client(api_key=api_key) if api_key else None
 
 def fetch_html(target_url):
-    """プロキシ経由および直接通信による安全なHTML取得"""
+    """プロキシ経由および直接通信を統合した安全なHTML取得"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -96,7 +96,7 @@ def collect_target_races_dynamically(target_yyyymmdd):
     return race_items
 
 def parse_race_details(race_info):
-    """10月3日の成功方式で出走馬・騎手・オッズを取得"""
+    """出馬表HTMLから出走馬・騎手・オッズを正確にパース"""
     race_id = race_info["race_id"]
     html = fetch_html(race_info["url"])
     if not html:
@@ -146,31 +146,36 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
-            # --- 3日成功時のオッズ抽出ロジック ---
+            # --- 開発者ツールで特定した実オッズ抽出ロジック ---
             odds_val = None
+            num_2digit = f"{num:02d}"  # 2桁ゼロ埋め（例: 01, 02）
             
-            # spanタグのID（odds-1, odds_1）またはテキスト
-            for sp in tr.find_all("span"):
-                sp_id = sp.get("id", "")
-                if "odds" in sp_id or "Popular" in " ".join(sp.get("class", [])):
-                    m = re.search(r"(\d{1,3}\.\d)", sp.get_text(strip=True))
+            # 1. 画面で確認された正確なspanタグ (id="odds-1_02" 等)
+            target_span = tr.find("span", id=re.compile(rf"odds-\d+_{num_2digit}$\vert{}odds-\d+_{num}$"))
+            if target_span:
+                m = re.search(r"(\d{1,4}\.\d)", target_span.get_text(strip=True))
+                if m:
+                    odds_val = float(m.group(1))
+
+            # 2. class="Odds_Ninki" または class="Popular" 内の探索
+            if odds_val is None:
+                ninki_span = tr.find("span", class_=re.compile(r"Odds_Ninki"))
+                if ninki_span:
+                    m = re.search(r"(\d{1,4}\.\d)", ninki_span.get_text(strip=True))
+                    if m:
+                        odds_val = float(m.group(1))
+
+            # 3. td class="Popular" または class="Odds" 内の探索
+            if odds_val is None:
+                for td_c in tr.find_all("td", class_=re.compile(r"Popular|Odds")):
+                    m = re.search(r"(\d{1,4}\.\d)", td_c.get_text(strip=True))
                     if m:
                         odds_val = float(m.group(1))
                         break
-            
-            # tdタグのPopular/Odds
-            if odds_val is None:
-                for td in tr.find_all("td"):
-                    td_cls = " ".join(td.get("class", []))
-                    if any(c in td_cls for c in ["Popular", "Odds"]):
-                        m = re.search(r"(\d{1,3}\.\d)", td.get_text(strip=True))
-                        if m:
-                            odds_val = float(m.group(1))
-                            break
 
-            # 万が一前日発売前等でオッズが完全ブランクだった場合の自然な初期値
+            # 4. 万が一未確定時のフォールバック
             if odds_val is None or odds_val <= 0:
-                odds_val = 10.0
+                odds_val = 15.0
 
             horses.append({
                 "num": num,
@@ -183,7 +188,7 @@ def parse_race_details(race_info):
                 "mark": "-"
             })
 
-    # オッズ順にソートして印を自動付与
+    # 実オッズ順にソートして印を自動付与（◎1頭、○1頭、▲・☆・△）
     if horses:
         horses_sorted = sorted(horses, key=lambda x: x["odds"])
         horses_sorted[0]["mark"] = "◎ 本命"
@@ -192,6 +197,7 @@ def parse_race_details(race_info):
         if len(horses_sorted) > 2:
             horses_sorted[2]["mark"] = "▲ 単穴"
         
+        # 10倍〜55倍の実力馬を「☆ 爆発期待穴」に設定
         ana_candidates = [h for h in horses if 10.0 <= h["odds"] <= 55.0]
         if ana_candidates:
             ana_candidates[0]["mark"] = "☆ 爆発期待穴"
@@ -211,7 +217,7 @@ def parse_race_details(race_info):
     }
 
 def get_fallback_prediction(horses):
-    """印に連動した安全バックアップ買い目（10点以内）"""
+    """印に完全連動した論理的バックアップ買い目（10点以内厳守）"""
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = [h for h in horses if "▲" in h.get("mark", "")]
@@ -246,7 +252,7 @@ def get_fallback_prediction(horses):
         "honmei_num": h_num,
         "confidence": "B",
         "confidence_score": 85,
-        "summary": f"能力最上位の{h_num}番{honmei['name']}を軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+        "summary": f"能力最上位の{h_num}番{honmei['name']}（単勝{honmei['odds']}倍）を本命に据える。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
         "recommendation": recommendation_text
     }
 
@@ -270,6 +276,7 @@ def ask_gemini_prediction(race_name, venue, horses):
    ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成してください。
 2. 【最重要：買い目点数は合計10点以内】
    ・無理に全券種を出さず、最も期待値の高い買い方に絞ってください。
+   ・（例: 馬連 2〜3点 / 3連複フォーメーション 4〜6点 / 穴ワイド 1〜2点 など）
    ・提示する買い目の合計点数は必ず【10点以内（10点以下）】を絶対厳守してください。
 
 会場: {venue}
@@ -277,7 +284,7 @@ def ask_gemini_prediction(race_name, venue, horses):
 出走馬一覧:
 {horse_summary}
 
-必ず以下のJSON形式のみを出力してください:
+必ず以下のJSON形式のみを出力してください（Markdownコードブロックは不要です）:
 {{
   "honmei_num": 本命馬の馬番(半角数字),
   "confidence": "AまたはBまたはC",
