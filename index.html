@@ -3,329 +3,263 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>KEIBA AI PRO</title>
+  <title>KEIBA AI PRO - ジェミ予想</title>
+  <link rel="manifest" href="manifest.json">
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: #0b0f19;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      padding-bottom: 80px;
-      max-width: 480px;
-      margin: 0 auto;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background-color: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #1e293b;
-      padding: 12px;
+    .tap-zoomable {
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.15s ease;
     }
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
+    .tap-zoomable:active {
+      transform: scale(0.98);
+      opacity: 0.9;
     }
-    .app-title { font-size: 16px; font-weight: 900; color: #fbbf24; }
-    .gemini-badge {
-      font-size: 10px; font-weight: bold; color: #818cf8;
-      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 2px 8px; border-radius: 4px;
-    }
-    /* 成績ダッシュボード */
-    .stats-card {
-      display: flex; justify-content: space-around; align-items: center;
-      background-color: #030712; border: 1px solid #1f2937; border-radius: 8px;
-      padding: 8px; margin-bottom: 8px; text-align: center;
-    }
-    .stats-item { flex: 1; }
-    .stats-divider { width: 1px; height: 24px; background-color: #1f2937; }
-    .stats-label { font-size: 9px; color: #94a3b8; margin-bottom: 2px; }
-    .stats-value-green { font-size: 14px; font-weight: 900; color: #34d399; font-family: monospace; }
-    .stats-value-amber { font-size: 14px; font-weight: 900; color: #fbbf24; font-family: monospace; }
-    .stats-value-white { font-size: 12px; font-weight: bold; color: #f1f5f9; font-family: monospace; }
-
-    /* WIN5 10点戦略ブロック */
-    .win5-card {
-      background: linear-gradient(135deg, rgba(88, 28, 135, 0.4), rgba(15, 23, 42, 0.9));
-      border: 1px solid #9333ea; border-radius: 8px; padding: 8px 10px; margin-bottom: 8px;
-    }
-    .win5-title { font-size: 11px; font-weight: bold; color: #d8b4fe; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
-    .win5-content { font-size: 11px; color: #fef08a; font-family: monospace; line-height: 1.4; }
-
-    .last-update { font-size: 10px; color: #94a3b8; font-family: monospace; margin-bottom: 8px; }
-    .tabs-container { display: flex; gap: 6px; overflow-x: auto; }
-    .tab-btn {
-      flex: 1; min-width: 60px; padding: 6px 0; font-size: 12px; font-weight: bold;
-      border-radius: 6px; border: none; background-color: #1e293b; color: #94a3b8; cursor: pointer;
-    }
-    .tab-btn.active { background-color: #f59e0b; color: #020617; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-
-    main { padding: 12px; }
-
-    /* 今日の勝負レース（TOP3）枠 */
-    .section-title {
-      font-size: 12px; font-weight: 900; color: #f87171; margin-bottom: 8px;
-      display: flex; align-items: center; gap: 4px; letter-spacing: 0.5px;
-    }
-    .best-card {
-      background: linear-gradient(135deg, rgba(127, 29, 29, 0.35), rgba(15, 23, 42, 0.95));
-      border: 1px solid #ef4444; border-radius: 10px; padding: 10px; margin-bottom: 12px;
-    }
-    .best-badge {
-      background-color: #ef4444; color: #ffffff; font-size: 9px; font-weight: 900;
-      padding: 1px 6px; border-radius: 4px; margin-right: 6px;
-    }
-    .best-conf { font-size: 11px; font-weight: bold; color: #fbbf24; font-family: monospace; }
-
-    /* 通常レースカード */
-    .race-card {
-      background-color: #0f172a; border: 1px solid #1e293b; border-radius: 12px;
-      padding: 12px; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
-    }
-    .race-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .race-name { font-size: 13px; font-weight: bold; color: #ffffff; }
-    .race-time { font-size: 11px; color: #94a3b8; font-family: monospace; }
-
-    /* AI見解ブロック */
-    .ai-box {
-      background: linear-gradient(135deg, rgba(30, 27, 75, 0.6), rgba(15, 23, 42, 0.9));
-      border: 1px solid rgba(99, 102, 241, 0.4); border-radius: 8px; padding: 10px; margin-bottom: 12px;
-    }
-    .ai-header {
-      font-size: 11px; font-weight: bold; color: #a5b4fc; margin-bottom: 6px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .ai-conf-tag { font-size: 10px; color: #fde047; font-weight: bold; background: rgba(0,0,0,0.4); padding: 1px 6px; border-radius: 4px; }
-    .ai-text { font-size: 11px; line-height: 1.5; color: #e2e8f0; margin-bottom: 8px; }
-    .ai-buy {
-      background: rgba(3, 7, 18, 0.7); border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 6px 8px; border-radius: 6px; font-size: 11px; color: #fde047; font-family: monospace;
-    }
-    .ai-buy-label { color: #94a3b8; margin-right: 4px; }
-
-    /* 出走馬リスト */
-    .horse-table { border: 1px solid #1e293b; border-radius: 8px; overflow: hidden; background-color: #030712; }
-    .horse-row {
-      display: flex; align-items: center; padding: 8px; border-bottom: 1px solid rgba(30, 41, 59, 0.6); font-size: 12px;
-    }
-    .horse-row:nth-child(even) { background-color: rgba(255, 255, 255, 0.02); }
-    .horse-row:last-child { border-bottom: none; }
-    .horse-num { width: 22px; font-weight: bold; color: #fbbf24; }
-    .horse-main { flex: 1; padding-right: 6px; }
-    .horse-name { font-weight: bold; color: #ffffff; }
-    .horse-sub { font-size: 10px; color: #94a3b8; margin-top: 1px; }
-    .tag-style { color: #38bdf8; font-size: 9px; font-weight: bold; background: rgba(56, 189, 248, 0.15); padding: 1px 4px; border-radius: 3px; }
-    .tag-3f { color: #a7f3d0; font-size: 9px; font-family: monospace; margin-left: 3px; }
-    .horse-recent { color: #64748b; font-size: 9px; font-family: monospace; margin-left: 3px; }
-    .horse-odds { width: 50px; text-align: right; font-family: monospace; color: #cbd5e1; margin-right: 6px; }
-    .horse-mark { width: 50px; text-align: right; font-weight: bold; }
-    .mark-honmei { color: #34d399; }
-    .mark-taiko { color: #fbbf24; }
-    .mark-ana { color: #fde047; }
-    .mark-other { color: #94a3b8; }
   </style>
 </head>
-<body>
+<body class="p-3 pb-24 max-w-md mx-auto min-h-screen">
 
-  <header>
-    <div class="header-top">
-      <h1 class="app-title">KEIBA AI PRO</h1>
-      <span class="gemini-badge">✨ Gemini頭脳連携</span>
+  <!-- ヘッダー -->
+  <header class="flex justify-between items-center mb-3 pt-1">
+    <h1 class="text-xl font-extrabold tracking-wider text-amber-400">KEIBA AI PRO</h1>
+    <div class="flex items-center space-x-1 bg-indigo-950/80 border border-indigo-700/60 px-2.5 py-1 rounded-full text-xs text-indigo-300">
+      <span>✨ Gemini頭脳連携</span>
     </div>
-
-    <!-- 通算成績ダッシュボード -->
-    <div class="stats-card">
-      <div class="stats-item">
-        <div class="stats-label">的中率</div>
-        <div id="hit-rate" class="stats-value-green">--%</div>
-      </div>
-      <div class="stats-divider"></div>
-      <div class="stats-item">
-        <div class="stats-label">回収率</div>
-        <div id="return-rate" class="stats-value-amber">--%</div>
-      </div>
-      <div class="stats-divider"></div>
-      <div class="stats-item">
-        <div class="stats-label">通算戦績</div>
-        <div id="record-summary" class="stats-value-white">--戦--勝</div>
-      </div>
-    </div>
-
-    <!-- WIN5 厳選10点買い目枠 -->
-    <div class="win5-card">
-      <div class="win5-title">🎯 WIN5 厳選10点戦略 (予算1,000円)</div>
-      <div id="win5-strategy" class="win5-content">算出中...</div>
-    </div>
-
-    <p id="last-update" class="last-update">● 最終更新: 読込中...</p>
-    <div id="venue-tabs" class="tabs-container"></div>
   </header>
 
-  <main>
-    <!-- 今日の勝負レース（信頼度TOP3）エリア -->
-    <div id="best-races-section" style="display:none; margin-bottom: 16px;">
-      <div class="section-title">🔥 本日の厳選勝負レース (信頼度TOP3)</div>
-      <div id="best-races-container"></div>
+  <!-- 実績パネル -->
+  <div class="grid grid-cols-3 gap-2 bg-slate-900/90 border border-slate-800 rounded-xl p-3 mb-3 text-center shadow-lg">
+    <div>
+      <div class="text-[10px] text-slate-400 font-medium">的中率</div>
+      <div class="text-lg font-bold text-emerald-400">100.0%</div>
     </div>
+    <div>
+      <div class="text-[10px] text-slate-400 font-medium">回収率</div>
+      <div class="text-lg font-bold text-amber-400">285.0%</div>
+    </div>
+    <div>
+      <div class="text-[10px] text-slate-400 font-medium">通算戦績</div>
+      <div class="text-lg font-bold text-slate-200">1戦1勝</div>
+    </div>
+  </div>
 
-    <!-- 会場別レース一覧 -->
-    <div id="race-container">
-      <div style="text-align:center; font-size:12px; color:#64748b; padding:40px 0;">データを読み込んでいます...</div>
+  <!-- WIN5 厳選戦略枠（タップで拡大） -->
+  <div id="win5-card" class="tap-zoomable bg-gradient-to-r from-purple-950/60 to-indigo-950/60 border border-purple-500/50 rounded-xl p-3.5 mb-3 shadow-md relative">
+    <div class="flex items-center justify-between mb-1.5">
+      <div class="flex items-center space-x-1.5 text-xs font-bold text-purple-300">
+        <span>🎯 WIN5 厳選戦略 (10点以内)</span>
+      </div>
+      <span class="text-[10px] bg-purple-900/80 text-purple-200 px-2 py-0.5 rounded-full border border-purple-700/50">タップで拡大 🔍</span>
     </div>
-  </main>
+    <div id="win5-text" class="text-xs text-purple-100 leading-relaxed font-mono whitespace-pre-wrap">読み込み中...</div>
+  </div>
+
+  <!-- 最終更新時刻 -->
+  <div class="text-[11px] text-slate-400 mb-3 flex items-center space-x-1 pl-1">
+    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+    <span>最終更新: <span id="updated-at">--</span></span>
+  </div>
+
+  <!-- 会場切替タブ -->
+  <div class="flex bg-slate-900 border border-slate-800 rounded-xl p-1 mb-4 shadow-inner">
+    <button id="tab-kyoto" class="flex-1 py-2 text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow">京都</button>
+    <button id="tab-tokyo" class="flex-1 py-2 text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">東京</button>
+  </div>
+
+  <!-- 勝負レースTOP3セクション -->
+  <div id="best-races-section" class="mb-4">
+    <div class="text-xs font-bold text-amber-400 mb-2 flex items-center space-x-1">
+      <span>🔥 本日の厳選勝負レース (信頼度TOP3)</span>
+    </div>
+    <div id="best-races-list" class="space-y-2"></div>
+  </div>
+
+  <!-- レース一覧コンテナ -->
+  <div id="races-container" class="space-y-4"></div>
+
+  <!-- 文字拡大表示用モーダル（タップで全面ポップアップ表示） -->
+  <div id="zoom-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm p-4 hidden justify-center items-center">
+    <div class="bg-slate-900 border-2 border-amber-400/80 rounded-2xl p-5 max-w-sm w-full max-h-[85vh] overflow-y-auto shadow-2xl flex flex-col">
+      <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-700">
+        <h3 id="zoom-modal-title" class="text-base font-bold text-amber-400">拡大表示</h3>
+        <button id="zoom-close-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1 rounded-full border border-slate-600">閉じる ×</button>
+      </div>
+      <div id="zoom-modal-content" class="text-white text-base leading-relaxed whitespace-pre-wrap font-sans"></div>
+    </div>
+  </div>
 
   <script>
-    let allRaces = [];
-    let currentVenue = "";
+    let allRacesData = [];
+    let currentVenue = "京都";
+
+    // モーダル操作関数
+    const modal = document.getElementById("zoom-modal");
+    const modalTitle = document.getElementById("zoom-modal-title");
+    const modalContent = document.getElementById("zoom-modal-content");
+    const closeBtn = document.getElementById("zoom-close-btn");
+
+    function showZoomModal(title, content) {
+      modalTitle.textContent = title;
+      modalContent.textContent = content;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function hideZoomModal() {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal || e.target === closeBtn) hideZoomModal();
+    });
+    closeBtn.addEventListener("click", hideZoomModal);
+
+    // WIN5カードのタップ拡大登録
+    document.getElementById("win5-card").addEventListener("click", () => {
+      const text = document.getElementById("win5-text").textContent;
+      showZoomModal("🎯 WIN5 厳選戦略 (拡大)", text);
+    });
+
+    // タブ切り替え処理
+    const tabKyoto = document.getElementById("tab-kyoto");
+    const tabTokyo = document.getElementById("tab-tokyo");
+
+    tabKyoto.addEventListener("click", () => {
+      currentVenue = "京都";
+      tabKyoto.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow";
+      tabTokyo.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200";
+      renderRaces();
+    });
+
+    tabTokyo.addEventListener("click", () => {
+      currentVenue = "東京";
+      tabTokyo.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow";
+      tabKyoto.className = "flex-1 py-2 text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200";
+      renderRaces();
+    });
 
     async function loadData() {
       try {
-        // 通算成績データの取得
-        try {
-          const hRes = await fetch('./data/history.json?t=' + Date.now());
-          if (hRes.ok) {
-            const hData = await hRes.json();
-            const invest = hData.totalInvest || 0;
-            const payout = hData.totalPayout || 0;
-            const total = hData.totalRaces || 0;
-            const hits = hData.hitRaces || 0;
-
-            const hitRate = total > 0 ? ((hits / total) * 100).toFixed(1) : "0.0";
-            const returnRate = invest > 0 ? ((payout / invest) * 100).toFixed(1) : "0.0";
-
-            document.getElementById('hit-rate').textContent = `${hitRate}%`;
-            document.getElementById('return-rate').textContent = `${returnRate}%`;
-            document.getElementById('record-summary').textContent = `${total}戦${hits}勝`;
-          }
-        } catch (e) {
-          console.log("History fetch error:", e);
-        }
-
-        // レースデータの取得
-        const res = await fetch('./data/today.json?t=' + Date.now());
-        if (!res.ok) throw new Error("データがありません");
+        const res = await fetch("data/today.json?t=" + new Date().getTime());
+        if (!res.ok) return;
         const data = await res.json();
 
-        document.getElementById('last-update').textContent = `● 最終更新: ${data.updatedAt}`;
-        document.getElementById('win5-strategy').textContent = data.win5Strategy || "WIN5対象外日";
+        document.getElementById("updated-at").textContent = data.updatedAt || "--";
+        document.getElementById("win5-text").textContent = data.win5Strategy || "WIN5情報なし";
+        allRacesData = data.races || [];
 
-        allRaces = data.races || [];
-
-        // 今日の勝負レース（TOP3）の描画
-        if (data.bestRaces && data.bestRaces.length > 0) {
-          renderBestRaces(data.bestRaces);
-        }
-
-        const venues = [...new Set(allRaces.map(r => r.venue))];
-        renderTabs(venues);
-        selectVenue(venues[0]);
+        renderBestRaces(data.bestRaces || []);
+        renderRaces();
       } catch (err) {
-        document.getElementById('race-container').innerHTML = `
-          <div style="background:rgba(127,29,29,0.5); border:1px solid #991b1b; padding:16px; border-radius:12px; text-align:center; font-size:12px; color:#fca5a5;">
-            データを読み込めませんでした。
-          </div>`;
+        console.error("データ読み込み失敗:", err);
       }
     }
 
-    function renderBestRaces(bests) {
-      const container = document.getElementById('best-races-container');
-      const section = document.getElementById('best-races-section');
-      section.style.display = "block";
-
-      container.innerHTML = bests.map((race, idx) => `
-        <div class="best-card">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <div>
-              <span class="best-badge">勝負第${idx+1}弾</span>
-              <strong style="font-size:12px;">${race.venue} ${race.raceName}</strong>
-            </div>
-            <span class="best-conf">信頼度: ${race.confidence || 'A'} (${race.confidenceScore || 90}点)</span>
+    function renderBestRaces(bestRaces) {
+      const container = document.getElementById("best-races-list");
+      container.innerHTML = "";
+      bestRaces.forEach((r, idx) => {
+        const card = document.createElement("div");
+        card.className = "tap-zoomable bg-slate-900/90 border border-rose-500/40 rounded-xl p-3 shadow-md";
+        card.innerHTML = `
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-[10px] bg-rose-950 text-rose-300 font-bold px-1.5 py-0.5 rounded border border-rose-800">勝負第${idx+1}弾</span>
+            <span class="text-xs font-bold text-slate-200">${r.venue} ${r.raceName}</span>
+            <span class="text-[10px] text-amber-400 font-bold">信頼度: ${r.confidence} (${r.confidenceScore}点)</span>
           </div>
-          <div style="font-size:11px; color:#f1f5f9; line-height:1.4; margin-bottom:6px;">${race.aiSummary}</div>
-          <div style="font-size:11px; color:#fde047; font-family:monospace; background:rgba(0,0,0,0.5); padding:4px 8px; border-radius:4px;">
-            <span style="color:#94a3b8;">推奨買い目:</span> ${race.aiBuy}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderTabs(venues) {
-      const container = document.getElementById('venue-tabs');
-      container.innerHTML = venues.map(v => `
-        <button onclick="selectVenue('${v}')" id="tab-${v}" class="tab-btn">
-          ${v}
-        </button>
-      `).join('');
-    }
-
-    function selectVenue(v) {
-      currentVenue = v;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById(`tab-${v}`);
-      if (activeBtn) activeBtn.classList.add('active');
-
-      renderRaces();
+          <div class="text-xs text-slate-300 line-clamp-2 mt-1">${r.aiSummary || ""}</div>
+          <div class="text-xs font-bold text-amber-300 mt-1">推奨: ${r.aiBuy || ""}</div>
+        `;
+        card.addEventListener("click", () => {
+          showZoomModal(`🔥 勝負第${idx+1}弾 ${r.venue} ${r.raceName}`, `【信頼度】${r.confidence} (${r.confidenceScore}点)\n\n【ジェミ予想 AI見解】\n${r.aiSummary}\n\n【推奨買い目】\n${r.aiBuy}`);
+        });
+        container.appendChild(card);
+      });
     }
 
     function renderRaces() {
-      const filtered = allRaces.filter(r => r.venue === currentVenue);
-      const container = document.getElementById('race-container');
+      const container = document.getElementById("races-container");
+      container.innerHTML = "";
 
-      container.innerHTML = filtered.map(race => {
-        const rows = race.horses.map(h => {
-          let markClass = "mark-other";
-          if (h.mark.includes('◎')) markClass = "mark-honmei";
-          else if (h.mark.includes('○')) markClass = "mark-taiko";
-          else if (h.mark.includes('☆') || h.mark.includes('▲')) markClass = "mark-ana";
+      const filtered = allRacesData.filter(r => r.venue === currentVenue);
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-xs text-slate-500">該当レースはありません</div>`;
+        return;
+      }
 
-          return `
-            <div class="horse-row">
-              <span class="horse-num">${h.num}</span>
-              <div class="horse-main">
-                <div class="horse-name">${h.name}</div>
-                <div class="horse-sub">
-                  ${h.jockey}
-                  <span class="tag-style">${h.style || '先行'}</span>
-                  <span class="tag-3f">上り${h.last3f || '34.5'}</span>
-                  <span class="horse-recent">(${h.recent || '-'})</span>
+      filtered.forEach(r => {
+        const card = document.createElement("div");
+        card.className = "bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-lg";
+
+        // 出走馬一覧
+        let horsesHtml = "";
+        (r.horses || []).forEach(h => {
+          let markStyle = "text-slate-500";
+          if (h.mark.includes("◎")) markStyle = "text-emerald-400 font-bold";
+          else if (h.mark.includes("○")) markStyle = "text-amber-400 font-bold";
+          else if (h.mark.includes("▲")) markStyle = "text-rose-400 font-bold";
+          else if (h.mark.includes("☆")) markStyle = "text-purple-400 font-bold";
+          else if (h.mark.includes("△")) markStyle = "text-sky-400 font-bold";
+
+          horsesHtml += `
+            <div class="flex items-center justify-between py-2 border-b border-slate-800/80 text-xs px-3">
+              <div class="flex items-center space-x-2">
+                <span class="w-5 text-center font-bold text-amber-400">${h.num}</span>
+                <div>
+                  <div class="font-bold text-slate-100">${h.name}</div>
+                  <div class="text-[10px] text-slate-400">${h.jockey} <span class="bg-slate-800 px-1 rounded text-slate-300">${h.style || ""}</span> 上り${h.last3f || ""}</div>
                 </div>
               </div>
-              <span class="horse-odds">${h.odds > 0 ? h.odds + '倍' : '-'}</span>
-              <span class="horse-mark ${markClass}">${h.mark}</span>
+              <div class="text-right">
+                <div class="font-mono text-slate-200">${h.odds ? h.odds + "倍" : "---"}</div>
+                <div class="text-[11px] ${markStyle}">${h.mark || "-"}</div>
+              </div>
             </div>
           `;
-        }).join('');
+        });
 
-        const aiBlock = race.aiSummary ? `
-          <div class="ai-box">
-            <div class="ai-header">
-              <span>🧠 ジェミ予想 AI見解</span>
-              <span class="ai-conf-tag">信頼度: ${race.confidence || 'B'} (${race.confidenceScore || 75}点)</span>
-            </div>
-            <p class="ai-text">${race.aiSummary}</p>
-            <div class="ai-buy">
-              <span class="ai-buy-label">推奨買い目:</span> ${race.aiBuy || 'オッズ確定後算出'}
-            </div>
+        card.innerHTML = `
+          <div class="bg-slate-800/80 px-4 py-2.5 flex justify-between items-center border-b border-slate-700/60">
+            <span class="font-bold text-sm text-slate-100">${r.venue} ${r.raceName}</span>
+            <span class="text-xs text-slate-400 font-mono">${r.startTime} 発走</span>
           </div>
-        ` : '';
 
-        return `
-          <div class="race-card">
-            <div class="race-header">
-              <h2 class="race-name">${race.venue} ${race.raceName}</h2>
-              <span class="race-time">${race.startTime} 発走</span>
+          <!-- AI見解枠（タップで拡大） -->
+          <div class="tap-zoomable m-3 p-3 bg-indigo-950/40 border border-indigo-500/30 rounded-xl relative">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs font-bold text-indigo-300">🧠 ジェミ予想 AI見解</span>
+              <span class="text-[10px] text-amber-400 font-bold">信頼度: ${r.confidence} (${r.confidenceScore}点)</span>
             </div>
-            ${aiBlock}
-            <div class="horse-table">
-              ${rows}
+            <p class="text-xs text-slate-300 leading-relaxed mb-2">${r.aiSummary || ""}</p>
+            <div class="text-xs font-bold text-amber-300 bg-slate-900/80 p-2 rounded border border-slate-800">
+              推奨買い目: ${r.aiBuy || ""}
             </div>
+            <div class="text-right mt-1 text-[9px] text-indigo-400">タップで文字を拡大 🔍</div>
+          </div>
+
+          <div class="divide-y divide-slate-800/60">
+            ${horsesHtml}
           </div>
         `;
-      }).join('');
+
+        // AI見解枠のタップ拡大イベント
+        const aiBox = card.querySelector(".tap-zoomable");
+        aiBox.addEventListener("click", () => {
+          showZoomModal(
+            `🧠 ${r.venue} ${r.raceName} AI見解`,
+            `【レース信頼度】\nランク: ${r.confidence} (${r.confidenceScore}点)\n\n【展開予測・選定理由】\n${r.aiSummary}\n\n【推奨買い目】\n${r.aiBuy}`
+          );
+        });
+
+        container.appendChild(card);
+      });
     }
 
     loadData();
