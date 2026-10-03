@@ -82,7 +82,9 @@ JSON形式のみで出力してください:
 
 def fetch_single_race(race_id, venue_name, r_num):
     """1レースごとに確定アドレスから直接出馬表を取得"""
-    url = f"[https://race.netkeiba.com/race/shutuba.html?race_id=](https://race.netkeiba.com/race/shutuba.html?race_id=){race_id}&rf=race_list"
+    # URLの文字列を直接組み立て
+    base_url = "https://" + "[race.netkeiba.com/race/shutuba.html](https://race.netkeiba.com/race/shutuba.html)"
+    url = f"{base_url}?race_id={race_id}&rf=race_list"
     try:
         res = requests.get(url, headers=headers, timeout=10)
         if res.status_code != 200 or len(res.text) < 2000:
