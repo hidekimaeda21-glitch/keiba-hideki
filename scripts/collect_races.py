@@ -284,7 +284,7 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     h_num = honmei["num"]
     h_name = honmei["name"]
 
-    # レースごとに異なる多様なフォールバック買い目
+    # 安全な文字列作成（エスケープエラーの完全防止）
     rec_items = []
     if "本命信頼" in race_type and taikou:
         t_num = taikou['num']
@@ -298,7 +298,10 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
         if opp_nums:
             rec_items.append(f"【馬連】{h_num} - {', '.join(opp_nums)} ({len(opp_nums)}点)")
         if ana:
-            rec_items.append(f"【穴ワイド】{ana['num']} - {h_num}{f', {taikou[\"num\"]}' if taikou else ''} (2点)")
+            wide_targets = [str(h_num)]
+            if taikou and taikou["num"] != ana["num"]:
+                wide_targets.append(str(taikou["num"]))
+            rec_items.append(f"【穴ワイド】{ana['num']} - {', '.join(wide_targets)} ({len(wide_targets)}点)")
         if renge and opp_nums:
             ren_nums = [str(x["num"]) for x in renge]
             rec_items.append(f"【3連複F】{h_num} - {opp_nums[0]} - {', '.join(ren_nums)} ({len(ren_nums)}点)")
@@ -347,7 +350,6 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
   "recommendation": "推奨買い目（券種ごとの買い目と点数、最後に[計○点]と明記）"
 }}
 """
-    # 確実に動作するモデル順でリトライ
     for model_name in ['gemini-2.5-flash', 'gemini-2.0-flash']:
         try:
             res = client.models.generate_content(
