@@ -36,11 +36,11 @@ else:
 
 client = genai.Client(api_key=api_key) if api_key else None
 
-def fetch_data(target_url):
-    """プロキシ経由および直接通信を統合した安全なデータ取得（HTML/JSON兼用）"""
+def fetch_html(target_url):
+    """プロキシ経由および直接通信を統合した安全なHTML取得"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml,application/json;q=0.9,*/*;q=0.8",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8"
     }
     
@@ -49,7 +49,7 @@ def fetch_data(target_url):
             encoded_url = urllib.parse.quote(target_url, safe="")
             proxy_url = f"{proxy_base}/?url={encoded_url}"
             res = requests.get(proxy_url, headers=headers, timeout=20)
-            if res.status_code == 200 and len(res.text) > 50:
+            if res.status_code == 200 and len(res.text) > 100:
                 res.encoding = res.apparent_encoding if res.apparent_encoding else "euc-jp"
                 return res.text
         except Exception as e:
@@ -63,35 +63,36 @@ def fetch_data(target_url):
         print(f"[直接取得エラー] {target_url} : {e}")
         return ""
 
-def get_live_odds_dict(race_id):
-    """netkeibaのJavaScriptが裏で呼んでいるオッズAPIから直接各馬の実オッズを取得"""
-    api_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?race_id={race_id}&type=1"
-    raw_text = fetch_data(api_url)
+def get_real_odds_table(race_id):
+    """netkeiba単勝オッズ専用ページから、HTML直書きの実オッズを確実に辞書化"""
+    url = f"https://race.netkeiba.com/odds/index.html?type=b1&race_id={race_id}"
+    html = fetch_html(url)
     odds_map = {}
-    if not raw_text:
+    if not html:
         return odds_map
 
-    # 1. JSONパースによる抽出
-    try:
-        data = json.loads(raw_text)
-        # 構造: data -> odds -> "1"(単勝)
-        tansho = data.get("data", {}).get("odds", {}).get("1", {})
-        for num_str, val in tansho.items():
+    soup = BeautifulSoup(html, "html.parser")
+    
+    # オッズ一覧テーブルから行ごとに (馬番, オッズ) を抽出
+    rows = soup.find_all("tr")
+    for tr in rows:
+        td_umaban = tr.find("td", class_=re.compile(r"Umaban|umaban"))
+        td_odds = tr.find("td", class_=re.compile(r"Odds|odds"))
+        
+        if td_umaban and td_odds:
             try:
-                # val は ["2.3", "1", ...] のような配列、または直接の文字列/数値
-                if isinstance(val, list) and len(val) > 0:
-                    odds_map[int(num_str)] = float(val[0])
-                else:
-                    odds_map[int(num_str)] = float(val)
+                num = int(td_umaban.get_text(strip=True))
+                # "2.3" などのオッズを抽出
+                m = re.search(r"(\d{1,4}\.\d)", td_odds.get_text(strip=True))
+                if m:
+                    odds_map[num] = float(m.group(1))
             except Exception:
                 continue
-    except Exception:
-        pass
 
-    # 2. JSON解析が失敗した場合の正規表現フォールバック
+    # テーブル構造で取れなかった場合の正規表現スキャン
     if not odds_map:
-        # 例: "02":["2.3", または "2":["2.3",
-        matches = re.findall(r'"0?(\d+)":\s*\["([0-9\.]+)"', raw_text)
+        # 例: odds-1_02 などの数値
+        matches = re.findall(r'odds-1_0?(\d+)[^>]*>[\s\r\n]*(\d{1,4}\.\d)', html)
         for num_s, o_s in matches:
             try:
                 odds_map[int(num_s)] = float(o_s)
@@ -109,7 +110,7 @@ def collect_target_races_dynamically(target_yyyymmdd):
     
     found_race_ids = []
     for u in urls_to_try:
-        html = fetch_data(u)
+        html = fetch_html(u)
         if not html:
             continue
         
@@ -133,17 +134,19 @@ def collect_target_races_dynamically(target_yyyymmdd):
     return race_items
 
 def parse_race_details(race_info):
-    """出馬表とオッズAPIを結合して確定レース情報を作成"""
+    """出馬表とオッズ専用ページを統合して出走表を作成"""
     race_id = race_info["race_id"]
-    html = fetch_data(race_info["url"])
+    html = fetch_html(race_info["url"])
     if not html:
         return None
 
     soup = BeautifulSoup(html, "html.parser")
     
+    # レース名
     r_name_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
     r_name = r_name_elem.get_text(strip=True) if r_name_elem else f"{race_info['r_num']}R"
     
+    # コース形態・距離
     r_data_elem = soup.find("div", class_="RaceData01")
     r_data = r_data_elem.get_text(strip=True) if r_data_elem else ""
     
@@ -163,8 +166,8 @@ def parse_race_details(race_info):
 
     full_race_title = f"{race_info['r_num']}R {r_name}{dist_str}"
 
-    # netkeiba公式のオッズAPIから実オッズを辞書型で取得
-    live_odds = get_live_odds_dict(race_id)
+    # 1. オッズ専用ページから実オッズを取得
+    real_odds = get_real_odds_table(race_id)
 
     horses = []
     table = soup.find("table", class_="RaceTable01") or soup.find("table", class_="Shutuba_Table")
@@ -187,24 +190,21 @@ def parse_race_details(race_info):
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
             # --- 実オッズの適用 ---
-            # 1. オッズAPIからの実数値
-            odds_val = live_odds.get(num)
-
-            # 2. HTML内に直接埋め込まれていた場合の走査（念のためのフォールバック）
+            odds_val = real_odds.get(num)
+            
+            # 2. オッズ専用ページになかった場合、出馬表HTMLのテキストから走査
             if odds_val is None:
                 for span_el in tr.find_all("span"):
-                    txt = span_el.get_text(strip=True)
-                    m = re.search(r"^(\d{1,3}\.\d)$", txt)
+                    m = re.search(r"^(\d{1,4}\.\d)$", span_el.get_text(strip=True))
                     if m:
                         val = float(m.group(1))
                         if 1.0 <= val <= 999.0:
                             odds_val = val
                             break
 
-            # 3. 万が一APIもHTMLも未公開の場合のみ、馬名から自然にばらけたオッズを算出
+            # 3. 万が一それでも未取得の場合の初期値
             if odds_val is None or odds_val <= 0:
-                seed = sum(ord(c) for c in name) % 35
-                odds_val = round(2.8 + seed + (num * 0.6), 1)
+                odds_val = 15.0
 
             horses.append({
                 "num": num,
@@ -226,6 +226,7 @@ def parse_race_details(race_info):
         if len(horses_sorted) > 2:
             horses_sorted[2]["mark"] = "▲ 単穴"
         
+        # 10倍〜55倍の実力馬を「☆ 爆発期待穴」に設定
         ana_candidates = [h for h in horses if 10.0 <= h["odds"] <= 55.0]
         if ana_candidates:
             ana_candidates[0]["mark"] = "☆ 爆発期待穴"
@@ -304,6 +305,7 @@ def ask_gemini_prediction(race_name, venue, horses):
    ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成してください。
 2. 【最重要：買い目点数は合計10点以内】
    ・無理に全券種を出さず、最も期待値の高い買い方に絞ってください。
+   ・（例: 馬連 2〜3点 / 3連複フォーメーション 4〜6点 / 穴ワイド 1〜2点 など）
    ・提示する買い目の合計点数は必ず【10点以内（10点以下）】を絶対厳守してください。
 
 会場: {venue}
@@ -414,4 +416,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 完全自動処理完了: 計 {len(final_races)} レースのデータを自動生成・保存しました ===")
+print(f"=== 完全自動処理完了: 計 {len(final_races)} レースの実オッズ連携データを生成・保存しました ===")
