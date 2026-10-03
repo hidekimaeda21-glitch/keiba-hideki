@@ -5,7 +5,6 @@ import time
 from datetime import datetime
 import urllib.parse
 import requests
-from bs4 import BeautifulSoup
 from google import genai
 
 os.makedirs("data", exist_ok=True)
@@ -29,24 +28,29 @@ def fetch_via_proxy(target_url):
     return res.text
 
 def ask_gemini_prediction(race_name, venue, horses):
-    """Gemini 3.8 Flash による各レースの展開・買い目推論"""
+    """Gemini 3.8 Flash による【回収率重視・期待値優先】の展開・買い目推論"""
     if not client or not horses:
         return {
             "honmei_num": horses[0]["num"] if horses else 1,
             "confidence": "A",
             "confidence_score": 88,
-            "summary": "先行力と末脚のバランスから本命を選定しました。",
+            "summary": "ポテンシャルと単勝オッズの妙味から期待値の高い馬を軸に選定しました。",
             "recommendation": f"単勝 {horses[0]['num']}"
         }
 
     horse_summary = "\n".join([
-        f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, オッズ:{h['odds']}倍, 脚質:{h.get('style','先行')}, 上り3F:{h.get('last3f','34.5秒')}, 印:{h.get('mark', '-')})"
+        f"{h['num']}番 {h['name']} (騎手:{h['jockey']}, オッズ:{h['odds']}倍, 脚質:{h.get('style','先行')}, 上り3F:{h.get('last3f','34.5秒')}, 潜在能力スコア:{h.get('score', 80.0)}, 暫定印:{h.get('mark', '-')})"
         for h in horses
     ])
 
     prompt = f"""
-あなたは競馬AI予想「ジェミ予想」です。
-以下の出走馬全頭情報、脚質、前走上り3Fを分析し、本命馬・推奨買い目・レース信頼度を判定してください。
+あなたは回収率を重視し、競馬で長期的に勝つためのAI予想エンジン「ジェミ予想」です。
+
+【重要：予想方針（期待値・回収率特化ロジック）】
+1. 的中率だけを意識して「当たりやすいが配当が低い1番人気」を安易に本命にするのではなく、【回収率】を最優先してください。
+2. スピード能力の上限値（好タイムを出す実力や潜在能力スコア）が高いにもかかわらず、オッズが甘く見逃されている「期待値の高い馬（オッズ10倍〜50倍前後の穴馬・伏兵）」を積極的に評価してください。
+3. 「この馬が本来のスピードを発揮できたら」「展開がハマったら」という爆発力シナリオを高く評価し、印（◎・○・▲・☆）および推奨買い目を組み立ててください。
+4. 1番人気が堅実でも、妙味のある伏兵を絡めた馬連・ワイド・単複などの高回収率を狙える買い目を提示してください。
 
 会場: {venue}
 レース名: {race_name}
@@ -58,8 +62,8 @@ def ask_gemini_prediction(race_name, venue, horses):
   "honmei_num": 本命馬の馬番(半角数字),
   "confidence": "レース信頼度(AまたはBまたはC)",
   "confidence_score": 50から98までの信頼度数値(半角数字),
-  "summary": "脚質と上がり3Fから導いた展開予測と本命選定の理由（100〜140文字程度）",
-  "recommendation": "推奨買い目（例：単勝 3 / 馬連 3-4,6 / 3連複 3-4,6-4,6,8 など）"
+  "summary": "期待値とハマった時の爆発力（スピードポテンシャル）に言及した見解（100〜140文字程度）",
+  "recommendation": "回収率を狙える推奨買い目（例：単勝 8 / ワイド 8-4,10 / 馬連流し など）"
 }}
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
@@ -80,12 +84,12 @@ def ask_gemini_prediction(race_name, venue, horses):
         "honmei_num": horses[0]["num"] if horses else 1,
         "confidence": "B",
         "confidence_score": 85,
-        "summary": "開幕週の絶好馬場。先行力と鋭い末脚を兼ね備えた軸馬の押し切りが濃厚。",
-        "recommendation": f"単勝 {horses[0]['num']} / 馬連流し"
+        "summary": "スピード指数が高く、展開がハマった際の爆発力と単勝オッズの妙味が非常に高い期待値ホースを推奨。",
+        "recommendation": f"単勝 {horses[0]['num']} / 馬連・ワイド流し"
     }
 
 def ask_gemini_win5_strategy(win5_races_info):
-    """Geminiに【通常は最大10点まで（10点以内・予算1,000円以内）】のWIN5買い目を厳選計算させる"""
+    """Geminiに【通常は最大10点まで】のWIN5買い目を期待値重視で厳選計算させる"""
     default_text = (
         "本日WIN5発売中！【AI厳選戦略（最大10点まで / 予算1,000円以内）】\n"
         "①東京9R: [4] ➔ ②京都10R: [6, 14] ➔ ③東京10R: [5] ➔ ④京都11R: [3, 17] ➔ ⑤東京11R: [4, 11]\n"
@@ -105,8 +109,9 @@ def ask_gemini_win5_strategy(win5_races_info):
 
 【ルール】
 ・選定頭数の積（第1戦の頭数 × 第2戦の頭数 × 第3戦の頭数 × 第4戦の頭数 × 第5戦の頭数）は【最大10点まで】です。
-・基本は10点を目指しますが、鉄板で自信があるレースを1頭に絞ることで8点や6点など10点以内になるのは問題ありません。
-・UI用のアナウンス文言は含めないでください。
+・単なる人気順ではなく、能力発揮時の期待値（配当妙味）を考慮して選定してください。
+・基本は10点を目指しますが、自信を持って1頭に絞れるレースがある場合は8点や6点など10点以内になるのは問題ありません。
+・UI用のアナウンス文言（※タップで拡大など）は含めないでください。
 
 対象レース一覧:
 {summary_text}
@@ -114,7 +119,7 @@ def ask_gemini_win5_strategy(win5_races_info):
 出力フォーマット（この形式のみを出力）:
 本日WIN5発売中！【AI厳選○点戦略（予算○○○円 / 最大10点まで）】
 ①東京9R: [馬番] ➔ ②京都10R: [馬番] ➔ ③東京10R: [馬番] ➔ ④京都11R: [馬番] ➔ ⑤東京11R: [馬番]
-理由: (30文字前後で選定の狙い)
+理由: (30文字前後で選定の狙い・期待値の根拠)
 """
     for model_name in ['gemini-3.8-flash', 'gemini-3.5-flash']:
         try:
@@ -182,18 +187,19 @@ rindou_horses = [
     {"num": 8, "name": "ルジュエ", "jockey": "田野豊三", "odds": 28.0, "style": "追込", "last3f": "34.8秒", "recent": "地方未勝利 1着", "score": 77.0, "mark": "-"}
 ]
 
+# 東京11R：netkeiba指数上位の8番メルキオル(42.0倍)、10番オウギノカナメ(40.3倍)の潜在能力スコアを高く反映
 green_horses = [
-    {"num": 1, "name": "ルヴァレドクール", "jockey": "横山和生", "odds": 9.3, "style": "先行", "last3f": "35.4秒", "recent": "夏至S 1着", "score": 86.5, "mark": "☆ 穴"},
-    {"num": 2, "name": "ジンセイ", "jockey": "丹内祐次", "odds": 14.6, "style": "好位", "last3f": "36.5秒", "recent": "太秦S 3着", "score": 83.0, "mark": "-"},
-    {"num": 3, "name": "スナッピードレッサ", "jockey": "大野拓弥", "odds": 11.2, "style": "先行", "last3f": "35.4秒", "recent": "桶狭間S 1着", "score": 85.0, "mark": "△ 連下"},
-    {"num": 4, "name": "ヘニーガイスト", "jockey": "横山武史", "odds": 2.5, "style": "好位", "last3f": "35.1秒", "recent": "ポプラS 1着", "score": 93.0, "mark": "◎ 本命"},
-    {"num": 5, "name": "ドンエレクトス", "jockey": "三浦皇成", "odds": 6.5, "style": "逃げ", "last3f": "35.8秒", "recent": "昇竜S 2着", "score": 89.0, "mark": "▲ 単穴"},
-    {"num": 6, "name": "ヒルノドゴール", "jockey": "戸崎圭太", "odds": 54.2, "style": "追込", "last3f": "35.6秒", "recent": "エニフS 8着", "score": 76.0, "mark": "-"},
-    {"num": 7, "name": "トリリオンボーイ", "jockey": "津村明秀", "odds": 60.8, "style": "追込", "last3f": "35.8秒", "recent": "麦秋S 6着", "score": 75.0, "mark": "-"},
-    {"num": 8, "name": "メルキオル", "jockey": "原優介", "odds": 29.4, "style": "先行", "last3f": "36.2秒", "recent": "阿波特別 3着", "score": 80.0, "mark": "-"},
+    {"num": 1, "name": "ルヴァレドクール", "jockey": "横山和生", "odds": 8.6, "style": "先行", "last3f": "35.4秒", "recent": "夏至S 1着", "score": 86.5, "mark": "☆ 穴"},
+    {"num": 2, "name": "ジンセイ", "jockey": "丹内祐次", "odds": 18.7, "style": "好位", "last3f": "36.5秒", "recent": "太秦S 3着", "score": 83.0, "mark": "-"},
+    {"num": 3, "name": "スナッピードレッサ", "jockey": "大野拓弥", "odds": 12.8, "style": "先行", "last3f": "35.4秒", "recent": "桶狭間S 1着", "score": 85.0, "mark": "△ 連下"},
+    {"num": 4, "name": "ヘニーガイスト", "jockey": "横山武史", "odds": 2.3, "style": "好位", "last3f": "35.1秒", "recent": "ポプラS 1着", "score": 93.0, "mark": "◎ 本命"},
+    {"num": 5, "name": "ドンエレクトス", "jockey": "三浦皇成", "odds": 5.2, "style": "逃げ", "last3f": "35.8秒", "recent": "昇竜S 2着", "score": 89.0, "mark": "▲ 単穴"},
+    {"num": 6, "name": "ヒルノドゴール", "jockey": "戸崎圭太", "odds": 94.5, "style": "追込", "last3f": "35.6秒", "recent": "エニフS 8着", "score": 76.0, "mark": "-"},
+    {"num": 7, "name": "トリリオンボーイ", "jockey": "津村明秀", "odds": 112.5, "style": "追込", "last3f": "35.8秒", "recent": "麦秋S 6着", "score": 75.0, "mark": "-"},
+    {"num": 8, "name": "メルキオル", "jockey": "原優介", "odds": 42.0, "style": "先行", "last3f": "36.2秒", "recent": "阿波特別 3着", "score": 95.8, "mark": "☆ 爆発期待穴"},
     {"num": 9, "name": "ヴィヴァン", "jockey": "佐々木大輔", "odds": 39.6, "style": "差し", "last3f": "35.7秒", "recent": "BSN賞 7着", "score": 78.0, "mark": "-"},
-    {"num": 10, "name": "オウギノカナメ", "jockey": "菊沢一樹", "odds": 27.6, "style": "差し", "last3f": "35.5秒", "recent": "アハルテケS 5着", "score": 81.0, "mark": "-"},
-    {"num": 11, "name": "ジャスティンアース", "jockey": "C.ルメール", "odds": 6.3, "style": "先行", "last3f": "35.2秒", "recent": "欅S 2着", "score": 90.5, "mark": "○ 対抗"},
+    {"num": 10, "name": "オウギノカナメ", "jockey": "菊沢一樹", "odds": 40.3, "style": "差し", "last3f": "35.5秒", "recent": "アハルテケS 5着", "score": 94.2, "mark": "▲ 期待値穴"},
+    {"num": 11, "name": "ジャスティンアース", "jockey": "C.ルメール", "odds": 6.6, "style": "先行", "last3f": "35.2秒", "recent": "欅S 2着", "score": 88.5, "mark": "○ 対抗"},
     {"num": 12, "name": "マピュース", "jockey": "田辺裕信", "odds": 9.6, "style": "差し", "last3f": "35.3秒", "recent": "NST賞 4着", "score": 84.5, "mark": "△ 連下"},
     {"num": 13, "name": "フリームファクシ", "jockey": "M.ミシェル", "odds": 48.1, "style": "先行", "last3f": "36.4秒", "recent": "エルムS 11着", "score": 77.0, "mark": "-"},
     {"num": 14, "name": "オーブルクール", "jockey": "石橋脩", "odds": 110.8, "style": "追込", "last3f": "36.0秒", "recent": "名鉄杯 9着", "score": 72.0, "mark": "-"},
@@ -245,11 +251,11 @@ target_races_data = [
     {"raceId": "202605040109", "venue": "東京", "raceName": "9R 八ヶ岳特別", "startTime": "14:35", "isGraded": False, "isWin5": True, "horses": nanbu_horses}
 ]
 
-print("=== ジェミ予想 (Gemini 3.8 Flash) 全レース一括推論開始 ===")
+print("=== ジェミ予想 (回収率重視・期待値優先モデル) 全レース推論開始 ===")
 final_races = []
 
 for r in target_races_data:
-    print(f"推論実行中: {r['venue']} {r['raceName']} (出走全{len(r['horses'])}頭)...")
+    print(f"推論実行中: {r['venue']} {r['raceName']} (回収率特化分析)...")
     ai_result = ask_gemini_prediction(r["raceName"], r["venue"], r["horses"])
     final_races.append({
         "raceId": r["raceId"],
@@ -270,7 +276,7 @@ for r in target_races_data:
 win5_target_ids = ["202605040109", "202608040110", "202605040110", "202608040111", "202605040111"]
 win5_races_list = [r for r in final_races if r["raceId"] in win5_target_ids]
 
-print("GeminiによるWIN5厳選戦略（最大10点まで）を算出中...")
+print("GeminiによるWIN5厳選戦略（最大10点まで・期待値配分）を算出中...")
 win5_strategy_text = ask_gemini_win5_strategy(win5_races_list)
 
 sorted_by_conf = sorted(final_races, key=lambda x: x.get("confidenceScore", 0), reverse=True)
@@ -286,4 +292,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 全処理完了: 本日WIN5戦略（最大10点まで）を含めて保存しました ===")
+print(f"=== 全処理完了: 回収率重視・期待値優先予想を反映保存しました ===")
