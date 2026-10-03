@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-03 18:50",
+  "updatedAt": "2026-10-03 18:58",
   "targetDate": "2026年10月04日",
   "win5Strategy": "本日WIN5対象レース確定後に厳選買い目を配信します。",
   "bestRaces": [
@@ -15,158 +15,158 @@
           "num": 1,
           "name": "ララバニュルス",
           "jockey": "藤懸",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "レイユール",
           "jockey": "長浜",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "イヌボウノウタゴエ",
           "jockey": "横山武",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "ルージュブリッツ",
           "jockey": "荻野極",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "サーナーティオン",
           "jockey": "戸崎圭",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "エイヨーアメジスト",
           "jockey": "幸",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "セルズパワー",
           "jockey": "岩田康",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "メイケイバートン",
           "jockey": "三浦",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "フェルミアーク",
           "jockey": "坂井",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "スペルーチェ",
           "jockey": "ルメール",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "ウフドゥウフ",
           "jockey": "田辺",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "ハルオーブ",
           "jockey": "石神道",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "ハクサンイーグル",
           "jockey": "佐々木",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "カガラプンツェル",
           "jockey": "原田和",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "ラパンチュール",
           "jockey": "丹内",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 10,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番サーナーティオン（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "◎スペルーチェはルメール騎手鞍上で能力上位。東京芝1400mへの適性も高く、スムーズなら勝ち負け必至。対抗○レイユールは内枠を活かした立ち回りで粘り込みを図る。▲イヌボウノウタゴエ、☆ララバニュルスなど一発を秘めた伏兵陣を相手に据え、期待値の高い買い目で高回収率を狙う。",
+      "aiBuy": "馬連流し：10 - 1, 2, 3, 4, 5, 6（6点）、ワイド流し：10 - 2, 3（2点）【合計8点】"
     },
     {
       "raceId": "202605040210",
@@ -180,168 +180,168 @@
           "num": 1,
           "name": "ターコイズフリンジ",
           "jockey": "坂井",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "リネアグローリア",
           "jockey": "松若",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "ブレトワルダ",
           "jockey": "津村",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "アラレタバシル",
           "jockey": "丸山",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "オンザムービー",
           "jockey": "横山典",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "クールブロン",
           "jockey": "三浦",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "チュウワチーフ",
           "jockey": "西村淳",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "ルグランヴァン",
           "jockey": "原",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "ブロッケンボウ",
           "jockey": "木幡育",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "トクシーカイザー",
           "jockey": "菊沢",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "チギリ",
           "jockey": "ミシェル",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "ジョディーズマロン",
           "jockey": "戸崎圭",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "スニーカースキル",
           "jockey": "荻野極",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "エイブラムス",
           "jockey": "木幡巧",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "サトミノエンジェル",
           "jockey": "横山武",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "トウカイポワール",
           "jockey": "佐々木",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番オンザムービー（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番ターコイズフリンジを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     },
     {
       "raceId": "202605040211",
@@ -355,178 +355,178 @@
           "num": 1,
           "name": "セイウンハーデス",
           "jockey": "幸",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "リアライズシリウス",
           "jockey": "津村",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "レディネス",
           "jockey": "横山典",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "サトノシャイニング",
           "jockey": "西村淳",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "クルゼイロドスル",
           "jockey": "荻野極",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "ライヒスアドラー",
           "jockey": "佐々木",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "ロングラン",
           "jockey": "菊沢",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "ビーアストニッシド",
           "jockey": "原",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "ドラゴンブースト",
           "jockey": "丹内",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "エルトンバローズ",
           "jockey": "松若",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "ランスオブカオス",
           "jockey": "横山武",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "レガーロデルシエロ",
           "jockey": "戸崎圭",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "ホウオウビスケッツ",
           "jockey": "岩田康",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "レイニング",
           "jockey": "ルメール",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "シャンパンカラー",
           "jockey": "内田博",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "アドマイヤクワッズ",
           "jockey": "坂井",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 17,
           "name": "ダノンエアズロック",
           "jockey": "田辺",
-          "odds": 30.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番クルゼイロドスル（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番セイウンハーデスを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     }
   ],
   "races": [
@@ -542,158 +542,158 @@
           "num": 1,
           "name": "ララバニュルス",
           "jockey": "藤懸",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "レイユール",
           "jockey": "長浜",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "イヌボウノウタゴエ",
           "jockey": "横山武",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "ルージュブリッツ",
           "jockey": "荻野極",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "サーナーティオン",
           "jockey": "戸崎圭",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "エイヨーアメジスト",
           "jockey": "幸",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "セルズパワー",
           "jockey": "岩田康",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "メイケイバートン",
           "jockey": "三浦",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "フェルミアーク",
           "jockey": "坂井",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "スペルーチェ",
           "jockey": "ルメール",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "ウフドゥウフ",
           "jockey": "田辺",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "ハルオーブ",
           "jockey": "石神道",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "ハクサンイーグル",
           "jockey": "佐々木",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "カガラプンツェル",
           "jockey": "原田和",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "ラパンチュール",
           "jockey": "丹内",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 10,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番サーナーティオン（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "◎スペルーチェはルメール騎手鞍上で能力上位。東京芝1400mへの適性も高く、スムーズなら勝ち負け必至。対抗○レイユールは内枠を活かした立ち回りで粘り込みを図る。▲イヌボウノウタゴエ、☆ララバニュルスなど一発を秘めた伏兵陣を相手に据え、期待値の高い買い目で高回収率を狙う。",
+      "aiBuy": "馬連流し：10 - 1, 2, 3, 4, 5, 6（6点）、ワイド流し：10 - 2, 3（2点）【合計8点】"
     },
     {
       "raceId": "202605040210",
@@ -707,168 +707,168 @@
           "num": 1,
           "name": "ターコイズフリンジ",
           "jockey": "坂井",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "リネアグローリア",
           "jockey": "松若",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "ブレトワルダ",
           "jockey": "津村",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "アラレタバシル",
           "jockey": "丸山",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "オンザムービー",
           "jockey": "横山典",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "クールブロン",
           "jockey": "三浦",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "チュウワチーフ",
           "jockey": "西村淳",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "ルグランヴァン",
           "jockey": "原",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "ブロッケンボウ",
           "jockey": "木幡育",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "トクシーカイザー",
           "jockey": "菊沢",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "チギリ",
           "jockey": "ミシェル",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "ジョディーズマロン",
           "jockey": "戸崎圭",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "スニーカースキル",
           "jockey": "荻野極",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "エイブラムス",
           "jockey": "木幡巧",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "サトミノエンジェル",
           "jockey": "横山武",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "トウカイポワール",
           "jockey": "佐々木",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番オンザムービー（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番ターコイズフリンジを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     },
     {
       "raceId": "202605040211",
@@ -882,178 +882,178 @@
           "num": 1,
           "name": "セイウンハーデス",
           "jockey": "幸",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "リアライズシリウス",
           "jockey": "津村",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "レディネス",
           "jockey": "横山典",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "サトノシャイニング",
           "jockey": "西村淳",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "クルゼイロドスル",
           "jockey": "荻野極",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "ライヒスアドラー",
           "jockey": "佐々木",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "ロングラン",
           "jockey": "菊沢",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "ビーアストニッシド",
           "jockey": "原",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "ドラゴンブースト",
           "jockey": "丹内",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "エルトンバローズ",
           "jockey": "松若",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "ランスオブカオス",
           "jockey": "横山武",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "レガーロデルシエロ",
           "jockey": "戸崎圭",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "ホウオウビスケッツ",
           "jockey": "岩田康",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "レイニング",
           "jockey": "ルメール",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "シャンパンカラー",
           "jockey": "内田博",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "アドマイヤクワッズ",
           "jockey": "坂井",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 17,
           "name": "ダノンエアズロック",
           "jockey": "田辺",
-          "odds": 30.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番クルゼイロドスル（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番セイウンハーデスを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     },
     {
       "raceId": "202605040212",
@@ -1067,168 +1067,168 @@
           "num": 1,
           "name": "ジオパーククラウン",
           "jockey": "☆長浜",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "グレイスザクラウン",
           "jockey": "木幡巧",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "ナイトスラッガー",
           "jockey": "田辺",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "レッドベルダンス",
           "jockey": "嶋田",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "カゼノタカトシ",
           "jockey": "戸崎圭",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "タマモカンパネラ",
           "jockey": "▲佐藤",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "ザーフィル",
           "jockey": "ルメール",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "ミクストベリーズ",
           "jockey": "菊沢",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "ライジンマル",
           "jockey": "木幡初",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "パイシャオピン",
           "jockey": "横山武",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "サンカルミア",
           "jockey": "坂井",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "カロローザ",
           "jockey": "幸",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "ロケットパンチ",
           "jockey": "武藤",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "ライフゲート",
           "jockey": "丹内",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "ノアヴィヴァーチェ",
           "jockey": "菅原隆",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "ファイアマン",
           "jockey": "原",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番カゼノタカトシ（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番ジオパーククラウンを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     },
     {
       "raceId": "202608040209",
@@ -1242,188 +1242,188 @@
           "num": 1,
           "name": "ホウオウアートマン",
           "jockey": "吉田豊",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "ナムラフッカー",
           "jockey": "菱田",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "レディーミコノス",
           "jockey": "田山",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "チェルノボーグ",
           "jockey": "西塚",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "キュクヌス",
           "jockey": "吉村",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "キントリヒ",
           "jockey": "田口",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "カリーニョ",
           "jockey": "川田",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "ヴィスマール",
           "jockey": "小沢",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "ホウオウスーペリア",
           "jockey": "高杉",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "スズカダブル",
           "jockey": "鮫島駿",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "ローベルクランツ",
           "jockey": "北村友",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "ファームツエンティ",
           "jockey": "酒井",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "リーティアコナル",
           "jockey": "小崎",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "ミュージシャン",
           "jockey": "松山",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "ミスタージーティー",
           "jockey": "斎藤",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "オールセインツ",
           "jockey": "富田",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 17,
           "name": "シンゼンカガ",
           "jockey": "吉田隼",
-          "odds": 30.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 18,
           "name": "ロードフィレール",
           "jockey": "横山和",
-          "odds": 38.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.6,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番キュクヌス（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番ホウオウアートマンを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     },
     {
       "raceId": "202608040210",
@@ -1437,168 +1437,168 @@
           "num": 1,
           "name": "ロードラディウス",
           "jockey": "吉村",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "グッジョブ",
           "jockey": "Ｍデムーロ",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "アガシ",
           "jockey": "田口",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "ロードアウォード",
           "jockey": "横山和",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "ロードフロンティア",
           "jockey": "川須",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "ペプチドヤマト",
           "jockey": "高倉",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "メイショウホウレン",
           "jockey": "浜中",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "コンクイスタ",
           "jockey": "北村友",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "エンヤラヴフェイス",
           "jockey": "松山",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "スマートフォルス",
           "jockey": "鮫島駿",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "ケイアイアニラ",
           "jockey": "高杉",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "サトノカルナバル",
           "jockey": "菱田",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "ドンレパルス",
           "jockey": "田山",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "ゼットエール",
           "jockey": "松本",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "ルージュラナキラ",
           "jockey": "斎藤",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "エコロエイト",
           "jockey": "江田照",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番ロードフロンティア（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番ロードラディウスを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     },
     {
       "raceId": "202608040211",
@@ -1612,188 +1612,188 @@
           "num": 1,
           "name": "ウエストナウ",
           "jockey": "横山和",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "ヴェルテンベルク",
           "jockey": "古川吉",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "ディープモンスター",
           "jockey": "浜中",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "ヘデントール",
           "jockey": "吉田隼",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "ヴェルミセル",
           "jockey": "川又",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "アクアヴァーナル",
           "jockey": "松山",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "リビアングラス",
           "jockey": "小沢",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "ミクニインスパイア",
           "jockey": "Ｍデムーロ",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "ミステリーウェイ",
           "jockey": "松本",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "マイネルエンペラー",
           "jockey": "吉村",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "ファミリータイム",
           "jockey": "鮫島駿",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "エコロディノス",
           "jockey": "田口",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "サフィラ",
           "jockey": "北村友",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "サヴォーナ",
           "jockey": "斎藤",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "メイショウブレゲ",
           "jockey": "酒井",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "ショウナンラプンタ",
           "jockey": "池添",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 17,
           "name": "キングスコール",
           "jockey": "吉田豊",
-          "odds": 30.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 18,
           "name": "ダノンシーマ",
           "jockey": "川田",
-          "odds": 38.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.6,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番ヴェルミセル（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番ウエストナウを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     },
     {
       "raceId": "202608040212",
@@ -1807,188 +1807,188 @@
           "num": 1,
           "name": "ファイツオン",
           "jockey": "吉田隼",
-          "odds": 10.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.7,
+          "score": 92.0,
           "mark": "☆ 爆発期待穴"
         },
         {
           "num": 2,
           "name": "スイミーユニバンス",
           "jockey": "浜中",
-          "odds": 18.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.6,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "○ 対抗"
         },
         {
           "num": 3,
           "name": "ジュルナール",
           "jockey": "池添",
-          "odds": 26.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "▲ 単穴"
         },
         {
           "num": 4,
           "name": "ガラベイヤ",
           "jockey": "横山和",
-          "odds": 34.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.3,
-          "mark": "-"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 5,
           "name": "モンサンゴールデン",
           "jockey": "△柴田裕",
-          "odds": 7.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 93.2,
-          "mark": "◎ 本命"
+          "score": 92.0,
+          "mark": "△ 連下"
         },
         {
           "num": 6,
           "name": "サンライズプルート",
           "jockey": "吉村",
-          "odds": 14.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.1,
+          "score": 92.0,
           "mark": "△ 連下"
         },
         {
           "num": 7,
           "name": "ロードトレゾール",
           "jockey": "河原田菜々",
-          "odds": 22.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 87.0,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 8,
           "name": "バシレウスシチー",
           "jockey": "菱田",
-          "odds": 30.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 9,
           "name": "トップアタック",
           "jockey": "小沢",
-          "odds": 38.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.7,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 10,
           "name": "メイショウゴールド",
           "jockey": "酒井",
-          "odds": 11.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 91.6,
-          "mark": "▲ 単穴"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 11,
           "name": "アイニードユー",
           "jockey": "川田",
-          "odds": 18.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 88.5,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 12,
           "name": "サクセスカラー",
           "jockey": "吉田豊",
-          "odds": 26.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 85.4,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 13,
           "name": "グッドピース",
           "jockey": "鮫島駿",
-          "odds": 34.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 82.2,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 14,
           "name": "マーゴットミスト",
           "jockey": "田口",
-          "odds": 42.2,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 79.1,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 15,
           "name": "マイネルラッシュ",
           "jockey": "国分恭",
-          "odds": 15.0,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 90.0,
-          "mark": "△ 連下"
+          "score": 92.0,
+          "mark": "-"
         },
         {
           "num": 16,
           "name": "スネーフリンガ",
           "jockey": "松山",
-          "odds": 22.8,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 86.9,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 17,
           "name": "タマカヅラ",
           "jockey": "斎藤",
-          "odds": 30.6,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 83.8,
+          "score": 92.0,
           "mark": "-"
         },
         {
           "num": 18,
           "name": "ルージュサウダージ",
           "jockey": "角田和",
-          "odds": 38.4,
+          "odds": 10.0,
           "style": "先行",
           "last3f": "34.2秒",
-          "score": 80.6,
+          "score": 92.0,
           "mark": "-"
         }
       ],
-      "honmeiNum": 5,
+      "honmeiNum": 1,
       "confidence": "B",
       "confidenceScore": 85,
-      "aiSummary": "能力最上位の5番モンサンゴールデン（7.0倍）を本命に推奨。相手にはオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
-      "aiBuy": "【馬連】5 - 10 (1点) / 【穴ワイド】1 - 5 (1点)"
+      "aiSummary": "能力最上位の1番ファイツオンを軸に推奨。相手には印上位馬を絡め、無駄な点数を削った高回収率を狙う。",
+      "aiBuy": "【馬連】1 - 2, 3 (2点)"
     }
   ]
 }
