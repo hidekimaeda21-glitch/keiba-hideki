@@ -10,12 +10,12 @@ from google import genai
 
 os.makedirs("data", exist_ok=True)
 
-# 日本時間（JST）を正確に計算
+# 日本時間（JST）の計算
 now_utc = datetime.utcnow()
 now_jst = now_utc + timedelta(hours=9)
 now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
-# 夕方15時以降は「翌日の開催レース」、それ以前は「当日のレース」を自動対象
+# 夕方15時以降は「翌日の開催レース」、それ以前は「当日のレース」
 if now_jst.hour >= 15:
     target_dt = now_jst + timedelta(days=1)
 else:
@@ -29,7 +29,6 @@ print(f"=== 実行日時(JST): {now_str} / 自動対象開催日: {target_date_d
 api_key = os.environ.get("GEMINI_API_KEY")
 raw_proxy = os.environ.get("PROXY_URL", "").strip()
 
-# PROXY_URL のプロトコル自動補正
 if raw_proxy and not raw_proxy.startswith("http://") and not raw_proxy.startswith("https://"):
     proxy_base = f"https://{raw_proxy}".rstrip("/")
 else:
@@ -45,7 +44,6 @@ def fetch_html(target_url):
         "Accept-Language": "ja,en-US;q=0.9,en;q=0.8"
     }
     
-    # 1. Cloudflare Worker中継プロキシ経由
     if proxy_base and proxy_base.startswith("http"):
         try:
             encoded_url = urllib.parse.quote(target_url, safe="")
@@ -55,9 +53,8 @@ def fetch_html(target_url):
                 res.encoding = res.apparent_encoding if res.apparent_encoding else "euc-jp"
                 return res.text
         except Exception as e:
-            print(f"[中継プロキシ取得警告] {target_url} : {e}")
+            print(f"[プロキシ取得警告] {target_url} : {e}")
 
-    # 2. 直接アクセス（フォールバック）
     try:
         res = requests.get(target_url, headers=headers, timeout=15)
         res.encoding = res.apparent_encoding if res.apparent_encoding else "euc-jp"
@@ -67,7 +64,7 @@ def fetch_html(target_url):
         return ""
 
 def collect_target_races_dynamically(target_yyyymmdd):
-    """netkeibaから指定日の9R〜12RのレースIDを動的に全自動抽出"""
+    """netkeibaから指定日の9R〜12RのレースIDを動的に自動抽出"""
     urls_to_try = [
         f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={target_yyyymmdd}",
         f"https://race.netkeiba.com/top/race_list.html?kaisai_date={target_yyyymmdd}"
@@ -79,7 +76,6 @@ def collect_target_races_dynamically(target_yyyymmdd):
         if not html:
             continue
         
-        # HTML全体から 12桁の race_id を正規表現で一括抽出
         matches = re.findall(r"race_id=(\d{12})", html)
         for rid in matches:
             if rid not in found_race_ids:
@@ -88,7 +84,6 @@ def collect_target_races_dynamically(target_yyyymmdd):
         if found_race_ids:
             break
 
-    # 9R, 10R, 11R, 12R のみを抽出・整理
     race_items = []
     for rid in found_race_ids:
         r_num = int(rid[10:12])
@@ -96,13 +91,12 @@ def collect_target_races_dynamically(target_yyyymmdd):
             clean_url = f"https://race.netkeiba.com/race/shutuba.html?race_id={rid}"
             race_items.append({"race_id": rid, "url": clean_url, "r_num": r_num})
 
-    # レースID順にソート
     race_items = sorted(race_items, key=lambda x: x["race_id"])
     print(f"動的検知レース数 (9〜12R): {len(race_items)} 件")
     return race_items
 
 def parse_race_details(race_info):
-    """出馬表ページから出走馬・距離・コース情報をパース"""
+    """レース詳細ページから出走馬・距離・実オッズを正確にパース"""
     html = fetch_html(race_info["url"])
     if not html:
         return None
@@ -113,7 +107,7 @@ def parse_race_details(race_info):
     r_name_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
     r_name = r_name_elem.get_text(strip=True) if r_name_elem else f"{race_info['r_num']}R"
     
-    # コース形態・距離
+    # コース・距離
     r_data_elem = soup.find("div", class_="RaceData01")
     r_data = r_data_elem.get_text(strip=True) if r_data_elem else ""
     
@@ -124,7 +118,6 @@ def parse_race_details(race_info):
     time_match = re.search(r"(\d{2}:\d{2})発走", r_data)
     start_time = time_match.group(1) if time_match else "15:00"
 
-    # 競馬場判別
     venue_map = {
         "01": "札幌", "02": "函館", "03": "福島", "04": "新潟",
         "05": "東京", "06": "中山", "07": "中京", "08": "京都",
@@ -143,7 +136,6 @@ def parse_race_details(race_info):
             num_td = tr.find("td", class_=re.compile(r"Umaban"))
             name_td = tr.find("span", class_="HorseName") or tr.find("td", class_="HorseInfo")
             jockey_td = tr.find("td", class_="Jockey")
-            odds_td = tr.find("td", class_=re.compile(r"Popular|Odds"))
 
             if not num_td or not name_td:
                 continue
@@ -156,10 +148,31 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             
-            odds_text = odds_td.get_text(strip=True) if odds_td else "10.0"
-            try:
-                odds_val = float(re.search(r"\d+\.\d+", odds_text).group(0))
-            except Exception:
+            # --- オッズの正確な抽出 ---
+            odds_val = None
+            # 1. spanタグのID指定（例: odds_1）
+            span_odds = tr.find("span", id=re.compile(rf"odds_{num}$\vert{}odds_val_{num}$"))
+            if span_odds:
+                m = re.search(r"\d+\.\d+", span_odds.get_text(strip=True))
+                if m:
+                    odds_val = float(m.group(0))
+
+            # 2. Popular / Odds クラス内のテキスト探索
+            if odds_val is None:
+                for cls_name in ["Popular", "Odds", "Txt_R"]:
+                    td_candidates = tr.find_all("td", class_=re.compile(cls_name))
+                    for td_c in td_candidates:
+                        m = re.search(r"\b(\d{1,3}\.\d)\b", td_c.get_text(strip=True))
+                        if m:
+                            val = float(m.group(1))
+                            if 1.0 <= val <= 999.0:
+                                odds_val = val
+                                break
+                    if odds_val is not None:
+                        break
+
+            # 3. 万が一未確定または抽出不可時のデフォルト値
+            if odds_val is None or odds_val <= 0:
                 odds_val = 15.0
 
             horses.append({
@@ -168,12 +181,12 @@ def parse_race_details(race_info):
                 "jockey": jockey,
                 "odds": odds_val,
                 "style": "先行",
-                "last3f": "34.5秒",
+                "last3f": "34.2秒",
                 "score": round(max(70.0, 96.0 - (odds_val * 0.4)), 1),
                 "mark": "-"
             })
 
-    # 印を自動付与（ルール：◎1頭のみ、○1頭のみ、▲・☆・△は制限なし）
+    # 実オッズをもとに印を自動付与（◎1頭、○1頭、▲・☆・△）
     if horses:
         horses_sorted = sorted(horses, key=lambda x: x["odds"])
         horses_sorted[0]["mark"] = "◎ 本命"
@@ -182,7 +195,7 @@ def parse_race_details(race_info):
         if len(horses_sorted) > 2:
             horses_sorted[2]["mark"] = "▲ 単穴"
         
-        # 10倍〜50倍で高指数の馬を「☆ 爆発期待穴」
+        # 10倍〜50倍の実力馬を「☆ 爆発期待穴」に設定
         ana_candidates = [h for h in horses if 10.0 <= h["odds"] <= 55.0]
         if ana_candidates:
             ana_candidates[0]["mark"] = "☆ 爆発期待穴"
@@ -202,7 +215,7 @@ def parse_race_details(race_info):
     }
 
 def get_fallback_prediction(horses):
-    """印に完全連動した安全バックアップ買い目（10点以内厳守）"""
+    """印に完全連動した論理的バックアップ買い目（重複防止・10点以内厳守）"""
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = [h for h in horses if "▲" in h.get("mark", "")]
@@ -212,17 +225,25 @@ def get_fallback_prediction(horses):
     rec_parts = []
     
     main_opps = []
-    if taikou:
+    if taikou and taikou["num"] != h_num:
         main_opps.append(taikou["num"])
-    for t in tanana[:2]:
-        main_opps.append(t["num"])
+    for t in tanana:
+        if t["num"] != h_num and t["num"] not in main_opps:
+            main_opps.append(t["num"])
+        if len(main_opps) >= 3:
+            break
 
     if main_opps:
         opp_str = ", ".join(map(str, main_opps))
         rec_parts.append(f"【馬連】{h_num} - {opp_str} ({len(main_opps)}点)")
 
-    if ana and taikou:
-        rec_parts.append(f"【穴ワイド】{ana[0]['num']} - {h_num}, {taikou['num']} (2点)")
+    # 穴ワイド（同一馬番の重複を厳密に排除）
+    if ana and ana[0]["num"] != h_num:
+        ana_num = ana[0]["num"]
+        wide_targets = [str(h_num)]
+        if taikou and taikou["num"] != ana_num and taikou["num"] != h_num:
+            wide_targets.append(str(taikou["num"]))
+        rec_parts.append(f"【穴ワイド】{ana_num} - {', '.join(wide_targets)} ({len(wide_targets)}点)")
 
     recommendation_text = " / ".join(rec_parts) if rec_parts else f"【単勝】{h_num}"
 
@@ -230,7 +251,7 @@ def get_fallback_prediction(horses):
         "honmei_num": h_num,
         "confidence": "B",
         "confidence_score": 85,
-        "summary": f"能力最上位の{h_num}番{honmei['name']}を本命に据える。相手には対抗格およびスピード指数の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
+        "summary": f"能力最上位の{h_num}番{honmei['name']}を軸に据える。相手には対抗格およびオッズ妙味の高い伏兵を絡め、無駄な点数を削った高回収率を狙う。",
         "recommendation": recommendation_text
     }
 
@@ -252,6 +273,7 @@ def ask_gemini_prediction(race_name, venue, horses):
    ・「◎ 本命」は必ず【1頭のみ】
    ・「○ 対抗」は必ず【1頭のみ】
    ・買い目は必ず印がついた馬番（◎・○・▲・☆・△）のみで構成し、無印の馬は買わないでください。
+   ・ワイド等で同じ馬番同士（例: 1-1）を組み合わせるミスは絶対に避けてください。
 2. 【最重要：買い目点数は合計10点以内】
    ・無理に全券種を出さず、最も期待値の高い買い方に絞ってください。
    ・（例: 馬連 2〜3点 / 3連複フォーメーション 4〜6点 / 穴ワイド 1〜2点 など）
