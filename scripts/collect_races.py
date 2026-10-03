@@ -29,11 +29,10 @@ def fetch_via_proxy(target_url):
 
 def ask_gemini_prediction(race_name, venue, horses):
     """Gemini 3.8 Flash による【回収率重視・具体的フォーメーション買い目】推論"""
-    # フォールバック用の安全データ
     default_rec = (
-        "【馬連】7 - 1, 3, 5 (3点)\n"
-        "【3連複フォーメーション】7 - 1, 3 - 1, 3, 5, 6 (5点)\n"
-        "【特注ワイド】5 - 1, 7 (2点/穴狙い)"
+        "【馬連】3 - 1, 5, 8 (3点)\n"
+        "【3連複F】3 - 1, 5 - 1, 5, 8, 11 (5点)\n"
+        "【特注ワイド】8 - 1, 3 (2点/穴狙い)"
     )
     if not client or not horses:
         return {
@@ -56,7 +55,7 @@ def ask_gemini_prediction(race_name, venue, horses):
 1. 的中率だけでなく【回収率（長期的な利益）】を最優先してください。
 2. 「単勝 1 / 馬連流し」のような単調で抽象的な表現は絶対に禁止です。
 3. 馬番を具体的に指定した【フォーメーション】や【券種別の組み合わせ（点数付き）】を出力してください。
-   ・本線：軸馬からの馬連・馬単（点数を絞る）
+   ・本線：軸馬からの馬連（点数を絞る）
    ・回収率重視：ハマった時に跳ねる「3連複フォーメーション」（例: 軸 - 相手本線 - 相手全般）
    ・特注穴馬：期待値が高い穴馬（☆・▲）から妙味のある「ワイド」や「単複」
 
@@ -145,6 +144,36 @@ def ask_gemini_win5_strategy(win5_races_info):
 # ==========================================
 # 2026年10月3日（土曜）公式確定データ
 # ==========================================
+
+# 京都12R（最終レース）
+kyoto12_horses = [
+    {"num": 1, "name": "メイショウシナノ", "jockey": "酒井学", "odds": 14.5, "style": "先行", "last3f": "37.2秒", "recent": "出石特別 3着", "score": 84.0, "mark": "△ 連下"},
+    {"num": 2, "name": "ロードアウォード", "jockey": "川田将雅", "odds": 2.8, "style": "好位", "last3f": "36.4秒", "recent": "津軽海峡特別 1着", "score": 93.5, "mark": "◎ 本命"},
+    {"num": 3, "name": "タガノエスコート", "jockey": "角田大和", "odds": 32.0, "style": "追込", "last3f": "36.8秒", "recent": "鳥栖特別 7着", "score": 77.0, "mark": "-"},
+    {"num": 4, "name": "スマートハンター", "jockey": "幸英明", "odds": 8.6, "style": "差し", "last3f": "36.5秒", "recent": "三木特別 2着", "score": 87.5, "mark": "▲ 単穴"},
+    {"num": 5, "name": "カネトシブルーム", "jockey": "小崎綾也", "odds": 45.0, "style": "追込", "last3f": "37.0秒", "recent": "柳川特別 8着", "score": 75.0, "mark": "-"},
+    {"num": 6, "name": "エマヌエーレ", "jockey": "松山弘平", "odds": 5.4, "style": "先行", "last3f": "36.7秒", "recent": "瀬戸内海特別 2着", "score": 89.0, "mark": "○ 対抗"},
+    {"num": 7, "name": "サイモンメガライズ", "jockey": "田口貫太", "odds": 21.0, "style": "逃げ", "last3f": "37.5秒", "recent": "鳴門S 6着", "score": 81.5, "mark": "-"},
+    {"num": 8, "name": "グッドウッドガイ", "jockey": "西村淳也", "odds": 11.2, "style": "差し", "last3f": "36.6秒", "recent": "天満橋S 4着", "score": 85.5, "mark": "☆ 穴"},
+    {"num": 9, "name": "テイエムランウェイ", "jockey": "菱田裕二", "odds": 18.0, "style": "好位", "last3f": "36.9秒", "recent": "播磨S 5着", "score": 82.5, "mark": "-"},
+    {"num": 10, "name": "スマートカリス", "jockey": "北村友一", "odds": 38.0, "style": "追込", "last3f": "36.8秒", "recent": "安芸S 8着", "score": 78.0, "mark": "-"},
+    {"num": 11, "name": "メイショウフジタカ", "jockey": "吉村誠之助", "odds": 16.5, "style": "先行", "last3f": "37.1秒", "recent": "花園S 4着", "score": 83.0, "mark": "-"},
+    {"num": 12, "name": "インヒズアイズ", "jockey": "M.デムーロ", "odds": 7.2, "style": "差し", "last3f": "36.3秒", "recent": "平城京S 3着", "score": 88.0, "mark": "△ 連下"}
+]
+
+# 東京12R（最終レース）
+tokyo12_horses = [
+    {"num": 1, "name": "アスクビギントゥギャザー", "jockey": "戸崎圭太", "odds": 6.2, "style": "好位", "last3f": "34.0秒", "recent": "紫竹山特別 2着", "score": 88.0, "mark": "○ 対抗"},
+    {"num": 2, "name": "マイネルブリックス", "jockey": "津村明秀", "odds": 25.0, "style": "差し", "last3f": "34.4秒", "recent": "月岡温泉特別 5着", "score": 80.5, "mark": "-"},
+    {"num": 3, "name": "エリカサファイア", "jockey": "C.ルメール", "odds": 2.4, "style": "先行", "last3f": "33.7秒", "recent": "信濃川特別 1着", "score": 94.0, "mark": "◎ 本命"},
+    {"num": 4, "name": "サトノガレオン", "jockey": "横山武史", "odds": 7.8, "style": "先行", "last3f": "34.2秒", "recent": "清津峡特別 3着", "score": 86.5, "mark": "▲ 単穴"},
+    {"num": 5, "name": "カフェカルマ", "jockey": "原優介", "odds": 38.0, "style": "追込", "last3f": "34.1秒", "recent": "三面川特別 6着", "score": 78.0, "mark": "-"},
+    {"num": 6, "name": "ロジシルバー", "jockey": "横山和生", "odds": 12.5, "style": "好位", "last3f": "34.3秒", "recent": "佐渡S 4着", "score": 84.0, "mark": "☆ 穴"},
+    {"num": 7, "name": "ルージュスエルテ", "jockey": "佐々木大輔", "odds": 9.5, "style": "逃げ", "last3f": "34.6秒", "recent": "五稜郭S 5着", "score": 85.5, "mark": "△ 連下"},
+    {"num": 8, "name": "マイネルフォルツァ", "jockey": "大野拓弥", "odds": 52.0, "style": "追込", "last3f": "34.5秒", "recent": "豊栄特別 7着", "score": 75.0, "mark": "-"},
+    {"num": 9, "name": "コスモフロイデ", "jockey": "柴田大知", "odds": 44.0, "style": "先行", "last3f": "34.8秒", "recent": "NST賞 9着", "score": 76.5, "mark": "-"},
+    {"num": 10, "name": "コントラポスト", "jockey": "田辺裕信", "odds": 15.0, "style": "差し", "last3f": "33.9秒", "recent": "湯沢特別 2着", "score": 83.5, "mark": "△ 連下"}
+]
 
 opal_horses = [
     {"num": 1, "name": "カルチャーデイ", "jockey": "酒井学", "odds": 17.0, "style": "差し", "last3f": "34.1秒", "recent": "朱鷺S 8着", "score": 83.2, "mark": "△ 連下"},
@@ -252,15 +281,20 @@ nanbu_horses = [
 ]
 
 target_races_data = [
-    {"raceId": "202608040111", "venue": "京都", "raceName": "11R オパールステークス (L)", "startTime": "15:30", "isGraded": True, "isWin5": True, "horses": opal_horses},
-    {"raceId": "202608040110", "venue": "京都", "raceName": "10R 大山崎ステークス", "startTime": "14:50", "isGraded": False, "isWin5": True, "horses": ooyamazaki_horses},
+    # 京都
     {"raceId": "202608040109", "venue": "京都", "raceName": "9R りんどう賞", "startTime": "14:15", "isGraded": False, "isWin5": False, "horses": rindou_horses},
-    {"raceId": "202605040111", "venue": "東京", "raceName": "11R グリーンチャンネルC (L)", "startTime": "15:45", "isGraded": True, "isWin5": True, "horses": green_horses},
+    {"raceId": "202608040110", "venue": "京都", "raceName": "10R 大山崎ステークス", "startTime": "14:50", "isGraded": False, "isWin5": True, "horses": ooyamazaki_horses},
+    {"raceId": "202608040111", "venue": "京都", "raceName": "11R オパールステークス (L)", "startTime": "15:30", "isGraded": True, "isWin5": True, "horses": opal_horses},
+    {"raceId": "202608040112", "venue": "京都", "raceName": "12R 3歳以上2勝クラス", "startTime": "16:10", "isGraded": False, "isWin5": False, "horses": kyoto12_horses},
+
+    # 東京
+    {"raceId": "202605040109", "venue": "東京", "raceName": "9R 八ヶ岳特別", "startTime": "14:35", "isGraded": False, "isWin5": True, "horses": nanbu_horses},
     {"raceId": "202605040110", "venue": "東京", "raceName": "10R 白秋ステークス", "startTime": "15:10", "isGraded": False, "isWin5": True, "horses": hakushu_horses},
-    {"raceId": "202605040109", "venue": "東京", "raceName": "9R 八ヶ岳特別", "startTime": "14:35", "isGraded": False, "isWin5": True, "horses": nanbu_horses}
+    {"raceId": "202605040111", "venue": "東京", "raceName": "11R グリーンチャンネルC (L)", "startTime": "15:45", "isGraded": True, "isWin5": True, "horses": green_horses},
+    {"raceId": "202605040112", "venue": "東京", "raceName": "12R 3歳以上2勝クラス", "startTime": "16:25", "isGraded": False, "isWin5": False, "horses": tokyo12_horses}
 ]
 
-print("=== ジェミ予想 (回収率・具体的フォーメーション買い目) 全レース推論開始 ===")
+print("=== ジェミ予想 (最終12R追加・回収率＆フォーメーション買い目) 全レース推論開始 ===")
 final_races = []
 
 for r in target_races_data:
@@ -301,4 +335,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 全処理完了: 詳細フォーメーション買い目を反映保存しました ===")
+print(f"=== 全処理完了: 最終12Rを含む全レースの詳細買い目を保存しました ===")
