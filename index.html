@@ -63,6 +63,39 @@
       font-weight: bold;
     }
 
+    /* 的中率・回収率 ステータスバー */
+    .stats-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .stat-card {
+      flex: 1;
+      background: linear-gradient(145deg, #181926, #12131d);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-sub);
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .val-hit { color: #60a5fa; }
+    .val-rec { color: var(--gold-color); }
+    .stat-sub {
+      font-size: 9px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
     /* WIN5 アコーディオンカード */
     .win5-card {
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(59, 130, 246, 0.12));
@@ -296,6 +329,20 @@
     <button class="reload-btn" onclick="loadData()">更新 ⟳</button>
   </header>
 
+  <!-- 的中率・回収率 ステータス表示 -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-label">AI 的中率</div>
+      <div class="stat-value val-hit" id="hitRateDisplay">--%</div>
+      <div class="stat-sub" id="hitCountDisplay">--R 的中</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">AI 通算回収率 (ROI)</div>
+      <div class="stat-value val-rec" id="recoveryRateDisplay">--%</div>
+      <div class="stat-sub">10点厳選回収特化</div>
+    </div>
+  </div>
+
   <!-- WIN5 アコーディオンカード -->
   <div class="win5-card" id="win5Card" onclick="toggleWin5()" style="display: none;">
     <div class="win5-header">
@@ -433,7 +480,6 @@
 
     async function loadData() {
       try {
-        // キャッシュを強制回避するランダムタイムスタンプ
         const res = await fetch(`data/today.json?nocache=${new Date().getTime()}`, {
           cache: 'no-store'
         });
@@ -442,13 +488,20 @@
 
         document.getElementById('updateTime').textContent = `${data.targetDate || ''} | 更新: ${data.updatedAt || '未更新'}`;
 
-        // 1. WIN5 戦略の表示
+        // 1. 的中率・回収率の表示
+        if (data.stats) {
+          document.getElementById('hitRateDisplay').textContent = `${data.stats.hitRate}%`;
+          document.getElementById('hitCountDisplay').textContent = `${data.stats.totalBets}戦 ${data.stats.hitCount}的中`;
+          document.getElementById('recoveryRateDisplay').textContent = `${data.stats.recoveryRate}%`;
+        }
+
+        // 2. WIN5 戦略の表示
         if (data.win5Strategy) {
           document.getElementById('win5Body').textContent = data.win5Strategy;
           document.getElementById('win5Card').style.display = 'block';
         }
 
-        // 2. 最勝負レースのポップアップ表示
+        // 3. 最勝負レースのポップアップ表示
         if (data.topRecommendation) {
           const top = data.topRecommendation;
           document.getElementById('modalRaceName').textContent = `${top.venue} ${top.raceName}`;
@@ -462,7 +515,7 @@
 
         globalRaces = data.races || [];
 
-        // 3. 会場切り替えタブの動的生成
+        // 4. 会場切り替えタブの動的生成
         const venues = [...new Set(globalRaces.map(r => r.venue))];
         const tabsContainer = document.getElementById('venueTabs');
         tabsContainer.innerHTML = '<div class="tab-btn active" onclick="filterVenue(\'ALL\')">全会場</div>';
