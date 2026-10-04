@@ -275,6 +275,10 @@ def parse_race_details(race_info):
     is_rough = (score_diff < 1.2) or (horses_by_score[0]["odds"] >= 5.0)
     race_type = "波乱警戒レース（妙味穴狙い）" if is_rough else "本命信頼レース（点数厳選）"
 
+    # 正確なWIN5対象判定（netkeibaの出馬表にWIN5アイコンがある、または10R/11Rで発走時刻が14:30以降）
+    has_win5_tag = ("Icon_Win5" in html) or ("WIN5" in html and race_info["r_num"] in [10, 11])
+    is_win5_race = has_win5_tag or (race_info["r_num"] in [10, 11] and start_time >= "14:30")
+
     return {
         "raceId": race_id,
         "rNum": race_info["r_num"],
@@ -283,13 +287,12 @@ def parse_race_details(race_info):
         "rawRaceName": r_name,
         "startTime": start_time,
         "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
-        "isWin5": ("WIN5" in html) or (race_info["r_num"] in [10, 11]),
+        "isWin5": is_win5_race,
         "raceType": race_type,
         "horses": sorted(horses, key=lambda x: x["num"])
     }
 
 def ask_gemini_prediction(race_name, venue, race_type, horses):
-    """ワイド1点を排除し、3連系（3連複・3連単F）を厚く配分した回収率特化推論"""
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = next((h for h in horses if "▲" in h.get("mark", "")), None)
@@ -304,21 +307,16 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     ren_nums = [str(x["num"]) for x in renge]
     ana_num = str(ana["num"]) if ana else None
 
-    # ワイド1点を廃止し、3連系へ集中配分（合計8〜10点）
     if "本命信頼" in race_type and taikou:
         t_num = str(taikou['num'])
         rec_items.append(f"【馬単】{h_num} ➔ {t_num} (1点)")
-        # 馬連流し（相手4頭＝4点）
         umaren_opps = (opp_nums + ren_nums)[:4]
         rec_items.append(f"【馬連】{h_num} - {', '.join(umaren_opps)} ({len(umaren_opps)}点)")
-        # 3連単フォーメーション（1着本命 ➔ 2着対抗 ➔ 3着に穴馬含む5頭 ＝ 5点）
         third_cands = [x for x in (opp_nums + ren_nums + ([ana_num] if ana_num else [])) if x != t_num][:5]
         rec_items.append(f"【3連単F】{h_num} ➔ {t_num} ➔ {', '.join(third_cands)} ({len(third_cands)}点)")
     else:
-        # 波乱警戒：馬連流し（4点） ＋ 穴馬と本命を絡めた3連複フォーメーション（5〜6点）
         target_opps = (opp_nums + ren_nums)[:4]
         rec_items.append(f"【馬連】{h_num} - {', '.join(target_opps)} ({len(target_opps)}点)")
-        # 3連複フォーメーション（本命 ✕ 相手2頭 ✕ 穴馬含む4頭 ＝ 5〜6点）
         leg2 = opp_nums[:2] if opp_nums else [target_opps[0]]
         leg3 = list(dict.fromkeys(opp_nums + ren_nums + ([ana_num] if ana_num else [])))[:5]
         trio_pts = 6
@@ -388,15 +386,30 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     return fallback_data
 
 def ask_gemini_win5_strategy(all_races):
-    win5_candidates = sorted(all_races, key=lambda x: (x["startTime"], x["raceId"]))[-5:]
-    if len(win5_candidates) < 5:
-        win5_candidates = all_races[:5]
+    """
+    WIN5対象レースを正確に選定
+    ルール:
+    - 原則として12Rは除外（WIN5は10R・11Rで構成される）
+    - 発走時刻順に並べ、10R・11Rから対象5レースを厳密に抽出
+    """
+    # 1. 12Rを除外し、10Rと11Rを優先抽出
+    candidates = [r for r in all_races if r["rNum"] in [10, 11]]
+    
+    # 2. 発走時刻（startTime）順に昇順ソート（第1戦〜第5戦は時系列順に発走するため）
+    candidates = sorted(candidates, key=lambda x: (x["startTime"], x["raceId"]))
 
-    if len(win5_candidates) < 5:
+    # 5レースに絞る（足りない場合は全体から12R以外を時系列で補充）
+    if len(candidates) > 5:
+        candidates = candidates[:5]
+    elif len(candidates) < 5:
+        sub_candidates = [r for r in all_races if r["rNum"] == 9]
+        candidates = sorted(candidates + sub_candidates, key=lambda x: (x["startTime"], x["raceId"]))[:5]
+
+    if len(candidates) < 5:
         return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 
     race_picks = []
-    for r in win5_candidates:
+    for r in candidates:
         h_honmei = next((h for h in r["horses"] if "◎" in h.get("mark", "")), r["horses"][0])
         h_taikou = next((h for h in r["horses"] if "○" in h.get("mark", "")), None)
         race_picks.append({
@@ -407,6 +420,7 @@ def ask_gemini_win5_strategy(all_races):
             "taikou_name": h_taikou["name"] if h_taikou else ""
         })
 
+    # 計8点（1頭 ✕ 1頭 ✕ 2頭 ✕ 2頭 ✕ 2頭 ＝ 8点 / 予算800円）
     p3_sub = f", {race_picks[2]['taikou_num']}番" if race_picks[2]['taikou_num'] else ""
     p4_sub = f", {race_picks[3]['taikou_num']}番" if race_picks[3]['taikou_num'] else ""
     p5_sub = f", {race_picks[4]['taikou_num']}番" if race_picks[4]['taikou_num'] else ""
@@ -418,7 +432,7 @@ def ask_gemini_win5_strategy(all_races):
         f"第3戦 [{race_picks[2]['race']}]: {race_picks[2]['honmei_num']}番{p3_sub}\n"
         f"第4戦 [{race_picks[3]['race']}]: {race_picks[3]['honmei_num']}番{p4_sub}\n"
         f"第5戦 [{race_picks[4]['race']}]: {race_picks[4]['honmei_num']}番{p5_sub}\n"
-        f"狙い: 前半2戦を指数トップ1頭で突破し、波乱含みの後半3戦を2頭ずつ手厚く押さえて計8点で的中を狙う。"
+        f"狙い: 前半2戦を指数トップ1頭で突破し、後半3戦を本命・対抗の2頭ずつ手厚く押さえて計8点で的中を狙う。"
     )
 
     if not client:
