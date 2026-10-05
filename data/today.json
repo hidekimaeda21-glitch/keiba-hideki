@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-10-05 11:01",
+  "updatedAt": "2026-10-05 11:05",
   "targetDate": "2026年10月05日",
   "stats": {
-    "hitRate": 43.8,
-    "recoveryRate": 135.0,
-    "totalBets": 48,
-    "hitCount": 21,
+    "hitRate": 59.7,
+    "recoveryRate": 184.7,
+    "totalBets": 72,
+    "hitCount": 43,
     "markRates": {
       "◎": {
-        "rate": 68.8,
-        "count": "33/48"
+        "rate": 73.2,
+        "count": "41/56"
       },
       "○": {
-        "rate": 54.2,
-        "count": "26/48"
+        "rate": 57.1,
+        "count": "32/56"
       },
       "▲": {
-        "rate": 43.8,
-        "count": "21/48"
+        "rate": 44.6,
+        "count": "25/56"
       },
       "☆": {
-        "rate": 31.2,
-        "count": "15/48"
+        "rate": 33.9,
+        "count": "19/56"
       },
       "△": {
-        "rate": 28.1,
-        "count": "27/96"
+        "rate": 30.4,
+        "count": "34/112"
       }
     }
   },
