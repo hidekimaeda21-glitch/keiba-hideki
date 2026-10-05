@@ -67,7 +67,7 @@
     .stats-bar {
       display: flex;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
     .stat-card {
       flex: 1;
@@ -95,6 +95,55 @@
       color: #6b7280;
       margin-top: 2px;
     }
+
+    /* 印別複勝圏内率（3着内率）アコーディオン */
+    .mark-rate-card {
+      background: #151722;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .mark-rate-header {
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mark-rate-title {
+      font-size: 12px;
+      font-weight: bold;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mark-rate-toggle-icon {
+      font-size: 10px;
+      color: #93c5fd;
+      background: rgba(147, 197, 253, 0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .mark-rate-body {
+      padding: 10px 14px 12px;
+      border-top: 1px dashed var(--border-color);
+      display: none;
+      gap: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .mark-item {
+      flex: 1;
+      text-align: center;
+      background: rgba(255,255,255,0.03);
+      padding: 6px 2px;
+      border-radius: 6px;
+    }
+    .mark-item-symbol { font-size: 13px; font-weight: bold; margin-bottom: 2px; }
+    .mark-item-pct { font-size: 13px; font-weight: 800; color: #fff; }
+    .mark-item-sub { font-size: 8px; color: var(--text-sub); }
 
     /* WIN5 アコーディオンカード */
     .win5-card {
@@ -178,7 +227,12 @@
       color: var(--gold-color);
       border: 1px solid var(--gold-color);
     }
-    
+    .badge-low-payout {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid #fbbf24;
+    }
+
     /* レースカード */
     .race-card {
       background: var(--card-bg);
@@ -212,6 +266,7 @@
       color: #60a5fa;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 6px;
     }
     .ai-summary {
@@ -343,6 +398,41 @@
     </div>
   </div>
 
+  <!-- 印別 複勝圏内率（3着内率）アコーディオンカード -->
+  <div class="mark-rate-card" onclick="toggleMarkRates()">
+    <div class="mark-rate-header">
+      <div class="mark-rate-title">📊 印別 複勝圏内率（3着内確率）</div>
+      <div class="mark-rate-toggle-icon" id="markToggleIcon">▼ タップで展開</div>
+    </div>
+    <div class="mark-rate-body" id="markRateBody">
+      <div class="mark-item">
+        <div class="mark-item-symbol mark-honmei">◎ 本命</div>
+        <div class="mark-item-pct" id="markPctHonmei">--%</div>
+        <div class="mark-item-sub" id="markCountHonmei">--/--</div>
+      </div>
+      <div class="mark-item">
+        <div class="mark-item-symbol mark-taikou">○ 対抗</div>
+        <div class="mark-item-pct" id="markPctTaikou">--%</div>
+        <div class="mark-item-sub" id="markCountTaikou">--/--</div>
+      </div>
+      <div class="mark-item">
+        <div class="mark-item-symbol mark-tanana">▲ 単穴</div>
+        <div class="mark-item-pct" id="markPctTanana">--%</div>
+        <div class="mark-item-sub" id="markCountTanana">--/--</div>
+      </div>
+      <div class="mark-item">
+        <div class="mark-item-symbol mark-ana">☆ 穴</div>
+        <div class="mark-item-pct" id="markPctAna">--%</div>
+        <div class="mark-item-sub" id="markCountAna">--/--</div>
+      </div>
+      <div class="mark-item">
+        <div class="mark-item-symbol mark-renge">△ 連下</div>
+        <div class="mark-item-pct" id="markPctRenge">--%</div>
+        <div class="mark-item-sub" id="markCountRenge">--/--</div>
+      </div>
+    </div>
+  </div>
+
   <!-- WIN5 アコーディオンカード -->
   <div class="win5-card" id="win5Card" onclick="toggleWin5()" style="display: none;">
     <div class="win5-header">
@@ -377,6 +467,18 @@
 
     function closeModal() {
       document.getElementById('recommendModal').style.display = 'none';
+    }
+
+    function toggleMarkRates() {
+      const body = document.getElementById('markRateBody');
+      const icon = document.getElementById('markToggleIcon');
+      if (body.style.display === 'none' || body.style.display === '') {
+        body.style.display = 'flex';
+        icon.textContent = '▲ 閉じる';
+      } else {
+        body.style.display = 'none';
+        icon.textContent = '▼ タップで展開';
+      }
     }
 
     function toggleWin5() {
@@ -442,6 +544,8 @@
           `;
         });
 
+        const lowPayoutBadge = r.isLowPayout ? '<span class="badge badge-low-payout">低配当警戒</span>' : '';
+
         card.innerHTML = `
           <div class="race-header">
             <div>
@@ -454,7 +558,10 @@
           <div class="ai-box">
             <div class="ai-box-title">
               <span>🧠 ジェミ予想 AI見解</span>
-              <span>信頼度: ${r.confidence || 'B'} (${r.confidenceScore || 85}点)</span>
+              <div style="display:flex; align-items:center; gap:6px;">
+                ${lowPayoutBadge}
+                <span>信頼度: ${r.confidence || 'B'} (${r.confidenceScore || 85}点)</span>
+              </div>
             </div>
             <div class="ai-summary">${r.aiSummary || '指数と展開から最適な買い目を導出しました。'}</div>
             <div class="ai-buy">推奨買い目: ${r.aiBuy || 'データ準備中'}</div>
@@ -493,6 +600,29 @@
           document.getElementById('hitRateDisplay').textContent = `${data.stats.hitRate}%`;
           document.getElementById('hitCountDisplay').textContent = `${data.stats.totalBets}戦 ${data.stats.hitCount}的中`;
           document.getElementById('recoveryRateDisplay').textContent = `${data.stats.recoveryRate}%`;
+
+          // 印別 複勝率の反映
+          const mr = data.stats.markRates || {};
+          if (mr['◎']) {
+            document.getElementById('markPctHonmei').textContent = `${mr['◎'].rate}%`;
+            document.getElementById('markCountHonmei').textContent = mr['◎'].count;
+          }
+          if (mr['○']) {
+            document.getElementById('markPctTaikou').textContent = `${mr['○'].rate}%`;
+            document.getElementById('markCountTaikou').textContent = mr['○'].count;
+          }
+          if (mr['▲']) {
+            document.getElementById('markPctTanana').textContent = `${mr['▲'].rate}%`;
+            document.getElementById('markCountTanana').textContent = mr['▲'].count;
+          }
+          if (mr['☆']) {
+            document.getElementById('markPctAna').textContent = `${mr['☆'].rate}%`;
+            document.getElementById('markCountAna').textContent = mr['☆'].count;
+          }
+          if (mr['△']) {
+            document.getElementById('markPctRenge').textContent = `${mr['△'].rate}%`;
+            document.getElementById('markCountRenge').textContent = mr['△'].count;
+          }
         }
 
         // 2. WIN5 戦略の表示
