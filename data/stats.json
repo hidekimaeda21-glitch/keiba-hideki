@@ -1,0 +1,29 @@
+{
+  "total_bets": 48,
+  "hit_count": 21,
+  "invest": 48000,
+  "payout": 64800,
+  "mark_stats": {
+    "◎": {
+      "total": 48,
+      "top3": 33
+    },
+    "○": {
+      "total": 48,
+      "top3": 26
+    },
+    "▲": {
+      "total": 48,
+      "top3": 21
+    },
+    "☆": {
+      "total": 48,
+      "top3": 15
+    },
+    "△": {
+      "total": 96,
+      "top3": 27
+    }
+  },
+  "checked_races": []
+}
