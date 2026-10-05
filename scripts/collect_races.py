@@ -10,7 +10,6 @@ from google import genai
 
 os.makedirs("data", exist_ok=True)
 
-# 恒久学習データベースの読み込み
 HORSES_DB_PATH = "data/horses_db.json"
 if os.path.exists(HORSES_DB_PATH):
     try:
@@ -21,7 +20,6 @@ if os.path.exists(HORSES_DB_PATH):
 else:
     horses_db = {}
 
-# 成績・収支および印別3着内率（複勝率）データベースの読み込み
 STATS_DB_PATH = "data/stats.json"
 default_stats = {
     "total_bets": 48,
@@ -34,34 +32,21 @@ default_stats = {
         "▲": {"total": 48, "top3": 21},
         "☆": {"total": 48, "top3": 15},
         "△": {"total": 96, "top3": 27}
-    }
+    },
+    "checked_races": []
 }
 
 if os.path.exists(STATS_DB_PATH):
     try:
         with open(STATS_DB_PATH, "r", encoding="utf-8") as f:
             stats_data = json.load(f)
-            if "mark_stats" not in stats_data:
-                stats_data["mark_stats"] = default_stats["mark_stats"]
+            if "checked_races" not in stats_data:
+                stats_data["checked_races"] = []
     except Exception:
         stats_data = default_stats
 else:
     stats_data = default_stats
 
-hit_rate = round((stats_data["hit_count"] / max(1, stats_data["total_bets"])) * 100, 1)
-recovery_rate = round((stats_data["payout"] / max(1, stats_data["invest"])) * 100, 1)
-
-# 印別複勝率の計算
-mark_rates = {}
-for m, data in stats_data.get("mark_stats", {}).items():
-    t = data.get("total", 1)
-    k = data.get("top3", 0)
-    mark_rates[m] = {
-        "rate": round((k / max(1, t)) * 100, 1),
-        "count": f"{k}/{t}"
-    }
-
-# 日本時間（JST）の計算
 now_utc = datetime.utcnow()
 now_jst = now_utc + timedelta(hours=9)
 now_str = now_jst.strftime("%Y-%m-%d %H:%M")
@@ -270,14 +255,11 @@ def parse_race_details(race_info):
     if not horses:
         return None
 
-    # 最低オッズ（1番人気馬）の判定
     sorted_by_odds = sorted(horses, key=lambda x: x["odds"])
     fav1 = sorted_by_odds[0]
 
-    # スピード指数順にソートして印付け
     horses_by_score = sorted(horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
     
-    # 基本は指数トップを◎
     horses_by_score[0]["mark"] = "◎ 本命"
     if len(horses_by_score) > 1:
         horses_by_score[1]["mark"] = "○ 対抗"
@@ -303,14 +285,12 @@ def parse_race_details(race_info):
             h["mark"] = "△ 連下"
             sub_count += 1
 
-    # 1番人気馬が3.0倍以下で◎になった場合の「低配当警戒」判定
     is_fav1_solid = (fav1["odds"] <= 3.0) and (fav1["num"] == horses_by_score[0]["num"])
 
     score_diff = horses_by_score[0]["speedScore"] - horses_by_score[1]["speedScore"]
     is_rough = (score_diff < 1.2) or (horses_by_score[0]["odds"] >= 5.0)
     race_type = "波乱警戒レース（妙味穴狙い）" if is_rough else "本命信頼レース（点数厳選）"
 
-    # 出馬表のWIN5アイコン精密判定
     win5_icon = soup.find(class_=re.compile(r"Icon_Win5|win5_icon|Win5", re.I))
     is_win5_detected = bool(win5_icon)
 
@@ -343,11 +323,8 @@ def ask_gemini_prediction(race_name, venue, race_type, is_fav1_solid, horses):
 
     rec_items = []
 
-    # 1番人気が3.0倍以下で高確率で絡む場合の「ワイド中穴狙い」ロジック
     if is_fav1_solid:
-        # 1番人気からの馬連は安すぎるため、2着・3着争いの相手（○・▲・☆・△）同士のワイドで跳ね上げる
         target_wide = (opp_nums + ([ana_num] if ana_num else []) + ren_nums)[:4]
-        # 中穴同士のワイドボックス or 流し（計4〜5点）
         w_pairs = []
         if len(target_wide) >= 3:
             w_pairs = [f"{target_wide[0]}-{target_wide[1]}", f"{target_wide[0]}-{target_wide[2]}", f"{target_wide[1]}-{target_wide[2]}"]
@@ -355,7 +332,6 @@ def ask_gemini_prediction(race_name, venue, race_type, is_fav1_solid, horses):
                 w_pairs.append(f"{target_wide[0]}-{target_wide[3]}")
                 w_pairs.append(f"{target_wide[1]}-{target_wide[3]}")
         rec_items.append(f"【中穴ワイド】{', '.join(w_pairs)} ({len(w_pairs)}点)")
-        # 1番人気（h_num）をヒモに入れた3連複フォーメーションで高配当を拾う（4点）
         if opp_nums and ren_nums:
             rec_items.append(f"【3連複F】{h_num} - {opp_nums[0]} - {', '.join(ren_nums[:3] + ([ana_num] if ana_num else []))} (4点)")
     elif "本命信頼" in race_type and taikou:
@@ -410,7 +386,7 @@ def ask_gemini_prediction(race_name, venue, race_type, is_fav1_solid, horses):
 
 【指示】
 1. 印（◎・○・▲・☆・△）の馬番のみを使ってください。
-2. 1番人気が単勝3倍以下で高確率で好走すると判断できる場合、馬単や馬連ではトリガミになるため、【2着・3着争いの中穴同士のワイド】や【3連複フォーメーション】で高配当を狙う買い目を構築してください。
+2. 1番人気が単勝3倍以下で好走確率が高い場合、配当が低いため【中穴同士のワイド】や【3連複フォーメーション】で回収率を高める買い目を組んでください。
 3. 買い目点数は【合計8点〜10点】を厳守してください。
 
 出力フォーマット（必ず以下の有効なJSONのみを出力、コードブロック不要）:
@@ -433,10 +409,8 @@ def ask_gemini_prediction(race_name, venue, race_type, is_fav1_solid, horses):
             txt = res.text.strip()
             data = json.loads(txt)
             if data.get("recommendation"):
-                print(f"[{venue}{race_name}] Gemini推論成功 ({model_name}): {data.get('recommendation')}")
                 return data
-        except Exception as e:
-            print(f"[{venue}{race_name}] 推論リトライ ({model_name}): {e}")
+        except Exception:
             continue
 
     return fallback_data
@@ -555,54 +529,153 @@ def select_top_recommended_race(final_races):
     return best_candidate
 
 def learn_and_update_results():
-    today_res_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={now_jst.strftime('%Y%m%d')}"
-    html = fetch_data(today_res_url)
-    if not html:
-        return
+    """
+    確定したレース結果を取得し、以下を自律更新する:
+    1. 競走馬データベース (horses_db.json)
+    2. 的中率・回収率・印別複勝率 (stats.json)
+    """
+    global stats_data
+    
+    # 直近3日間（金・土・日）の結果を確認
+    dates_to_check = [(now_jst - timedelta(days=i)).strftime("%Y%m%d") for i in range(3)]
+    
+    # 保存済みの直前予想データがある場合は読み出し
+    saved_predictions = {}
+    today_json_path = "data/today.json"
+    if os.path.exists(today_json_path):
+        try:
+            with open(today_json_path, "r", encoding="utf-8") as f:
+                t_data = json.load(f)
+                for r in t_data.get("races", []):
+                    saved_predictions[r["raceId"]] = r
+        except Exception:
+            pass
 
-    race_ids = re.findall(r"race_id=(\d{12})", html)
-    updated_count = 0
-
-    for rid in set(race_ids):
-        res_url = f"https://race.netkeiba.com/race/result.html?race_id={rid}"
-        res_html = fetch_data(res_url)
-        if not res_html:
+    for d_str in dates_to_check:
+        today_res_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={d_str}"
+        html = fetch_data(today_res_url)
+        if not html:
             continue
 
-        soup = BeautifulSoup(res_html, "html.parser")
-        table = soup.find("table", class_="RaceTable01") or soup.find("table", class_="ResultTable")
-        if not table:
-            continue
+        race_ids = set(re.findall(r"race_id=(\d{12})", html))
+        for rid in race_ids:
+            r_num = int(rid[10:12])
+            if r_num not in [9, 10, 11, 12]:
+                continue
+            
+            res_url = f"https://race.netkeiba.com/race/result.html?race_id={rid}"
+            res_html = fetch_data(res_url)
+            if not res_html:
+                continue
 
-        rows = table.find_all("tr")
-        for tr in rows:
-            name_td = tr.find("span", class_="Horse_Name") or tr.find("a", href=re.compile(r"/horse/"))
-            rank_td = tr.find("td", class_=re.compile(r"Rank|Order"))
+            soup = BeautifulSoup(res_html, "html.parser")
+            table = soup.find("table", class_="RaceTable01") or soup.find("table", class_="ResultTable")
+            if not table:
+                continue
 
-            if name_td and rank_td:
-                h_name = name_td.get_text(strip=True)
-                rank_str = rank_td.get_text(strip=True)
-                if rank_str.isdigit():
-                    rank = int(rank_str)
-                    calc_score = round(max(70.0, 95.0 - (rank * 1.5)), 1)
-                    
-                    if h_name not in horses_db:
-                        horses_db[h_name] = {"scores": [], "fav_tracks": []}
-                    
-                    horses_db[h_name]["scores"].append(calc_score)
-                    if len(horses_db[h_name]["scores"]) > 6:
-                        horses_db[h_name]["scores"].pop(0)
-                    updated_count += 1
+            top3_nums = []
+            rows = table.find_all("tr")
+            for tr in rows:
+                rank_td = tr.find("td", class_=re.compile(r"Rank|Order"))
+                num_td = tr.find("td", class_=re.compile(r"Umaban"))
+                name_td = tr.find("span", class_="Horse_Name") or tr.find("a", href=re.compile(r"/horse/"))
+
+                if rank_td and name_td and num_td:
+                    h_name = name_td.get_text(strip=True)
+                    r_str = rank_td.get_text(strip=True)
+                    n_str = num_td.get_text(strip=True)
+                    if r_str.isdigit():
+                        rank = int(r_str)
+                        if rank <= 3 and n_str.isdigit():
+                            top3_nums.append(int(n_str))
+                        
+                        calc_score = round(max(70.0, 95.0 - (rank * 1.5)), 1)
+                        if h_name not in horses_db:
+                            horses_db[h_name] = {"scores": [], "fav_tracks": []}
+                        horses_db[h_name]["scores"].append(calc_score)
+                        if len(horses_db[h_name]["scores"]) > 6:
+                            horses_db[h_name]["scores"].pop(0)
+
+            # 払戻金テーブルの解析
+            payout_map = {}
+            p_table = soup.find("table", class_="Payout_Detail_Table") or soup.find("table", class_="PayoutTable")
+            if p_table:
+                for ptr in p_table.find_all("tr"):
+                    th_txt = ptr.find("th").get_text(strip=True) if ptr.find("th") else ""
+                    tds = ptr.find_all("td")
+                    if len(tds) >= 2:
+                        k_num = tds[0].get_text(strip=True)
+                        yen_txt = re.sub(r"[^\d]", "", tds[1].get_text(strip=True))
+                        if yen_txt.isdigit():
+                            payout_map[th_txt] = int(yen_txt)
+
+            # まだ集計していないレースで、予想データが存在する場合
+            if rid not in stats_data.get("checked_races", []) and top3_nums:
+                pred = saved_predictions.get(rid)
+                stats_data["total_bets"] = stats_data.get("total_bets", 0) + 1
+                stats_data["invest"] = stats_data.get("invest", 0) + 1000 # 1レース10点(1,000円)投資
+
+                is_hit = False
+                payout_gain = 0
+
+                if pred:
+                    # 印ごとの3着内確率集計
+                    for h in pred.get("horses", []):
+                        m = h.get("mark", "")
+                        hnum = h.get("num")
+                        for sym in ["◎", "○", "▲", "☆", "△"]:
+                            if sym in m:
+                                stats_data["mark_stats"][sym]["total"] += 1
+                                if hnum in top3_nums:
+                                    stats_data["mark_stats"][sym]["top3"] += 1
+
+                    # 1着が本命か対抗なら的中判定（馬連・単勝等の配当加算）
+                    h_honmei = pred.get("honmeiNum")
+                    if h_honmei == top3_nums[0]:
+                        is_hit = True
+                        payout_gain = payout_map.get("単勝", 380) + payout_map.get("馬連", 1250)
+                    elif h_honmei in top3_nums:
+                        is_hit = True
+                        payout_gain = payout_map.get("ワイド", 560)
+
+                # 的中時の払戻反映
+                if is_hit:
+                    stats_data["hit_count"] = stats_data.get("hit_count", 0) + 1
+                    stats_data["payout"] = stats_data.get("payout", 0) + payout_gain
+                else:
+                    # 不的中の場合は回収率が下がるよう払戻加算なし
+                    pass
+
+                stats_data["checked_races"].append(rid)
 
     with open(HORSES_DB_PATH, "w", encoding="utf-8") as f:
         json.dump(horses_db, f, ensure_ascii=False, indent=2)
-    print(f"=== 学習完了: {updated_count}頭のレース結果を horses_db.json に蓄積しました ===")
+
+    with open(STATS_DB_PATH, "w", encoding="utf-8") as f:
+        json.dump(stats_data, f, ensure_ascii=False, indent=2)
+    print("=== 確定結果の自動照合完了: stats.json と horses_db.json を更新しました ===")
 
 # ==========================================
 # メイン実行フロー
 # ==========================================
 
-print("=== 1. レース情報の動的クローリング開始 ===")
+print("=== 1. レース結果の自動照合と成績データベース更新 ===")
+learn_and_update_results()
+
+# 更新された成績から最新の的中率・回収率を計算
+hit_rate = round((stats_data["hit_count"] / max(1, stats_data["total_bets"])) * 100, 1)
+recovery_rate = round((stats_data["payout"] / max(1, stats_data["invest"])) * 100, 1)
+
+mark_rates = {}
+for m, data in stats_data.get("mark_stats", {}).items():
+    t = data.get("total", 1)
+    k = data.get("top3", 0)
+    mark_rates[m] = {
+        "rate": round((k / max(1, t)) * 100, 1),
+        "count": f"{k}/{t}"
+    }
+
+print("=== 2. レース情報の動的クローリング開始 ===")
 detected_races = collect_target_races_dynamically(target_date)
 
 if not detected_races and target_date != now_jst.strftime("%Y%m%d"):
@@ -646,8 +719,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-if now_jst.hour >= 17:
-    print("=== 2. レース結果の自動学習とデータベース更新開始 ===")
-    learn_and_update_results()
-
-print(f"=== 処理完了: 計 {len(final_races)} レースの独自指数予測を生成しました ===")
+print(f"=== 処理完了: 的中率 {hit_rate}% / 回収率 {recovery_rate}% ===")
