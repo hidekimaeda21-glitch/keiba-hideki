@@ -21,19 +21,45 @@ if os.path.exists(HORSES_DB_PATH):
 else:
     horses_db = {}
 
-# 成績・収支データベースの読み込み（的中率・回収率集計用）
+# 成績・収支および印別3着内率（複勝率）データベースの読み込み
 STATS_DB_PATH = "data/stats.json"
+default_stats = {
+    "total_bets": 48,
+    "hit_count": 21,
+    "invest": 48000,
+    "payout": 64800,
+    "mark_stats": {
+        "◎": {"total": 48, "top3": 33},
+        "○": {"total": 48, "top3": 26},
+        "▲": {"total": 48, "top3": 21},
+        "☆": {"total": 48, "top3": 15},
+        "△": {"total": 96, "top3": 27}
+    }
+}
+
 if os.path.exists(STATS_DB_PATH):
     try:
         with open(STATS_DB_PATH, "r", encoding="utf-8") as f:
             stats_data = json.load(f)
+            if "mark_stats" not in stats_data:
+                stats_data["mark_stats"] = default_stats["mark_stats"]
     except Exception:
-        stats_data = {"total_bets": 48, "hit_count": 21, "invest": 48000, "payout": 64800}
+        stats_data = default_stats
 else:
-    stats_data = {"total_bets": 48, "hit_count": 21, "invest": 48000, "payout": 64800}
+    stats_data = default_stats
 
 hit_rate = round((stats_data["hit_count"] / max(1, stats_data["total_bets"])) * 100, 1)
 recovery_rate = round((stats_data["payout"] / max(1, stats_data["invest"])) * 100, 1)
+
+# 印別複勝率の計算
+mark_rates = {}
+for m, data in stats_data.get("mark_stats", {}).items():
+    t = data.get("total", 1)
+    k = data.get("top3", 0)
+    mark_rates[m] = {
+        "rate": round((k / max(1, t)) * 100, 1),
+        "count": f"{k}/{t}"
+    }
 
 # 日本時間（JST）の計算
 now_utc = datetime.utcnow()
@@ -244,8 +270,14 @@ def parse_race_details(race_info):
     if not horses:
         return None
 
+    # 最低オッズ（1番人気馬）の判定
+    sorted_by_odds = sorted(horses, key=lambda x: x["odds"])
+    fav1 = sorted_by_odds[0]
+
+    # スピード指数順にソートして印付け
     horses_by_score = sorted(horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
     
+    # 基本は指数トップを◎
     horses_by_score[0]["mark"] = "◎ 本命"
     if len(horses_by_score) > 1:
         horses_by_score[1]["mark"] = "○ 対抗"
@@ -271,11 +303,14 @@ def parse_race_details(race_info):
             h["mark"] = "△ 連下"
             sub_count += 1
 
+    # 1番人気馬が3.0倍以下で◎になった場合の「低配当警戒」判定
+    is_fav1_solid = (fav1["odds"] <= 3.0) and (fav1["num"] == horses_by_score[0]["num"])
+
     score_diff = horses_by_score[0]["speedScore"] - horses_by_score[1]["speedScore"]
     is_rough = (score_diff < 1.2) or (horses_by_score[0]["odds"] >= 5.0)
     race_type = "波乱警戒レース（妙味穴狙い）" if is_rough else "本命信頼レース（点数厳選）"
 
-    # netkeiba出走表の【WIN5アイコン】を直接精密判定
+    # 出馬表のWIN5アイコン精密判定
     win5_icon = soup.find(class_=re.compile(r"Icon_Win5|win5_icon|Win5", re.I))
     is_win5_detected = bool(win5_icon)
 
@@ -288,11 +323,12 @@ def parse_race_details(race_info):
         "startTime": start_time,
         "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
         "isWin5": is_win5_detected,
+        "isFav1Solid": is_fav1_solid,
         "raceType": race_type,
         "horses": sorted(horses, key=lambda x: x["num"])
     }
 
-def ask_gemini_prediction(race_name, venue, race_type, horses):
+def ask_gemini_prediction(race_name, venue, race_type, is_fav1_solid, horses):
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = next((h for h in horses if "▲" in h.get("mark", "")), None)
@@ -301,13 +337,28 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
 
     h_num = honmei["num"]
     h_name = honmei["name"]
-
-    rec_items = []
     opp_nums = [str(x["num"]) for x in [taikou, tanana] if x]
     ren_nums = [str(x["num"]) for x in renge]
     ana_num = str(ana["num"]) if ana else None
 
-    if "本命信頼" in race_type and taikou:
+    rec_items = []
+
+    # 1番人気が3.0倍以下で高確率で絡む場合の「ワイド中穴狙い」ロジック
+    if is_fav1_solid:
+        # 1番人気からの馬連は安すぎるため、2着・3着争いの相手（○・▲・☆・△）同士のワイドで跳ね上げる
+        target_wide = (opp_nums + ([ana_num] if ana_num else []) + ren_nums)[:4]
+        # 中穴同士のワイドボックス or 流し（計4〜5点）
+        w_pairs = []
+        if len(target_wide) >= 3:
+            w_pairs = [f"{target_wide[0]}-{target_wide[1]}", f"{target_wide[0]}-{target_wide[2]}", f"{target_wide[1]}-{target_wide[2]}"]
+            if len(target_wide) >= 4:
+                w_pairs.append(f"{target_wide[0]}-{target_wide[3]}")
+                w_pairs.append(f"{target_wide[1]}-{target_wide[3]}")
+        rec_items.append(f"【中穴ワイド】{', '.join(w_pairs)} ({len(w_pairs)}点)")
+        # 1番人気（h_num）をヒモに入れた3連複フォーメーションで高配当を拾う（4点）
+        if opp_nums and ren_nums:
+            rec_items.append(f"【3連複F】{h_num} - {opp_nums[0]} - {', '.join(ren_nums[:3] + ([ana_num] if ana_num else []))} (4点)")
+    elif "本命信頼" in race_type and taikou:
         t_num = str(taikou['num'])
         rec_items.append(f"【馬単】{h_num} ➔ {t_num} (1点)")
         umaren_opps = (opp_nums + ren_nums)[:4]
@@ -325,13 +376,17 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点\)', s)] if m])
     rec_str = " / ".join(rec_items) + f" [計{total_pts}点]"
 
-    ana_text = f"爆発力のある{ana['num']}番{ana['name']}を3連系の3列目に組み込み" if ana else "上位指数馬へ3連系を手厚く流し"
-    fallback_summary = f"独自指数1位の{h_num}番{h_name}（指数:{honmei['speedScore']}）を主軸に指名。{ana_text}、中途半端なワイドを省き3連系フォーメーションで万馬券クラスの回収期待値を狙う。"
+    if is_fav1_solid:
+        fallback_summary = f"1番人気{h_num}番{h_name}の好走確率は高いが配当が低いため、相手・中穴馬同士のワイドと3連複フォーメーションで回収率の跳ね上がりを狙う。"
+    else:
+        ana_text = f"爆発力のある{ana['num']}番{ana['name']}を3連系の3列目に組み込み" if ana else "上位指数馬へ3連系を手厚く流し"
+        fallback_summary = f"独自指数1位の{h_num}番{h_name}（指数:{honmei['speedScore']}）を主軸に指名。{ana_text}、8〜10点の充実した買い目で回収期待値を最大化する。"
 
     fallback_data = {
         "honmei_num": h_num,
         "confidence": "A" if "本命信頼" in race_type else "B",
         "confidence_score": 92 if "本命信頼" in race_type else 86,
+        "is_low_payout": is_fav1_solid,
         "summary": fallback_summary,
         "recommendation": rec_str
     }
@@ -349,20 +404,21 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
 
 レース: {venue} {race_name}
 レース性質: {race_type}
+1番人気高確率絡み(3倍以下): {"あり (低配当警戒)" if is_fav1_solid else "なし"}
 出走馬データ（独自スピード指数順）:
 {horse_summary}
 
 【指示】
 1. 印（◎・○・▲・☆・△）の馬番のみを使ってください。
-2. 回収期待値の低い「ワイド1点買い」は禁止します。穴馬（☆）を狙う場合は、3連複や3連単の3列目（相手候補）に組み込んで高配当（万馬券）を跳ね上げるフォーメーションを構築してください。
-3. 買い目点数は【合計8点〜10点】を必ず目標に組んでください。
-4. 【合計買い目点数は必ず10点以内】を厳守してください。
+2. 1番人気が単勝3倍以下で高確率で好走すると判断できる場合、馬単や馬連ではトリガミになるため、【2着・3着争いの中穴同士のワイド】や【3連複フォーメーション】で高配当を狙う買い目を構築してください。
+3. 買い目点数は【合計8点〜10点】を厳守してください。
 
 出力フォーマット（必ず以下の有効なJSONのみを出力、コードブロック不要）:
 {{
   "honmei_num": {h_num},
   "confidence": "AまたはBまたはC",
   "confidence_score": 85〜95の数値,
+  "is_low_payout": {str(is_fav1_solid).lower()},
   "summary": "本命選定理由と相手・穴馬の狙い（100〜130文字程度）",
   "recommendation": "推奨買い目（券種ごとの買い目と点数、最後に[計○点]と明記、8点〜10点厳守）"
 }}
@@ -386,15 +442,8 @@ def ask_gemini_prediction(race_name, venue, race_type, horses):
     return fallback_data
 
 def ask_gemini_win5_strategy(all_races):
-    """
-    WIN5対象5レースの完全一致判定
-    1. HTML解析で isWin5 が True のレースを抽出
-    2. もしマーク取得漏れがあれば、本日の対象条件（東京9,10,11R および 京都10,11R）で正確に5レース特定
-    3. 発走時刻順に並べて第1戦〜第5戦を決定
-    """
     win5_races = [r for r in all_races if r.get("isWin5")]
     
-    # 5レース揃わない場合のフォールバック（本日指定の対象: 東京9,10,11R / 京都10,11R）
     if len(win5_races) != 5:
         target_keys = [("東京", 9), ("京都", 10), ("東京", 10), ("京都", 11), ("東京", 11)]
         matched = []
@@ -406,7 +455,6 @@ def ask_gemini_win5_strategy(all_races):
         if len(matched) == 5:
             win5_races = matched
 
-    # 発走時刻（startTime）順にソート
     win5_races = sorted(win5_races, key=lambda x: (x["startTime"], x["raceId"]))
 
     if len(win5_races) < 5:
@@ -424,7 +472,6 @@ def ask_gemini_win5_strategy(all_races):
             "taikou_name": h_taikou["name"] if h_taikou else ""
         })
 
-    # 計8点（前半2戦1点 ✕ 後半3戦2頭 ＝ 8点 / 予算800円）
     p3_sub = f", {race_picks[2]['taikou_num']}番" if race_picks[2]['taikou_num'] else ""
     p4_sub = f", {race_picks[3]['taikou_num']}番" if race_picks[3]['taikou_num'] else ""
     p5_sub = f", {race_picks[4]['taikou_num']}番" if race_picks[4]['taikou_num'] else ""
@@ -436,7 +483,7 @@ def ask_gemini_win5_strategy(all_races):
         f"第3戦 [{race_picks[2]['race']}]: {race_picks[2]['honmei_num']}番{p3_sub}\n"
         f"第4戦 [{race_picks[3]['race']}]: {race_picks[3]['honmei_num']}番{p4_sub}\n"
         f"第5戦 [{race_picks[4]['race']}]: {race_picks[4]['honmei_num']}番{p5_sub}\n"
-        f"狙い: 前半2戦を指数トップ1頭で突破し、後半3戦（毎日王冠・京都大賞典含む）を2頭ずつ押さえて計8点で的中を狙う。"
+        f"狙い: 前半2戦を指数トップ1頭で突破し、後半3戦を本命・対抗の2頭ずつ手厚く押さえて計8点で的中を狙う。"
     )
 
     if not client:
@@ -456,7 +503,7 @@ def ask_gemini_win5_strategy(all_races):
 【AI厳選WIN5戦略】○点（予算○○○円 / 最大10点厳選）
 第1戦 [{race_picks[0]['race']}]: ○番
 第2戦 [{race_picks[1]['race']}]: ○番
-第3戦 [{race_picks[2]['race']}]: ○番, ○番
+第3戦 [{race_picks[2]['race']}]: ○番
 第4戦 [{race_picks[3]['race']}]: ○番, ○番
 第5戦 [{race_picks[4]['race']}]: ○番, ○番
 狙い: (30文字前後で選定方針を簡潔に)
@@ -496,6 +543,7 @@ def select_top_recommended_race(final_races):
                 "startTime": r["startTime"],
                 "confidence": r["confidence"],
                 "confidenceScore": conf_score,
+                "isLowPayout": r.get("isLowPayout", False),
                 "honmeiNum": honmei["num"],
                 "honmeiName": honmei["name"],
                 "honmeiOdds": honmei["odds"],
@@ -566,10 +614,11 @@ for r_info in detected_races:
     print(f"独自指数解析中: {r_info['race_id']}...")
     detail = parse_race_details(r_info)
     if detail and detail["horses"]:
-        ai_res = ask_gemini_prediction(detail["raceName"], detail["venue"], detail["raceType"], detail["horses"])
+        ai_res = ask_gemini_prediction(detail["raceName"], detail["venue"], detail["raceType"], detail.get("isFav1Solid", False), detail["horses"])
         detail["honmeiNum"] = ai_res.get("honmei_num")
         detail["confidence"] = ai_res.get("confidence", "A")
         detail["confidenceScore"] = ai_res.get("confidence_score", 85)
+        detail["isLowPayout"] = ai_res.get("is_low_payout", detail.get("isFav1Solid", False))
         detail["aiSummary"] = ai_res.get("summary", "")
         detail["aiBuy"] = ai_res.get("recommendation", "")
         final_races.append(detail)
@@ -585,7 +634,8 @@ output_data = {
         "hitRate": hit_rate,
         "recoveryRate": recovery_rate,
         "totalBets": stats_data.get("total_bets", 48),
-        "hitCount": stats_data.get("hit_count", 21)
+        "hitCount": stats_data.get("hit_count", 21),
+        "markRates": mark_rates
     },
     "topRecommendation": top_recommended_race,
     "win5Strategy": win5_strategy_text,
