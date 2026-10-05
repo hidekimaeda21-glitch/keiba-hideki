@@ -1,11 +1,33 @@
 {
-  "updatedAt": "2026-10-05 00:48",
+  "updatedAt": "2026-10-05 10:54",
   "targetDate": "2026年10月05日",
   "stats": {
     "hitRate": 43.8,
     "recoveryRate": 135.0,
     "totalBets": 48,
-    "hitCount": 21
+    "hitCount": 21,
+    "markRates": {
+      "◎": {
+        "rate": 68.8,
+        "count": "33/48"
+      },
+      "○": {
+        "rate": 54.2,
+        "count": "26/48"
+      },
+      "▲": {
+        "rate": 43.8,
+        "count": "21/48"
+      },
+      "☆": {
+        "rate": 31.2,
+        "count": "15/48"
+      },
+      "△": {
+        "rate": 28.1,
+        "count": "27/96"
+      }
+    }
   },
   "topRecommendation": null,
   "win5Strategy": "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。",
