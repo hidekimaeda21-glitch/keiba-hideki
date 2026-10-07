@@ -135,30 +135,12 @@ def get_real_odds_dict(race_id):
 
     return odds_map
 
-# ==========================================
-# 特徴量エンジニアリング（メソッド準拠）
-# ==========================================
-
-def calculate_pci(run_time: float, last_3f: float, distance: int) -> float:
-    """前走のPCI（ペースチェンジ指数）算定"""
-    if last_3f <= 0 or (distance - 600) <= 0:
-        return 50.0
-    first_part = run_time - last_3f
-    return round((first_part / last_3f) * (600.0 / (distance - 600.0)) * 100.0, 1)
-
-def apply_bayesian_smoothing(success: float, total: float, global_mean: float = 0.28, m: float = 8.0) -> float:
-    """ベイズ平滑化による適性スコア化"""
-    return round((success + m * global_mean) / (total + m), 3)
-
 def compute_advanced_horse_score(h_data, race_context):
-    """
-    メソッドに基づく複合指数算定:
-    スピード指数 + Gap Score(過小評価穴馬) + PCI展開補正 + 枠番・トラックバイアス + 危険フラグ
-    """
     h_name = h_data["name"]
     odds = h_data["odds"]
     track_type = race_context["track_type"]
     dist_m = race_context["dist_m"]
+    is_wet = race_context.get("is_wet", False)
     frame_no = h_data.get("frame_no", 4)
     pos_score = h_data.get("pos_score", 0.5)
 
@@ -167,7 +149,7 @@ def compute_advanced_horse_score(h_data, race_context):
     past_gaps = history.get("gap_scores", [])
     prev_pci = history.get("last_pci", 50.0)
 
-    # 1. 基礎スピードスコア
+    # 基礎スピード指数
     if past_scores:
         base_score = round(max(past_scores) * 0.55 + past_scores[-1] * 0.45, 1)
         if track_type in history.get("fav_tracks", []):
@@ -177,45 +159,42 @@ def compute_advanced_horse_score(h_data, race_context):
         base_score = round(92.0 - (odds * 0.22) + (name_hash * 0.35), 1)
     base_score = max(72.0, min(97.0, base_score))
 
-    # 2. Gap Score（直近走の人気と着順の乖離度）
+    # Gap Score（着順と人気の乖離度：過小評価穴馬の検知）
     gap_score = sum(past_gaps[-3:]) / len(past_gaps[-3:]) if past_gaps else round((odds - 8.0) / 4.0, 1)
 
-    # 3. 展開・PCI補正
+    # 展開・PCI補正
     pace_bonus = 0.0
-    is_slow = race_context.get("is_slow_pace", False)
-    is_high = race_context.get("is_high_pace", False)
+    if race_context.get("is_slow_pace") and pos_score >= 0.75:
+        pace_bonus += 1.5
+    elif race_context.get("is_high_pace") and pos_score <= 0.4:
+        pace_bonus += 1.5
 
-    if is_slow and pos_score >= 0.75:
-        pace_bonus += 1.5  # 前残り有利
-    elif is_high and pos_score <= 0.4:
-        pace_bonus += 1.5  # 差し追込有利
-
-    # 前走ハイペース（PCI < 47）で先行大敗した馬の巻き返し補正
     if prev_pci < 47.0 and pos_score >= 0.70:
-        pace_bonus += 2.0
+        pace_bonus += 2.0  # 前走ハイペース先行大敗の巻き返し
 
-    # 4. トラックバイアス（枠順補正）
+    # トラックバイアス（枠番補正）
     frame_bonus = 0.0
     if frame_no in [1, 2, 3]:
-        frame_bonus += 0.8  # 内枠アドバンテージ
+        frame_bonus += 0.8
     elif frame_no in [7, 8] and pos_score >= 0.8:
-        frame_bonus -= 1.0  # 大外枠先行のリスク
+        frame_bonus -= 1.0
 
-    total_score = round(base_score + (gap_score * 0.4) + pace_bonus + frame_bonus, 1)
+    # 道悪（重・不良馬場）適性補正
+    wet_bonus = 1.5 if (is_wet and (track_type == "ダ" or "パワー" in h_name)) else 0.0
 
-    # 5. 5大危険フラグの機械判定
+    total_score = round(base_score + (gap_score * 0.4) + pace_bonus + frame_bonus + wet_bonus, 1)
+
+    # 危険フラグの機械判定
     danger_flags = 0
     if dist_m not in history.get("experienced_distances", [dist_m]):
-        danger_flags += 1  # 距離未経験
+        danger_flags += 1
     if frame_no >= 7 and pos_score >= 0.8:
-        danger_flags += 1  # 大外枠逃げ先行
+        danger_flags += 1
     if gap_score <= -2.5:
-        danger_flags += 1  # Gap Score大幅マイナス（過大評価）
-    if h_data.get("weight_diff_pct", 0) <= -3.5:
-        danger_flags += 1  # 馬体重激痩せ
+        danger_flags += 1
 
     is_dangerous_fav = (odds <= 3.2 and danger_flags >= 2)
-    is_undervalued_longshot = (gap_score >= 2.0 and odds >= 8.5)
+    is_undervalued_longshot = (gap_score >= 1.8 and 6.0 <= odds <= 25.0)
 
     return total_score, gap_score, is_dangerous_fav, is_undervalued_longshot
 
@@ -267,6 +246,8 @@ def parse_race_details(race_info):
     time_match = re.search(r"(\d{2}:\d{2})発走", r_data)
     start_time = time_match.group(1) if time_match else "15:00"
 
+    is_wet = any(w in r_data for w in ["稍重", "重", "不良"])
+
     venue_map = {
         "01": "札幌", "02": "函館", "03": "福島", "04": "新潟",
         "05": "東京", "06": "中山", "07": "中京", "08": "京都",
@@ -302,8 +283,6 @@ def parse_race_details(race_info):
             name = name_td.get_text(strip=True)
             jockey = jockey_td.get_text(strip=True) if jockey_td else "未定"
             odds_val = real_odds_dict.get(num, 15.0)
-
-            # 脚質推定（先行力スコア）
             pos_score = 0.8 if (num % 3 == 0) else (0.5 if (num % 2 == 0) else 0.3)
 
             raw_horses.append({
@@ -318,11 +297,11 @@ def parse_race_details(race_info):
     if not raw_horses:
         return None
 
-    # レース全体の展開判定
     front_count = sum(1 for h in raw_horses if h["pos_score"] >= 0.75)
     race_context = {
         "track_type": track_type,
         "dist_m": dist_m,
+        "is_wet": is_wet,
         "is_slow_pace": (front_count <= 1),
         "is_high_pace": (front_count >= 4)
     }
@@ -342,14 +321,11 @@ def parse_race_details(race_info):
             "mark": "-"
         })
 
-    # スコア順にソートして印付け
     ranked_horses = sorted(processed_horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
-
-    # 1番人気の消し判定
     sorted_by_odds = sorted(processed_horses, key=lambda x: x["odds"])
     fav1 = sorted_by_odds[0]
-    
-    # 危険な1番人気の場合は本命（◎）から除外
+
+    # 危険な1番人気消し判定
     if fav1.get("isDangerFav") and ranked_horses[0]["num"] == fav1["num"]:
         ranked_horses[1]["mark"] = "◎ 本命"
         ranked_horses[0]["mark"] = "△ 連下"
@@ -364,10 +340,9 @@ def parse_race_details(race_info):
         if len(ranked_horses) > 2:
             ranked_horses[2]["mark"] = "▲ 単穴"
 
-    # Gap Score上位の過小評価穴馬を☆に指定
     ana_candidate = next((h for h in ranked_horses if h.get("isLongshot") and h["mark"] == "-"), None)
     if not ana_candidate:
-        ana_candidate = next((h for h in ranked_horses if h["odds"] >= 9.0 and h["mark"] == "-"), None)
+        ana_candidate = next((h for h in ranked_horses if h["odds"] >= 8.5 and h["mark"] == "-"), None)
     if ana_candidate:
         ana_candidate["mark"] = "☆ 爆発期待穴"
 
@@ -380,6 +355,14 @@ def parse_race_details(race_info):
     win5_icon = soup.find(class_=re.compile(r"Icon_Win5|win5_icon|Win5", re.I))
     is_win5_detected = bool(win5_icon)
 
+    # 見送り（ケン）判定：上位馬の指数差が極小（0.5未満）で大混戦、かつ穴妙味もない場合
+    top_diff = ranked_horses[0]["speedScore"] - ranked_horses[1]["speedScore"]
+    is_ken = (top_diff < 0.4 and fav1["odds"] > 4.5 and not ana_candidate)
+
+    race_type = "波乱警戒（中穴ワイド狙い）" if (ana_candidate or fav1.get("isDangerFav")) else "本命信頼（点数厳選）"
+    if is_ken:
+        race_type = "混戦模様（見送り推奨）"
+
     return {
         "raceId": race_id,
         "rNum": race_info["r_num"],
@@ -391,29 +374,24 @@ def parse_race_details(race_info):
         "isWin5": is_win5_detected,
         "isFav1Solid": (fav1["odds"] <= 3.0 and not fav1.get("isDangerFav")),
         "isDangerFavDetected": fav1.get("isDangerFav", False),
-        "raceType": "波乱警戒（穴狙い）" if (fav1.get("isDangerFav") or fav1["odds"] >= 4.5) else "本命信頼（点数厳選）",
+        "isKen": is_ken,
+        "raceType": race_type,
         "horses": sorted(processed_horses, key=lambda x: x["num"])
     }
 
 # ==========================================
-# 期待値フィルター・ハービル式・ケリー資金配分
+# 的中×回収バランス型 買い目エンジン（ワイド優先）
 # ==========================================
 
-def calculate_kelly_stake(ev: float, odds: float, total_budget: int = 1000) -> int:
-    """1/8ケリー基準による推奨賭け金（100円単位）"""
-    if ev <= 1.0 or odds <= 1.0:
-        return 100
-    f_star = (1.0 / 8.0) * ((ev - 1.0) / (odds - 1.0))
-    stake = int(round(total_budget * f_star / 100.0) * 100)
-    return max(100, min(stake, 400))
+def build_balanced_betting_strategy(detail):
+    """
+    ワイドで中穴・高配当を優先しつつ、的中率と回収率の黄金バランスを取るロジック
+    """
+    horses = detail["horses"]
+    is_fav1_solid = detail["isFav1Solid"]
+    is_danger_fav = detail.get("isDangerFavDetected", False)
+    is_ken = detail.get("isKen", False)
 
-def build_advanced_betting_strategy(horses, is_fav1_solid, is_danger_fav):
-    """
-    メソッド準拠の買い目構築:
-    - 期待値（EV >= 1.05）とハービル式馬連確率
-    - 1番人気消しパターンの高配当シフト
-    - 1/8ケリー基準による傾斜資金配分
-    """
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
     tanana = next((h for h in horses if "▲" in h.get("mark", "")), None)
@@ -421,49 +399,75 @@ def build_advanced_betting_strategy(horses, is_fav1_solid, is_danger_fav):
     renge = [h for h in horses if "△" in h.get("mark", "")]
 
     h_num = honmei["num"]
+    h_name = honmei["name"]
+
+    if is_ken:
+        return {
+            "honmei_num": h_num,
+            "confidence": "C",
+            "confidence_score": 72,
+            "is_low_payout": False,
+            "summary": "全馬の実力が拮抗しており展開リスクが高いレース。無理な勝負を避け、資金を温存する【見送り推奨】と判定。",
+            "recommendation": "【AI判定: 見送り推奨】勝負を避け次レースへ資金集中 [計0点]"
+        }
+
     rec_items = []
 
-    # 1. 危険な1番人気消しフラグ作動時（大波乱狙い）
-    if is_danger_fav:
-        # 1番人気を外した上位陣と穴馬の馬連・3連複
-        opps = [str(x["num"]) for x in [taikou, tanana, ana] if x]
-        rec_items.append(f"【馬連(波乱)】{h_num} - {', '.join(opps)} ({len(opps)}点)")
-        if taikou and ana:
-            rec_items.append(f"【3連複F】{h_num} - {taikou['num']} - {ana['num']}, {', '.join([str(x['num']) for x in renge[:2]])} (3点)")
-    
-    # 2. 1番人気が3.0倍以下で好走確率が高い場合（中穴ワイド＋3連複）
+    # 1. 中穴・高配当が狙える場合（☆穴馬が存在、または危険な1番人気消し）➔ ワイド最優先
+    if ana or is_danger_fav or "中穴ワイド" in detail["raceType"]:
+        target_wide_horses = []
+        if taikou: target_wide_horses.append(str(taikou["num"]))
+        if tanana: target_wide_horses.append(str(tanana["num"]))
+        if ana: target_wide_horses.append(str(ana["num"]))
+        for r in renge[:2]: target_wide_horses.append(str(r["num"]))
+
+        # 軸馬からのワイド本線＆中穴流し（3〜4点）
+        w_main = [f"{h_num}-{x}" for x in target_wide_horses[:3]]
+        rec_items.append(f"【ワイド主軸】{', '.join(w_main)} ({len(w_main)}点)")
+
+        # 中穴同士のワイド押さえ（ダブル的中トリガー）
+        if ana and taikou:
+            rec_items.append(f"【中穴ワイド】{taikou['num']}-{ana['num']} (1点)")
+
+        # 万馬券狙いの3連複フォーメーション（軸1頭 ✕ 対抗・単穴 ✕ 穴含む相手 ＝ 4〜5点）
+        leg2 = [str(x["num"]) for x in [taikou, tanana] if x]
+        leg3 = list(dict.fromkeys(target_wide_horses))[:5]
+        if leg2 and leg3:
+            trio_pts = min(len(leg2) * len(leg3) - 1, 5)
+            rec_items.append(f"【3連複F】{h_num} - {', '.join(leg2)} - {', '.join(leg3)} ({trio_pts}点)")
+
+    # 2. 1番人気が3.0倍以下で好走確率が高い場合（低配当警戒）
     elif is_fav1_solid:
-        target_wide = [str(x["num"]) for x in ([taikou, tanana, ana] + renge) if x][:4]
-        if len(target_wide) >= 3:
-            w_pairs = [f"{target_wide[0]}-{target_wide[1]}", f"{target_wide[0]}-{target_wide[2]}", f"{target_wide[1]}-{target_wide[2]}"]
+        # 1番人気をヒモに据え、2着・3着争いの中穴同士のワイドで跳ね上げる
+        opps = [str(x["num"]) for x in ([taikou, tanana, ana] + renge) if x][:4]
+        if len(opps) >= 3:
+            w_pairs = [f"{opps[0]}-{opps[1]}", f"{opps[0]}-{opps[2]}", f"{opps[1]}-{opps[2]}"]
             rec_items.append(f"【中穴ワイド】{', '.join(w_pairs)} (3点)")
         if taikou:
-            t_nums = [str(x["num"]) for x in (renge[:3] + ([ana] if ana else []))]
-            rec_items.append(f"【3連複F】{h_num} - {taikou['num']} - {', '.join(t_nums)} (4点)")
-    
-    # 3. 通常の本命・対抗フォーメーション
+            rec_items.append(f"【3連複F】{h_num} - {taikou['num']} - {', '.join(opps[:4])} (4点)")
+
+    # 3. 本命信頼レース（手堅い配当をきっちり拾う）
     else:
         opps = [str(x["num"]) for x in ([taikou, tanana] + renge)[:4] if x]
-        rec_items.append(f"【馬連】{h_num} - {', '.join(opps)} ({len(opps)}点)")
+        # 的中率を確保する馬連＋ワイドのハイブリッド
+        rec_items.append(f"【馬連】{h_num} - {', '.join(opps[:3])} (3点)")
         if taikou:
-            third_cands = [str(x["num"]) for x in ([tanana, ana] + renge)[:4] if x]
-            rec_items.append(f"【3連複F】{h_num} - {taikou['num']} - {', '.join(third_cands)} (4点)")
+            rec_items.append(f"【ワイド】{h_num} - {taikou['num']}, {tanana['num'] if tanana else opps[0]} (2点)")
+            rec_items.append(f"【3連複F】{h_num} - {taikou['num']} - {', '.join(opps)} (4点)")
 
     total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点\)', s)] if m])
-    
-    # 1/8ケリー基準の傾斜配分を注記
     rec_text = " / ".join(rec_items) + f" [計{total_pts}点]"
+
+    ana_info = f"GapScore上位の{ana['num']}番{ana['name']}を絡めたワイド" if ana else "軸馬からのワイド・馬連"
     summary_text = (
-        f"独自指数1位の{h_num}番{honmei['name']}（指数:{honmei['speedScore']}）を主軸に指名。"
-        f"{'【危険な1番人気を検知し消し評価】' if is_danger_fav else ''}"
-        f"{f'GapScore上位の穴馬{ana[\"num\"]}番を絡め、' if ana else ''}"
-        f"期待値フィルターと1/8ケリー基準で回収率を最大化。"
+        f"独自指数1位の{h_num}番{h_name}（指数:{honmei['speedScore']}）を信頼軸に指名。"
+        f"{ana_info}を最優先に据え、的中率の安定とダブル的中の高配当回収を両立させた配分。"
     )
 
     return {
         "honmei_num": h_num,
         "confidence": "A" if not is_danger_fav else "B",
-        "confidence_score": 93 if not is_danger_fav else 87,
+        "confidence_score": 93 if not is_danger_fav else 86,
         "is_low_payout": is_fav1_solid,
         "summary": summary_text,
         "recommendation": rec_text
@@ -516,6 +520,8 @@ def select_top_recommended_race(final_races):
     best_candidate = None
     best_val = -1.0
     for r in final_races:
+        if r.get("isKen"):
+            continue
         honmei = next((h for h in r["horses"] if h["num"] == r.get("honmeiNum")), None)
         if not honmei:
             continue
@@ -579,7 +585,7 @@ def learn_and_update_results():
                         horses_db[h_name] = {"scores": [], "gap_scores": [], "fav_tracks": []}
                     
                     horses_db[h_name]["scores"].append(calc_score)
-                    horses_db[h_name]["gap_scores"].append(pop - rank) # Gap Score蓄積
+                    horses_db[h_name]["gap_scores"].append(pop - rank)
                     
                     if len(horses_db[h_name]["scores"]) > 6:
                         horses_db[h_name]["scores"].pop(0)
@@ -605,7 +611,7 @@ final_races = []
 for r_info in detected_races:
     detail = parse_race_details(r_info)
     if detail and detail["horses"]:
-        strat = build_advanced_betting_strategy(detail["horses"], detail["isFav1Solid"], detail.get("isDangerFavDetected", False))
+        strat = build_balanced_betting_strategy(detail)
         detail["honmeiNum"] = strat["honmei_num"]
         detail["confidence"] = strat["confidence"]
         detail["confidenceScore"] = strat["confidence_score"]
@@ -614,7 +620,6 @@ for r_info in detected_races:
         detail["aiBuy"] = strat["recommendation"]
         final_races.append(detail)
 
-# 過去データの保持
 today_json_path = "data/today.json"
 old_win5 = ""
 old_top = None
@@ -666,4 +671,4 @@ with open(today_json_path, "w", encoding="utf-8") as f:
 if now_jst.hour >= 17:
     learn_and_update_results()
 
-print(f"=== 処理完了: 計 {len(final_races)} レースの回収率特化予測を出力しました ===")
+print(f"=== 処理完了: ワイド最優先・的中×回収バランス型予測を出力しました ===")
