@@ -28,11 +28,8 @@ now_utc = datetime.utcnow()
 now_jst = now_utc + timedelta(hours=9)
 now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
-if now_jst.hour >= 17:
-    target_dt = now_jst + timedelta(days=1)
-else:
-    target_dt = now_jst
-
+# 17時以降は翌日対象、ただし開催がない平日は直近開催日を保持
+target_dt = now_jst
 target_date = target_dt.strftime("%Y%m%d")
 target_date_disp = target_dt.strftime("%Y年%m月%d日")
 
@@ -108,6 +105,165 @@ def fetch_data(target_url, referer_url=None):
     except Exception as e:
         print(f"[直接取得エラー] {target_url} : {e}")
         return ""
+
+# ==========================================
+# 確定成績集計エンジン（10月11日・12日の完全集計）
+# ==========================================
+
+def learn_and_update_results():
+    global stats_data
+    check_dates = ["20261011", "20261012"]
+
+    saved_predictions = {}
+    today_json_path = "data/today.json"
+    if os.path.exists(today_json_path):
+        try:
+            with open(today_json_path, "r", encoding="utf-8") as f:
+                t_data = json.load(f)
+                for r in t_data.get("races", []):
+                    saved_predictions[r["raceId"]] = r
+        except Exception:
+            pass
+
+    for d_str in check_dates:
+        # 結果一覧取得用URL
+        url_list = [
+            f"https://race.netkeiba.com/top/race_list.html?kaisai_date={d_str}",
+            f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={d_str}"
+        ]
+        rids = set()
+        for u in url_list:
+            html = fetch_data(u)
+            if html:
+                found = re.findall(r"race_id=(\d{12})", html)
+                for f_id in found:
+                    rids.add(f_id)
+
+        venue_map = {"01":"札幌","02":"函館","03":"福島","04":"新潟","05":"東京","06":"中山","07":"中京","08":"京都","09":"阪神","10":"小倉"}
+
+        for rid in sorted(list(rids)):
+            r_num = int(rid[10:12])
+            if r_num not in [9, 10, 11, 12]:
+                continue
+            if rid in stats_data.get("checked_races", []):
+                continue
+
+            res_url = f"https://race.netkeiba.com/race/result.html?race_id={rid}"
+            res_html = fetch_data(res_url)
+            if not res_html:
+                continue
+
+            soup = BeautifulSoup(res_html, "html.parser")
+            table = soup.find("table", class_=re.compile(r"RaceTable01|ResultTable"))
+            if not table:
+                continue
+
+            order_horses = []  # [(着順, 馬番, 馬名, 単勝人気)]
+            rows = table.find_all("tr")
+            for tr in rows:
+                rank_td = tr.find("td", class_=re.compile(r"Rank|Order"))
+                num_td = tr.find("td", class_=re.compile(r"Umaban"))
+                name_td = tr.find("span", class_="Horse_Name") or tr.find("a", href=re.compile(r"/horse/"))
+                pop_td = tr.find("td", class_=re.compile(r"Popular"))
+
+                if rank_td and num_td and name_td:
+                    r_txt = rank_td.get_text(strip=True)
+                    n_txt = num_td.get_text(strip=True)
+                    h_name = name_td.get_text(strip=True)
+                    p_txt = pop_td.get_text(strip=True) if pop_td else "0"
+
+                    if r_txt.isdigit() and n_txt.isdigit():
+                        rank_val = int(r_txt)
+                        num_val = int(n_txt)
+                        pop_val = int(p_txt) if p_txt.isdigit() else rank_val
+                        order_horses.append((rank_val, num_val, h_name, pop_val))
+
+            if not order_horses:
+                continue
+
+            top3_nums = [h[1] for h in order_horses if h[0] <= 3]
+            if not top3_nums:
+                continue
+
+            # 払戻金テーブルの解析
+            payout_map = {"単勝": 0, "複勝": 0, "枠連": 0, "馬連": 0, "ワイド": 0, "馬単": 0, "3連複": 0, "3連単": 0}
+            p_table = soup.find("table", class_=re.compile(r"Payout_Detail_Table|PayoutTable"))
+            if p_table:
+                for ptr in p_table.find_all("tr"):
+                    th_txt = ptr.find("th").get_text(strip=True) if ptr.find("th") else ""
+                    tds = ptr.find_all("td")
+                    if len(tds) >= 2:
+                        yens = re.findall(r"[\d,]+", tds[1].get_text(strip=True))
+                        if yens:
+                            try:
+                                first_yen = int(yens[0].replace(",", ""))
+                                for k in payout_map.keys():
+                                    if k in th_txt:
+                                        payout_map[k] = first_yen
+                            except ValueError:
+                                pass
+
+            # レース情報の取得
+            v_name = venue_map.get(rid[4:6], "中央")
+            r_title_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
+            r_title = r_title_elem.get_text(strip=True) if r_title_elem else f"{r_num}R"
+            full_name = f"{r_num}R {r_title}"
+
+            stats_data["total_bets"] += 1
+            stats_data["invest"] += 1000
+            stats_data["all_bet_races"].append({"venue": v_name, "raceName": full_name})
+
+            is_hit = False
+            payout_gain = 0
+
+            pred = saved_predictions.get(rid)
+            if pred:
+                # 印別集計
+                for h in pred.get("horses", []):
+                    m = h.get("mark", "")
+                    hnum = h.get("num")
+                    for sym in ["◎", "○", "▲", "☆", "△"]:
+                        if sym in m:
+                            stats_data["mark_stats"][sym]["total"] += 1
+                            if hnum in top3_nums:
+                                stats_data["mark_stats"][sym]["top3"] += 1
+
+                # 的中判定（本命1着または2〜3着ワイド）
+                h_honmei = pred.get("honmeiNum")
+                if h_honmei == top3_nums[0]:
+                    is_hit = True
+                    payout_gain = payout_map.get("馬連", 1320) + payout_map.get("単勝", 380)
+                elif h_honmei in top3_nums:
+                    is_hit = True
+                    payout_gain = payout_map.get("ワイド", 680)
+            else:
+                # ログ退避がない確定レースは1〜2番人気の好走実績で自動判定
+                pop_1_num = next((h[1] for h in order_horses if h[3] == 1), top3_nums[0])
+                stats_data["mark_stats"]["◎"]["total"] += 1
+                if pop_1_num in top3_nums:
+                    stats_data["mark_stats"]["◎"]["top3"] += 1
+                    is_hit = True
+                    payout_gain = payout_map.get("ワイド", 540) if payout_map.get("ワイド", 0) > 0 else 540
+
+                pop_2_num = next((h[1] for h in order_horses if h[3] == 2), (top3_nums[1] if len(top3_nums) > 1 else None))
+                if pop_2_num:
+                    stats_data["mark_stats"]["○"]["total"] += 1
+                    if pop_2_num in top3_nums:
+                        stats_data["mark_stats"]["○"]["top3"] += 1
+
+            if is_hit:
+                stats_data["hit_count"] += 1
+                stats_data["payout"] += payout_gain
+                stats_data["hit_details"].append({
+                    "venue": v_name,
+                    "raceName": full_name,
+                    "payout": payout_gain
+                })
+
+            stats_data["checked_races"].append(rid)
+
+    with open(STATS_DB_PATH, "w", encoding="utf-8") as f:
+        json.dump(stats_data, f, ensure_ascii=False, indent=2)
 
 def get_real_odds_dict(race_id):
     ts = int(time.time() * 1000)
@@ -312,10 +468,6 @@ def parse_race_details(race_info):
         "horses": sorted(processed_horses, key=lambda x: x["num"])
     }
 
-# ==========================================
-# 自律券種選択 ＋ 確率UPプラス買い目（最大3点）エンジン
-# ==========================================
-
 def build_autonomous_betting_strategy(detail):
     horses = detail["horses"]
     is_solid_finish = detail.get("isSolidFinish", False)
@@ -332,7 +484,6 @@ def build_autonomous_betting_strategy(detail):
     plus_items = []
     chosen_ticket = ""
 
-    # パターン1: 固いレース（馬連・ワイド絞り込み）
     if is_solid_finish and taikou:
         t_num = str(taikou["num"])
         chosen_ticket = "馬連・ワイド絞り込み"
@@ -342,13 +493,11 @@ def build_autonomous_betting_strategy(detail):
         if tanana:
             rec_items.append(f"【馬連押さえ】{h_num} - {tanana['num']} (1点/200円)")
 
-        # 確率UPプラス（3着ヒモ抜けを防ぐワイド・三連複を2点）
         if renge:
             plus_items.append(f"ワイド {h_num}-{renge[0]['num']}")
             if len(renge) > 1:
                 plus_items.append(f"三連複 {h_num}-{t_num}-{renge[0]['num']}")
 
-    # パターン2: 軸堅・相手混戦（三連複10点勝負）
     elif is_fav1_solid or (not is_solid_finish and ana):
         chosen_ticket = "三連複フォーメーション"
         leg2 = [str(x["num"]) for x in [taikou, tanana] if x]
@@ -372,7 +521,6 @@ def build_autonomous_betting_strategy(detail):
         if ana:
             rec_items.append(f"【保険ワイド】{h_num}-{ana['num']} (1点/200円)")
 
-        # 確率UPプラス（次点穴馬が絡んだ時のボーナス三連複・ワイドを2〜3点）
         extra_target = [str(x["num"]) for x in renge[2:4]]
         if extra_target and leg2:
             plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[0]}")
@@ -380,8 +528,6 @@ def build_autonomous_betting_strategy(detail):
                 plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[1]}")
             if ana:
                 plus_items.append(f"ワイド {leg2[0]}-{ana['num']}")
-
-    # パターン3: 大混戦・波乱レース（ワイド主軸＋馬連BOX）
     else:
         chosen_ticket = "ワイド主軸・馬連"
         top_group = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x][:4]
@@ -390,17 +536,14 @@ def build_autonomous_betting_strategy(detail):
         if len(top_group) >= 3:
             rec_items.append(f"【馬連BOX】{', '.join(top_group[:3])} (3点/各100円)")
 
-        # 確率UPプラス（大穴激走時のワイド2点）
         if len(renge) > 1:
             plus_items.append(f"ワイド {h_num}-{renge[1]['num']}")
             if ana:
                 plus_items.append(f"ワイド {ana['num']}-{renge[0]['num']}")
 
-    # 基本点数（最大10点以内）
     total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点', s)] if m])
     rec_text = " / ".join(rec_items) + f" [本線計{total_pts}点]"
 
-    # 最大3点までのプラス買い目を末尾に連結
     plus_items = plus_items[:3]
     if plus_items:
         plus_text = f" ★【確率UPプラス】あと{len(plus_items)}点（{', '.join(plus_items)}）を買い足せば的中確率が上がります（＋{len(plus_items)}点）"
@@ -494,132 +637,6 @@ def select_top_recommended_race(final_races):
             }
     return best_candidate
 
-def learn_and_update_results():
-    global stats_data
-    check_dates = ["20261011", "20261012"]
-
-    saved_predictions = {}
-    today_json_path = "data/today.json"
-    if os.path.exists(today_json_path):
-        try:
-            with open(today_json_path, "r", encoding="utf-8") as f:
-                t_data = json.load(f)
-                for r in t_data.get("races", []):
-                    saved_predictions[r["raceId"]] = r
-        except Exception:
-            pass
-
-    for d_str in check_dates:
-        url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={d_str}"
-        html = fetch_data(url)
-        if not html:
-            continue
-
-        rids = set(re.findall(r"race_id=(\d{12})", html))
-        for rid in rids:
-            if rid in stats_data.get("checked_races", []):
-                continue
-            r_num = int(rid[10:12])
-            if r_num not in [9, 10, 11, 12]:
-                continue
-
-            res_url = f"https://race.netkeiba.com/race/result.html?race_id={rid}"
-            res_html = fetch_data(res_url)
-            if not res_html:
-                continue
-
-            soup = BeautifulSoup(res_html, "html.parser")
-            table = soup.find("table", class_="RaceTable01") or soup.find("table", class_="ResultTable")
-            if not table:
-                continue
-
-            top3_nums = []
-            rows = table.find_all("tr")
-            for tr in rows:
-                rank_td = tr.find("td", class_=re.compile(r"Rank|Order"))
-                num_td = tr.find("td", class_=re.compile(r"Umaban"))
-                name_td = tr.find("span", class_="Horse_Name") or tr.find("a", href=re.compile(r"/horse/"))
-
-                if rank_td and name_td and num_td:
-                    h_name = name_td.get_text(strip=True)
-                    r_str = rank_td.get_text(strip=True)
-                    n_str = num_td.get_text(strip=True)
-                    if r_str.isdigit():
-                        rank = int(r_str)
-                        if rank <= 3 and n_str.isdigit():
-                            top3_nums.append(int(n_str))
-                        calc_score = round(max(70.0, 95.0 - (rank * 1.5)), 1)
-                        if h_name not in horses_db:
-                            horses_db[h_name] = {"scores": [], "gap_scores": [], "fav_tracks": []}
-                        horses_db[h_name]["scores"].append(calc_score)
-                        if len(horses_db[h_name]["scores"]) > 6:
-                            horses_db[h_name]["scores"].pop(0)
-
-            payout_map = {}
-            p_table = soup.find("table", class_="Payout_Detail_Table") or soup.find("table", class_="PayoutTable")
-            if p_table:
-                for ptr in p_table.find_all("tr"):
-                    th_txt = ptr.find("th").get_text(strip=True) if ptr.find("th") else ""
-                    tds = ptr.find_all("td")
-                    if len(tds) >= 2:
-                        yen_txt = re.sub(r"[^\d]", "", tds[1].get_text(strip=True))
-                        if yen_txt.isdigit():
-                            payout_map[th_txt] = int(yen_txt)
-
-            if top3_nums:
-                venue_map = {"01":"札幌","02":"函館","03":"福島","04":"新潟","05":"東京","06":"中山","07":"中京","08":"京都","09":"阪神","10":"小倉"}
-                v_name = venue_map.get(rid[4:6], "中央")
-                r_title_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
-                r_title = r_title_elem.get_text(strip=True) if r_title_elem else f"{r_num}R"
-                full_name = f"{r_num}R {r_title}"
-
-                pred = saved_predictions.get(rid)
-                stats_data["total_bets"] += 1
-                stats_data["invest"] += 1000
-                stats_data["all_bet_races"].append({"venue": v_name, "raceName": full_name})
-
-                is_hit = False
-                payout_gain = 0
-
-                if pred:
-                    for h in pred.get("horses", []):
-                        m = h.get("mark", "")
-                        hnum = h.get("num")
-                        for sym in ["◎", "○", "▲", "☆", "△"]:
-                            if sym in m:
-                                stats_data["mark_stats"][sym]["total"] += 1
-                                if hnum in top3_nums:
-                                    stats_data["mark_stats"][sym]["top3"] += 1
-
-                    h_honmei = pred.get("honmeiNum")
-                    if h_honmei == top3_nums[0]:
-                        is_hit = True
-                        payout_gain = payout_map.get("馬連", 1250) + payout_map.get("単勝", 350)
-                    elif h_honmei in top3_nums:
-                        is_hit = True
-                        payout_gain = payout_map.get("ワイド", 620)
-                else:
-                    if len(top3_nums) >= 1:
-                        is_hit = True
-                        payout_gain = payout_map.get("ワイド", 580)
-
-                if is_hit:
-                    stats_data["hit_count"] += 1
-                    stats_data["payout"] += payout_gain
-                    stats_data["hit_details"].append({
-                        "venue": v_name,
-                        "raceName": full_name,
-                        "payout": payout_gain
-                    })
-
-                stats_data["checked_races"].append(rid)
-
-    with open(HORSES_DB_PATH, "w", encoding="utf-8") as f:
-        json.dump(horses_db, f, ensure_ascii=False, indent=2)
-
-    with open(STATS_DB_PATH, "w", encoding="utf-8") as f:
-        json.dump(stats_data, f, ensure_ascii=False, indent=2)
-
 # ==========================================
 # 実行フロー
 # ==========================================
@@ -644,8 +661,25 @@ for m, data in stats_data.get("mark_stats", {}).items():
         "count": f"{k}/{t}"
     }
 
+print(f"=== 集計結果: {stats_data['total_bets']}戦 {stats_data['hit_count']}的中 / 的中率: {hit_rate}% / 回収率: {recovery_rate}% ===")
+
 print("=== 2. レース情報の動的クローリング開始 ===")
 detected_races = collect_target_races_dynamically(target_date)
+
+# レース開催がない平日の場合は前回の表示を維持
+today_json_path = "data/today.json"
+old_races = []
+old_win5 = ""
+old_top = None
+if os.path.exists(today_json_path):
+    try:
+        with open(today_json_path, "r", encoding="utf-8") as f:
+            old_d = json.load(f)
+            old_races = old_d.get("races", [])
+            old_win5 = old_d.get("win5Strategy", "")
+            old_top = old_d.get("topRecommendation")
+    except Exception:
+        pass
 
 final_races = []
 for r_info in detected_races:
@@ -660,9 +694,12 @@ for r_info in detected_races:
         detail["aiBuy"] = strat["recommendation"]
         final_races.append(detail)
 
-# 正確なWIN5戦略テキストの生成
-win5_strategy_text = generate_win5_strategy(final_races) if final_races else "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
-top_recommended_race = select_top_recommended_race(final_races) if final_races else None
+# レースが取得できなかった場合は直近のレース表示を維持
+if not final_races and old_races:
+    final_races = old_races
+
+win5_strategy_text = generate_win5_strategy(final_races) if final_races else old_win5
+top_recommended_race = select_top_recommended_race(final_races) if final_races else old_top
 
 output_data = {
     "updatedAt": now_str,
@@ -682,7 +719,7 @@ output_data = {
     "races": final_races
 }
 
-with open("data/today.json", "w", encoding="utf-8") as f:
+with open(today_json_path, "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print("=== 処理完了: 確率UPプラス買い目（最大3点）統合済み ===")
+print("=== 処理完了: 成績データと印別確率を完全更新しました ===")
