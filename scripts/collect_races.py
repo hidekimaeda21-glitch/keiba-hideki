@@ -285,17 +285,17 @@ def parse_race_details(race_info):
             h["mark"] = "△ 連下"
             sub_c += 1
 
-    is_solid_favorite = (fav1["odds"] <= 3.0 and ranked_horses[0]["num"] == fav1["num"])
-    is_solid_finish = is_solid_favorite and (ranked_horses[1]["odds"] <= 5.5)
+    is_solid_favorite = (fav1["odds"] <= 2.8 and ranked_horses[0]["num"] == fav1["num"])
+    is_solid_finish = is_solid_favorite and (ranked_horses[1]["odds"] <= 5.0)
 
-    # ==========================================
-    # 本日のWIN5対象判定（京都9〜11R、東京10・11R）
-    # ==========================================
+    # WIN5対象判定（京都9〜11R、東京10・11R）
     is_win5_race = False
     if venue == "京都" and r_num in [9, 10, 11]:
         is_win5_race = True
     elif venue == "東京" and r_num in [10, 11]:
         is_win5_race = True
+
+    race_type = "本命信頼（点数絞り・手堅く的中）" if is_solid_finish else ("三連複10点勝負（波乱狙い）" if ana_candidate else "標準レース（最適券種選択）")
 
     return {
         "raceId": race_id,
@@ -308,11 +308,15 @@ def parse_race_details(race_info):
         "isWin5": is_win5_race,
         "isSolidFinish": is_solid_finish,
         "isFav1Solid": is_solid_favorite,
-        "raceType": "本命信頼（点数絞り込み・金額集中）" if is_solid_finish else ("波乱警戒（中穴ワイド狙い）" if ana_candidate else "標準レース（回収特化）"),
+        "raceType": race_type,
         "horses": sorted(processed_horses, key=lambda x: x["num"])
     }
 
-def build_flexible_betting_strategy(detail):
+# ==========================================
+# 自律券種選択 ＋ 確率UPプラス買い目（最大3点）エンジン
+# ==========================================
+
+def build_autonomous_betting_strategy(detail):
     horses = detail["horses"]
     is_solid_finish = detail.get("isSolidFinish", False)
     is_fav1_solid = detail.get("isFav1Solid", False)
@@ -323,58 +327,105 @@ def build_flexible_betting_strategy(detail):
     ana = next((h for h in horses if "☆" in h.get("mark", "")), None)
     renge = [h for h in horses if "△" in h.get("mark", "")]
 
-    h_num = honmei["num"]
+    h_num = str(honmei["num"])
     rec_items = []
+    plus_items = []
+    chosen_ticket = ""
 
+    # パターン1: 固いレース（馬連・ワイド絞り込み）
     if is_solid_finish and taikou:
         t_num = str(taikou["num"])
-        rec_items.append(f"【馬連本線】{h_num} - {t_num} (1点/各400円)")
+        chosen_ticket = "馬連・ワイド絞り込み"
+        rec_items.append(f"【馬連】{h_num} - {t_num} (1点/500円)")
         w_opps = [t_num] + ([str(tanana['num'])] if tanana else [])
-        rec_items.append(f"【ワイド厳選】{h_num} - {', '.join(w_opps)} ({len(w_opps)}点/各300円)")
-        if renge or ana:
-            third_num = str(ana['num']) if ana else str(renge[0]['num'])
-            rec_items.append(f"【3連単】{h_num} ➔ {t_num} ➔ {third_num} (1点/100円)")
-    elif is_fav1_solid:
-        target_wide = [str(x["num"]) for x in ([taikou, tanana, ana] + renge) if x][:4]
-        w_items = [f"{h_num}-{x}" for x in target_wide[:3]]
-        rec_items.append(f"【ワイド主軸】{', '.join(w_items)} ({len(w_items)}点/各200円)")
-        if taikou:
-            rec_items.append(f"【3連複F】{h_num} - {taikou['num']} - {', '.join(target_wide)} (4点/各100円)")
+        rec_items.append(f"【ワイド】{h_num} - {', '.join(w_opps)} ({len(w_opps)}点/各300円)")
+        if tanana:
+            rec_items.append(f"【馬連押さえ】{h_num} - {tanana['num']} (1点/200円)")
+
+        # 確率UPプラス（3着ヒモ抜けを防ぐワイド・三連複を2点）
+        if renge:
+            plus_items.append(f"ワイド {h_num}-{renge[0]['num']}")
+            if len(renge) > 1:
+                plus_items.append(f"三連複 {h_num}-{t_num}-{renge[0]['num']}")
+
+    # パターン2: 軸堅・相手混戦（三連複10点勝負）
+    elif is_fav1_solid or (not is_solid_finish and ana):
+        chosen_ticket = "三連複フォーメーション"
+        leg2 = [str(x["num"]) for x in [taikou, tanana] if x]
+        if not leg2 and renge:
+            leg2 = [str(renge[0]["num"])]
+
+        leg3_cands = [str(x["num"]) for x in ([taikou, tanana, ana] + renge) if x and str(x["num"]) != h_num]
+        leg3_cands = list(dict.fromkeys(leg3_cands))[:5]
+
+        trio_combos = []
+        for l2 in leg2:
+            for l3 in leg3_cands:
+                if l2 != l3:
+                    combo = tuple(sorted([int(h_num), int(l2), int(l3)]))
+                    if combo not in trio_combos:
+                        trio_combos.append(combo)
+
+        trio_combos = trio_combos[:8]
+        if trio_combos:
+            rec_items.append(f"【三連複F】{h_num} ✕ {', '.join(leg2)} ✕ {', '.join(leg3_cands)} ({len(trio_combos)}点/各100円)")
+        if ana:
+            rec_items.append(f"【保険ワイド】{h_num}-{ana['num']} (1点/200円)")
+
+        # 確率UPプラス（次点穴馬が絡んだ時のボーナス三連複・ワイドを2〜3点）
+        extra_target = [str(x["num"]) for x in renge[2:4]]
+        if extra_target and leg2:
+            plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[0]}")
+            if len(extra_target) > 1:
+                plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[1]}")
+            if ana:
+                plus_items.append(f"ワイド {leg2[0]}-{ana['num']}")
+
+    # パターン3: 大混戦・波乱レース（ワイド主軸＋馬連BOX）
     else:
-        target_horses = []
-        if taikou: target_horses.append(str(taikou["num"]))
-        if tanana: target_horses.append(str(tanana["num"]))
-        if ana: target_horses.append(str(ana["num"]))
-        for r in renge[:2]: target_horses.append(str(r["num"]))
-
-        w_main = [f"{h_num}-{x}" for x in target_horses[:3]]
+        chosen_ticket = "ワイド主軸・馬連"
+        top_group = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x][:4]
+        w_main = [f"{h_num}-{x}" for x in top_group[1:]]
         rec_items.append(f"【ワイド】{', '.join(w_main)} ({len(w_main)}点/各200円)")
-        rec_items.append(f"【馬連】{h_num} - {', '.join(target_horses[:3])} (3点/各100円)")
-        if len(target_horses) >= 3:
-            rec_items.append(f"【3連複F】{h_num} - {target_horses[0]} - {', '.join(target_horses[1:4])} (3点/各100円)")
+        if len(top_group) >= 3:
+            rec_items.append(f"【馬連BOX】{', '.join(top_group[:3])} (3点/各100円)")
 
+        # 確率UPプラス（大穴激走時のワイド2点）
+        if len(renge) > 1:
+            plus_items.append(f"ワイド {h_num}-{renge[1]['num']}")
+            if ana:
+                plus_items.append(f"ワイド {ana['num']}-{renge[0]['num']}")
+
+    # 基本点数（最大10点以内）
     total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点', s)] if m])
-    rec_text = " / ".join(rec_items) + f" [計{total_pts}点]"
+    rec_text = " / ".join(rec_items) + f" [本線計{total_pts}点]"
+
+    # 最大3点までのプラス買い目を末尾に連結
+    plus_items = plus_items[:3]
+    if plus_items:
+        plus_text = f" ★【確率UPプラス】あと{len(plus_items)}点（{', '.join(plus_items)}）を買い足せば的中確率が上がります（＋{len(plus_items)}点）"
+        rec_text += plus_text
+
+    summary_text = (
+        f"レース波乱度から【{chosen_ticket}】を最適と自律判定。"
+        f"本線{total_pts}点で回収率を狙いつつ、"
+        f"{f'取りこぼしを防ぐ確率UP買い目（+{len(plus_items)}点）を補完。' if plus_items else '厳選点数で勝負。'}"
+    )
 
     return {
-        "honmei_num": h_num,
+        "honmei_num": int(h_num),
         "confidence": "A" if is_solid_finish else "B",
         "confidence_score": 94 if is_solid_finish else 88,
-        "is_low_payout": is_fav1_solid and not is_solid_finish,
-        "summary": f"指数1位の{h_num}番{honmei['name']}を主軸に指名。回収期待値を最大化する厳選配分。",
+        "is_low_payout": is_solid_finish,
+        "summary": summary_text,
         "recommendation": rec_text
     }
 
 def generate_win5_strategy(all_races):
-    """
-    指定のWIN5対象レース（京都9R, 東京10R, 京都10R, 東京11R, 京都11R）を発走時刻順に並べて買い目生成
-    """
     win5_races = [r for r in all_races if r.get("isWin5")]
-    # 発走時刻順にソート
     win5_races = sorted(win5_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
 
     if len(win5_races) < 5:
-        # 該当レースが揃っていない場合のフォールバック
         target_keys = [("京都", 9), ("東京", 10), ("京都", 10), ("東京", 11), ("京都", 11)]
         matched = []
         for v, rn in target_keys:
@@ -600,7 +651,7 @@ final_races = []
 for r_info in detected_races:
     detail = parse_race_details(r_info)
     if detail and detail["horses"]:
-        strat = build_flexible_betting_strategy(detail)
+        strat = build_autonomous_betting_strategy(detail)
         detail["honmeiNum"] = strat["honmei_num"]
         detail["confidence"] = strat["confidence"]
         detail["confidenceScore"] = strat["confidence_score"]
@@ -634,5 +685,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== WIN5戦略生成確認: {win5_strategy_text[:60]}... ===")
-print("=== 処理完了 ===")
+print("=== 処理完了: 確率UPプラス買い目（最大3点）統合済み ===")
