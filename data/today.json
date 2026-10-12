@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-12 11:35",
+  "updatedAt": "2026-10-12 11:39",
   "targetDate": "2026年10月12日",
   "stats": {
     "hitRate": 0.0,
@@ -46,7 +46,7 @@
     "aiSummary": "指数1位の4番タイセイアストロを主軸に指名。回収期待値を最大化する厳選配分。",
     "aiBuy": "【ワイド】4-9, 4-2, 4-5 (3点/各200円) / 【馬連】4 - 9, 2, 5 (3点/各100円) / 【3連複F】4 - 9 - 2, 5, 8 (3点/各100円) [計9点]"
   },
-  "win5Strategy": "【AI厳選WIN5戦略】計8点（予算800円 / 最大10点厳選）\n第1戦 [東京9R 3歳以上1勝クラス]: 4番 タイセイアストロ\n第2戦 [京都9R 蹴上特別]: 1番 イプシロンナンバー\n第3戦 [東京10R 昇仙峡S]: 1番, 11番\n第4戦 [京都10R 堀川特別]: 2番, 7番\n第5戦 [東京11R オクトーバーS]: 7番, 2番\n狙い: 前半2戦を指数1位の単騎突破で絞り、後半3戦を本命・対抗の2頭ずつ手厚く押さえて計8点で的中を狙う。",
+  "win5Strategy": "【AI厳選WIN5戦略】計8点（予算800円 / 最大10点厳選）\n第1戦 [東京10R 昇仙峡S]: 1番 バドリナート\n第2戦 [京都10R 堀川特別]: 2番 カムアップローゼス\n第3戦 [東京11R オクトーバーS]: 7番, 2番\n第4戦 [京都11R スワンS]: 13番, 1番\n第5戦 [東京12R 3歳以上1勝クラス]: 11番, 7番\n狙い: 前半2戦を指数1位の単騎突破で絞り、後半3戦を本命・対抗の2頭ずつ手厚く押さえて計8点で的中を狙う。",
   "bestRaces": [
     {
       "raceId": "202605040509",
@@ -56,7 +56,7 @@
       "rawRaceName": "3歳以上1勝クラス",
       "startTime": "14:20",
       "isGraded": false,
-      "isWin5": true,
+      "isWin5": false,
       "isSolidFinish": false,
       "isFav1Solid": false,
       "raceType": "波乱警戒（中穴ワイド狙い）",
@@ -551,7 +551,7 @@
       "rawRaceName": "3歳以上1勝クラス",
       "startTime": "14:20",
       "isGraded": false,
-      "isWin5": true,
+      "isWin5": false,
       "isSolidFinish": false,
       "isFav1Solid": false,
       "raceType": "波乱警戒（中穴ワイド狙い）",
@@ -1044,7 +1044,7 @@
       "rawRaceName": "3歳以上1勝クラス",
       "startTime": "16:15",
       "isGraded": false,
-      "isWin5": false,
+      "isWin5": true,
       "isSolidFinish": false,
       "isFav1Solid": false,
       "raceType": "波乱警戒（中穴ワイド狙い）",
@@ -1225,7 +1225,7 @@
       "rawRaceName": "蹴上特別",
       "startTime": "14:35",
       "isGraded": false,
-      "isWin5": true,
+      "isWin5": false,
       "isSolidFinish": false,
       "isFav1Solid": false,
       "raceType": "波乱警戒（中穴ワイド狙い）",
@@ -1487,7 +1487,7 @@
       "rawRaceName": "スワンS",
       "startTime": "15:45",
       "isGraded": false,
-      "isWin5": false,
+      "isWin5": true,
       "isSolidFinish": false,
       "isFav1Solid": false,
       "raceType": "波乱警戒（中穴ワイド狙い）",
