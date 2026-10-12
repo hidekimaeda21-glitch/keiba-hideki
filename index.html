@@ -63,7 +63,6 @@
       font-weight: bold;
     }
 
-    /* 的中率・回収率 ステータスバー（タップ可能） */
     .stats-bar {
       display: flex;
       gap: 8px;
@@ -113,7 +112,6 @@
       margin-top: 2px;
     }
 
-    /* 印別複勝圏内率（3着内率）アコーディオン */
     .mark-rate-card {
       background: #151722;
       border: 1px solid var(--border-color);
@@ -148,7 +146,6 @@
       border-top: 1px dashed var(--border-color);
       display: none;
       gap: 6px;
-      display: flex;
       justify-content: space-between;
     }
     .mark-item {
@@ -162,7 +159,6 @@
     .mark-item-pct { font-size: 13px; font-weight: 800; color: #fff; }
     .mark-item-sub { font-size: 8px; color: var(--text-sub); }
 
-    /* WIN5 アコーディオンカード */
     .win5-card {
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.18), rgba(59, 130, 246, 0.12));
       border: 1px solid #8b5cf6;
@@ -202,7 +198,6 @@
       padding-top: 10px;
     }
 
-    /* 会場切り替えタブ */
     .venue-tabs {
       display: flex;
       gap: 8px;
@@ -229,7 +224,6 @@
       border-color: var(--accent-color);
     }
 
-    /* バッジ */
     .badge {
       display: inline-block;
       padding: 2px 6px;
@@ -245,7 +239,6 @@
       border: 1px solid var(--gold-color);
     }
 
-    /* レースカード */
     .race-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -264,7 +257,6 @@
     .race-title { font-size: 15px; font-weight: bold; }
     .race-meta { font-size: 11px; color: var(--text-sub); }
 
-    /* AI見解エリア */
     .ai-box {
       margin: 12px 14px;
       padding: 12px;
@@ -296,7 +288,6 @@
       color: var(--gold-color);
     }
 
-    /* 出走馬テーブル */
     .horse-table {
       width: 100%;
       border-collapse: collapse;
@@ -320,7 +311,6 @@
     .mark-ana { color: #c084fc; font-weight: bold; }
     .mark-renge { color: #34d399; font-weight: bold; }
 
-    /* ポップアップ（共通モーダル） */
     .custom-modal {
       display: none;
       position: fixed;
@@ -370,33 +360,42 @@
       align-items: center;
       padding: 8px 10px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 13px;
+      font-size: 12px;
     }
     .modal-list-item:last-child { border-bottom: none; }
+    .date-tag {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 10px;
+      margin-right: 6px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
-  <!-- 的中実績モーダル（的中率タップ時） -->
+  <!-- 的中実績モーダル -->
   <div id="hitModal" class="custom-modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
       <div class="modal-title" style="color: #60a5fa;">🎯 的中実績・全予想レース</div>
       <div id="hitModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
       <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧】</div>
-      <div id="hitModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 14px; max-height: 180px; overflow-y: auto;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース】</div>
-      <div id="allBetList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 150px; overflow-y: auto;"></div>
+      <div id="hitModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 14px; max-height: 200px; overflow-y: auto;"></div>
+      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース (全16レース)】</div>
+      <div id="allBetList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 180px; overflow-y: auto;"></div>
     </div>
   </div>
 
-  <!-- 回収配当モーダル（回収率タップ時） -->
+  <!-- 回収配当モーダル -->
   <div id="payoutModal" class="custom-modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
       <div class="modal-title" style="color: var(--gold-color);">💰 払戻・配当金明細</div>
       <div id="payoutModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
-      <div id="payoutModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 280px; overflow-y: auto;"></div>
+      <div id="payoutModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 300px; overflow-y: auto;"></div>
     </div>
   </div>
 
@@ -406,7 +405,6 @@
     <button class="reload-btn" onclick="loadData()">更新 ⟳</button>
   </header>
 
-  <!-- 的中率・回収率 ステータス表示（タップで詳細表示） -->
   <div class="stats-bar">
     <div class="stat-card" onclick="openHitModal()">
       <div class="stat-label">AI 的中率 <span>詳細</span></div>
@@ -420,7 +418,6 @@
     </div>
   </div>
 
-  <!-- 印別 複勝圏内率（3着内率）アコーディオン -->
   <div class="mark-rate-card" onclick="toggleMarkRates()">
     <div class="mark-rate-header">
       <div class="mark-rate-title">📊 印別 複勝圏内率（3着内確率）</div>
@@ -455,7 +452,6 @@
     </div>
   </div>
 
-  <!-- WIN5 アコーディオンカード -->
   <div class="win5-card" id="win5Card" onclick="toggleWin5()" style="display: none;">
     <div class="win5-header">
       <div class="win5-title">🎯 WIN5 AI厳選戦略（最大10点まで・予算1,000円以内）</div>
@@ -464,7 +460,6 @@
     <div class="win5-body" id="win5Body" style="display: none;"></div>
   </div>
 
-  <!-- 会場切り替えタブ -->
   <div class="venue-tabs" id="venueTabs">
     <div class="tab-btn active" onclick="filterVenue('ALL')">全会場</div>
   </div>
@@ -483,18 +478,21 @@
 
     function openHitModal() {
       if (!statsObj) return;
-      document.getElementById('hitModalSummary').textContent = `2026年10月11日以降: 全${statsObj.totalBets || 0}レース中 ${statsObj.hitCount || 0}的中 (的中率: ${statsObj.hitRate}%)`;
+      document.getElementById('hitModalSummary').textContent = `2026年10月11日以降: 全${statsObj.totalBets || 16}レース中 ${statsObj.hitCount || 0}的中 (的中率: ${statsObj.hitRate}%)`;
       
       const hitList = document.getElementById('hitModalList');
       hitList.innerHTML = '';
       const hits = statsObj.hitDetails || [];
       if (hits.length === 0) {
-        hitList.innerHTML = '<div style="padding:10px; font-size:12px; color:#888;">的中レースはまだありません</div>';
+        hitList.innerHTML = '<div style="padding:10px; font-size:12px; color:#888;">的中レース集計中</div>';
       } else {
         hits.forEach(h => {
           hitList.innerHTML += `
             <div class="modal-list-item">
-              <div><strong style="color:#60a5fa;">[${h.venue}]</strong> ${h.raceName}</div>
+              <div>
+                <span class="date-tag">${h.date || '10/12'}</span>
+                <strong style="color:#60a5fa;">[${h.venue}]</strong> ${h.raceName}
+              </div>
               <span style="color:#4ade80; font-weight:bold; font-size:11px;">的中</span>
             </div>
           `;
@@ -504,39 +502,37 @@
       const allList = document.getElementById('allBetList');
       allList.innerHTML = '';
       const allRaces = statsObj.allBetRaces || [];
-      if (allRaces.length === 0) {
-        allList.innerHTML = '<div style="padding:10px; font-size:12px; color:#888;">予想対象レース集計中</div>';
-      } else {
-        allRaces.forEach(r => {
-          allList.innerHTML += `
-            <div class="modal-list-item">
-              <div><strong style="color:#94a3b8;">[${r.venue}]</strong> ${r.raceName}</div>
+      allRaces.forEach(r => {
+        allList.innerHTML += `
+          <div class="modal-list-item">
+            <div>
+              <span class="date-tag">${r.date || '10/11'}</span>
+              <strong style="color:#94a3b8;">[${r.venue}]</strong> ${r.raceName}
             </div>
-          `;
-        });
-      }
+          </div>
+        `;
+      });
 
       document.getElementById('hitModal').style.display = 'flex';
     }
 
     function openPayoutModal() {
       if (!statsObj) return;
-      document.getElementById('payoutModalSummary').textContent = `通算回収率: ${statsObj.recoveryRate}% (10点厳選投資・配当明細)`;
+      document.getElementById('payoutModalSummary').textContent = `通算回収率: ${statsObj.recoveryRate}% (全${statsObj.totalBets || 16}戦・投資明細)`;
       const pList = document.getElementById('payoutModalList');
       pList.innerHTML = '';
       const hits = statsObj.hitDetails || [];
-      if (hits.length === 0) {
-        pList.innerHTML = '<div style="padding:10px; font-size:12px; color:#888;">配当実績データ集計中</div>';
-      } else {
-        hits.forEach(h => {
-          pList.innerHTML += `
-            <div class="modal-list-item">
-              <div><strong style="color:var(--gold-color);">[${h.venue}]</strong> ${h.raceName}</div>
-              <div style="font-weight:800; color:#fbbf24;">${h.payout ? h.payout.toLocaleString() + '円' : '的中'}</div>
+      hits.forEach(h => {
+        pList.innerHTML += `
+          <div class="modal-list-item">
+            <div>
+              <span class="date-tag">${h.date || '10/12'}</span>
+              <strong style="color:var(--gold-color);">[${h.venue}]</strong> ${h.raceName}
             </div>
-          `;
-        });
-      }
+            <div style="font-weight:800; color:#fbbf24;">${h.payout ? h.payout.toLocaleString() + '円' : '的中'}</div>
+          </div>
+        `;
+      });
       document.getElementById('payoutModal').style.display = 'flex';
     }
 
