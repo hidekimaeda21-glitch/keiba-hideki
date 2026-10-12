@@ -287,9 +287,17 @@ def parse_race_details(race_info):
     is_solid_favorite = (fav1["odds"] <= 3.0 and ranked_horses[0]["num"] == fav1["num"])
     is_solid_finish = is_solid_favorite and (ranked_horses[1]["odds"] <= 5.5)
 
-    # netkeiba公式のWIN5アイコンまたはクラス名で厳密に判定
-    win5_tag = soup.find(class_=re.compile(r"Icon_Win5|win5_target|IconWin5", re.I))
-    is_win5_detected = bool(win5_tag)
+    # ==========================================
+    # ネット競馬のレース名横「WIN5」マークの判定
+    # ==========================================
+    # レースヘッダーブロック（RaceName, RaceData, RaceHeadなど）のHTMLを精査
+    header_block = soup.find(class_=re.compile(r"RaceColumn01|RaceHead|RaceData|RaceName", re.I))
+    header_text = header_block.get_text() if header_block else html[:2500]
+    
+    # アイコンまたはタグ、テキストからWIN5を検知
+    win5_icon = soup.find(class_=re.compile(r"Icon_Win5|win5_target|IconWin5|win5_icon", re.I))
+    win5_img = soup.find("img", alt=re.compile(r"WIN5", re.I)) or soup.find("img", src=re.compile(r"win5", re.I))
+    is_win5_detected = bool(win5_icon or win5_img or ("WIN5" in header_text and "対象" in header_text))
 
     return {
         "raceId": race_id,
@@ -361,30 +369,27 @@ def build_flexible_betting_strategy(detail):
 
 def generate_win5_strategy(all_races):
     """
-    JRA公式のWIN5対象レース（後半メイン中心の5レース）を特定し、
+    ネット競馬でマークされたWIN5対象レース（5レース）を正確に抽出し、
     厳選フォーメーションを生成する
     """
-    # 1. ページ内に明確にWIN5アイコンがあるレースを抽出
+    # ネット競馬のマークで検知されたレース
     win5_races = [r for r in all_races if r.get("isWin5")]
 
-    # 2. 5レース揃わない場合は、JRA公式ルールに基づき「10R・11R・12R」から発走順に5レースを正確に選出
+    # マークで5レース揃わない場合は、発走時刻順（東京9R・京都9R・東京10R・京都10R等を含む順）で整列
     if len(win5_races) != 5:
-        # 10R, 11R, 12R を優先抽出（9RはWIN5対象外）
-        late_races = [r for r in all_races if r.get("rNum") in [10, 11, 12]]
-        late_races = sorted(late_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
-        
-        if len(late_races) >= 5:
-            win5_races = late_races[:5]
+        # 本日のWIN5対象（東京9R, 京都9R, 東京10R, 京都10R, 東京11R/京都11R）の発走時刻順
+        all_sorted = sorted(all_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
+        # 発走時刻順で9R以降の該当5レースを抽出
+        cands = [r for r in all_sorted if r.get("rNum") in [9, 10, 11]]
+        if len(cands) >= 5:
+            win5_races = cands[:5]
         else:
-            # 10〜12Rで不足する場合のみ9Rを連結
-            all_sorted = sorted(all_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
-            win5_races = all_sorted[-5:]  # 後半5レースを特定
+            win5_races = all_sorted[:5]
 
-    # 各レースにWIN5フラグを付与
     for r in win5_races:
         r["isWin5"] = True
 
-    # 発走時刻順に並べ替え
+    # 発走時刻順に並び替え
     win5_races = sorted(win5_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))[:5]
 
     race_picks = []
@@ -608,7 +613,7 @@ for r_info in detected_races:
         detail["aiBuy"] = strat["recommendation"]
         final_races.append(detail)
 
-# 正確なWIN5戦略テキストの生成
+# WIN5戦略テキストの生成
 win5_strategy_text = generate_win5_strategy(final_races) if final_races else "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 top_recommended_race = select_top_recommended_race(final_races) if final_races else None
 
