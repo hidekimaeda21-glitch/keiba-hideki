@@ -1,32 +1,135 @@
 {
   "reset_date": "20261011",
-  "total_bets": 0,
-  "hit_count": 0,
-  "invest": 0,
-  "payout": 0,
+  "total_bets": 12,
+  "hit_count": 8,
+  "invest": 12000,
+  "payout": 17860,
   "mark_stats": {
     "◎": {
-      "total": 0,
-      "top3": 0
+      "total": 12,
+      "top3": 8
     },
     "○": {
-      "total": 0,
-      "top3": 0
+      "total": 12,
+      "top3": 9
     },
     "▲": {
-      "total": 0,
-      "top3": 0
+      "total": 12,
+      "top3": 10
     },
     "☆": {
-      "total": 0,
-      "top3": 0
+      "total": 12,
+      "top3": 3
     },
     "△": {
-      "total": 0,
-      "top3": 0
+      "total": 30,
+      "top3": 4
     }
   },
-  "checked_races": [],
-  "hit_details": [],
-  "all_bet_races": []
+  "checked_races": [
+    "202605040409",
+    "202608040409",
+    "202605040410",
+    "202608040410",
+    "202605040411",
+    "202608040411",
+    "202605040509",
+    "202608040509",
+    "202605040510",
+    "202608040510",
+    "202605040511",
+    "202608040511"
+  ],
+  "hit_details": [
+    {
+      "venue": "東京",
+      "raceName": "9R 鷹巣山特別",
+      "payout": 1250
+    },
+    {
+      "venue": "京都",
+      "raceName": "9R 長久手特別",
+      "payout": 750
+    },
+    {
+      "venue": "東京",
+      "raceName": "10R テレビ静岡賞",
+      "payout": 640
+    },
+    {
+      "venue": "京都",
+      "raceName": "10R 藤森S",
+      "payout": 1420
+    },
+    {
+      "venue": "東京",
+      "raceName": "11R アイルランドT(G2)",
+      "payout": 1450
+    },
+    {
+      "venue": "京都",
+      "raceName": "11R 京都大賞典(G2)",
+      "payout": 950
+    },
+    {
+      "venue": "東京",
+      "raceName": "10R 昇仙峡S",
+      "payout": 2240
+    },
+    {
+      "venue": "京都",
+      "raceName": "11R スワンS(G2)",
+      "payout": 9160
+    }
+  ],
+  "all_bet_races": [
+    {
+      "venue": "東京",
+      "raceName": "9R 鷹巣山特別"
+    },
+    {
+      "venue": "京都",
+      "raceName": "9R 長久手特別"
+    },
+    {
+      "venue": "東京",
+      "raceName": "10R テレビ静岡賞"
+    },
+    {
+      "venue": "京都",
+      "raceName": "10R 藤森S"
+    },
+    {
+      "venue": "東京",
+      "raceName": "11R アイルランドT(G2)"
+    },
+    {
+      "venue": "京都",
+      "raceName": "11R 京都大賞典(G2)"
+    },
+    {
+      "venue": "東京",
+      "raceName": "9R 3歳以上1勝クラス"
+    },
+    {
+      "venue": "京都",
+      "raceName": "9R 蹴上特別"
+    },
+    {
+      "venue": "東京",
+      "raceName": "10R 昇仙峡S"
+    },
+    {
+      "venue": "京都",
+      "raceName": "10R 堀川特別"
+    },
+    {
+      "venue": "東京",
+      "raceName": "11R オクトーバーS"
+    },
+    {
+      "venue": "京都",
+      "raceName": "11R スワンS(G2)"
+    }
+  ]
 }
