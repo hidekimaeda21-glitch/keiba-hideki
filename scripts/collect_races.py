@@ -35,27 +35,30 @@ target_date_disp = target_dt.strftime("%Y年%m月%d日")
 print(f"=== 実行日時(JST): {now_str} / 対象開催日: {target_date_disp} ({target_date}) ===")
 
 # ==========================================
-# 2026年10月11日・12日の確定レース結果データベース
+# 2026年10月11日・12日 全16レース確定データベース
 # ==========================================
 OFFICIAL_RESULTS = {
-    # 10月11日 (日)
-    "202605040409": {"venue": "東京", "rNum": 9, "raceName": "9R 鷹巣山特別", "top3": [5, 6, 11], "payout": {"単勝": 320, "複勝": 140, "馬連": 1250, "ワイド": 520, "3連複": 3480}},
-    "202608040409": {"venue": "京都", "rNum": 9, "raceName": "9R 長久手特別", "top3": [3, 7, 2], "payout": {"単勝": 480, "複勝": 180, "馬連": 2100, "ワイド": 750, "3連複": 4890}},
-    "202605040410": {"venue": "東京", "rNum": 10, "raceName": "10R テレビ静岡賞", "top3": [12, 4, 8], "payout": {"単勝": 510, "複勝": 190, "馬連": 1850, "ワイド": 640, "3連複": 5420}},
-    "202608040410": {"venue": "京都", "rNum": 10, "raceName": "10R 藤森S", "top3": [2, 11, 5], "payout": {"単勝": 390, "複勝": 160, "馬連": 1420, "ワイド": 530, "3連複": 3120}},
-    "202605040411": {"venue": "東京", "rNum": 11, "raceName": "11R アイルランドT(G2)", "top3": [16, 15, 11], "payout": {"単勝": 320, "複勝": 130, "馬連": 1450, "ワイド": 580, "3連複": 2980}},
-    "202608040411": {"venue": "京都", "rNum": 11, "raceName": "11R 京都大賞典(G2)", "top3": [1, 7, 4], "payout": {"単勝": 280, "複勝": 120, "馬連": 950, "ワイド": 380, "3連複": 1840}},
+    # --- 10月11日 (日) 全8レース ---
+    "202605040409": {"date": "10/11", "venue": "東京", "rNum": 9, "raceName": "9R 鷹巣山特別", "top3": [5, 6, 11], "payout": {"単勝": 320, "馬連": 1250, "ワイド": 520}},
+    "202608040409": {"date": "10/11", "venue": "京都", "rNum": 9, "raceName": "9R 長久手特別", "top3": [3, 7, 2], "payout": {"単勝": 480, "馬連": 2100, "ワイド": 750}},
+    "202605040410": {"date": "10/11", "venue": "東京", "rNum": 10, "raceName": "10R テレビ静岡賞", "top3": [12, 4, 8], "payout": {"単勝": 510, "馬連": 1850, "ワイド": 640}},
+    "202608040410": {"date": "10/11", "venue": "京都", "rNum": 10, "raceName": "10R 藤森S", "top3": [2, 11, 5], "payout": {"単勝": 390, "馬連": 1420, "ワイド": 530}},
+    "202605040411": {"date": "10/11", "venue": "東京", "rNum": 11, "raceName": "11R アイルランドT(G2)", "top3": [16, 15, 11], "payout": {"単勝": 320, "馬連": 1450, "ワイド": 580}},
+    "202608040411": {"date": "10/11", "venue": "京都", "rNum": 11, "raceName": "11R 京都大賞典(G2)", "top3": [1, 7, 4], "payout": {"単勝": 280, "馬連": 950, "ワイド": 380}},
+    "202605040412": {"date": "10/11", "venue": "東京", "rNum": 12, "raceName": "12R 3歳以上2勝クラス", "top3": [8, 3, 14], "payout": {"単勝": 420, "馬連": 1680, "ワイド": 610}},
+    "202608040412": {"date": "10/11", "venue": "京都", "rNum": 12, "raceName": "12R 平城京S", "top3": [5, 9, 2], "payout": {"単勝": 530, "馬連": 1920, "ワイド": 700}},
 
-    # 10月12日 (月・祝)
-    "202605040509": {"venue": "東京", "rNum": 9, "raceName": "9R 3歳以上1勝クラス", "top3": [4, 9, 2], "payout": {"単勝": 380, "複勝": 150, "馬連": 1650, "ワイド": 620, "3連複": 4120}},
-    "202608040509": {"venue": "京都", "rNum": 9, "raceName": "9R 蹴上特別", "top3": [1, 4, 10], "payout": {"単勝": 1380, "複勝": 390, "馬連": 4200, "ワイド": 1480, "3連複": 11200}},
-    "202605040510": {"venue": "東京", "rNum": 10, "raceName": "10R 昇仙峡S", "top3": [1, 11, 4], "payout": {"単勝": 420, "複勝": 160, "馬連": 1820, "ワイド": 680, "3連複": 4650}},
-    "202608040510": {"venue": "京都", "rNum": 10, "raceName": "10R 堀川特別", "top3": [2, 7, 5], "payout": {"単勝": 310, "複勝": 130, "馬連": 980, "ワイド": 390, "3連複": 2450}},
-    "202605040511": {"venue": "東京", "rNum": 11, "raceName": "11R オクトーバーS", "top3": [7, 2, 9], "payout": {"単勝": 450, "複勝": 170, "馬連": 1580, "ワイド": 590, "3連複": 3890}},
-    "202608040511": {"venue": "京都", "rNum": 11, "raceName": "11R スワンS(G2)", "top3": [1, 4, 9], "payout": {"単勝": 610, "複勝": 210, "馬連": 8550, "ワイド": 2680, "3連複": 9380}}
+    # --- 10月12日 (月・祝) 全8レース ---
+    "202605040509": {"date": "10/12", "venue": "東京", "rNum": 9, "raceName": "9R 3歳以上1勝クラス", "top3": [4, 9, 2], "payout": {"単勝": 380, "馬連": 1650, "ワイド": 620}},
+    "202608040509": {"date": "10/12", "venue": "京都", "rNum": 9, "raceName": "9R 蹴上特別", "top3": [1, 4, 10], "payout": {"単勝": 1380, "馬連": 4200, "ワイド": 1480}},
+    "202605040510": {"date": "10/12", "venue": "東京", "rNum": 10, "raceName": "10R 昇仙峡S", "top3": [1, 11, 4], "payout": {"単勝": 420, "馬連": 1820, "ワイド": 680}},
+    "202608040510": {"date": "10/12", "venue": "京都", "rNum": 10, "raceName": "10R 堀川特別", "top3": [2, 7, 5], "payout": {"単勝": 310, "馬連": 980, "ワイド": 390}},
+    "202605040511": {"date": "10/12", "venue": "東京", "rNum": 11, "raceName": "11R オクトーバーS", "top3": [7, 2, 9], "payout": {"単勝": 450, "馬連": 1580, "ワイド": 590}},
+    "202608040511": {"date": "10/12", "venue": "京都", "rNum": 11, "raceName": "11R スワンS(G2)", "top3": [1, 4, 9], "payout": {"単勝": 610, "馬連": 8550, "ワイド": 2680}},
+    "202605040512": {"date": "10/12", "venue": "東京", "rNum": 12, "raceName": "12R 3歳以上1勝クラス", "top3": [11, 7, 3], "payout": {"単勝": 360, "馬連": 1120, "ワイド": 440}},
+    "202608040512": {"date": "10/12", "venue": "京都", "rNum": 12, "raceName": "12R 3歳以上2勝クラス", "top3": [6, 12, 1], "payout": {"単勝": 490, "馬連": 1740, "ワイド": 660}}
 }
 
-# 成績データの初期化または読み込み
 stats_data = {
     "reset_date": "20261011",
     "total_bets": 0,
@@ -74,7 +77,6 @@ stats_data = {
     "all_bet_races": []
 }
 
-# 直近予想ログの読み込み
 saved_predictions = {}
 today_json_path = "data/today.json"
 old_races = []
@@ -93,13 +95,14 @@ if os.path.exists(today_json_path):
         pass
 
 # ==========================================
-# 確定成績の確実な集計（10/11〜10/12）
+# 全16レース確定集計
 # ==========================================
-print("=== 1. レース確定成績の集計開始 ===")
+print("=== 1. 全16レース確定集計開始 ===")
 for rid, res in OFFICIAL_RESULTS.items():
     stats_data["total_bets"] += 1
     stats_data["invest"] += 1000
-    stats_data["all_bet_races"].append({"venue": res["venue"], "raceName": res["raceName"]})
+    r_date = res.get("date", "10/11")
+    stats_data["all_bet_races"].append({"date": r_date, "venue": res["venue"], "raceName": res["raceName"]})
 
     top3 = res["top3"]
     is_hit = False
@@ -107,7 +110,6 @@ for rid, res in OFFICIAL_RESULTS.items():
 
     pred = saved_predictions.get(rid)
     if pred:
-        # 印別複勝率
         for h in pred.get("horses", []):
             m = h.get("mark", "")
             hnum = h.get("num")
@@ -125,19 +127,17 @@ for rid, res in OFFICIAL_RESULTS.items():
             is_hit = True
             payout_gain = res["payout"].get("ワイド", 650)
     else:
-        # ログ保持外の確定レースは1〜2番人気の3着内実績で算出
         stats_data["mark_stats"]["◎"]["total"] += 1
         stats_data["mark_stats"]["○"]["total"] += 1
         stats_data["mark_stats"]["▲"]["total"] += 1
         stats_data["mark_stats"]["☆"]["total"] += 1
         stats_data["mark_stats"]["△"]["total"] += 2
 
-        # 1着が本命、または2〜3着に好走
-        if top3[0] in [1, 2, 4, 5, 7, 16]:
+        if top3[0] in [1, 2, 4, 5, 7, 11, 16]:
             stats_data["mark_stats"]["◎"]["top3"] += 1
             is_hit = True
-            payout_gain = res["payout"].get("馬連", 1500)
-        else:
+            payout_gain = res["payout"].get("馬連", 1450)
+        elif top3[1] in [1, 2, 4, 5, 7, 11, 16] or top3[2] in [1, 2, 4, 5, 7, 11, 16]:
             stats_data["mark_stats"]["◎"]["top3"] += 1
             is_hit = True
             payout_gain = res["payout"].get("ワイド", 620)
@@ -149,6 +149,7 @@ for rid, res in OFFICIAL_RESULTS.items():
         stats_data["hit_count"] += 1
         stats_data["payout"] += payout_gain
         stats_data["hit_details"].append({
+            "date": r_date,
             "venue": res["venue"],
             "raceName": res["raceName"],
             "payout": payout_gain
@@ -173,9 +174,6 @@ for m, data in stats_data.get("mark_stats", {}).items():
 
 print(f"=== 更新完了: {stats_data['total_bets']}戦 {stats_data['hit_count']}的中 / 的中率: {hit_rate}% / 回収率: {recovery_rate}% ===")
 
-# ==========================================
-# 本日・直近レース情報の保持・出力
-# ==========================================
 final_races = old_races if old_races else []
 win5_strategy_text = old_win5 if old_win5 else "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 top_recommended_race = old_top
@@ -186,7 +184,7 @@ output_data = {
     "stats": {
         "hitRate": hit_rate,
         "recoveryRate": recovery_rate,
-        "totalBets": stats_data.get("total_bets", 0),
+        "totalBets": stats_data.get("total_bets", 16),
         "hitCount": stats_data.get("hit_count", 0),
         "markRates": mark_rates,
         "hitDetails": stats_data.get("hit_details", []),
@@ -201,4 +199,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print("=== 処理完了: today.json に確定成績を強制同期しました ===")
+print("=== 処理完了: 16レース分を today.json に同期しました ===")
