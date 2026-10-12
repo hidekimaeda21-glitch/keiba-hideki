@@ -112,39 +112,25 @@
       margin-top: 2px;
     }
 
+    /* 印別複勝圏内率（常時展開） */
     .mark-rate-card {
       background: #151722;
       border: 1px solid var(--border-color);
       border-radius: 10px;
       margin-bottom: 12px;
-      overflow: hidden;
-      cursor: pointer;
+      padding: 10px 12px;
     }
     .mark-rate-header {
-      padding: 10px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .mark-rate-title {
       font-size: 12px;
       font-weight: bold;
       color: #93c5fd;
       display: flex;
       align-items: center;
       gap: 6px;
-    }
-    .mark-rate-toggle-icon {
-      font-size: 10px;
-      color: #93c5fd;
-      background: rgba(147, 197, 253, 0.15);
-      padding: 2px 6px;
-      border-radius: 4px;
+      margin-bottom: 8px;
     }
     .mark-rate-body {
-      padding: 10px 14px 12px;
-      border-top: 1px dashed var(--border-color);
-      display: none;
+      display: flex;
       gap: 6px;
       justify-content: space-between;
     }
@@ -154,8 +140,9 @@
       background: rgba(255,255,255,0.03);
       padding: 6px 2px;
       border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.04);
     }
-    .mark-item-symbol { font-size: 13px; font-weight: bold; margin-bottom: 2px; }
+    .mark-item-symbol { font-size: 12px; font-weight: bold; margin-bottom: 2px; }
     .mark-item-pct { font-size: 13px; font-weight: 800; color: #fff; }
     .mark-item-sub { font-size: 8px; color: var(--text-sub); }
 
@@ -418,12 +405,10 @@
     </div>
   </div>
 
-  <div class="mark-rate-card" onclick="toggleMarkRates()">
-    <div class="mark-rate-header">
-      <div class="mark-rate-title">📊 印別 複勝圏内率（3着内確率）</div>
-      <div class="mark-rate-toggle-icon" id="markToggleIcon">▼ タップで展開</div>
-    </div>
-    <div class="mark-rate-body" id="markRateBody">
+  <!-- 印別 複勝圏内率（3着内確率）表示エリア -->
+  <div class="mark-rate-card">
+    <div class="mark-rate-header">📊 印別 複勝圏内率（3着内確率）</div>
+    <div class="mark-rate-body">
       <div class="mark-item">
         <div class="mark-item-symbol mark-honmei">◎ 本命</div>
         <div class="mark-item-pct" id="markPctHonmei">--%</div>
@@ -544,18 +529,6 @@
       if (mark.includes('☆')) return 'mark-ana';
       if (mark.includes('△')) return 'mark-renge';
       return '';
-    }
-
-    function toggleMarkRates() {
-      const body = document.getElementById('markRateBody');
-      const icon = document.getElementById('markToggleIcon');
-      if (body.style.display === 'none' || body.style.display === '') {
-        body.style.display = 'flex';
-        icon.textContent = '▲ 閉じる';
-      } else {
-        body.style.display = 'none';
-        icon.textContent = '▼ タップで展開';
-      }
     }
 
     function toggleWin5() {
