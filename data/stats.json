@@ -1,29 +1,29 @@
 {
   "reset_date": "20261011",
   "total_bets": 16,
-  "hit_count": 10,
+  "hit_count": 9,
   "invest": 16000,
-  "payout": 20440,
+  "payout": 11290,
   "mark_stats": {
     "◎": {
       "total": 16,
-      "top3": 10
+      "top3": 9
     },
     "○": {
       "total": 16,
-      "top3": 12
+      "top3": 13
     },
     "▲": {
       "total": 16,
-      "top3": 12
+      "top3": 8
     },
     "☆": {
       "total": 16,
-      "top3": 5
+      "top3": 4
     },
     "△": {
       "total": 40,
-      "top3": 4
+      "top3": 10
     }
   },
   "checked_races": [
@@ -91,19 +91,13 @@
       "date": "10/12",
       "venue": "東京",
       "raceName": "10R 昇仙峡S",
-      "payout": 2240
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "11R スワンS(G2)",
-      "payout": 9160
+      "payout": 680
     },
     {
       "date": "10/12",
       "venue": "京都",
       "raceName": "12R 3歳以上2勝クラス",
-      "payout": 660
+      "payout": 2230
     }
   ],
   "all_bet_races": [
