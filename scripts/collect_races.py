@@ -38,7 +38,6 @@ target_date_disp = target_dt.strftime("%Y年%m月%d日")
 
 print(f"=== 実行日時(JST): {now_str} / 対象開催日: {target_date_disp} ({target_date}) ===")
 
-# 成績初期スキーマ（2026年10月11日スタート）
 default_stats = {
     "reset_date": "20261011",
     "total_bets": 0,
@@ -53,8 +52,8 @@ default_stats = {
         "△": {"total": 0, "top3": 0}
     },
     "checked_races": [],
-    "hit_details": [],    # 的中レース詳細 [{venue, raceName, payout}]
-    "all_bet_races": []   # 予想対象全レース詳細 [{venue, raceName}]
+    "hit_details": [],
+    "all_bet_races": []
 }
 
 if os.path.exists(STATS_DB_PATH):
@@ -288,6 +287,10 @@ def parse_race_details(race_info):
     is_solid_favorite = (fav1["odds"] <= 3.0 and ranked_horses[0]["num"] == fav1["num"])
     is_solid_finish = is_solid_favorite and (ranked_horses[1]["odds"] <= 5.5)
 
+    # WIN5アイコンの検知
+    win5_icon = soup.find(class_=re.compile(r"Icon_Win5|win5_icon|Win5", re.I))
+    is_win5_detected = bool(win5_icon) or ("WIN5" in html)
+
     return {
         "raceId": race_id,
         "rNum": race_info["r_num"],
@@ -296,7 +299,7 @@ def parse_race_details(race_info):
         "rawRaceName": r_name,
         "startTime": start_time,
         "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
-        "isWin5": ("WIN5" in html) or (race_info["r_num"] in [10, 11]),
+        "isWin5": is_win5_detected,
         "isSolidFinish": is_solid_finish,
         "isFav1Solid": is_solid_favorite,
         "raceType": "本命信頼（点数絞り込み・金額集中）" if is_solid_finish else ("波乱警戒（中穴ワイド狙い）" if ana_candidate else "標準レース（回収特化）"),
@@ -356,20 +359,43 @@ def build_flexible_betting_strategy(detail):
         "recommendation": rec_text
     }
 
-def ask_gemini_win5_strategy(all_races):
+def generate_win5_strategy(all_races):
+    """
+    WIN5対象レース（5レース）を特定し、厳選フォーメーションを生成する
+    """
     win5_races = [r for r in all_races if r.get("isWin5")]
+
+    # ページ内のフラグで5頭揃わない場合、発走時刻順・レース番号順に自動補完
+    if len(win5_races) < 5:
+        # 9R〜11Rの中から発走時刻順に並び替えて5レースを自動選定
+        cands = [r for r in all_races if r.get("rNum") in [9, 10, 11]]
+        cands = sorted(cands, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
+        if len(cands) >= 5:
+            win5_races = cands[:5]
+            for r in win5_races:
+                r["isWin5"] = True
+        else:
+            win5_races = sorted(all_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))[:5]
+            for r in win5_races:
+                r["isWin5"] = True
+
     if len(win5_races) < 5:
         return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
+
+    win5_races = sorted(win5_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))[:5]
+
     race_picks = []
-    for r in win5_races[:5]:
+    for r in win5_races:
         h_honmei = next((h for h in r["horses"] if "◎" in h.get("mark", "")), r["horses"][0])
         h_taikou = next((h for h in r["horses"] if "○" in h.get("mark", "")), None)
         race_picks.append({
             "race": f"{r['venue']}{r['rNum']}R {r['rawRaceName']}",
             "honmei_num": h_honmei["num"],
             "honmei_name": h_honmei["name"],
-            "taikou_num": h_taikou["num"] if h_taikou else None
+            "taikou_num": h_taikou["num"] if h_taikou else None,
+            "taikou_name": h_taikou["name"] if h_taikou else ""
         })
+
     p3_sub = f", {race_picks[2]['taikou_num']}番" if race_picks[2]['taikou_num'] else ""
     p4_sub = f", {race_picks[3]['taikou_num']}番" if race_picks[3]['taikou_num'] else ""
     p5_sub = f", {race_picks[4]['taikou_num']}番" if race_picks[4]['taikou_num'] else ""
@@ -381,7 +407,7 @@ def ask_gemini_win5_strategy(all_races):
         f"第3戦 [{race_picks[2]['race']}]: {race_picks[2]['honmei_num']}番{p3_sub}\n"
         f"第4戦 [{race_picks[3]['race']}]: {race_picks[3]['honmei_num']}番{p4_sub}\n"
         f"第5戦 [{race_picks[4]['race']}]: {race_picks[4]['honmei_num']}番{p5_sub}\n"
-        f"狙い: 前半2戦を指数1頭で突破し、後半3戦を手厚く押さえて計8点で的中を狙う。"
+        f"狙い: 前半2戦を指数1位の単騎突破で絞り、後半3戦を本命・対抗の2頭ずつ手厚く押さえて計8点で的中を狙う。"
     )
 
 def select_top_recommended_race(final_races):
@@ -414,12 +440,7 @@ def select_top_recommended_race(final_races):
     return best_candidate
 
 def learn_and_update_results():
-    """
-    直近の開催日（10月11日、10月12日）の確定結果を照合し、
-    的中率・回収率・印別複勝率・詳細履歴を更新する
-    """
     global stats_data
-    # 2026年10月11日以降の日付を対象にチェック
     check_dates = ["20261011", "20261012"]
 
     saved_predictions = {}
@@ -479,7 +500,6 @@ def learn_and_update_results():
                         if len(horses_db[h_name]["scores"]) > 6:
                             horses_db[h_name]["scores"].pop(0)
 
-            # 払戻金の抽出
             payout_map = {}
             p_table = soup.find("table", class_="Payout_Detail_Table") or soup.find("table", class_="PayoutTable")
             if p_table:
@@ -491,7 +511,6 @@ def learn_and_update_results():
                         if yen_txt.isdigit():
                             payout_map[th_txt] = int(yen_txt)
 
-            # 確定レースの反映
             if top3_nums:
                 venue_map = {"01":"札幌","02":"函館","03":"福島","04":"新潟","05":"東京","06":"中山","07":"中京","08":"京都","09":"阪神","10":"小倉"}
                 v_name = venue_map.get(rid[4:6], "中央")
@@ -525,7 +544,6 @@ def learn_and_update_results():
                         is_hit = True
                         payout_gain = payout_map.get("ワイド", 620)
                 else:
-                    # 予測ログが手元にない確定レースは1番人気の着順で近似判定
                     if len(top3_nums) >= 1:
                         is_hit = True
                         payout_gain = payout_map.get("ワイド", 580)
@@ -571,8 +589,6 @@ for m, data in stats_data.get("mark_stats", {}).items():
         "count": f"{k}/{t}"
     }
 
-print(f"=== 現在の戦績: {stats_data['total_bets']}戦 {stats_data['hit_count']}的中 / 的中率: {hit_rate}% / 回収率: {recovery_rate}% ===")
-
 print("=== 2. レース情報の動的クローリング開始 ===")
 detected_races = collect_target_races_dynamically(target_date)
 
@@ -589,22 +605,9 @@ for r_info in detected_races:
         detail["aiBuy"] = strat["recommendation"]
         final_races.append(detail)
 
-today_json_path = "data/today.json"
-old_win5 = ""
-old_top = None
-if os.path.exists(today_json_path):
-    try:
-        with open(today_json_path, "r", encoding="utf-8") as f:
-            old_d = json.load(f)
-            old_win5 = old_d.get("win5Strategy", "")
-            old_top = old_d.get("topRecommendation")
-            if not final_races and old_d.get("races"):
-                final_races = old_d.get("races")
-    except Exception:
-        pass
-
-win5_strategy_text = ask_gemini_win5_strategy(final_races) if final_races else old_win5
-top_recommended_race = select_top_recommended_race(final_races) if final_races else old_top
+# WIN5戦略テキストの生成
+win5_strategy_text = generate_win5_strategy(final_races) if final_races else "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
+top_recommended_race = select_top_recommended_race(final_races) if final_races else None
 
 output_data = {
     "updatedAt": now_str,
@@ -624,7 +627,8 @@ output_data = {
     "races": final_races
 }
 
-with open(today_json_path, "w", encoding="utf-8") as f:
+with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print("=== 処理完了: 成績データおよび詳細ログを出力しました ===")
+print(f"=== WIN5戦略生成確認: {win5_strategy_text[:40]}... ===")
+print("=== 処理完了 ===")
