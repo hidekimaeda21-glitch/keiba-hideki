@@ -35,7 +35,7 @@ target_date_disp = target_dt.strftime("%Y年%m月%d日")
 print(f"=== 実行日時(JST): {now_str} / 対象開催日: {target_date_disp} ({target_date}) ===")
 
 # ==========================================
-# 2026年10月11日・12日 全16レース確定データベース
+# 2026年10月11日・12日 全16レース確定データベース（永続保持）
 # ==========================================
 OFFICIAL_RESULTS = {
     # 10月11日 (日)
@@ -221,9 +221,6 @@ def get_real_odds_dict(race_id):
         pass
     return odds_map
 
-# ==========================================
-# 弥永理論スコア（展開・位置取り・地力・巻き返し判定）
-# ==========================================
 def compute_yanaga_score(h_data, race_context):
     h_name = h_data["name"]
     odds = h_data["odds"]
@@ -246,16 +243,13 @@ def compute_yanaga_score(h_data, race_context):
         base_score = round(92.0 - (odds * 0.22) + (name_hash * 0.35), 1)
     base_score = max(72.0, min(97.0, base_score))
 
-    # Gap Score（前走不利・着順過小評価の巻き返し判定）
     gap_score = sum(past_gaps[-3:]) / len(past_gaps[-3:]) if past_gaps else round((odds - 8.0) / 4.0, 1)
 
-    # 弥永流「トラックバイアス・展開補正」
     bias_bonus = 0.0
     if pos_score >= 0.75:
-        bias_bonus += 2.0  # 前に行ける馬を最重要視
+        bias_bonus += 2.0
     if frame_no in [1, 2, 3] and pos_score >= 0.6:
-        bias_bonus += 1.0  # 内枠先行の有利
-
+        bias_bonus += 1.0
     if is_wet and (track_type == "ダ" or "パワー" in h_name):
         bias_bonus += 1.5
 
@@ -347,7 +341,10 @@ def parse_race_details(race_info):
         })
 
     ranked_horses = sorted(processed_horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
-    fav1 = sorted(processed_horses, key=lambda x: x["odds"])[0]
+    sorted_by_odds = sorted(processed_horses, key=lambda x: x["odds"])
+    fav1 = sorted_by_odds[0]
+    fav2 = sorted_by_odds[1] if len(sorted_by_odds) > 1 else fav1
+    fav3 = sorted_by_odds[2] if len(sorted_by_odds) > 2 else fav2
 
     ranked_horses[0]["mark"] = "◎ 本命"
     if len(ranked_horses) > 1: ranked_horses[1]["mark"] = "○ 対抗"
@@ -365,16 +362,30 @@ def parse_race_details(race_info):
             h["mark"] = "△ 連下"
             sub_c += 1
 
-    is_solid_favorite = (fav1["odds"] <= 2.8 and ranked_horses[0]["num"] == fav1["num"])
-    is_solid_finish = is_solid_favorite and (ranked_horses[1]["odds"] <= 5.0)
+    # ==========================================
+    # オッズ断層理論による3パターン判定
+    # 1: 手堅いレース (SOLID)
+    # 2: ちょい荒れレース (SEMI_CHAOS)
+    # 3: 波乱レース (CHAOS)
+    # ==========================================
+    # 1番人気が2.5倍以下かつ2番人気とのオッズ差が大きく安定している場合
+    if fav1["odds"] <= 2.6 and (fav2["odds"] - fav1["odds"] >= 1.5):
+        chaos_level = "SOLID"
+        race_type_label = "手堅いレース（単勝・馬連本線集中）"
+    # 1番人気が3.8倍以上、または上位拮抗で混戦の場合
+    elif fav1["odds"] >= 3.6 or (fav2["odds"] - fav1["odds"] <= 0.8 and fav1["odds"] >= 3.0):
+        chaos_level = "CHAOS"
+        race_type_label = "波乱レース（中穴ワイド流し＆馬連BOX）"
+    # その中間（軸はしっかりしているがヒモ荒れが期待できるレース）
+    else:
+        chaos_level = "SEMI_CHAOS"
+        race_type_label = "ちょい荒れレース（3連複10点フォーメーション）"
 
     is_win5_race = False
     if venue == "京都" and r_num in [9, 10, 11]:
         is_win5_race = True
     elif venue == "東京" and r_num in [10, 11]:
         is_win5_race = True
-
-    race_type = "弥永流・本線集中（点数絞り込み）" if is_solid_finish else ("弥永流・3連複フォーメーション" if ana_candidate else "最適券種選択")
 
     return {
         "raceId": race_id,
@@ -385,19 +396,17 @@ def parse_race_details(race_info):
         "startTime": start_time,
         "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
         "isWin5": is_win5_race,
-        "isSolidFinish": is_solid_finish,
-        "isFav1Solid": is_solid_favorite,
-        "raceType": race_type,
+        "chaosLevel": chaos_level,
+        "raceType": race_type_label,
         "horses": sorted(processed_horses, key=lambda x: x["num"])
     }
 
 # ==========================================
-# 弥永流・買い目構築ロジック（基本10点以内 ＋ 確率UP最大3点）
+# 弥永理論×波乱度別ダイナミック買い目構築
 # ==========================================
-def build_yanaga_betting_strategy(detail):
+def build_yanaga_dynamic_strategy(detail):
     horses = detail["horses"]
-    is_solid_finish = detail.get("isSolidFinish", False)
-    is_fav1_solid = detail.get("isFav1Solid", False)
+    chaos_level = detail.get("chaosLevel", "SEMI_CHAOS")
 
     honmei = next((h for h in horses if "◎" in h.get("mark", "")), horses[0])
     taikou = next((h for h in horses if "○" in h.get("mark", "")), None)
@@ -406,29 +415,40 @@ def build_yanaga_betting_strategy(detail):
     renge = [h for h in horses if "△" in h.get("mark", "")]
 
     h_num = str(honmei["num"])
+    t_num = str(taikou["num"]) if taikou else None
+    tan_num = str(tanana["num"]) if tanana else None
+
     rec_items = []
     plus_items = []
-    chosen_strategy = ""
 
-    # 弥永流1: 本命信頼レース（◎と○のラインに厚く張る）
-    if is_solid_finish and taikou:
-        t_num = str(taikou["num"])
-        chosen_strategy = "弥永流・本線一点集中"
-        rec_items.append(f"【馬連本線】{h_num} - {t_num} (1点/500円)")
-        w_opps = [t_num] + ([str(tanana['num'])] if tanana else [])
-        rec_items.append(f"【ワイド主線】{h_num} - {', '.join(w_opps)} ({len(w_opps)}点/各300円)")
-        if tanana:
-            rec_items.append(f"【馬連押さえ】{h_num} - {tanana['num']} (1点/200円)")
+    # ----------------------------------------------------
+    # パターン1: 【手堅いレース】単勝・馬連本線に資金を集中（2〜4点）
+    # ----------------------------------------------------
+    if chaos_level == "SOLID":
+        # 単勝と馬連本線に厚く張る
+        rec_items.append(f"【単勝】{h_num} (1点/500円)")
+        if t_num:
+            rec_items.append(f"【馬連本線】{h_num} - {t_num} (1点/500円)")
+        if tan_num:
+            rec_items.append(f"【馬連押さえ】{h_num} - {tan_num} (1点/200円)")
+        if t_num:
+            rec_items.append(f"【ワイド】{h_num} - {t_num} (1点/300円)")
 
-        # 確率UPプラス（3着ヒモ荒れ押さえ最大2点）
+        # 確率UPプラス（3着抜け防止のワイド・三連複）
         if renge:
             plus_items.append(f"ワイド {h_num}-{renge[0]['num']}")
-            if len(renge) > 1:
+            if len(renge) > 1 and t_num:
                 plus_items.append(f"三連複 {h_num}-{t_num}-{renge[0]['num']}")
 
-    # 弥永流2: 軸堅・相手混戦（3連複フォーメーションで高配当を獲る）
-    elif is_fav1_solid or (not is_solid_finish and ana):
-        chosen_strategy = "弥永流・3連複フォーメーション"
+        summary_text = (
+            f"1番人気{h_num}番{honmei['name']}の実力・位置取りが圧倒的。"
+            f"無駄な3連系を削り、弥永流の【単勝＋馬連本線】に集中投資して回収率を最大化。"
+        )
+
+    # ----------------------------------------------------
+    # パターン2: 【ちょい荒れレース】3連複10点フォーメーション（6〜8点）
+    # ----------------------------------------------------
+    elif chaos_level == "SEMI_CHAOS":
         leg2 = [str(x["num"]) for x in [taikou, tanana] if x]
         if not leg2 and renge:
             leg2 = [str(renge[0]["num"])]
@@ -444,35 +464,48 @@ def build_yanaga_betting_strategy(detail):
                     if combo not in trio_combos:
                         trio_combos.append(combo)
 
-        trio_combos = trio_combos[:8]
+        trio_combos = trio_combos[:7]
         if trio_combos:
             rec_items.append(f"【三連複F】{h_num} ✕ {', '.join(leg2)} ✕ {', '.join(leg3_cands)} ({len(trio_combos)}点/各100円)")
         if ana:
             rec_items.append(f"【保険ワイド】{h_num}-{ana['num']} (1点/200円)")
+        elif t_num:
+            rec_items.append(f"【ワイド押さえ】{h_num}-{t_num} (1点/200円)")
 
-        # 確率UPプラス（弥永流「大外一気・展開崩れの突っ込み馬」最大3点）
+        # 確率UPプラス（3列目に追加したい穴馬）
         extra_target = [str(x["num"]) for x in renge[2:4]]
         if extra_target and leg2:
             plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[0]}")
             if len(extra_target) > 1:
                 plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[1]}")
-            if ana:
-                plus_items.append(f"ワイド {leg2[0]}-{ana['num']}")
 
-    # 弥永流3: 波乱・混戦レース（ワイド2点＋馬連BOX）
+        summary_text = (
+            f"軸馬{h_num}番{honmei['name']}は安定も、ヒモ荒れが期待できる絶好の番組。"
+            f"弥永流【3連複フォーメーション】で相手を広くすくい高配当を獲る。"
+        )
+
+    # ----------------------------------------------------
+    # パターン3: 【波乱レース】中穴ワイド流し＋馬連BOX（5〜8点）
+    # ----------------------------------------------------
     else:
-        chosen_strategy = "弥永流・中穴ワイド＆馬連BOX"
         top_group = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x][:4]
+        # 軸馬からのワイド流し
         w_main = [f"{h_num}-{x}" for x in top_group[1:]]
-        rec_items.append(f"【ワイド本線】{', '.join(w_main)} ({len(w_main)}点/各200円)")
+        rec_items.append(f"【ワイド流し】{', '.join(w_main)} ({len(w_main)}点/各200円)")
+        # 上位馬連BOX
         if len(top_group) >= 3:
             rec_items.append(f"【馬連BOX】{', '.join(top_group[:3])} (3点/各100円)")
 
-        # 確率UPプラス（大穴激走時のワイド最大2点）
+        # 確率UPプラス（大穴激走時のワイド）
         if len(renge) > 1:
             plus_items.append(f"ワイド {h_num}-{renge[1]['num']}")
             if ana:
                 plus_items.append(f"ワイド {ana['num']}-{renge[0]['num']}")
+
+        summary_text = (
+            f"人気割れの大混戦。1番人気の信頼度が低いため、"
+            f"過小評価馬を絡めた【ワイド流し＆馬連BOX】で跳ね上がり（高配当）を狙う。"
+        )
 
     total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点', s)] if m])
     rec_text = " / ".join(rec_items) + f" [本線計{total_pts}点]"
@@ -482,17 +515,11 @@ def build_yanaga_betting_strategy(detail):
         plus_text = f" ★【確率UPプラス】あと{len(plus_items)}点（{', '.join(plus_items)}）を買い足せば的中確率が上がります（＋{len(plus_items)}点）"
         rec_text += plus_text
 
-    summary_text = (
-        f"弥永明郎理論（展開・位置取り・地力比較）に基づき【{chosen_strategy}】を採択。"
-        f"軸馬{h_num}番{honmei['name']}から本線{total_pts}点に資金を傾斜配分し、"
-        f"{f'抜け目のない確率UP買い目（+{len(plus_items)}点）で完全網羅。' if plus_items else '手堅く回収率を狙う。'}"
-    )
-
     return {
         "honmei_num": int(h_num),
-        "confidence": "A" if is_solid_finish else "B",
-        "confidence_score": 94 if is_solid_finish else 88,
-        "is_low_payout": is_solid_finish,
+        "confidence": "A" if chaos_level == "SOLID" else ("B" if chaos_level == "SEMI_CHAOS" else "C"),
+        "confidenceScore": 95 if chaos_level == "SOLID" else (88 if chaos_level == "SEMI_CHAOS" else 82),
+        "isLowPayout": (chaos_level == "SOLID"),
         "summary": summary_text,
         "recommendation": rec_text
     }
@@ -577,16 +604,25 @@ final_races = []
 for r_info in detected_races:
     detail = parse_race_details(r_info)
     if detail and detail["horses"]:
-        strat = build_yanaga_betting_strategy(detail)
+        strat = build_yanaga_dynamic_strategy(detail)
         detail["honmeiNum"] = strat["honmei_num"]
         detail["confidence"] = strat["confidence"]
-        detail["confidenceScore"] = strat["confidence_score"]
-        detail["isLowPayout"] = strat["is_low_payout"]
+        detail["confidenceScore"] = strat["confidenceScore"]
+        detail["isLowPayout"] = strat["isLowPayout"]
         detail["aiSummary"] = strat["summary"]
         detail["aiBuy"] = strat["recommendation"]
         final_races.append(detail)
 
+# レース取得が0件（平日夜等）の場合は既存データを波乱度判定付きで更新
 if not final_races and old_races:
+    for r in old_races:
+        strat = build_yanaga_dynamic_strategy(r)
+        r["honmeiNum"] = strat["honmei_num"]
+        r["confidence"] = strat["confidence"]
+        r["confidenceScore"] = strat["confidenceScore"]
+        r["isLowPayout"] = strat["isLowPayout"]
+        r["aiSummary"] = strat["summary"]
+        r["aiBuy"] = strat["recommendation"]
     final_races = old_races
 
 win5_strategy_text = generate_win5_strategy(final_races) if final_races else old_win5
@@ -613,4 +649,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print("=== 処理完了: 弥永理論エンジン搭載完了 ===")
+print("=== 処理完了: 波乱度別・券種シフトエンジン稼働完了 ===")
