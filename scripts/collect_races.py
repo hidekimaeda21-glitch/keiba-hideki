@@ -221,7 +221,8 @@ def parse_race_details(race_info):
 
     venue_map = {"01":"札幌","02":"函館","03":"福島","04":"新潟","05":"東京","06":"中山","07":"中京","08":"京都","09":"阪神","10":"小倉"}
     venue = venue_map.get(race_id[4:6], "中央")
-    full_race_title = f"{race_info['r_num']}R {r_name}{dist_str}"
+    r_num = race_info["r_num"]
+    full_race_title = f"{r_num}R {r_name}{dist_str}"
 
     real_odds_dict = get_real_odds_dict(race_id)
     raw_horses = []
@@ -288,26 +289,23 @@ def parse_race_details(race_info):
     is_solid_finish = is_solid_favorite and (ranked_horses[1]["odds"] <= 5.5)
 
     # ==========================================
-    # ネット競馬のレース名横「WIN5」マークの判定
+    # 本日のWIN5対象判定（京都9〜11R、東京10・11R）
     # ==========================================
-    # レースヘッダーブロック（RaceName, RaceData, RaceHeadなど）のHTMLを精査
-    header_block = soup.find(class_=re.compile(r"RaceColumn01|RaceHead|RaceData|RaceName", re.I))
-    header_text = header_block.get_text() if header_block else html[:2500]
-    
-    # アイコンまたはタグ、テキストからWIN5を検知
-    win5_icon = soup.find(class_=re.compile(r"Icon_Win5|win5_target|IconWin5|win5_icon", re.I))
-    win5_img = soup.find("img", alt=re.compile(r"WIN5", re.I)) or soup.find("img", src=re.compile(r"win5", re.I))
-    is_win5_detected = bool(win5_icon or win5_img or ("WIN5" in header_text and "対象" in header_text))
+    is_win5_race = False
+    if venue == "京都" and r_num in [9, 10, 11]:
+        is_win5_race = True
+    elif venue == "東京" and r_num in [10, 11]:
+        is_win5_race = True
 
     return {
         "raceId": race_id,
-        "rNum": race_info["r_num"],
+        "rNum": r_num,
         "venue": venue,
         "raceName": full_race_title,
         "rawRaceName": r_name,
         "startTime": start_time,
         "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
-        "isWin5": is_win5_detected,
+        "isWin5": is_win5_race,
         "isSolidFinish": is_solid_finish,
         "isFav1Solid": is_solid_favorite,
         "raceType": "本命信頼（点数絞り込み・金額集中）" if is_solid_finish else ("波乱警戒（中穴ワイド狙い）" if ana_candidate else "標準レース（回収特化）"),
@@ -369,28 +367,26 @@ def build_flexible_betting_strategy(detail):
 
 def generate_win5_strategy(all_races):
     """
-    ネット競馬でマークされたWIN5対象レース（5レース）を正確に抽出し、
-    厳選フォーメーションを生成する
+    指定のWIN5対象レース（京都9R, 東京10R, 京都10R, 東京11R, 京都11R）を発走時刻順に並べて買い目生成
     """
-    # ネット競馬のマークで検知されたレース
     win5_races = [r for r in all_races if r.get("isWin5")]
+    # 発走時刻順にソート
+    win5_races = sorted(win5_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
 
-    # マークで5レース揃わない場合は、発走時刻順（東京9R・京都9R・東京10R・京都10R等を含む順）で整列
-    if len(win5_races) != 5:
-        # 本日のWIN5対象（東京9R, 京都9R, 東京10R, 京都10R, 東京11R/京都11R）の発走時刻順
-        all_sorted = sorted(all_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
-        # 発走時刻順で9R以降の該当5レースを抽出
-        cands = [r for r in all_sorted if r.get("rNum") in [9, 10, 11]]
-        if len(cands) >= 5:
-            win5_races = cands[:5]
-        else:
-            win5_races = all_sorted[:5]
+    if len(win5_races) < 5:
+        # 該当レースが揃っていない場合のフォールバック
+        target_keys = [("京都", 9), ("東京", 10), ("京都", 10), ("東京", 11), ("京都", 11)]
+        matched = []
+        for v, rn in target_keys:
+            r = next((x for x in all_races if x["venue"] == v and x["rNum"] == rn), None)
+            if r:
+                r["isWin5"] = True
+                matched.append(r)
+        if len(matched) == 5:
+            win5_races = matched
 
-    for r in win5_races:
-        r["isWin5"] = True
-
-    # 発走時刻順に並び替え
-    win5_races = sorted(win5_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))[:5]
+    if len(win5_races) < 5:
+        return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 
     race_picks = []
     for r in win5_races:
@@ -613,7 +609,7 @@ for r_info in detected_races:
         detail["aiBuy"] = strat["recommendation"]
         final_races.append(detail)
 
-# WIN5戦略テキストの生成
+# 正確なWIN5戦略テキストの生成
 win5_strategy_text = generate_win5_strategy(final_races) if final_races else "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 top_recommended_race = select_top_recommended_race(final_races) if final_races else None
 
@@ -638,5 +634,5 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== WIN5戦略生成確認: {win5_strategy_text[:50]}... ===")
+print(f"=== WIN5戦略生成確認: {win5_strategy_text[:60]}... ===")
 print("=== 処理完了 ===")
