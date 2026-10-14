@@ -112,7 +112,6 @@
       margin-top: 2px;
     }
 
-    /* 印別複勝圏内率（常時展開） */
     .mark-rate-card {
       background: #151722;
       border: 1px solid var(--border-color);
@@ -288,7 +287,18 @@
     .horse-table th { color: var(--text-sub); font-size: 10px; }
     .horse-num { font-weight: bold; width: 24px; text-align: center; }
     .horse-name { font-weight: bold; font-size: 13px; }
-    .horse-sub { font-size: 10px; color: var(--text-sub); }
+    .horse-sub { font-size: 10px; color: var(--text-sub); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+    .style-tag {
+      font-size: 9px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+    .style-nige { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .style-senkou { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+    .style-sashi { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+    .style-oikomi { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+
     .horse-odds { text-align: right; font-weight: bold; font-size: 13px; }
     .horse-score { font-size: 10px; color: #60a5fa; text-align: right; }
     
@@ -371,7 +381,7 @@
       <div id="hitModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
       <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧】</div>
       <div id="hitModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 14px; max-height: 200px; overflow-y: auto;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース (全16レース)】</div>
+      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース】</div>
       <div id="allBetList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 180px; overflow-y: auto;"></div>
     </div>
   </div>
@@ -405,7 +415,6 @@
     </div>
   </div>
 
-  <!-- 印別 複勝圏内率（3着内確率）表示エリア -->
   <div class="mark-rate-card">
     <div class="mark-rate-header">📊 印別 複勝圏内率（3着内確率）</div>
     <div class="mark-rate-body">
@@ -531,6 +540,15 @@
       return '';
     }
 
+    function getStyleBadge(style) {
+      const st = style || '先行';
+      if (st === '逃げ') return '<span class="style-tag style-nige">逃げ</span>';
+      if (st === '先行') return '<span class="style-tag style-senkou">先行</span>';
+      if (st === '差し') return '<span class="style-tag style-sashi">差し</span>';
+      if (st === '追込') return '<span class="style-tag style-oikomi">追込</span>';
+      return `<span class="style-tag style-senkou">${st}</span>`;
+    }
+
     function toggleWin5() {
       const body = document.getElementById('win5Body');
       const icon = document.getElementById('win5ToggleIcon');
@@ -572,12 +590,13 @@
         let horseRows = '';
         r.horses.forEach(h => {
           const markClass = getMarkClass(h.mark);
+          const styleBadge = getStyleBadge(h.runningStyle);
           horseRows += `
             <tr>
               <td class="horse-num">${h.num}</td>
               <td>
                 <div class="horse-name">${h.name}</div>
-                <div class="horse-sub">${h.jockey} | 先行</div>
+                <div class="horse-sub"><span>${h.jockey}</span> ${styleBadge}</div>
               </td>
               <td style="text-align:center;">
                 <span class="${markClass}">${h.mark || '-'}</span>
@@ -610,7 +629,7 @@
             <thead>
               <tr>
                 <th style="width:24px; text-align:center;">馬番</th>
-                <th>馬名 / 騎手</th>
+                <th>馬名 / 騎手・脚質</th>
                 <th style="width:70px; text-align:center;">印</th>
                 <th style="width:65px; text-align:right;">オッズ/指数</th>
               </tr>
