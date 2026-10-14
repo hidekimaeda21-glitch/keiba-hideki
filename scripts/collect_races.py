@@ -35,7 +35,7 @@ target_date_disp = target_dt.strftime("%Y年%m月%d日")
 print(f"=== 実行日時(JST): {now_str} / 対象開催日: {target_date_disp} ({target_date}) ===")
 
 # ==========================================
-# 2026年10月11日・12日 全16レース確定データベース（永続保持）
+# 2026年10月11日・12日 全16レース確定データベース（永続集計）
 # ==========================================
 OFFICIAL_RESULTS = {
     # 10月11日 (日)
@@ -344,7 +344,6 @@ def parse_race_details(race_info):
     sorted_by_odds = sorted(processed_horses, key=lambda x: x["odds"])
     fav1 = sorted_by_odds[0]
     fav2 = sorted_by_odds[1] if len(sorted_by_odds) > 1 else fav1
-    fav3 = sorted_by_odds[2] if len(sorted_by_odds) > 2 else fav2
 
     ranked_horses[0]["mark"] = "◎ 本命"
     if len(ranked_horses) > 1: ranked_horses[1]["mark"] = "○ 対抗"
@@ -362,21 +361,13 @@ def parse_race_details(race_info):
             h["mark"] = "△ 連下"
             sub_c += 1
 
-    # ==========================================
-    # オッズ断層理論による3パターン判定
-    # 1: 手堅いレース (SOLID)
-    # 2: ちょい荒れレース (SEMI_CHAOS)
-    # 3: 波乱レース (CHAOS)
-    # ==========================================
-    # 1番人気が2.5倍以下かつ2番人気とのオッズ差が大きく安定している場合
+    # オッズ断層判定
     if fav1["odds"] <= 2.6 and (fav2["odds"] - fav1["odds"] >= 1.5):
         chaos_level = "SOLID"
         race_type_label = "手堅いレース（単勝・馬連本線集中）"
-    # 1番人気が3.8倍以上、または上位拮抗で混戦の場合
     elif fav1["odds"] >= 3.6 or (fav2["odds"] - fav1["odds"] <= 0.8 and fav1["odds"] >= 3.0):
         chaos_level = "CHAOS"
         race_type_label = "波乱レース（中穴ワイド流し＆馬連BOX）"
-    # その中間（軸はしっかりしているがヒモ荒れが期待できるレース）
     else:
         chaos_level = "SEMI_CHAOS"
         race_type_label = "ちょい荒れレース（3連複10点フォーメーション）"
@@ -402,7 +393,7 @@ def parse_race_details(race_info):
     }
 
 # ==========================================
-# 弥永理論×波乱度別ダイナミック買い目構築
+# 改善版：軸馬最適化＆保険ワイド判定エンジン
 # ==========================================
 def build_yanaga_dynamic_strategy(detail):
     horses = detail["horses"]
@@ -414,46 +405,48 @@ def build_yanaga_dynamic_strategy(detail):
     ana = next((h for h in horses if "☆" in h.get("mark", "")), None)
     renge = [h for h in horses if "△" in h.get("mark", "")]
 
-    h_num = str(honmei["num"])
-    t_num = str(taikou["num"]) if taikou else None
+    # 【改善1】○対抗（複勝率81.2%）の安定度が高い場合は、三連複の軸馬を最適化
+    # ◎が単勝高配当の穴馬寄りで、○が手堅い場合は○を軸として活用
+    axis_horse = honmei
+    if taikou and (honmei["odds"] >= 4.0 and taikou["odds"] <= 3.5):
+        axis_horse = taikou
+
+    h_num = str(axis_horse["num"])
+    t_num = str(taikou["num"]) if (taikou and str(taikou["num"]) != h_num) else str(honmei["num"])
     tan_num = str(tanana["num"]) if tanana else None
 
     rec_items = []
     plus_items = []
 
     # ----------------------------------------------------
-    # パターン1: 【手堅いレース】単勝・馬連本線に資金を集中（2〜4点）
+    # パターン1: 【手堅いレース】単勝・馬連本線に資金を集中
     # ----------------------------------------------------
     if chaos_level == "SOLID":
-        # 単勝と馬連本線に厚く張る
         rec_items.append(f"【単勝】{h_num} (1点/500円)")
         if t_num:
             rec_items.append(f"【馬連本線】{h_num} - {t_num} (1点/500円)")
         if tan_num:
             rec_items.append(f"【馬連押さえ】{h_num} - {tan_num} (1点/200円)")
-        if t_num:
-            rec_items.append(f"【ワイド】{h_num} - {t_num} (1点/300円)")
 
-        # 確率UPプラス（3着抜け防止のワイド・三連複）
         if renge:
             plus_items.append(f"ワイド {h_num}-{renge[0]['num']}")
             if len(renge) > 1 and t_num:
                 plus_items.append(f"三連複 {h_num}-{t_num}-{renge[0]['num']}")
 
         summary_text = (
-            f"1番人気{h_num}番{honmei['name']}の実力・位置取りが圧倒的。"
+            f"軸馬{h_num}番{axis_horse['name']}の実力・位置取りが圧倒的。"
             f"無駄な3連系を削り、弥永流の【単勝＋馬連本線】に集中投資して回収率を最大化。"
         )
 
     # ----------------------------------------------------
-    # パターン2: 【ちょい荒れレース】3連複10点フォーメーション（6〜8点）
+    # パターン2: 【ちょい荒れレース】3連複10点フォーメーション
     # ----------------------------------------------------
     elif chaos_level == "SEMI_CHAOS":
-        leg2 = [str(x["num"]) for x in [taikou, tanana] if x]
+        leg2 = [str(x["num"]) for x in [honmei, taikou, tanana] if x and str(x["num"]) != h_num]
         if not leg2 and renge:
             leg2 = [str(renge[0]["num"])]
 
-        leg3_cands = [str(x["num"]) for x in ([taikou, tanana, ana] + renge) if x and str(x["num"]) != h_num]
+        leg3_cands = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x and str(x["num"]) != h_num]
         leg3_cands = list(dict.fromkeys(leg3_cands))[:5]
 
         trio_combos = []
@@ -467,12 +460,22 @@ def build_yanaga_dynamic_strategy(detail):
         trio_combos = trio_combos[:7]
         if trio_combos:
             rec_items.append(f"【三連複F】{h_num} ✕ {', '.join(leg2)} ✕ {', '.join(leg3_cands)} ({len(trio_combos)}点/各100円)")
-        if ana:
-            rec_items.append(f"【保険ワイド】{h_num}-{ana['num']} (1点/200円)")
-        elif t_num:
-            rec_items.append(f"【ワイド押さえ】{h_num}-{t_num} (1点/200円)")
 
-        # 確率UPプラス（3列目に追加したい穴馬）
+        # 【改善2】保険ワイドのトリガミ防止判定
+        # 想定ワイドオッズが低すぎる（4.5倍未満）ならワイドをカットし、三連複の期待値が高い目に資金を回す
+        main_cost = len(trio_combos) * 100
+        wide_target = ana if ana else taikou
+        if wide_target:
+            estimated_wide_odds = round(math.sqrt(axis_horse["odds"] * wide_target["odds"]) * 0.65, 1)
+            # 総投資(main_cost + 200円)を回収できるオッズか判定
+            if (estimated_wide_odds * 200) >= (main_cost + 200):
+                rec_items.append(f"【保険ワイド】{h_num}-{wide_target['num']} (1点/200円)")
+            else:
+                # トリガミになる場合は保険カットし、三連複の穴目を厚めに評価
+                if ana:
+                    rec_items.append(f"【三連複厚め推奨】{h_num}軸×☆{ana['num']}絡み (+200円配分)")
+
+        # 確率UPプラス（3列目穴馬）
         extra_target = [str(x["num"]) for x in renge[2:4]]
         if extra_target and leg2:
             plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[0]}")
@@ -480,31 +483,27 @@ def build_yanaga_dynamic_strategy(detail):
                 plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[1]}")
 
         summary_text = (
-            f"軸馬{h_num}番{honmei['name']}は安定も、ヒモ荒れが期待できる絶好の番組。"
-            f"弥永流【3連複フォーメーション】で相手を広くすくい高配当を獲る。"
+            f"複勝圏内率の高い{h_num}番{axis_horse['name']}を主軸に指名。"
+            f"トリガミを防ぐ資金管理を徹底し、弥永流【3連複フォーメーション】で高配当を獲る。"
         )
 
     # ----------------------------------------------------
-    # パターン3: 【波乱レース】中穴ワイド流し＋馬連BOX（5〜8点）
+    # パターン3: 【波乱レース】中穴ワイド流し＋馬連BOX
     # ----------------------------------------------------
     else:
         top_group = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x][:4]
-        # 軸馬からのワイド流し
         w_main = [f"{h_num}-{x}" for x in top_group[1:]]
         rec_items.append(f"【ワイド流し】{', '.join(w_main)} ({len(w_main)}点/各200円)")
-        # 上位馬連BOX
         if len(top_group) >= 3:
             rec_items.append(f"【馬連BOX】{', '.join(top_group[:3])} (3点/各100円)")
 
-        # 確率UPプラス（大穴激走時のワイド）
         if len(renge) > 1:
             plus_items.append(f"ワイド {h_num}-{renge[1]['num']}")
             if ana:
                 plus_items.append(f"ワイド {ana['num']}-{renge[0]['num']}")
 
         summary_text = (
-            f"人気割れの大混戦。1番人気の信頼度が低いため、"
-            f"過小評価馬を絡めた【ワイド流し＆馬連BOX】で跳ね上がり（高配当）を狙う。"
+            f"波乱必至の番組。過小評価穴馬を絡めた【ワイド流し＆馬連BOX】で高配当を狙い撃つ。"
         )
 
     total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点', s)] if m])
@@ -524,6 +523,9 @@ def build_yanaga_dynamic_strategy(detail):
         "recommendation": rec_text
     }
 
+# ==========================================
+# 【改善3】WIN5突出度・黄金パターン自動配分エンジン
+# ==========================================
 def generate_win5_strategy(all_races):
     win5_races = [r for r in all_races if r.get("isWin5")]
     win5_races = sorted(win5_races, key=lambda x: (x.get("startTime", "15:00"), x["raceId"]))
@@ -542,31 +544,62 @@ def generate_win5_strategy(all_races):
     if len(win5_races) < 5:
         return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
 
-    race_picks = []
-    for r in win5_races:
-        h_honmei = next((h for h in r["horses"] if "◎" in h.get("mark", "")), r["horses"][0])
-        h_taikou = next((h for h in r["horses"] if "○" in h.get("mark", "")), None)
-        race_picks.append({
+    # 各レースの1位・2位スコア差（突出度）を計算
+    race_analysis = []
+    for idx, r in enumerate(win5_races):
+        sorted_h = sorted(r["horses"], key=lambda x: x.get("speedScore", 0), reverse=True)
+        h1 = sorted_h[0] if len(sorted_h) > 0 else None
+        h2 = sorted_h[1] if len(sorted_h) > 1 else None
+        gap = round((h1["speedScore"] - h2["speedScore"]), 1) if (h1 and h2) else 0.0
+
+        race_analysis.append({
+            "idx": idx,
             "race": f"{r['venue']}{r['rNum']}R {r['rawRaceName']}",
-            "honmei_num": h_honmei["num"],
-            "honmei_name": h_honmei["name"],
-            "taikou_num": h_taikou["num"] if h_taikou else None,
-            "taikou_name": h_taikou["name"] if h_taikou else ""
+            "gap": gap,
+            "horses": sorted_h
         })
 
-    p3_sub = f", {race_picks[2]['taikou_num']}番" if race_picks[2]['taikou_num'] else ""
-    p4_sub = f", {race_picks[3]['taikou_num']}番" if race_picks[3]['taikou_num'] else ""
-    p5_sub = f", {race_picks[4]['taikou_num']}番" if race_picks[4]['taikou_num'] else ""
+    # 突出度が高い順（1頭が抜けている順）にランキング
+    ranked_by_gap = sorted(race_analysis, key=lambda x: x["gap"], reverse=True)
 
-    return (
-        f"【AI厳選WIN5戦略】計8点（予算800円 / 最大10点厳選）\n"
-        f"第1戦 [{race_picks[0]['race']}]: {race_picks[0]['honmei_num']}番 {race_picks[0]['honmei_name']}\n"
-        f"第2戦 [{race_picks[1]['race']}]: {race_picks[1]['honmei_num']}番 {race_picks[1]['honmei_name']}\n"
-        f"第3戦 [{race_picks[2]['race']}]: {race_picks[2]['honmei_num']}番{p3_sub}\n"
-        f"第4戦 [{race_picks[3]['race']}]: {race_picks[3]['honmei_num']}番{p4_sub}\n"
-        f"第5戦 [{race_picks[4]['race']}]: {race_picks[4]['honmei_num']}番{p5_sub}\n"
-        f"狙い: 前半2戦を指数1位の単騎突破で絞り、後半3戦を本命・対抗の2頭ずつ手厚く押さえて計8点で的中を狙う。"
-    )
+    # 3番目のレースも突出している（gap >= 2.0）ならパターンB（1×1×1×3×3=9点）、通常はパターンA（1×1×2×2×2=8点）
+    if ranked_by_gap[2]["gap"] >= 2.0:
+        alloc_counts = [1, 1, 1, 3, 3]  # 9点
+        plan_name = "計9点（1頭固定×3戦 ＋ 混戦3頭×2戦）"
+    else:
+        alloc_counts = [1, 1, 2, 2, 2]  # 8点
+        plan_name = "計8点（1頭固定×2戦 ＋ 2頭押さえ×3戦）"
+
+    picks_by_race_idx = {}
+    for rank_i, r_info in enumerate(ranked_by_gap):
+        take_n = alloc_counts[rank_i]
+        h_list = r_info["horses"]
+
+        if take_n == 1:
+            picks_by_race_idx[r_info["idx"]] = [f"{h_list[0]['num']}番 {h_list[0]['name']}"]
+        else:
+            # 複数頭選出：1位馬 ＋ 2位以降で期待値（GapScore）が高い穴馬を優先ピック
+            selected = [f"{h_list[0]['num']}番"]
+            # 穴馬（☆）または対抗（○）
+            sub_cands = [h for h in h_list[1:5] if h.get("isLongshot") or "○" in h.get("mark", "")]
+            if not sub_cands:
+                sub_cands = h_list[1:take_n]
+            for s in sub_cands[:(take_n - 1)]:
+                selected.append(f"{s['num']}番")
+            picks_by_race_idx[r_info["idx"]] = selected
+
+    total_cost = int(math.prod(alloc_counts) * 100)
+    lines = [
+        f"【AI厳選WIN5戦略】{plan_name} / 予算{total_cost}円",
+        f"第1戦 [{race_analysis[0]['race']}]: {', '.join(picks_by_race_idx[0])}",
+        f"第2戦 [{race_analysis[1]['race']}]: {', '.join(picks_by_race_idx[1])}",
+        f"第3戦 [{race_analysis[2]['race']}]: {', '.join(picks_by_race_idx[2])}",
+        f"第4戦 [{race_analysis[3]['race']}]: {', '.join(picks_by_race_idx[3])}",
+        f"第5戦 [{race_analysis[4]['race']}]: {', '.join(picks_by_race_idx[4])}",
+        f"狙い: AIスコア突出度から銀行レースを1頭固定。波乱指数の高いレースに穴馬を配分し、1,000円以内で高配当を射抜く。"
+    ]
+
+    return "\n".join(lines)
 
 def select_top_recommended_race(final_races):
     best_candidate = None
@@ -613,7 +646,6 @@ for r_info in detected_races:
         detail["aiBuy"] = strat["recommendation"]
         final_races.append(detail)
 
-# レース取得が0件（平日夜等）の場合は既存データを波乱度判定付きで更新
 if not final_races and old_races:
     for r in old_races:
         strat = build_yanaga_dynamic_strategy(r)
@@ -649,4 +681,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print("=== 処理完了: 波乱度別・券種シフトエンジン稼働完了 ===")
+print("=== 処理完了: WIN5＆買い目最適化エンジン完全統合 ===")
