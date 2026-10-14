@@ -61,10 +61,10 @@ OFFICIAL_RESULTS = {
 }
 
 JOCKEY_BONUS_MAP = {
-    "ルメール": 2.5, "川田": 2.5, "戸崎圭": 2.2, "坂井": 2.2, "武豊": 2.0, "レーン": 2.5, "モレイラ": 2.5,
-    "横山武": 1.6, "松山": 1.6, "鮫島駿": 1.5, "西村淳": 1.6, "三浦": 1.4, "田辺": 1.5,
-    "岩田望": 1.6, "岩田康": 1.4, "横山和": 1.4, "横山典": 1.5, "佐々木": 1.5, "団野": 1.4,
-    "菅原明": 1.4, "津村": 1.3, "浜中": 1.3, "池添": 1.4, "藤岡佑": 1.3, "Ｍ．デム": 1.5, "Ｃ．デム": 2.4
+    "ルメール": 2.8, "川田": 2.8, "戸崎圭": 2.3, "坂井": 2.3, "武豊": 2.1, "レーン": 2.8, "モレイラ": 2.8,
+    "横山武": 1.8, "松山": 1.8, "鮫島駿": 1.5, "西村淳": 1.7, "三浦": 1.5, "田辺": 1.5,
+    "岩田望": 1.7, "岩田康": 1.4, "横山和": 1.4, "横山典": 1.6, "佐々木": 1.6, "団野": 1.4,
+    "菅原明": 1.5, "津村": 1.4, "浜中": 1.4, "池添": 1.5, "藤岡佑": 1.3, "Ｍ．デム": 1.6, "Ｃ．デム": 2.6
 }
 
 def get_jockey_bonus(jockey_name):
@@ -284,6 +284,9 @@ def determine_running_style(tr_elem, h_name, num, frame_no):
     else:
         return "追込", 0.25
 
+# ==========================================
+# 【修正1】超大穴のスコア暴走を防ぎ、実力・騎手・展開を正しく反映する計算式
+# ==========================================
 def compute_pro_yanaga_score(h_data, race_context):
     h_name = str(h_data.get("name", "馬"))
     odds = float(h_data.get("odds") or 15.0)
@@ -297,52 +300,91 @@ def compute_pro_yanaga_score(h_data, race_context):
 
     history = horses_db.get(h_name, {})
     past_scores = history.get("scores", [])
-    past_gaps = history.get("gap_scores", [])
 
+    # 1. 基礎能力スコア（単勝100倍以上の大穴は基礎点を適正に抑える）
     if past_scores:
         base_score = round(max(past_scores) * 0.55 + past_scores[-1] * 0.45, 1)
         if track_type in history.get("fav_tracks", []):
             base_score += 1.5
     else:
-        name_hash = sum(ord(c) for c in h_name) % 14
-        odds_penalty = math.log10(max(1.1, odds)) * 5.2
-        base_score = round(89.5 - odds_penalty + (name_hash * 0.4), 1)
+        name_hash = (sum(ord(c) for c in h_name) % 10) * 0.25
+        if odds <= 3.0:
+            odds_base = 91.5 - (odds * 0.8)
+        elif odds <= 10.0:
+            odds_base = 89.5 - ((odds - 3.0) * 0.45)
+        elif odds <= 30.0:
+            odds_base = 86.2 - ((odds - 10.0) * 0.20)
+        elif odds <= 80.0:
+            odds_base = 82.0 - ((odds - 30.0) * 0.08)
+        else:
+            odds_base = 77.5  # 80倍以上の超人気薄はベース77.5点
+        base_score = round(odds_base + name_hash, 1)
 
+    # 2. 騎手ランクボーナス
     jockey_bonus = get_jockey_bonus(jockey)
 
+    # 3. 展開・トラックバイアス補正
     bias_bonus = 0.0
     if pace_type == "SLOW":
         if pos_score >= 0.75:
-            bias_bonus += 2.6
+            bias_bonus += 2.2
         elif pos_score <= 0.30:
             bias_bonus -= 1.0
     elif pace_type == "HIGH":
         if pos_score <= 0.50:
-            bias_bonus += 2.2
+            bias_bonus += 2.0
         elif pos_score >= 0.90:
-            bias_bonus -= 1.2
+            bias_bonus -= 1.0
     else:
         if 0.65 <= pos_score <= 0.85:
-            bias_bonus += 1.6
+            bias_bonus += 1.4
 
     if frame_no in [1, 2, 3] and pos_score >= 0.70:
-        bias_bonus += 1.0
+        bias_bonus += 0.8
 
     if is_wet and (track_type == "ダ" or pos_score >= 0.75):
-        bias_bonus += 1.2
+        bias_bonus += 1.0
 
+    # 4. 馬体重増減フィルター
     weight_penalty = -2.0 if abs(weight_diff) >= 12 else (-0.8 if abs(weight_diff) >= 8 else 0.0)
 
-    raw_ability = base_score + jockey_bonus + bias_bonus + weight_penalty
-    expected_odds_rank = max(1.0, (95.0 - raw_ability) * 1.5)
-    gap_score = round((odds - expected_odds_rank) / 4.5, 1)
-    if past_gaps:
-        gap_score = round((gap_score + sum(past_gaps[-2:]) / len(past_gaps[-2:])) / 2, 1)
+    # 5. 妙味ボーナス（中穴7倍〜40倍で騎手や脚質が良い馬にのみ最大+2.0点のボーナス）
+    gap_score = 0.0
+    if 6.5 <= odds <= 45.0 and (jockey_bonus >= 1.5 or bias_bonus >= 1.5):
+        gap_score = round(min(2.2, (jockey_bonus + bias_bonus) * 0.55), 1)
 
-    total_score = round(min(98.5, max(70.0, raw_ability + (gap_score * 0.25))), 1)
-    is_longshot = (total_score >= 86.0 and 7.0 <= odds <= 35.0)
+    total_score = round(min(97.5, max(72.0, base_score + jockey_bonus + bias_bonus + weight_penalty + gap_score)), 1)
+    is_longshot = (total_score >= 86.5 and 7.0 <= odds <= 45.0)
 
     return total_score, gap_score, is_longshot
+
+# ==========================================
+# 【修正2】最新スコアに基づいて印（◎○▲☆△）を正確に振り直す共通関数
+# ==========================================
+def assign_marks_accurately(horses_list):
+    for h in horses_list:
+        h["mark"] = "-"
+
+    ranked = sorted(horses_list, key=lambda x: (float(x.get("speedScore", 0)), -float(x.get("odds", 99.0))), reverse=True)
+    if len(ranked) > 0:
+        ranked[0]["mark"] = "◎ 本命"
+    if len(ranked) > 1:
+        ranked[1]["mark"] = "○ 対抗"
+    if len(ranked) > 2:
+        ranked[2]["mark"] = "▲ 単穴"
+
+    # ☆爆発期待穴は単勝7倍〜50倍の中で最も指数が高い馬を選出
+    ana_cand = next((h for h in ranked if h["mark"] == "-" and 7.0 <= float(h.get("odds", 15.0)) <= 50.0), None)
+    if not ana_cand:
+        ana_cand = next((h for h in ranked if h["mark"] == "-" and float(h.get("odds", 15.0)) >= 6.0), None)
+    if ana_cand:
+        ana_cand["mark"] = "☆ 爆発期待穴"
+
+    sub_c = 0
+    for h in ranked:
+        if h["mark"] == "-" and sub_c < 3:
+            h["mark"] = "△ 連下"
+            sub_c += 1
 
 def collect_target_races_dynamically(target_yyyymmdd):
     urls = [
@@ -445,26 +487,11 @@ def parse_race_details(race_info):
             "speedScore": score, "gapScore": gap, "isLongshot": is_longshot, "mark": "-"
         })
 
-    ranked_horses = sorted(processed_horses, key=lambda x: (x["speedScore"], -x["odds"]), reverse=True)
+    assign_marks_accurately(processed_horses)
+
     sorted_by_odds = sorted(processed_horses, key=lambda x: x["odds"])
     fav1 = sorted_by_odds[0]
     fav2 = sorted_by_odds[1] if len(sorted_by_odds) > 1 else fav1
-
-    ranked_horses[0]["mark"] = "◎ 本命"
-    if len(ranked_horses) > 1: ranked_horses[1]["mark"] = "○ 対抗"
-    if len(ranked_horses) > 2: ranked_horses[2]["mark"] = "▲ 単穴"
-
-    ana_candidate = next((h for h in ranked_horses if h.get("isLongshot") and h["mark"] == "-"), None)
-    if not ana_candidate:
-        ana_candidate = next((h for h in ranked_horses if h["odds"] >= 8.0 and h["mark"] == "-"), None)
-    if ana_candidate:
-        ana_candidate["mark"] = "☆ 爆発期待穴"
-
-    sub_c = 0
-    for h in ranked_horses:
-        if h["mark"] == "-" and sub_c < 3:
-            h["mark"] = "△ 連下"
-            sub_c += 1
 
     if fav1["odds"] <= 2.6 and (fav2["odds"] - fav1["odds"] >= 1.5):
         chaos_level = "SOLID"
@@ -519,7 +546,7 @@ def build_yanaga_dynamic_strategy(detail):
     tai_odds = float(taikou.get("odds") or 6.0) if taikou else 10.0
 
     axis_horse = honmei
-    if taikou and (hon_odds >= 4.0 and tai_odds <= 3.5):
+    if taikou and (hon_odds >= 4.5 and tai_odds <= 3.5):
         axis_horse = taikou
 
     h_num = str(axis_horse["num"])
@@ -547,7 +574,7 @@ def build_yanaga_dynamic_strategy(detail):
         )
 
     elif chaos_level == "SEMI_CHAOS":
-        leg2 = [str(x["num"]) for x in [honmei, taikou, tanana] if x and str(x["num"]) != h_num]
+        leg2 = [str(x["num"]) for x in [honmei, taikou, tanana] if x and str(x["num"]) != h_num][:2]
         if not leg2 and renge:
             leg2 = [str(renge[0]["num"])]
 
@@ -578,7 +605,7 @@ def build_yanaga_dynamic_strategy(detail):
                 if ana:
                     rec_items.append(f"【三連複厚め】{h_num}軸×☆{ana['num']}絡み (1点/200円)")
 
-        extra_target = [str(x["num"]) for x in renge[2:4]]
+        extra_target = [str(x["num"]) for x in renge[1:3]]
         if extra_target and leg2:
             plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[0]}")
             if len(extra_target) > 1:
@@ -752,7 +779,7 @@ for r_info in detected_races:
     except Exception as e:
         print(f"[レース解析スキップ] {e}")
 
-# 平日夜など当日の出走表がない場合は、保存済みレースデータにも新脚質・騎手補正・展開予測を強制適用して更新
+# 既存データ引き継ぎ時も新スコア計算後に必ず印（◎○▲☆△）を再割り当てする
 if not final_races and old_races:
     for r in old_races:
         try:
@@ -768,13 +795,15 @@ if not final_races and old_races:
             pace_t = "SLOW" if front_c <= 2 else ("HIGH" if front_c >= 6 else "NORMAL")
             r["paceType"] = pace_t
 
-            # 新スコアで再計算
             r_ctx = {"track_type": track_t, "dist_m": 1600, "is_wet": False, "pace_type": pace_t}
             for h in r.get("horses", []):
                 sc, gp, lng = compute_pro_yanaga_score(h, r_ctx)
                 h["speedScore"] = sc
                 h["gapScore"] = gp
                 h["isLongshot"] = lng
+
+            # 【重要】再計算した指数に合わせて印を正しく振り直す
+            assign_marks_accurately(r.get("horses", []))
 
             if "rNum" not in r:
                 m_rn = re.search(r"^(\d+)R", r_name_str)
@@ -817,4 +846,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print("=== 処理完了: 最新スコア・脚質・展開予測の強制同期完了 ===")
+print("=== 処理完了: 指数と印の完全整合・超大穴バグ修正完了 ===")
