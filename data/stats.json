@@ -1,13 +1,13 @@
 {
   "reset_date": "20261011",
   "total_bets": 16,
-  "hit_count": 9,
+  "hit_count": 12,
   "invest": 16000,
-  "payout": 11290,
+  "payout": 13380,
   "mark_stats": {
     "◎": {
       "total": 16,
-      "top3": 9
+      "top3": 11
     },
     "○": {
       "total": 16,
@@ -15,7 +15,7 @@
     },
     "▲": {
       "total": 16,
-      "top3": 8
+      "top3": 10
     },
     "☆": {
       "total": 16,
@@ -23,7 +23,7 @@
     },
     "△": {
       "total": 40,
-      "top3": 10
+      "top3": 7
     }
   },
   "checked_races": [
@@ -96,8 +96,26 @@
     {
       "date": "10/12",
       "venue": "京都",
+      "raceName": "10R 堀川特別",
+      "payout": 390
+    },
+    {
+      "date": "10/12",
+      "venue": "東京",
+      "raceName": "11R オクトーバーS",
+      "payout": 590
+    },
+    {
+      "date": "10/12",
+      "venue": "京都",
+      "raceName": "11R スワンS(G2)",
+      "payout": 2680
+    },
+    {
+      "date": "10/12",
+      "venue": "京都",
       "raceName": "12R 3歳以上2勝クラス",
-      "payout": 2230
+      "payout": 660
     }
   ],
   "all_bet_races": [
