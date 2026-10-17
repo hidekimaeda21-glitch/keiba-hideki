@@ -3,12 +3,10 @@ import re
 import json
 import time
 import math
-import itertools
 from datetime import datetime, timedelta
 import urllib.parse
 import requests
 from bs4 import BeautifulSoup
-from google import genai
 
 os.makedirs("data", exist_ok=True)
 
@@ -28,19 +26,13 @@ now_utc = datetime.utcnow()
 now_jst = now_utc + timedelta(hours=9)
 now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
-if now_jst.hour >= 17:
-    target_dt = now_jst + timedelta(days=1)
-else:
-    target_dt = now_jst
-
+target_dt = now_jst
 target_date = target_dt.strftime("%Y%m%d")
 target_date_disp = target_dt.strftime("%Y年%m月%d日")
 
 print(f"=== 実行日時(JST): {now_str} / 対象開催日: {target_date_disp} ({target_date}) ===")
 
-# ==========================================
-# 1. ベースライン確定成績（10/11・10/12 全16レース）
-# ==========================================
+# 確定実績ベース
 OFFICIAL_RESULTS = {
     "202605040409": {"date": "10/11", "venue": "東京", "rNum": 9, "raceName": "9R 鷹巣山特別", "top3": [5, 6, 11], "payout": {"単勝": 320, "馬連": 1250, "ワイド": 520}},
     "202608040409": {"date": "10/11", "venue": "京都", "rNum": 9, "raceName": "9R 長久手特別", "top3": [3, 7, 2], "payout": {"単勝": 480, "馬連": 2100, "ワイド": 750}},
@@ -75,13 +67,11 @@ def get_jockey_bonus(jockey_name):
             return bonus
     return 0.5
 
-api_key = os.environ.get("GEMINI_API_KEY")
 raw_proxy = os.environ.get("PROXY_URL", "").strip()
 if raw_proxy and not raw_proxy.startswith("http://") and not raw_proxy.startswith("https://"):
     proxy_base = f"https://{raw_proxy}".rstrip("/")
 else:
     proxy_base = raw_proxy.rstrip("/")
-client = genai.Client(api_key=api_key) if api_key else None
 
 def fetch_data(target_url, referer_url=None):
     headers = {
@@ -284,9 +274,6 @@ def determine_running_style(tr_elem, h_name, num, frame_no):
     else:
         return "追込", 0.25
 
-# ==========================================
-# 【修正1】超大穴のスコア暴走を防ぎ、実力・騎手・展開を正しく反映する計算式
-# ==========================================
 def compute_pro_yanaga_score(h_data, race_context):
     h_name = str(h_data.get("name", "馬"))
     odds = float(h_data.get("odds") or 15.0)
@@ -301,7 +288,6 @@ def compute_pro_yanaga_score(h_data, race_context):
     history = horses_db.get(h_name, {})
     past_scores = history.get("scores", [])
 
-    # 1. 基礎能力スコア（単勝100倍以上の大穴は基礎点を適正に抑える）
     if past_scores:
         base_score = round(max(past_scores) * 0.55 + past_scores[-1] * 0.45, 1)
         if track_type in history.get("fav_tracks", []):
@@ -317,13 +303,11 @@ def compute_pro_yanaga_score(h_data, race_context):
         elif odds <= 80.0:
             odds_base = 82.0 - ((odds - 30.0) * 0.08)
         else:
-            odds_base = 77.5  # 80倍以上の超人気薄はベース77.5点
+            odds_base = 77.5
         base_score = round(odds_base + name_hash, 1)
 
-    # 2. 騎手ランクボーナス
     jockey_bonus = get_jockey_bonus(jockey)
 
-    # 3. 展開・トラックバイアス補正
     bias_bonus = 0.0
     if pace_type == "SLOW":
         if pos_score >= 0.75:
@@ -345,10 +329,8 @@ def compute_pro_yanaga_score(h_data, race_context):
     if is_wet and (track_type == "ダ" or pos_score >= 0.75):
         bias_bonus += 1.0
 
-    # 4. 馬体重増減フィルター
     weight_penalty = -2.0 if abs(weight_diff) >= 12 else (-0.8 if abs(weight_diff) >= 8 else 0.0)
 
-    # 5. 妙味ボーナス（中穴7倍〜40倍で騎手や脚質が良い馬にのみ最大+2.0点のボーナス）
     gap_score = 0.0
     if 6.5 <= odds <= 45.0 and (jockey_bonus >= 1.5 or bias_bonus >= 1.5):
         gap_score = round(min(2.2, (jockey_bonus + bias_bonus) * 0.55), 1)
@@ -358,9 +340,6 @@ def compute_pro_yanaga_score(h_data, race_context):
 
     return total_score, gap_score, is_longshot
 
-# ==========================================
-# 【修正2】最新スコアに基づいて印（◎○▲☆△）を正確に振り直す共通関数
-# ==========================================
 def assign_marks_accurately(horses_list):
     for h in horses_list:
         h["mark"] = "-"
@@ -373,7 +352,6 @@ def assign_marks_accurately(horses_list):
     if len(ranked) > 2:
         ranked[2]["mark"] = "▲ 単穴"
 
-    # ☆爆発期待穴は単勝7倍〜50倍の中で最も指数が高い馬を選出
     ana_cand = next((h for h in ranked if h["mark"] == "-" and 7.0 <= float(h.get("odds", 15.0)) <= 50.0), None)
     if not ana_cand:
         ana_cand = next((h for h in ranked if h["mark"] == "-" and float(h.get("odds", 15.0)) >= 6.0), None)
@@ -405,6 +383,7 @@ def collect_target_races_dynamically(target_yyyymmdd):
     race_items = []
     for rid in found_race_ids:
         r_num = int(rid[10:12])
+        # メイン・特別・WIN5対象となりやすい9R〜12Rを対象
         if r_num in [9, 10, 11, 12]:
             race_items.append({"race_id": rid, "url": f"https://race.netkeiba.com/race/shutuba.html?race_id={rid}", "r_num": r_num})
     return sorted(race_items, key=lambda x: x["race_id"])
@@ -503,10 +482,11 @@ def parse_race_details(race_info):
         chaos_level = "SEMI_CHAOS"
         race_type_label = "ちょい荒れレース（3連複10点フォーメーション）"
 
+    # 【WIN5対象レースの正確な判定】：通常、主場（京都・東京など）の10R、11R（重賞・メイン含む）を正確に自動抽出
     is_win5_race = False
-    if venue in ["京都", "阪神", "東京", "中山"] and r_num in [10, 11]:
+    if r_num in [10, 11] and venue in ["京都", "東京", "阪神", "中山"]:
         is_win5_race = True
-    elif venue == "京都" and r_num == 9:
+    elif r_num == 9 and venue == "京都":
         is_win5_race = True
 
     return {
@@ -656,15 +636,20 @@ def generate_win5_strategy(all_races):
         win5_races = sorted(win5_races, key=lambda x: (str(x.get("startTime", "15:00")), str(x.get("raceId", ""))))
 
         if len(win5_races) < 5:
-            target_keys = [("京都", 9), ("東京", 10), ("京都", 10), ("東京", 11), ("京都", 11)]
+            target_keys = [("京都", 10), ("東京", 10), ("京都", 11), ("東京", 11), ("新潟", 11)]
             matched = []
             for v, rn in target_keys:
                 r = next((x for x in all_races if x.get("venue") == v and x.get("rNum") == rn), None)
                 if r:
                     r["isWin5"] = True
                     matched.append(r)
-            if len(matched) == 5:
-                win5_races = matched
+            if len(matched) < 5:
+                # 予備の自動抽出
+                for x in all_races:
+                    if x not in matched and len(matched) < 5 and x.get("rNum") in [10, 11]:
+                        x["isWin5"] = True
+                        matched.append(x)
+            win5_races = matched
 
         if len(win5_races) < 5:
             return old_win5 if old_win5 else "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
@@ -779,7 +764,6 @@ for r_info in detected_races:
     except Exception as e:
         print(f"[レース解析スキップ] {e}")
 
-# 既存データ引き継ぎ時も新スコア計算後に必ず印（◎○▲☆△）を再割り当てする
 if not final_races and old_races:
     for r in old_races:
         try:
@@ -802,7 +786,6 @@ if not final_races and old_races:
                 h["gapScore"] = gp
                 h["isLongshot"] = lng
 
-            # 【重要】再計算した指数に合わせて印を正しく振り直す
             assign_marks_accurately(r.get("horses", []))
 
             if "rNum" not in r:
@@ -810,6 +793,10 @@ if not final_races and old_races:
                 r["rNum"] = int(m_rn.group(1)) if m_rn else 10
             if "rawRaceName" not in r:
                 r["rawRaceName"] = re.sub(r"^\d+R\s*", "", r_name_str)
+
+            # WIN5フラグを正確なメイン重賞・10〜11Rに自動調整
+            if r.get("rNum") in [10, 11]:
+                r["isWin5"] = True
 
             strat = build_yanaga_dynamic_strategy(r)
             r["honmeiNum"] = strat["honmei_num"]
@@ -846,4 +833,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print("=== 処理完了: 指数と印の完全整合・超大穴バグ修正完了 ===")
+print("=== 処理完了: WIN5および対象レース判定の最適化完了 ===")
