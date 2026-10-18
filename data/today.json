@@ -1,23 +1,23 @@
 {
-  "updatedAt": "2026-10-18 17:54",
+  "updatedAt": "2026-10-18 19:55",
   "targetDate": "2026年10月19日",
   "stats": {
-    "hitRate": 67.6,
-    "recoveryRate": 169.2,
+    "hitRate": 70.3,
+    "recoveryRate": 176.9,
     "totalBets": 37,
-    "hitCount": 25,
+    "hitCount": 26,
     "markRates": {
       "◎": {
-        "rate": 51.4,
-        "count": "19/37"
+        "rate": 54.1,
+        "count": "20/37"
       },
       "○": {
         "rate": 54.1,
         "count": "20/37"
       },
       "▲": {
-        "rate": 40.5,
-        "count": "15/37"
+        "rate": 43.2,
+        "count": "16/37"
       },
       "☆": {
         "rate": 27.0,
@@ -96,6 +96,12 @@
         "payout": 1580
       },
       {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "12R 桂川S",
+        "payout": 2840
+      },
+      {
         "date": "10/17",
         "venue": "新潟",
         "raceName": "9R 岩船特別",
@@ -114,30 +120,6 @@
         "payout": 4460
       },
       {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 1180
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "10R 清滝特別",
-        "payout": 740
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "11R トルマリンS",
-        "payout": 4030
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 3200
-      },
-      {
         "date": "10/18",
         "venue": "新潟",
         "raceName": "9R 松浜特別",
@@ -148,6 +130,12 @@
         "venue": "新潟",
         "raceName": "11R 新潟牝馬S",
         "payout": 1610
+      },
+      {
+        "date": "10/17",
+        "venue": "東京",
+        "raceName": "12R 3歳以上2勝クラス",
+        "payout": 1180
       },
       {
         "date": "10/18",
@@ -166,6 +154,24 @@
         "venue": "東京",
         "raceName": "11R ブラジルC",
         "payout": 2230
+      },
+      {
+        "date": "10/17",
+        "venue": "京都",
+        "raceName": "10R 清滝特別",
+        "payout": 740
+      },
+      {
+        "date": "10/17",
+        "venue": "京都",
+        "raceName": "11R トルマリンS",
+        "payout": 4030
+      },
+      {
+        "date": "10/17",
+        "venue": "京都",
+        "raceName": "12R 3歳以上1勝クラス",
+        "payout": 3200
       },
       {
         "date": "10/18",
@@ -262,6 +268,11 @@
         "raceName": "12R 3歳以上2勝クラス"
       },
       {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "12R 桂川S"
+      },
+      {
         "date": "10/17",
         "venue": "新潟",
         "raceName": "9R 岩船特別"
@@ -282,6 +293,21 @@
         "raceName": "12R 3歳以上1勝クラス"
       },
       {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "9R 松浜特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "10R 飛翼特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "11R 新潟牝馬S"
+      },
+      {
         "date": "10/17",
         "venue": "東京",
         "raceName": "9R アイビーS"
@@ -295,6 +321,21 @@
         "date": "10/17",
         "venue": "東京",
         "raceName": "12R 3歳以上2勝クラス"
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "9R 東京ハイジャンプ"
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "10R 西湖特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "11R ブラジルC"
       },
       {
         "date": "10/17",
@@ -318,36 +359,6 @@
       },
       {
         "date": "10/18",
-        "venue": "新潟",
-        "raceName": "9R 松浜特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "10R 飛翼特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "11R 新潟牝馬S"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "9R 東京ハイジャンプ"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "10R 西湖特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "11R ブラジルC"
-      },
-      {
-        "date": "10/18",
         "venue": "京都",
         "raceName": "9R 宝ケ池特別"
       },
@@ -360,11 +371,6 @@
         "date": "10/18",
         "venue": "京都",
         "raceName": "11R 秋華賞"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "12R 桂川S"
       }
     ]
   },
@@ -379,11 +385,11 @@
     "honmeiNum": 9,
     "honmeiName": "ジューンベロシティ",
     "honmeiOdds": 4.1,
-    "honmeiScore": 93.5,
-    "aiSummary": "展開予測は【差し有利ハイペース】。軸馬9番ジューンベロシティ（差し）の能力・位置取りが盤石。弥永流【単勝＋馬連本線】に集中投資して回収率を最大化。",
-    "aiBuy": "【単勝】9 (1点/500円) / 【馬連本線】9 - 4 (1点/500円) / 【馬連押さえ】9 - 6 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-2, 三連複 9-4-2）を買い足せば的中確率が上がります（＋2点）"
+    "honmeiScore": 92.7,
+    "aiSummary": "展開予測は【平均ペース】。軸馬9番ジューンベロシティ（偏差値:61.0 / EV:1.25）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
+    "aiBuy": "【単勝】9 (1点/600円) / 【馬連本線】9 - 6 (1点/400円) / 【馬連押さえ】9 - 4 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-1, 三連複 9-6-1）を買い足せば的中確率が上がります（＋2点）"
   },
-  "win5Strategy": "【AI厳選WIN5戦略】計8点（1頭固定×2戦 ＋ 2頭押さえ×3戦） / 予算800円\n第1戦 [東京10R 西湖特別]: 3番 コスモストーム\n第2戦 [京都10R 聚楽第特別]: 8番 ジョータルマエ, 9番 ホウショウルクス\n第3戦 [新潟11R 新潟牝馬S]: 3番 シャドウメテオ, 4番 ヴェルミセル\n第4戦 [東京11R ブラジルC]: 6番 ハピ, 7番 リアレスト\n第5戦 [京都11R 秋華賞]: 8番 モンローウォーク\n狙い: AIスコア突出度から銀行レースを1頭固定。波乱指数の高いレースに穴馬を配分し、1,000円以内で高配当を射抜く。",
+  "win5Strategy": "【AI厳選WIN5戦略】計8点（Zスコア突出1頭固定×2戦 ＋ 2頭押さえ×3戦） / 予算800円\n第1戦 [東京10R 西湖特別]: 3番 コスモストーム\n第2戦 [京都10R 聚楽第特別]: 3番 ポッドフォルク, 10番 マハートマーベル\n第3戦 [新潟11R 新潟牝馬S]: 4番 ヴェルミセル, 8番 ルールーリマ\n第4戦 [東京11R ブラジルC]: 9番 クールミラボー, 2番 メイプルリッジ\n第5戦 [京都11R 秋華賞]: 13番 ドリームコア\n狙い: レース内Zスコア（偏差値）突出度から銀行レースを1頭固定。混戦レースには高EV（期待値）馬を配分。",
   "bestRaces": [
     {
       "raceId": "202605040709",
@@ -395,7 +401,7 @@
       "isGraded": false,
       "isWin5": false,
       "chaosLevel": "SOLID",
-      "paceType": "HIGH",
+      "paceType": "NORMAL",
       "raceType": "手堅いレース（単勝・馬連本線集中）",
       "horses": [
         {
@@ -403,24 +409,30 @@
           "name": "キャネル",
           "jockey": "坂口",
           "odds": 9.2,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 88.5,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 88.9,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "△ 連下",
+          "zScore": 53.7,
+          "winProb": 8.7,
+          "ev": 0.73
         },
         {
           "num": 2,
           "name": "サイード",
           "jockey": "小牧加",
           "odds": 12.5,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 87.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 87.4,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 50.8,
+          "winProb": 5.4,
+          "ev": 0.62
         },
         {
           "num": 3,
@@ -429,10 +441,13 @@
           "odds": 78.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 79.4,
+          "speedScore": 79.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 35.8,
+          "winProb": 0.4,
+          "ev": 0.14
         },
         {
           "num": 4,
@@ -441,10 +456,13 @@
           "odds": 6.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.4,
-          "gapScore": 1.4,
-          "isLongshot": false,
-          "mark": "○ 対抗"
+          "speedScore": 91.2,
+          "gapScore": 0.0,
+          "isLongshot": true,
+          "mark": "▲ 単穴",
+          "zScore": 58.1,
+          "winProb": 18.1,
+          "ev": 1.3
         },
         {
           "num": 5,
@@ -453,10 +471,13 @@
           "odds": 82.3,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 77.0,
+          "speedScore": 78.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 32.7,
+          "winProb": 0.3,
+          "ev": 0.09
         },
         {
           "num": 6,
@@ -465,10 +486,13 @@
           "odds": 1.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 90.8,
+          "speedScore": 92.2,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "○ 対抗",
+          "zScore": 60.1,
+          "winProb": 24.9,
+          "ev": 0.56
         },
         {
           "num": 7,
@@ -477,42 +501,51 @@
           "odds": 10.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.5,
+          "speedScore": 89.9,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 55.6,
+          "winProb": 11.9,
+          "ev": 1.18
         },
         {
           "num": 8,
           "name": "マイネルメサイア",
           "jockey": "上野",
           "odds": 31.8,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 86.3,
-          "gapScore": 1.4,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 82.9,
+          "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 42.1,
+          "winProb": 1.3,
+          "ev": 0.45
         },
         {
           "num": 9,
           "name": "ジューンベロシティ",
           "jockey": "高田",
           "odds": 4.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 93.5,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 92.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "◎ 本命",
+          "zScore": 61.0,
+          "winProb": 29.2,
+          "ev": 1.25
         }
       ],
       "honmeiNum": 9,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬9番ジューンベロシティ（差し）の能力・位置取りが盤石。弥永流【単勝＋馬連本線】に集中投資して回収率を最大化。",
-      "aiBuy": "【単勝】9 (1点/500円) / 【馬連本線】9 - 4 (1点/500円) / 【馬連押さえ】9 - 6 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-2, 三連複 9-4-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。軸馬9番ジューンベロシティ（偏差値:61.0 / EV:1.25）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
+      "aiBuy": "【単勝】9 (1点/600円) / 【馬連本線】9 - 6 (1点/400円) / 【馬連押さえ】9 - 4 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-1, 三連複 9-6-1）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040711",
@@ -534,22 +567,28 @@
           "odds": 26.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 85.1,
+          "speedScore": 84.3,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 45.5,
+          "winProb": 0.9,
+          "ev": 0.45
         },
         {
           "num": 2,
           "name": "テイエムアイラン",
           "jockey": "富田",
           "odds": 66.3,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 80.4,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 82.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 42.6,
+          "winProb": 0.6,
+          "ev": 0.15
         },
         {
           "num": 3,
@@ -558,106 +597,133 @@
           "odds": 14.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.6,
+          "speedScore": 92.8,
           "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "○ 対抗"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 62.2,
+          "winProb": 13.6,
+          "ev": 1.94
         },
         {
           "num": 4,
           "name": "エンネ",
           "jockey": "坂井",
           "odds": 23.4,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 90.0,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 91.2,
           "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "△ 連下",
+          "zScore": 59.1,
+          "winProb": 8.2,
+          "ev": 1.9
         },
         {
           "num": 5,
           "name": "タイセイボーグ",
           "jockey": "西村淳",
           "odds": 59.0,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 83.4,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 80.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 37.8,
+          "winProb": 0.3,
+          "ev": 0.45
         },
         {
           "num": 6,
           "name": "ラベルセーヌ",
           "jockey": "荻野極",
           "odds": 10.8,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 91.4,
-          "gapScore": 1.4,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 93.1,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "▲ 単穴"
+          "mark": "▲ 単穴",
+          "zScore": 62.8,
+          "winProb": 15.0,
+          "ev": 1.64
         },
         {
           "num": 7,
           "name": "バースデイフライト",
           "jockey": "田山",
           "odds": 148.4,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 77.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 81.2,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 39.4,
+          "winProb": 0.3,
+          "ev": 0.2
         },
         {
           "num": 8,
           "name": "モンローウォーク",
           "jockey": "戸崎圭",
           "odds": 1.5,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 95.6,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 93.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "○ 対抗",
+          "zScore": 63.8,
+          "winProb": 17.6,
+          "ev": 0.45
         },
         {
           "num": 9,
           "name": "スウィートハピネス",
           "jockey": "佐々木",
           "odds": 52.8,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 82.5,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 86.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 50.2,
+          "winProb": 1.9,
+          "ev": 0.94
         },
         {
           "num": 10,
           "name": "ナイスプレーアスク",
           "jockey": "岩田康",
           "odds": 172.8,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 80.9,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 79.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 36.9,
+          "winProb": 0.2,
+          "ev": 0.15
         },
         {
           "num": 11,
           "name": "ガーネットフレア",
           "jockey": "北村友",
           "odds": 32.0,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 88.0,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "△ 連下"
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 84.6,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 46.1,
+          "winProb": 1.0,
+          "ev": 0.45
         },
         {
           "num": 12,
@@ -666,22 +732,28 @@
           "odds": 15.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.0,
-          "gapScore": 0.9,
+          "speedScore": 88.9,
+          "gapScore": 0.8,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 54.6,
+          "winProb": 3.9,
+          "ev": 0.54
         },
         {
           "num": 13,
           "name": "ドリームコア",
           "jockey": "ルメール",
           "odds": 8.5,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 89.8,
-          "gapScore": 1.0,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 95.2,
+          "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "◎ 本命",
+          "zScore": 67.0,
+          "winProb": 29.3,
+          "ev": 2.44
         },
         {
           "num": 14,
@@ -693,7 +765,10 @@
           "speedScore": 83.0,
           "gapScore": 0.4,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 43.0,
+          "winProb": 0.6,
+          "ev": 0.45
         },
         {
           "num": 15,
@@ -702,42 +777,51 @@
           "odds": 118.2,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 82.4,
+          "speedScore": 83.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 44.1,
+          "winProb": 0.7,
+          "ev": 0.34
         },
         {
           "num": 16,
           "name": "ハヤブササキチャン",
           "jockey": "吉田隼",
           "odds": 29.8,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 85.0,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 90.1,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "△ 連下",
+          "zScore": 56.9,
+          "winProb": 5.7,
+          "ev": 1.57
         },
         {
           "num": 17,
           "name": "ロザーンジュ",
           "jockey": "今村",
           "odds": 71.8,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 79.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 80.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 37.8,
+          "winProb": 0.3,
+          "ev": 0.07
         }
       ],
       "honmeiNum": 8,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬8番モンローウォーク（差し）の能力・位置取りが盤石。弥永流【単勝＋馬連本線】に集中投資して回収率を最大化。",
-      "aiBuy": "【単勝】8 (1点/500円) / 【馬連本線】8 - 3 (1点/500円) / 【馬連押さえ】8 - 6 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 8-11, 三連複 8-3-11）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬8番モンローウォーク（偏差値:63.8 / EV:0.45）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
+      "aiBuy": "【単勝】8 (1点/400円) / 【馬連本線】8 - 13 (1点/600円) / 【馬連押さえ】8 - 6 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 8-4, 三連複 8-13-4）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202604040212",
@@ -749,7 +833,7 @@
       "isGraded": false,
       "isWin5": false,
       "chaosLevel": "SEMI_CHAOS",
-      "paceType": "NORMAL",
+      "paceType": "HIGH",
       "raceType": "ちょい荒れレース（3連複10点フォーメーション）",
       "horses": [
         {
@@ -759,22 +843,28 @@
           "odds": 16.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.1,
-          "gapScore": 1.5,
+          "speedScore": 86.7,
+          "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "-",
+          "zScore": 41.6,
+          "winProb": 3.8,
+          "ev": 0.58
         },
         {
           "num": 2,
           "name": "レボルシオン",
           "jockey": "江田照",
           "odds": 5.6,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 90.1,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 90.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "△ 連下",
+          "zScore": 56.1,
+          "winProb": 12.3,
+          "ev": 0.63
         },
         {
           "num": 3,
@@ -783,10 +873,13 @@
           "odds": 6.0,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 92.4,
+          "speedScore": 91.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "○ 対抗",
+          "zScore": 60.5,
+          "winProb": 17.4,
+          "ev": 1.11
         },
         {
           "num": 4,
@@ -795,10 +888,13 @@
           "odds": 26.9,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 86.0,
+          "speedScore": 85.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 38.4,
+          "winProb": 2.9,
+          "ev": 0.72
         },
         {
           "num": 5,
@@ -807,10 +903,13 @@
           "odds": 32.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.6,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "speedScore": 86.8,
+          "gapScore": 1.2,
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 42.0,
+          "winProb": 3.9,
+          "ev": 1.15
         },
         {
           "num": 6,
@@ -819,10 +918,13 @@
           "odds": 30.8,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 84.4,
+          "speedScore": 84.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 33.7,
+          "winProb": 2.0,
+          "ev": 0.56
         },
         {
           "num": 7,
@@ -831,54 +933,66 @@
           "odds": 3.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.4,
+          "speedScore": 92.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗"
+          "mark": "◎ 本命",
+          "zScore": 64.0,
+          "winProb": 23.2,
+          "ev": 0.86
         },
         {
           "num": 8,
           "name": "ホウオウストライク",
           "jockey": "松本",
           "odds": 4.2,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 89.5,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 91.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "▲ 単穴",
+          "zScore": 60.5,
+          "winProb": 17.4,
+          "ev": 0.82
         },
         {
           "num": 9,
           "name": "アメリカンイズム",
           "jockey": "丹内",
           "odds": 8.2,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 88.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 89.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 53.4,
+          "winProb": 9.8,
+          "ev": 0.74
         },
         {
           "num": 10,
           "name": "トーアケルキラ",
           "jockey": "横山琉",
           "odds": 11.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 88.5,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 88.8,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 49.8,
+          "winProb": 7.3,
+          "ev": 0.75
         }
       ],
       "honmeiNum": 7,
       "confidence": "B",
       "confidenceScore": 88,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】。複勝圏内率の高い7番サトノグロリア（差し）を主軸に指名。トリガミを防ぐ資金管理を徹底し、弥永流【3連複フォーメーション】で高配当を獲る。",
-      "aiBuy": "【三連複F】7 ✕ 3, 2 ✕ 3, 2, 1, 8, 9 (7点/各100円) / 【保険ワイド】7-1 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 7-3-9, 三連複 7-3-10）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。主軸7番サトノグロリア（偏差値:64.0 / EV:0.86）を指名。PCIコース適性と1/8ケリー資金管理により【3連複フォーメーション】で高期待値目を狙う。",
+      "aiBuy": "【三連複F】7 ✕ 3, 8 ✕ 3, 8, 5, 2, 9 (7点/各100円) / 【保険ワイド】7-5 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 7-3-9, 三連複 7-3-10）を買い足せば的中確率が上がります（＋2点）"
     }
   ],
   "races": [
@@ -902,10 +1016,13 @@
           "odds": 4.3,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 91.5,
+          "speedScore": 90.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗"
+          "mark": "△ 連下",
+          "zScore": 57.1,
+          "winProb": 9.8,
+          "ev": 0.45
         },
         {
           "num": 2,
@@ -914,10 +1031,13 @@
           "odds": 14.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.8,
+          "speedScore": 88.0,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "-",
+          "zScore": 48.9,
+          "winProb": 4.1,
+          "ev": 0.56
         },
         {
           "num": 3,
@@ -926,130 +1046,163 @@
           "odds": 5.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.7,
+          "speedScore": 91.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "▲ 単穴",
+          "zScore": 60.7,
+          "winProb": 14.3,
+          "ev": 0.93
         },
         {
           "num": 4,
           "name": "タイキアロハ",
           "jockey": "荻野琢",
           "odds": 34.8,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 86.0,
-          "gapScore": 1.4,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 81.6,
+          "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 29.7,
+          "winProb": 0.5,
+          "ev": 0.45
         },
         {
           "num": 5,
           "name": "インドミタビリティ",
           "jockey": "亀田",
           "odds": 17.5,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 88.6,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "-"
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 84.2,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 37.5,
+          "winProb": 1.2,
+          "ev": 0.45
         },
         {
           "num": 6,
           "name": "ショウグンマサムネ",
           "jockey": "斎藤",
           "odds": 5.4,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 89.7,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 92.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "◎ 本命",
+          "zScore": 63.7,
+          "winProb": 19.7,
+          "ev": 1.13
         },
         {
           "num": 7,
           "name": "デイズインザサン",
           "jockey": "江田照",
           "odds": 26.8,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 88.2,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "-"
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 83.8,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 36.3,
+          "winProb": 1.1,
+          "ev": 0.45
         },
         {
           "num": 8,
           "name": "リリエンフェルト",
           "jockey": "菊沢",
           "odds": 34.5,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 83.1,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 89.2,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "△ 連下",
+          "zScore": 52.6,
+          "winProb": 6.0,
+          "ev": 1.92
         },
         {
           "num": 9,
           "name": "コスモエルヴァル",
           "jockey": "柴田大",
           "odds": 26.2,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 85.2,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 90.3,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 55.9,
+          "winProb": 8.6,
+          "ev": 2.07
         },
         {
           "num": 10,
           "name": "ページターナー",
           "jockey": "小沢",
           "odds": 8.6,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 89.2,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 88.2,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "-",
+          "zScore": 49.5,
+          "winProb": 4.4,
+          "ev": 0.45
         },
         {
           "num": 11,
           "name": "オービタルピリオド",
           "jockey": "杉原",
           "odds": 10.2,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 92.1,
-          "gapScore": 1.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 88.7,
+          "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "◎ 本命"
+          "mark": "-",
+          "zScore": 51.1,
+          "winProb": 5.2,
+          "ev": 0.48
         },
         {
           "num": 12,
           "name": "リアルセンター",
           "jockey": "横山琉",
           "odds": 17.4,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 88.6,
-          "gapScore": 1.4,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 90.3,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "△ 連下",
+          "zScore": 55.9,
+          "winProb": 8.6,
+          "ev": 1.38
         },
         {
           "num": 13,
           "name": "マイネルクオリア",
           "jockey": "丹内",
           "odds": 14.2,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 86.1,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 85.1,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 40.2,
+          "winProb": 1.6,
+          "ev": 0.45
         },
         {
           "num": 14,
@@ -1058,18 +1211,21 @@
           "odds": 14.0,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.3,
-          "gapScore": 1.4,
+          "speedScore": 92.0,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "○ 対抗",
+          "zScore": 61.0,
+          "winProb": 14.8,
+          "ev": 2.06
         }
       ],
-      "honmeiNum": 11,
+      "honmeiNum": 6,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。騎手補正・脚質バイアスから浮上した過小評価馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】11-1, 11-3, 11-14 (3点/各200円) / 【馬連BOX】11, 1, 3 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 11-6, ワイド 14-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
+      "aiBuy": "【ワイド流し】6-14, 6-3, 6-9 (3点/各200円) / 【馬連BOX】6, 14, 3 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 6-8, ワイド 9-1）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202604040210",
@@ -1089,12 +1245,15 @@
           "name": "レジーナローズ",
           "jockey": "菊沢",
           "odds": 16.8,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 90.0,
-          "gapScore": 1.4,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 91.7,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "△ 連下",
+          "zScore": 57.1,
+          "winProb": 6.7,
+          "ev": 1.04
         },
         {
           "num": 2,
@@ -1103,106 +1262,133 @@
           "odds": 54.0,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.1,
+          "speedScore": 84.3,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 38.8,
+          "winProb": 0.6,
+          "ev": 0.45
         },
         {
           "num": 3,
           "name": "ケンキョ",
           "jockey": "丸田",
           "odds": 54.2,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 81.9,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 82.1,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 33.3,
+          "winProb": 0.3,
+          "ev": 0.45
         },
         {
           "num": 4,
           "name": "セイウンデセオ",
           "jockey": "野中",
           "odds": 18.3,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 88.9,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "△ 連下"
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 84.5,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 39.2,
+          "winProb": 0.7,
+          "ev": 0.45
         },
         {
           "num": 5,
           "name": "クォーツァイト",
           "jockey": "長浜",
           "odds": 41.0,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 82.2,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 82.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 34.0,
+          "winProb": 0.3,
+          "ev": 0.45
         },
         {
           "num": 6,
           "name": "ニホンピロトッティ",
           "jockey": "小沢",
           "odds": 30.4,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 82.8,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 88.1,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 48.2,
+          "winProb": 2.1,
+          "ev": 0.59
         },
         {
           "num": 7,
           "name": "ピコアーガイル",
           "jockey": "丹内",
           "odds": 11.4,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 86.9,
-          "gapScore": 0.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 92.0,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "△ 連下",
+          "zScore": 57.8,
+          "winProb": 7.4,
+          "ev": 0.78
         },
         {
           "num": 8,
           "name": "ラヴェンデル",
           "jockey": "松本",
           "odds": 36.6,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 83.2,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 89.3,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 51.1,
+          "winProb": 3.1,
+          "ev": 1.05
         },
         {
           "num": 9,
           "name": "パレスドフィーヌ",
           "jockey": "丸山",
           "odds": 21.5,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 85.2,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 91.3,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 56.1,
+          "winProb": 5.9,
+          "ev": 1.17
         },
         {
           "num": 10,
           "name": "ミスエル",
           "jockey": "武藤",
           "odds": 22.7,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 88.3,
-          "gapScore": 1.4,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 90.0,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 52.9,
+          "winProb": 3.9,
+          "ev": 0.81
         },
         {
           "num": 11,
@@ -1214,19 +1400,25 @@
           "speedScore": 83.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 37.5,
+          "winProb": 0.5,
+          "ev": 0.45
         },
         {
           "num": 12,
           "name": "イスラコラソン",
           "jockey": "三浦",
           "odds": 14.3,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 86.6,
-          "gapScore": 0.3,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 92.7,
+          "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "▲ 単穴",
+          "zScore": 59.6,
+          "winProb": 9.3,
+          "ev": 1.37
         },
         {
           "num": 13,
@@ -1235,10 +1427,13 @@
           "odds": 6.0,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 92.9,
-          "gapScore": 0.0,
+          "speedScore": 96.0,
+          "gapScore": 1.9,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "◎ 本命",
+          "zScore": 67.7,
+          "winProb": 26.6,
+          "ev": 1.62
         },
         {
           "num": 14,
@@ -1247,10 +1442,13 @@
           "odds": 20.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.2,
-          "gapScore": 1.4,
+          "speedScore": 90.9,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 55.1,
+          "winProb": 5.2,
+          "ev": 0.99
         },
         {
           "num": 15,
@@ -1262,51 +1460,63 @@
           "speedScore": 88.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 49.2,
+          "winProb": 2.4,
+          "ev": 0.45
         },
         {
           "num": 16,
           "name": "ゼンダンタカ",
           "jockey": "杉原",
           "odds": 7.1,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 88.7,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 89.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "-",
+          "zScore": 52.1,
+          "winProb": 3.5,
+          "ev": 0.45
         },
         {
           "num": 17,
           "name": "ウーマンズパワー",
           "jockey": "横山琉",
           "odds": 13.9,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 90.1,
-          "gapScore": 1.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 86.7,
+          "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "○ 対抗"
+          "mark": "-",
+          "zScore": 44.7,
+          "winProb": 1.4,
+          "ev": 0.45
         },
         {
           "num": 18,
           "name": "シーグルロス",
           "jockey": "小林美",
           "odds": 6.4,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 90.0,
-          "gapScore": 0.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 95.1,
+          "gapScore": 1.9,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "○ 対抗",
+          "zScore": 65.5,
+          "winProb": 20.0,
+          "ev": 1.32
         }
       ],
       "honmeiNum": 13,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。騎手補正・脚質バイアスから浮上した過小評価馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】13-17, 13-18, 13-1 (3点/各200円) / 【馬連BOX】13, 17, 18 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 13-14, ワイド 1-4）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
+      "aiBuy": "【ワイド流し】13-18, 13-12, 13-9 (3点/各200円) / 【馬連BOX】13, 18, 12 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 13-7, ワイド 9-1）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202604040211",
@@ -1328,22 +1538,28 @@
           "odds": 8.1,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 89.5,
+          "speedScore": 88.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "-",
+          "zScore": 45.6,
+          "winProb": 4.2,
+          "ev": 0.45
         },
         {
           "num": 2,
           "name": "ダンツエラン",
           "jockey": "高倉",
           "odds": 35.5,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 86.2,
-          "gapScore": 1.4,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 87.9,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 43.1,
+          "winProb": 3.2,
+          "ev": 1.15
         },
         {
           "num": 3,
@@ -1352,34 +1568,43 @@
           "odds": 4.2,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 92.8,
+          "speedScore": 92.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "△ 連下",
+          "zScore": 55.8,
+          "winProb": 12.0,
+          "ev": 0.46
         },
         {
           "num": 4,
           "name": "ヴェルミセル",
           "jockey": "斎藤",
           "odds": 9.7,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 92.6,
-          "gapScore": 1.4,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 94.3,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "○ 対抗"
+          "mark": "◎ 本命",
+          "zScore": 62.9,
+          "winProb": 25.1,
+          "ev": 2.39
         },
         {
           "num": 5,
           "name": "カニキュル",
           "jockey": "杉原",
           "odds": 4.9,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 88.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 89.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 47.7,
+          "winProb": 5.2,
+          "ev": 0.45
         },
         {
           "num": 6,
@@ -1388,66 +1613,81 @@
           "odds": 6.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.7,
-          "gapScore": 0.0,
+          "speedScore": 90.5,
+          "gapScore": 0.8,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 51.1,
+          "winProb": 7.4,
+          "ev": 0.45
         },
         {
           "num": 7,
           "name": "セントメモリーズ",
           "jockey": "石神道",
           "odds": 47.6,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 81.8,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 82.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 27.3,
+          "winProb": 0.6,
+          "ev": 0.45
         },
         {
           "num": 8,
           "name": "ルールーリマ",
           "jockey": "横山琉",
           "odds": 16.1,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 87.5,
-          "gapScore": 0.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 92.6,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "▲ 単穴",
+          "zScore": 57.6,
+          "winProb": 14.6,
+          "ev": 2.16
         },
         {
           "num": 9,
           "name": "フレミングフープ",
           "jockey": "Ｍデムーロ",
           "odds": 8.3,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 88.9,
-          "gapScore": 0.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 94.0,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "○ 対抗",
+          "zScore": 62.0,
+          "winProb": 22.8,
+          "ev": 1.89
         },
         {
           "num": 10,
           "name": "ケリフレッドアスク",
           "jockey": "西塚",
           "odds": 4.9,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 91.1,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 89.1,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "-",
+          "zScore": 46.8,
+          "winProb": 4.8,
+          "ev": 0.45
         }
       ],
-      "honmeiNum": 3,
+      "honmeiNum": 4,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。騎手補正・脚質バイアスから浮上した過小評価馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】3-4, 3-10, 3-1 (3点/各200円) / 【馬連BOX】3, 4, 10 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 3-6, ワイド 1-5）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
+      "aiBuy": "【ワイド流し】4-9, 4-8, 4-2 (3点/各200円) / 【馬連BOX】4, 9, 8 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 4-5, ワイド 2-3）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202604040212",
@@ -1459,7 +1699,7 @@
       "isGraded": false,
       "isWin5": false,
       "chaosLevel": "SEMI_CHAOS",
-      "paceType": "NORMAL",
+      "paceType": "HIGH",
       "raceType": "ちょい荒れレース（3連複10点フォーメーション）",
       "horses": [
         {
@@ -1469,22 +1709,28 @@
           "odds": 16.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.1,
-          "gapScore": 1.5,
+          "speedScore": 86.7,
+          "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "-",
+          "zScore": 41.6,
+          "winProb": 3.8,
+          "ev": 0.58
         },
         {
           "num": 2,
           "name": "レボルシオン",
           "jockey": "江田照",
           "odds": 5.6,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 90.1,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 90.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "△ 連下",
+          "zScore": 56.1,
+          "winProb": 12.3,
+          "ev": 0.63
         },
         {
           "num": 3,
@@ -1493,10 +1739,13 @@
           "odds": 6.0,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 92.4,
+          "speedScore": 91.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "○ 対抗",
+          "zScore": 60.5,
+          "winProb": 17.4,
+          "ev": 1.11
         },
         {
           "num": 4,
@@ -1505,10 +1754,13 @@
           "odds": 26.9,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 86.0,
+          "speedScore": 85.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 38.4,
+          "winProb": 2.9,
+          "ev": 0.72
         },
         {
           "num": 5,
@@ -1517,10 +1769,13 @@
           "odds": 32.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.6,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "speedScore": 86.8,
+          "gapScore": 1.2,
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 42.0,
+          "winProb": 3.9,
+          "ev": 1.15
         },
         {
           "num": 6,
@@ -1529,10 +1784,13 @@
           "odds": 30.8,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 84.4,
+          "speedScore": 84.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 33.7,
+          "winProb": 2.0,
+          "ev": 0.56
         },
         {
           "num": 7,
@@ -1541,54 +1799,66 @@
           "odds": 3.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.4,
+          "speedScore": 92.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗"
+          "mark": "◎ 本命",
+          "zScore": 64.0,
+          "winProb": 23.2,
+          "ev": 0.86
         },
         {
           "num": 8,
           "name": "ホウオウストライク",
           "jockey": "松本",
           "odds": 4.2,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 89.5,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 91.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "▲ 単穴",
+          "zScore": 60.5,
+          "winProb": 17.4,
+          "ev": 0.82
         },
         {
           "num": 9,
           "name": "アメリカンイズム",
           "jockey": "丹内",
           "odds": 8.2,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 88.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 89.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 53.4,
+          "winProb": 9.8,
+          "ev": 0.74
         },
         {
           "num": 10,
           "name": "トーアケルキラ",
           "jockey": "横山琉",
           "odds": 11.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 88.5,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 88.8,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 49.8,
+          "winProb": 7.3,
+          "ev": 0.75
         }
       ],
       "honmeiNum": 7,
       "confidence": "B",
       "confidenceScore": 88,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】。複勝圏内率の高い7番サトノグロリア（差し）を主軸に指名。トリガミを防ぐ資金管理を徹底し、弥永流【3連複フォーメーション】で高配当を獲る。",
-      "aiBuy": "【三連複F】7 ✕ 3, 2 ✕ 3, 2, 1, 8, 9 (7点/各100円) / 【保険ワイド】7-1 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 7-3-9, 三連複 7-3-10）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。主軸7番サトノグロリア（偏差値:64.0 / EV:0.86）を指名。PCIコース適性と1/8ケリー資金管理により【3連複フォーメーション】で高期待値目を狙う。",
+      "aiBuy": "【三連複F】7 ✕ 3, 8 ✕ 3, 8, 5, 2, 9 (7点/各100円) / 【保険ワイド】7-5 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 7-3-9, 三連複 7-3-10）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040709",
@@ -1600,7 +1870,7 @@
       "isGraded": false,
       "isWin5": false,
       "chaosLevel": "SOLID",
-      "paceType": "HIGH",
+      "paceType": "NORMAL",
       "raceType": "手堅いレース（単勝・馬連本線集中）",
       "horses": [
         {
@@ -1608,24 +1878,30 @@
           "name": "キャネル",
           "jockey": "坂口",
           "odds": 9.2,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 88.5,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 88.9,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "△ 連下",
+          "zScore": 53.7,
+          "winProb": 8.7,
+          "ev": 0.73
         },
         {
           "num": 2,
           "name": "サイード",
           "jockey": "小牧加",
           "odds": 12.5,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 87.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 87.4,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 50.8,
+          "winProb": 5.4,
+          "ev": 0.62
         },
         {
           "num": 3,
@@ -1634,10 +1910,13 @@
           "odds": 78.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 79.4,
+          "speedScore": 79.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 35.8,
+          "winProb": 0.4,
+          "ev": 0.14
         },
         {
           "num": 4,
@@ -1646,10 +1925,13 @@
           "odds": 6.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.4,
-          "gapScore": 1.4,
-          "isLongshot": false,
-          "mark": "○ 対抗"
+          "speedScore": 91.2,
+          "gapScore": 0.0,
+          "isLongshot": true,
+          "mark": "▲ 単穴",
+          "zScore": 58.1,
+          "winProb": 18.1,
+          "ev": 1.3
         },
         {
           "num": 5,
@@ -1658,10 +1940,13 @@
           "odds": 82.3,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 77.0,
+          "speedScore": 78.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 32.7,
+          "winProb": 0.3,
+          "ev": 0.09
         },
         {
           "num": 6,
@@ -1670,10 +1955,13 @@
           "odds": 1.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 90.8,
+          "speedScore": 92.2,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "○ 対抗",
+          "zScore": 60.1,
+          "winProb": 24.9,
+          "ev": 0.56
         },
         {
           "num": 7,
@@ -1682,42 +1970,51 @@
           "odds": 10.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.5,
+          "speedScore": 89.9,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 55.6,
+          "winProb": 11.9,
+          "ev": 1.18
         },
         {
           "num": 8,
           "name": "マイネルメサイア",
           "jockey": "上野",
           "odds": 31.8,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 86.3,
-          "gapScore": 1.4,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 82.9,
+          "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 42.1,
+          "winProb": 1.3,
+          "ev": 0.45
         },
         {
           "num": 9,
           "name": "ジューンベロシティ",
           "jockey": "高田",
           "odds": 4.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 93.5,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 92.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "◎ 本命",
+          "zScore": 61.0,
+          "winProb": 29.2,
+          "ev": 1.25
         }
       ],
       "honmeiNum": 9,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬9番ジューンベロシティ（差し）の能力・位置取りが盤石。弥永流【単勝＋馬連本線】に集中投資して回収率を最大化。",
-      "aiBuy": "【単勝】9 (1点/500円) / 【馬連本線】9 - 4 (1点/500円) / 【馬連押さえ】9 - 6 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-2, 三連複 9-4-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。軸馬9番ジューンベロシティ（偏差値:61.0 / EV:1.25）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
+      "aiBuy": "【単勝】9 (1点/600円) / 【馬連本線】9 - 6 (1点/400円) / 【馬連押さえ】9 - 4 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-1, 三連複 9-6-1）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040710",
@@ -1737,12 +2034,15 @@
           "name": "ライジンマル",
           "jockey": "木幡初",
           "odds": 15.0,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 88.8,
-          "gapScore": 0.0,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 92.3,
+          "gapScore": 1.6,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "○ 対抗",
+          "zScore": 58.6,
+          "winProb": 17.6,
+          "ev": 2.45
         },
         {
           "num": 2,
@@ -1754,7 +2054,10 @@
           "speedScore": 82.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 36.6,
+          "winProb": 0.9,
+          "ev": 0.45
         },
         {
           "num": 3,
@@ -1763,10 +2066,13 @@
           "odds": 4.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 94.4,
+          "speedScore": 94.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "◎ 本命",
+          "zScore": 64.7,
+          "winProb": 40.5,
+          "ev": 1.94
         },
         {
           "num": 4,
@@ -1778,19 +2084,25 @@
           "speedScore": 87.8,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 48.1,
+          "winProb": 4.2,
+          "ev": 0.55
         },
         {
           "num": 5,
           "name": "マクミランテソーロ",
           "jockey": "木幡巧",
           "odds": 16.9,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 87.7,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 86.3,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下"
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 44.6,
+          "winProb": 2.6,
+          "ev": 0.45
         },
         {
           "num": 6,
@@ -1802,51 +2114,63 @@
           "speedScore": 90.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "△ 連下",
+          "zScore": 54.9,
+          "winProb": 10.6,
+          "ev": 0.45
         },
         {
           "num": 7,
           "name": "ヘリオトロープ",
           "jockey": "川田",
           "odds": 2.8,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 93.5,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 92.1,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗"
+          "mark": "▲ 単穴",
+          "zScore": 58.2,
+          "winProb": 16.5,
+          "ev": 0.58
         },
         {
           "num": 8,
           "name": "タイヨウフレア",
           "jockey": "大野",
           "odds": 46.4,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
           "speedScore": 81.2,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 32.6,
+          "winProb": 0.5,
+          "ev": 0.45
         },
         {
           "num": 9,
           "name": "マンダリンボレロ",
           "jockey": "松岡",
           "odds": 19.7,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 85.0,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "△ 連下"
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 89.3,
+          "gapScore": 1.6,
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 51.6,
+          "winProb": 6.7,
+          "ev": 1.22
         }
       ],
-      "honmeiNum": 7,
+      "honmeiNum": 3,
       "confidence": "B",
       "confidenceScore": 88,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】。複勝圏内率の高い7番ヘリオトロープ（先行）を主軸に指名。トリガミを防ぐ資金管理を徹底し、弥永流【3連複フォーメーション】で高配当を獲る。",
-      "aiBuy": "【三連複F】7 ✕ 3, 6 ✕ 3, 6, 1, 4, 5 (7点/各100円) / 【三連複厚め】7軸×☆1絡み (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 7-3-5, 三連複 7-3-9）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。主軸3番コスモストーム（偏差値:64.7 / EV:1.94）を指名。PCIコース適性と1/8ケリー資金管理により【3連複フォーメーション】で高期待値目を狙う。",
+      "aiBuy": "【三連複F】3 ✕ 1, 7 ✕ 1, 7, 9, 4, 5 (7点/各100円) / 【保険ワイド】3-9 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 3-1-5, 三連複 3-1-6）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040711",
@@ -1866,12 +2190,15 @@
           "name": "ダブルジョーク",
           "jockey": "木幡巧",
           "odds": 27.0,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 85.3,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 86.8,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 39.0,
+          "winProb": 1.6,
+          "ev": 0.45
         },
         {
           "num": 2,
@@ -1880,10 +2207,13 @@
           "odds": 13.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 91.0,
-          "gapScore": 1.3,
+          "speedScore": 91.6,
+          "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 54.2,
+          "winProb": 7.4,
+          "ev": 1.15
         },
         {
           "num": 3,
@@ -1892,138 +2222,171 @@
           "odds": 9.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 90.6,
+          "speedScore": 91.1,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 52.6,
+          "winProb": 6.3,
+          "ev": 0.55
         },
         {
           "num": 4,
           "name": "ロードプレジール",
           "jockey": "石川",
           "odds": 23.6,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 85.5,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 88.7,
+          "gapScore": 1.2,
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 45.0,
+          "winProb": 2.9,
+          "ev": 0.64
         },
         {
           "num": 5,
           "name": "ピカピカサンダー",
           "jockey": "石橋脩",
           "odds": 12.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 91.7,
-          "gapScore": 1.4,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 91.5,
+          "gapScore": 1.2,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "△ 連下",
+          "zScore": 53.9,
+          "winProb": 7.2,
+          "ev": 0.8
         },
         {
           "num": 6,
           "name": "ハピ",
           "jockey": "川田",
           "odds": 5.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
           "speedScore": 94.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "○ 対抗",
+          "zScore": 63.7,
+          "winProb": 19.4,
+          "ev": 1.06
         },
         {
           "num": 7,
           "name": "リアレスト",
           "jockey": "田辺",
           "odds": 7.7,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 94.5,
-          "gapScore": 1.9,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 93.3,
+          "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "○ 対抗"
+          "mark": "▲ 単穴",
+          "zScore": 59.6,
+          "winProb": 12.8,
+          "ev": 1.06
         },
         {
           "num": 8,
           "name": "ピュアキアン",
           "jockey": "吉田豊",
           "odds": 44.8,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 83.6,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 86.8,
+          "gapScore": 1.2,
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 39.0,
+          "winProb": 1.6,
+          "ev": 0.66
         },
         {
           "num": 9,
           "name": "クールミラボー",
           "jockey": "横山武",
           "odds": 6.0,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 90.5,
-          "gapScore": 0.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 95.4,
+          "gapScore": 1.9,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "◎ 本命",
+          "zScore": 66.2,
+          "winProb": 25.0,
+          "ev": 1.53
         },
         {
           "num": 10,
           "name": "ハグ",
           "jockey": "内田博",
           "odds": 34.6,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 87.8,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "-"
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 85.7,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 35.5,
+          "winProb": 1.1,
+          "ev": 0.45
         },
         {
           "num": 11,
           "name": "レッドプロフェシー",
           "jockey": "原",
           "odds": 3.9,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
           "speedScore": 91.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "△ 連下",
+          "zScore": 54.8,
+          "winProb": 7.9,
+          "ev": 0.45
         },
         {
           "num": 12,
           "name": "リチュアル",
           "jockey": "長岡",
           "odds": 20.8,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 85.3,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 85.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 35.2,
+          "winProb": 1.1,
+          "ev": 0.45
         },
         {
           "num": 13,
           "name": "カズタンジャー",
           "jockey": "菅原明",
           "odds": 14.2,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 86.2,
-          "gapScore": 0.3,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 90.7,
+          "gapScore": 1.8,
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 51.3,
+          "winProb": 5.6,
+          "ev": 0.73
         }
       ],
-      "honmeiNum": 6,
+      "honmeiNum": 9,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。騎手補正・脚質バイアスから浮上した過小評価馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】6-7, 6-11, 6-5 (3点/各200円) / 【馬連BOX】6, 7, 11 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 6-3, ワイド 5-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
+      "aiBuy": "【ワイド流し】9-6, 9-7, 9-2 (3点/各200円) / 【馬連BOX】9, 6, 7 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 9-5, ワイド 2-3）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040712",
@@ -2045,142 +2408,178 @@
           "odds": 28.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 83.7,
+          "speedScore": 82.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 36.9,
+          "winProb": 0.4,
+          "ev": 0.45
         },
         {
           "num": 2,
           "name": "グラニット",
           "jockey": "大野",
           "odds": 35.2,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 83.6,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 83.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 39.0,
+          "winProb": 0.6,
+          "ev": 0.45
         },
         {
           "num": 3,
           "name": "マイネルフルムーン",
           "jockey": "松岡",
           "odds": 24.6,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 84.8,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 85.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 41.7,
+          "winProb": 0.8,
+          "ev": 0.45
         },
         {
           "num": 4,
           "name": "ソルトブリーズ",
           "jockey": "菅原明",
           "odds": 12.4,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 90.8,
-          "gapScore": 1.3,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 94.1,
+          "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "▲ 単穴",
+          "zScore": 62.4,
+          "winProb": 15.0,
+          "ev": 1.86
         },
         {
           "num": 5,
           "name": "ラブリージャブリー",
           "jockey": "横山典",
           "odds": 9.2,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 91.9,
-          "gapScore": 1.3,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 95.2,
+          "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "▲ 単穴"
+          "mark": "○ 対抗",
+          "zScore": 64.9,
+          "winProb": 21.3,
+          "ev": 1.95
         },
         {
           "num": 6,
           "name": "ロンギングセリーヌ",
           "jockey": "吉田豊",
           "odds": 14.6,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 86.1,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 91.4,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "△ 連下",
+          "zScore": 56.3,
+          "winProb": 6.3,
+          "ev": 0.85
         },
         {
           "num": 7,
           "name": "ビーオンザカバー",
           "jockey": "横山武",
           "odds": 17.3,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 88.3,
-          "gapScore": 1.0,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 92.7,
+          "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 59.2,
+          "winProb": 9.6,
+          "ev": 1.67
         },
         {
           "num": 8,
           "name": "クリニクラウン",
           "jockey": "木幡初",
           "odds": 37.2,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 86.6,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "-"
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 83.2,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 37.6,
+          "winProb": 0.5,
+          "ev": 0.45
         },
         {
           "num": 9,
           "name": "タイセイプランセス",
           "jockey": "石橋脩",
           "odds": 6.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 90.9,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 88.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "-",
+          "zScore": 50.6,
+          "winProb": 2.8,
+          "ev": 0.45
         },
         {
           "num": 10,
           "name": "キュクヌス",
           "jockey": "石川",
           "odds": 29.4,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 83.3,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 89.4,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 51.7,
+          "winProb": 3.3,
+          "ev": 0.9
         },
         {
           "num": 11,
           "name": "ナヴォーナ",
           "jockey": "内田博",
           "odds": 45.8,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 85.5,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 83.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 38.3,
+          "winProb": 0.5,
+          "ev": 0.45
         },
         {
           "num": 12,
           "name": "ショーマンフリート",
           "jockey": "木幡巧",
           "odds": 64.0,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 79.3,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 83.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 38.3,
+          "winProb": 0.5,
+          "ev": 0.13
         },
         {
           "num": 13,
@@ -2192,7 +2591,10 @@
           "speedScore": 89.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 52.6,
+          "winProb": 3.8,
+          "ev": 0.45
         },
         {
           "num": 14,
@@ -2201,10 +2603,13 @@
           "odds": 6.0,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 92.6,
-          "gapScore": 0.0,
+          "speedScore": 96.0,
+          "gapScore": 2.2,
           "isLongshot": false,
-          "mark": "○ 対抗"
+          "mark": "◎ 本命",
+          "zScore": 66.7,
+          "winProb": 27.5,
+          "ev": 1.67
         },
         {
           "num": 15,
@@ -2213,30 +2618,36 @@
           "odds": 19.1,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.0,
-          "gapScore": 1.4,
+          "speedScore": 90.7,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 54.7,
+          "winProb": 5.0,
+          "ev": 0.89
         },
         {
           "num": 16,
           "name": "カフジエメンタール",
           "jockey": "鮫島駿",
           "odds": 9.7,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 92.9,
-          "gapScore": 1.9,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 88.2,
+          "gapScore": 0.2,
           "isLongshot": true,
-          "mark": "◎ 本命"
+          "mark": "-",
+          "zScore": 49.0,
+          "winProb": 2.3,
+          "ev": 0.45
         }
       ],
-      "honmeiNum": 16,
+      "honmeiNum": 14,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。騎手補正・脚質バイアスから浮上した過小評価馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】16-14, 16-5, 16-4 (3点/各200円) / 【馬連BOX】16, 14, 5 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 16-13, ワイド 4-9）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
+      "aiBuy": "【ワイド流し】14-5, 14-4, 14-7 (3点/各200円) / 【馬連BOX】14, 5, 4 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 14-13, ワイド 7-6）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040709",
@@ -2258,10 +2669,13 @@
           "odds": 11.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.5,
-          "gapScore": 1.3,
+          "speedScore": 92.2,
+          "gapScore": 1.8,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 55.3,
+          "winProb": 14.5,
+          "ev": 1.56
         },
         {
           "num": 2,
@@ -2270,34 +2684,43 @@
           "odds": 7.3,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 89.1,
+          "speedScore": 90.3,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 48.2,
+          "winProb": 7.9,
+          "ev": 0.53
         },
         {
           "num": 3,
           "name": "リアンマヒナ",
           "jockey": "岩田望",
           "odds": 3.1,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 91.4,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 92.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "▲ 単穴",
+          "zScore": 56.8,
+          "winProb": 16.5,
+          "ev": 0.47
         },
         {
           "num": 4,
           "name": "アロンソア",
           "jockey": "川又",
           "odds": 24.9,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 84.5,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 85.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 31.6,
+          "winProb": 1.9,
+          "ev": 0.45
         },
         {
           "num": 5,
@@ -2306,54 +2729,66 @@
           "odds": 7.2,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 92.4,
-          "gapScore": 1.0,
+          "speedScore": 94.1,
+          "gapScore": 1.5,
           "isLongshot": true,
-          "mark": "○ 対抗"
+          "mark": "◎ 本命",
+          "zScore": 62.4,
+          "winProb": 26.6,
+          "ev": 1.91
         },
         {
           "num": 6,
           "name": "アメリカンポリス",
           "jockey": "吉村",
           "odds": 20.4,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 86.9,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 88.3,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 40.7,
+          "winProb": 4.2,
+          "ev": 0.78
         },
         {
           "num": 7,
           "name": "ルトゥール",
           "jockey": "荻野極",
           "odds": 13.0,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 87.9,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 89.3,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 44.4,
+          "winProb": 5.7,
+          "ev": 0.69
         },
         {
           "num": 8,
           "name": "サーディンラン",
           "jockey": "ルメール",
           "odds": 2.4,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 92.4,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 93.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "○ 対抗",
+          "zScore": 60.6,
+          "winProb": 22.7,
+          "ev": 0.65
         }
       ],
       "honmeiNum": 8,
       "confidence": "B",
       "confidenceScore": 88,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】。複勝圏内率の高い8番サーディンラン（差し）を主軸に指名。トリガミを防ぐ資金管理を徹底し、弥永流【3連複フォーメーション】で高配当を獲る。",
-      "aiBuy": "【三連複F】8 ✕ 5, 3 ✕ 5, 3, 1, 2, 6 (7点/各100円) / 【三連複厚め】8軸×☆1絡み (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 8-5-6, 三連複 8-5-7）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。主軸8番サーディンラン（偏差値:60.6 / EV:0.65）を指名。PCIコース適性と1/8ケリー資金管理により【3連複フォーメーション】で高期待値目を狙う。",
+      "aiBuy": "【三連複F】8 ✕ 5, 3 ✕ 5, 3, 1, 2, 6 (7点/各100円) / 【ケリー厚張り】三連複 8-5-1 (1点/+200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 8-5-6, 三連複 8-5-7）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040710",
@@ -2373,36 +2808,45 @@
           "name": "アールプロスト",
           "jockey": "幸",
           "odds": 15.9,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 89.7,
-          "gapScore": 1.5,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 86.0,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 41.9,
+          "winProb": 2.7,
+          "ev": 0.45
         },
         {
           "num": 2,
           "name": "ビルンバウム",
           "jockey": "太宰",
           "odds": 8.3,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 88.9,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 90.2,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 54.4,
+          "winProb": 10.2,
+          "ev": 1.15
         },
         {
           "num": 3,
           "name": "ポッドフォルク",
           "jockey": "中井",
           "odds": 8.1,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 89.8,
-          "gapScore": 0.0,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 93.3,
+          "gapScore": 1.6,
           "isLongshot": true,
-          "mark": "▲ 単穴"
+          "mark": "◎ 本命",
+          "zScore": 63.6,
+          "winProb": 27.5,
+          "ev": 2.2
         },
         {
           "num": 4,
@@ -2414,31 +2858,40 @@
           "speedScore": 89.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 52.6,
+          "winProb": 8.4,
+          "ev": 0.45
         },
         {
           "num": 5,
           "name": "ヒデノレインボー",
           "jockey": "藤懸",
           "odds": 24.4,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 86.2,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 84.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 38.3,
+          "winProb": 1.8,
+          "ev": 0.45
         },
         {
           "num": 6,
           "name": "エンマ",
           "jockey": "富田",
           "odds": 19.1,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 86.6,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 87.9,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "△ 連下",
+          "zScore": 47.5,
+          "winProb": 4.9,
+          "ev": 0.86
         },
         {
           "num": 7,
@@ -2450,51 +2903,63 @@
           "speedScore": 82.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 30.0,
+          "winProb": 0.7,
+          "ev": 0.45
         },
         {
           "num": 8,
           "name": "ジョータルマエ",
           "jockey": "鮫島良",
           "odds": 7.7,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 91.5,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 90.1,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "◎ 本命"
+          "mark": "△ 連下",
+          "zScore": 54.1,
+          "winProb": 9.9,
+          "ev": 0.7
         },
         {
           "num": 9,
           "name": "ホウショウルクス",
           "jockey": "松若",
           "odds": 3.2,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
           "speedScore": 90.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗"
+          "mark": "▲ 単穴",
+          "zScore": 56.4,
+          "winProb": 12.7,
+          "ev": 0.45
         },
         {
           "num": 10,
           "name": "マハートマーベル",
           "jockey": "吉村",
           "odds": 7.5,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 88.2,
-          "gapScore": 0.0,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 92.5,
+          "gapScore": 1.6,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "○ 対抗",
+          "zScore": 61.2,
+          "winProb": 21.3,
+          "ev": 1.62
         }
       ],
-      "honmeiNum": 9,
+      "honmeiNum": 3,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】で波乱含み。騎手補正・脚質バイアスから浮上した過小評価馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】9-9, 9-3, 9-1 (3点/各200円) / 【馬連BOX】8, 9, 3 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 9-4, ワイド 1-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
+      "aiBuy": "【ワイド流し】3-10, 3-9, 3-2 (3点/各200円) / 【馬連BOX】3, 10, 9 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 3-6, ワイド 2-4）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040711",
@@ -2516,22 +2981,28 @@
           "odds": 26.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 85.1,
+          "speedScore": 84.3,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 45.5,
+          "winProb": 0.9,
+          "ev": 0.45
         },
         {
           "num": 2,
           "name": "テイエムアイラン",
           "jockey": "富田",
           "odds": 66.3,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 80.4,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 82.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 42.6,
+          "winProb": 0.6,
+          "ev": 0.15
         },
         {
           "num": 3,
@@ -2540,106 +3011,133 @@
           "odds": 14.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.6,
+          "speedScore": 92.8,
           "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "○ 対抗"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 62.2,
+          "winProb": 13.6,
+          "ev": 1.94
         },
         {
           "num": 4,
           "name": "エンネ",
           "jockey": "坂井",
           "odds": 23.4,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 90.0,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 91.2,
           "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "△ 連下",
+          "zScore": 59.1,
+          "winProb": 8.2,
+          "ev": 1.9
         },
         {
           "num": 5,
           "name": "タイセイボーグ",
           "jockey": "西村淳",
           "odds": 59.0,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 83.4,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 80.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 37.8,
+          "winProb": 0.3,
+          "ev": 0.45
         },
         {
           "num": 6,
           "name": "ラベルセーヌ",
           "jockey": "荻野極",
           "odds": 10.8,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 91.4,
-          "gapScore": 1.4,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 93.1,
+          "gapScore": 1.9,
           "isLongshot": true,
-          "mark": "▲ 単穴"
+          "mark": "▲ 単穴",
+          "zScore": 62.8,
+          "winProb": 15.0,
+          "ev": 1.64
         },
         {
           "num": 7,
           "name": "バースデイフライト",
           "jockey": "田山",
           "odds": 148.4,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 77.0,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 81.2,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 39.4,
+          "winProb": 0.3,
+          "ev": 0.2
         },
         {
           "num": 8,
           "name": "モンローウォーク",
           "jockey": "戸崎圭",
           "odds": 1.5,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 95.6,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 93.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命"
+          "mark": "○ 対抗",
+          "zScore": 63.8,
+          "winProb": 17.6,
+          "ev": 0.45
         },
         {
           "num": 9,
           "name": "スウィートハピネス",
           "jockey": "佐々木",
           "odds": 52.8,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 82.5,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 86.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 50.2,
+          "winProb": 1.9,
+          "ev": 0.94
         },
         {
           "num": 10,
           "name": "ナイスプレーアスク",
           "jockey": "岩田康",
           "odds": 172.8,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 80.9,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 79.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 36.9,
+          "winProb": 0.2,
+          "ev": 0.15
         },
         {
           "num": 11,
           "name": "ガーネットフレア",
           "jockey": "北村友",
           "odds": 32.0,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 88.0,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "△ 連下"
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 84.6,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 46.1,
+          "winProb": 1.0,
+          "ev": 0.45
         },
         {
           "num": 12,
@@ -2648,22 +3146,28 @@
           "odds": 15.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.0,
-          "gapScore": 0.9,
+          "speedScore": 88.9,
+          "gapScore": 0.8,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "△ 連下",
+          "zScore": 54.6,
+          "winProb": 3.9,
+          "ev": 0.54
         },
         {
           "num": 13,
           "name": "ドリームコア",
           "jockey": "ルメール",
           "odds": 8.5,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 89.8,
-          "gapScore": 1.0,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 95.2,
+          "gapScore": 2.2,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "◎ 本命",
+          "zScore": 67.0,
+          "winProb": 29.3,
+          "ev": 2.44
         },
         {
           "num": 14,
@@ -2675,7 +3179,10 @@
           "speedScore": 83.0,
           "gapScore": 0.4,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 43.0,
+          "winProb": 0.6,
+          "ev": 0.45
         },
         {
           "num": 15,
@@ -2684,42 +3191,51 @@
           "odds": 118.2,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 82.4,
+          "speedScore": 83.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 44.1,
+          "winProb": 0.7,
+          "ev": 0.34
         },
         {
           "num": 16,
           "name": "ハヤブササキチャン",
           "jockey": "吉田隼",
           "odds": 29.8,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 85.0,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 90.1,
+          "gapScore": 1.9,
+          "isLongshot": true,
+          "mark": "△ 連下",
+          "zScore": 56.9,
+          "winProb": 5.7,
+          "ev": 1.57
         },
         {
           "num": 17,
           "name": "ロザーンジュ",
           "jockey": "今村",
           "odds": 71.8,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 79.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 80.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 37.8,
+          "winProb": 0.3,
+          "ev": 0.07
         }
       ],
       "honmeiNum": 8,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬8番モンローウォーク（差し）の能力・位置取りが盤石。弥永流【単勝＋馬連本線】に集中投資して回収率を最大化。",
-      "aiBuy": "【単勝】8 (1点/500円) / 【馬連本線】8 - 3 (1点/500円) / 【馬連押さえ】8 - 6 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 8-11, 三連複 8-3-11）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬8番モンローウォーク（偏差値:63.8 / EV:0.45）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
+      "aiBuy": "【単勝】8 (1点/400円) / 【馬連本線】8 - 13 (1点/600円) / 【馬連押さえ】8 - 6 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 8-4, 三連複 8-13-4）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040712",
@@ -2731,7 +3247,7 @@
       "isGraded": false,
       "isWin5": false,
       "chaosLevel": "CHAOS",
-      "paceType": "NORMAL",
+      "paceType": "HIGH",
       "raceType": "波乱レース（中穴ワイド流し＆馬連BOX）",
       "horses": [
         {
@@ -2741,22 +3257,28 @@
           "odds": 64.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 81.9,
+          "speedScore": 81.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 25.5,
+          "winProb": 0.3,
+          "ev": 0.07
         },
         {
           "num": 2,
           "name": "ハクサンアイリス",
           "jockey": "西村淳",
           "odds": 8.7,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 90.8,
-          "gapScore": 0.9,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 91.2,
+          "gapScore": 1.0,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴"
+          "mark": "☆ 爆発期待穴",
+          "zScore": 53.0,
+          "winProb": 6.8,
+          "ev": 1.15
         },
         {
           "num": 3,
@@ -2765,10 +3287,13 @@
           "odds": 12.2,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 92.9,
-          "gapScore": 2.0,
+          "speedScore": 90.0,
+          "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "○ 対抗"
+          "mark": "-",
+          "zScore": 49.8,
+          "winProb": 4.6,
+          "ev": 0.52
         },
         {
           "num": 4,
@@ -2777,10 +3302,13 @@
           "odds": 18.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 87.5,
+          "speedScore": 87.4,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "-",
+          "zScore": 42.7,
+          "winProb": 2.0,
+          "ev": 0.45
         },
         {
           "num": 5,
@@ -2789,10 +3317,13 @@
           "odds": 5.9,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 92.5,
+          "speedScore": 94.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴"
+          "mark": "○ 対抗",
+          "zScore": 61.9,
+          "winProb": 19.6,
+          "ev": 1.21
         },
         {
           "num": 6,
@@ -2801,90 +3332,111 @@
           "odds": 12.0,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.3,
-          "gapScore": 0.0,
+          "speedScore": 90.5,
+          "gapScore": 1.2,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "△ 連下",
+          "zScore": 51.1,
+          "winProb": 5.5,
+          "ev": 0.6
         },
         {
           "num": 7,
           "name": "クーデール",
           "jockey": "田山",
           "odds": 13.2,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 86.8,
-          "gapScore": 0.0,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 90.0,
+          "gapScore": 1.2,
           "isLongshot": true,
-          "mark": "-"
+          "mark": "△ 連下",
+          "zScore": 49.8,
+          "winProb": 4.6,
+          "ev": 0.56
         },
         {
           "num": 8,
           "name": "ジョディーズマロン",
           "jockey": "武豊",
           "odds": 7.4,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 95.2,
-          "gapScore": 1.9,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 95.9,
+          "gapScore": 2.0,
           "isLongshot": true,
-          "mark": "◎ 本命"
+          "mark": "◎ 本命",
+          "zScore": 65.7,
+          "winProb": 30.7,
+          "ev": 2.24
         },
         {
           "num": 9,
           "name": "キタノソワレ",
           "jockey": "佐々木",
           "odds": 25.8,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 86.0,
-          "gapScore": 0.9,
-          "isLongshot": false,
-          "mark": "-"
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 87.9,
+          "gapScore": 1.5,
+          "isLongshot": true,
+          "mark": "-",
+          "zScore": 44.1,
+          "winProb": 2.4,
+          "ev": 0.56
         },
         {
           "num": 10,
           "name": "トゥロン",
           "jockey": "幸",
           "odds": 6.7,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 91.5,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 90.4,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "△ 連下"
+          "isLongshot": true,
+          "mark": "△ 連下",
+          "zScore": 50.8,
+          "winProb": 5.3,
+          "ev": 0.45
         },
         {
           "num": 11,
           "name": "マッシャーブルム",
           "jockey": "鮫島良",
           "odds": 10.0,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 88.3,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 88.6,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下"
+          "mark": "-",
+          "zScore": 46.0,
+          "winProb": 3.0,
+          "ev": 0.45
         },
         {
           "num": 12,
           "name": "サンダーバース",
           "jockey": "角田和",
           "odds": 4.2,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 91.7,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 93.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下"
+          "mark": "▲ 単穴",
+          "zScore": 59.7,
+          "winProb": 15.2,
+          "ev": 0.74
         }
       ],
       "honmeiNum": 8,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】で波乱含み。騎手補正・脚質バイアスから浮上した過小評価馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】8-3, 8-5, 8-2 (3点/各200円) / 【馬連BOX】8, 3, 5 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 8-11, ワイド 2-10）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
+      "aiBuy": "【ワイド流し】8-5, 8-12, 8-2 (3点/各200円) / 【馬連BOX】8, 5, 12 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 8-7, ワイド 2-6）を買い足せば的中確率が上がります（＋2点）"
     }
   ]
 }
