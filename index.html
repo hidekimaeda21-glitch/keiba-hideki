@@ -353,6 +353,18 @@
       align-items: center;
       gap: 6px;
     }
+    .date-group-header {
+      background: rgba(59, 130, 246, 0.15);
+      color: #93c5fd;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-left: 3px solid #3b82f6;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .modal-list-item {
       display: flex;
       justify-content: space-between;
@@ -381,9 +393,9 @@
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
       <div class="modal-title" style="color: #60a5fa;">🎯 的中実績・全予想レース</div>
       <div id="hitModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧（最新順）】</div>
+      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧（日付ごと・レース順）】</div>
       <div id="hitModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 14px; max-height: 220px; overflow-y: auto;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース】</div>
+      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース（日付ごと・レース順）】</div>
       <div id="allBetList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 180px; overflow-y: auto;"></div>
     </div>
   </div>
@@ -392,9 +404,9 @@
   <div id="payoutModal" class="custom-modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
-      <div class="modal-title" style="color: var(--gold-color);">💰 払戻・配当金明細（最新順）</div>
+      <div class="modal-title" style="color: var(--gold-color);">💰 払戻・配当金明細（日付・レース順）</div>
       <div id="payoutModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
-      <div id="payoutModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 360px; overflow-y: auto;"></div>
+      <div id="payoutModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 380px; overflow-y: auto;"></div>
     </div>
   </div>
 
@@ -472,21 +484,76 @@
       document.getElementById('payoutModal').style.display = 'none';
     }
 
+    // 日付文字列 (例: "10/18") を数値 (1018) に変換して比較
+    function parseDateVal(dateStr) {
+      if (!dateStr) return 0;
+      const parts = String(dateStr).split('/');
+      if (parts.length === 2) {
+        return parseInt(parts[0], 10) * 100 + parseInt(parts[1], 10);
+      }
+      return 0;
+    }
+
+    // レース名 (例: "11R 秋華賞") からレース番号 (11) を抽出
+    function parseRaceNum(raceName) {
+      if (!raceName) return 99;
+      const m = String(raceName).match(/(\d+)R/);
+      return m ? parseInt(m[1], 10) : 99;
+    }
+
+    // 会場の表示順定義（東京・中山 → 京都・阪神 → 新潟・中京・その他）
+    function getVenueOrder(venue) {
+      const order = { "東京": 1, "中山": 2, "京都": 3, "阪神": 4, "新潟": 5, "中京": 6, "福島": 7, "小倉": 8, "札幌": 9, "函館": 10 };
+      return order[venue] || 99;
+    }
+
+    // リストを「日付の新しい順」→「同じ日付内では 9R→10R→11R→12R ＆ 会場順」に整列する共通関数
+    function sortRaceRecords(list) {
+      // 重複排除（同じ日付・会場・レース番号が重複している場合は1つにまとめる）
+      const uniqueMap = new Map();
+      (list || []).forEach(item => {
+        const rNum = parseRaceNum(item.raceName);
+        const key = `${item.date}_${item.venue}_${rNum}`;
+        uniqueMap.set(key, item);
+      });
+      const uniqueList = Array.from(uniqueMap.values());
+
+      return uniqueList.sort((a, b) => {
+        const dA = parseDateVal(a.date);
+        const dB = parseDateVal(b.date);
+        if (dA !== dB) {
+          return dB - dA; // 日付は新しい順 (10/18 -> 10/17 -> 10/12 -> 10/11)
+        }
+        // 同じ日付の中は会場順（東京→京都→新潟）→ レース番号順（9R→10R→11R→12R）
+        const vA = getVenueOrder(a.venue);
+        const vB = getVenueOrder(b.venue);
+        if (vA !== vB) {
+          return vA - vB;
+        }
+        return parseRaceNum(a.raceName) - parseRaceNum(b.raceName);
+      });
+    }
+
     function openHitModal() {
       if (!statsObj) return;
       document.getElementById('hitModalSummary').textContent = `2026年10月11日以降: 全${statsObj.totalBets || 16}レース中 ${statsObj.hitCount || 0}的中 (的中率: ${statsObj.hitRate}%)`;
       
       const hitList = document.getElementById('hitModalList');
       hitList.innerHTML = '';
-      const hits = [...(statsObj.hitDetails || [])].reverse();
-      if (hits.length === 0) {
+      const sortedHits = sortRaceRecords(statsObj.hitDetails || []);
+      if (sortedHits.length === 0) {
         hitList.innerHTML = '<div style="padding:10px; font-size:12px; color:#888;">的中レース集計中</div>';
       } else {
-        hits.forEach(h => {
+        let lastDate = '';
+        sortedHits.forEach(h => {
+          if (h.date !== lastDate) {
+            lastDate = h.date;
+            hitList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${h.date} 開催</span></div>`;
+          }
           hitList.innerHTML += `
             <div class="modal-list-item">
               <div>
-                <span class="date-tag">${h.date || '10/18'}</span>
+                <span class="date-tag">${h.date}</span>
                 <strong style="color:#60a5fa;">[${h.venue}]</strong> ${h.raceName}
               </div>
               <span style="color:#4ade80; font-weight:bold; font-size:11px;">的中</span>
@@ -497,12 +564,17 @@
 
       const allList = document.getElementById('allBetList');
       allList.innerHTML = '';
-      const allRaces = [...(statsObj.allBetRaces || [])].reverse();
-      allRaces.forEach(r => {
+      const sortedAll = sortRaceRecords(statsObj.allBetRaces || []);
+      let lastAllDate = '';
+      sortedAll.forEach(r => {
+        if (r.date !== lastAllDate) {
+          lastAllDate = r.date;
+          allList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${r.date} 開催</span></div>`;
+        }
         allList.innerHTML += `
           <div class="modal-list-item">
             <div>
-              <span class="date-tag">${r.date || '10/18'}</span>
+              <span class="date-tag">${r.date}</span>
               <strong style="color:#94a3b8;">[${r.venue}]</strong> ${r.raceName}
             </div>
           </div>
@@ -514,15 +586,28 @@
 
     function openPayoutModal() {
       if (!statsObj) return;
-      document.getElementById('payoutModalSummary').textContent = `通算回収率: ${statsObj.recoveryRate}% (全${statsObj.totalBets || 16}戦・最新順明細)`;
+      document.getElementById('payoutModalSummary').textContent = `通算回収率: ${statsObj.recoveryRate}% (全${statsObj.totalBets || 16}戦・日付別レース順明細)`;
       const pList = document.getElementById('payoutModalList');
       pList.innerHTML = '';
-      const hits = [...(statsObj.hitDetails || [])].reverse();
-      hits.forEach(h => {
+      const sortedHits = sortRaceRecords(statsObj.hitDetails || []);
+      
+      let lastDate = '';
+      sortedHits.forEach(h => {
+        if (h.date !== lastDate) {
+          lastDate = h.date;
+          // その日の合計払戻額を計算して見出しに表示
+          const dayTotal = sortedHits.filter(x => x.date === h.date).reduce((sum, x) => sum + (x.payout || 0), 0);
+          pList.innerHTML += `
+            <div class="date-group-header">
+              <span>📅 2026年 ${h.date} 開催</span>
+              <span style="color:#fbbf24;">日計: ${dayTotal.toLocaleString()}円</span>
+            </div>
+          `;
+        }
         pList.innerHTML += `
           <div class="modal-list-item">
             <div>
-              <span class="date-tag">${h.date || '10/18'}</span>
+              <span class="date-tag">${h.date}</span>
               <strong style="color:var(--gold-color);">[${h.venue}]</strong> ${h.raceName}
             </div>
             <div style="font-weight:800; color:#fbbf24;">${h.payout ? h.payout.toLocaleString() + '円' : '的中'}</div>
