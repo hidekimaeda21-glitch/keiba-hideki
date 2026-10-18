@@ -393,7 +393,7 @@
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
       <div class="modal-title" style="color: #60a5fa;">🎯 的中実績・全予想レース</div>
       <div id="hitModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧（日付ごと・レース順）】</div>
+      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧】</div>
       <div id="hitModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 14px; max-height: 220px; overflow-y: auto;"></div>
       <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース】</div>
       <div id="allBetList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 180px; overflow-y: auto;"></div>
@@ -414,9 +414,9 @@
   <div id="win5Modal" class="custom-modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
-      <div class="modal-title" style="color: #c084fc;">🎯 WIN5 的中実績・払戻明細</div>
-      <div id="win5ModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;">AI厳選WIN5（予算800円フォーメーション）の的中履歴</div>
-      <div id="win5ModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 320px; overflow-y: auto;"></div>
+      <div class="modal-title" style="color: #c084fc;">🎯 WIN5 的中実績・詳細買い目</div>
+      <div id="win5ModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;">AI厳選WIN5（予算800円フォーメーション）の買い目＆結果明細</div>
+      <div id="win5ModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 360px; overflow-y: auto;"></div>
     </div>
   </div>
 
@@ -472,7 +472,7 @@
 
   <div class="win5-card" id="win5Card">
     <div class="win5-header" onclick="openWin5Modal()">
-      <div class="win5-title">🎯 WIN5 AI厳選戦略（タップで実績・払戻明細）</div>
+      <div class="win5-title">🎯 WIN5 AI厳選戦略（タップで詳細買い目・実績）</div>
       <div class="win5-toggle-icon" id="win5ToggleIcon">明細 ↗</div>
     </div>
     <div class="win5-body" id="win5Body" onclick="toggleWin5()" style="display: none; cursor: pointer;"></div>
@@ -488,6 +488,7 @@
     let globalRaces = [];
     let currentFilter = 'ALL';
     let statsObj = null;
+    let cachedWin5Text = '';
 
     function closeAllModals() {
       document.getElementById('hitModal').style.display = 'none';
@@ -620,20 +621,17 @@
     function openWin5Modal() {
       const wList = document.getElementById('win5ModalList');
       wList.innerHTML = `
-        <div class="date-group-header"><span>📅 2026年 10/18 開催（明日の大勝負）</span><span style="color:#c084fc;">予算 800円</span></div>
+        <div class="date-group-header"><span>📅 2026年 10/18 開催（明日の大勝負・秋華賞デー）</span><span style="color:#c084fc;">予算 800円</span></div>
+        <div style="padding:10px; font-size:11px; line-height:1.5; color:#e2e8f0; white-space:pre-wrap; background:rgba(139, 92, 246, 0.08); border-radius:6px; margin-bottom:8px;">${cachedWin5Text || 'WIN5買い目読み込み中'}</div>
+        <div class="date-group-header"><span>📅 2026年 10/12 開催</span><span style="color:#fbbf24;">挑戦記録</span></div>
         <div class="modal-list-item">
-          <div><strong style="color:#c084fc;">[WIN5対象5レース編成完了]</strong> 西湖特別・聚楽第特別・新潟牝馬S・ブラジルC・秋華賞(G1)</div>
-          <span style="color:#3b82f6; font-weight:bold; font-size:11px;">待機中</span>
+          <div><span class="date-tag">10/12</span><strong>[京都11R] スワンS(G2)等</strong></div>
+          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前挑戦</span>
         </div>
-        <div class="date-group-header"><span>📅 2026年 10/12 開催</span><span style="color:#fbbf24;">挑戦中</span></div>
+        <div class="date-group-header"><span>📅 2026年 10/11 開催</span><span style="color:#fbbf24;">挑戦記録</span></div>
         <div class="modal-list-item">
-          <div><span class="date-tag">10/12</span><strong>[京都11R] スワンS(G2) 等</strong></div>
-          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前微調整中</span>
-        </div>
-        <div class="date-group-header"><span>📅 2026年 10/11 開催</span><span style="color:#fbbf24;">挑戦中</span></div>
-        <div class="modal-list-item">
-          <div><span class="date-tag">10/11</span><strong>[東京11R] アイルランドT(G2) 等</strong></div>
-          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前微調整中</span>
+          <div><span class="date-tag">10/11</span><strong>[東京11R] アイルランドT(G2)等</strong></div>
+          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前挑戦</span>
         </div>
       `;
       document.getElementById('win5Modal').style.display = 'flex';
@@ -793,6 +791,7 @@
         }
 
         if (data.win5Strategy) {
+          cachedWin5Text = data.win5Strategy;
           document.getElementById('win5Body').textContent = data.win5Strategy;
           document.getElementById('win5Card').style.display = 'block';
         }
