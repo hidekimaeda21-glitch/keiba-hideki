@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-10-18 08:44",
-  "targetDate": "2026年10月18日",
+  "updatedAt": "2026-10-18 17:54",
+  "targetDate": "2026年10月19日",
   "stats": {
-    "hitRate": 66.7,
-    "recoveryRate": 183.5,
-    "totalBets": 27,
-    "hitCount": 18,
+    "hitRate": 67.6,
+    "recoveryRate": 169.2,
+    "totalBets": 37,
+    "hitCount": 25,
     "markRates": {
       "◎": {
-        "rate": 55.6,
-        "count": "15/27"
+        "rate": 51.4,
+        "count": "19/37"
       },
       "○": {
-        "rate": 59.3,
-        "count": "16/27"
+        "rate": 54.1,
+        "count": "20/37"
       },
       "▲": {
-        "rate": 44.4,
-        "count": "12/27"
+        "rate": 40.5,
+        "count": "15/37"
       },
       "☆": {
-        "rate": 25.9,
-        "count": "7/27"
+        "rate": 27.0,
+        "count": "10/37"
       },
       "△": {
-        "rate": 14.8,
-        "count": "12/81"
+        "rate": 17.1,
+        "count": "19/111"
       }
     },
     "hitDetails": [
@@ -136,6 +136,48 @@
         "venue": "京都",
         "raceName": "12R 3歳以上1勝クラス",
         "payout": 3200
+      },
+      {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "9R 松浜特別",
+        "payout": 520
+      },
+      {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "11R 新潟牝馬S",
+        "payout": 1610
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "9R 東京ハイジャンプ",
+        "payout": 4140
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "10R 西湖特別",
+        "payout": 600
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "11R ブラジルC",
+        "payout": 2230
+      },
+      {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "9R 宝ケ池特別",
+        "payout": 590
+      },
+      {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "10R 聚楽第特別",
+        "payout": 3370
       }
     ],
     "allBetRaces": [
@@ -273,6 +315,56 @@
         "date": "10/17",
         "venue": "京都",
         "raceName": "12R 3歳以上1勝クラス"
+      },
+      {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "9R 松浜特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "10R 飛翼特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "新潟",
+        "raceName": "11R 新潟牝馬S"
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "9R 東京ハイジャンプ"
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "10R 西湖特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "東京",
+        "raceName": "11R ブラジルC"
+      },
+      {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "9R 宝ケ池特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "10R 聚楽第特別"
+      },
+      {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "11R 秋華賞"
+      },
+      {
+        "date": "10/18",
+        "venue": "京都",
+        "raceName": "12R 桂川S"
       }
     ]
   },
