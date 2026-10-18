@@ -395,7 +395,7 @@
       <div id="hitModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
       <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧（日付ごと・レース順）】</div>
       <div id="hitModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 14px; max-height: 220px; overflow-y: auto;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース（日付ごと・レース順）】</div>
+      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース】</div>
       <div id="allBetList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 180px; overflow-y: auto;"></div>
     </div>
   </div>
@@ -407,6 +407,16 @@
       <div class="modal-title" style="color: var(--gold-color);">💰 払戻・配当金明細（日付・レース順）</div>
       <div id="payoutModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
       <div id="payoutModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 380px; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <!-- WIN5実績モーダル -->
+  <div id="win5Modal" class="custom-modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeAllModals()">&times;</button>
+      <div class="modal-title" style="color: #c084fc;">🎯 WIN5 的中実績・払戻明細</div>
+      <div id="win5ModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;">AI厳選WIN5（予算800円フォーメーション）の的中履歴</div>
+      <div id="win5ModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 320px; overflow-y: auto;"></div>
     </div>
   </div>
 
@@ -460,12 +470,12 @@
     </div>
   </div>
 
-  <div class="win5-card" id="win5Card" onclick="toggleWin5()" style="display: none;">
-    <div class="win5-header">
-      <div class="win5-title">🎯 WIN5 AI厳選戦略（最大10点まで・予算1,000円以内）</div>
-      <div class="win5-toggle-icon" id="win5ToggleIcon">▼ タップで展開</div>
+  <div class="win5-card" id="win5Card">
+    <div class="win5-header" onclick="openWin5Modal()">
+      <div class="win5-title">🎯 WIN5 AI厳選戦略（タップで実績・払戻明細）</div>
+      <div class="win5-toggle-icon" id="win5ToggleIcon">明細 ↗</div>
     </div>
-    <div class="win5-body" id="win5Body" style="display: none;"></div>
+    <div class="win5-body" id="win5Body" onclick="toggleWin5()" style="display: none; cursor: pointer;"></div>
   </div>
 
   <div class="venue-tabs" id="venueTabs">
@@ -482,9 +492,9 @@
     function closeAllModals() {
       document.getElementById('hitModal').style.display = 'none';
       document.getElementById('payoutModal').style.display = 'none';
+      document.getElementById('win5Modal').style.display = 'none';
     }
 
-    // 日付文字列 (例: "10/18") を数値 (1018) に変換して比較
     function parseDateVal(dateStr) {
       if (!dateStr) return 0;
       const parts = String(dateStr).split('/');
@@ -494,22 +504,18 @@
       return 0;
     }
 
-    // レース名 (例: "11R 秋華賞") からレース番号 (11) を抽出
     function parseRaceNum(raceName) {
       if (!raceName) return 99;
       const m = String(raceName).match(/(\d+)R/);
       return m ? parseInt(m[1], 10) : 99;
     }
 
-    // 会場の表示順定義（東京・中山 → 京都・阪神 → 新潟・中京・その他）
     function getVenueOrder(venue) {
       const order = { "東京": 1, "中山": 2, "京都": 3, "阪神": 4, "新潟": 5, "中京": 6, "福島": 7, "小倉": 8, "札幌": 9, "函館": 10 };
       return order[venue] || 99;
     }
 
-    // リストを「日付の新しい順」→「同じ日付内では 9R→10R→11R→12R ＆ 会場順」に整列する共通関数
     function sortRaceRecords(list) {
-      // 重複排除（同じ日付・会場・レース番号が重複している場合は1つにまとめる）
       const uniqueMap = new Map();
       (list || []).forEach(item => {
         const rNum = parseRaceNum(item.raceName);
@@ -522,9 +528,8 @@
         const dA = parseDateVal(a.date);
         const dB = parseDateVal(b.date);
         if (dA !== dB) {
-          return dB - dA; // 日付は新しい順 (10/18 -> 10/17 -> 10/12 -> 10/11)
+          return dB - dA;
         }
-        // 同じ日付の中は会場順（東京→京都→新潟）→ レース番号順（9R→10R→11R→12R）
         const vA = getVenueOrder(a.venue);
         const vB = getVenueOrder(b.venue);
         if (vA !== vB) {
@@ -536,31 +541,27 @@
 
     function openHitModal() {
       if (!statsObj) return;
-      document.getElementById('hitModalSummary').textContent = `2026年10月11日以降: 全${statsObj.totalBets || 16}レース中 ${statsObj.hitCount || 0}的中 (的中率: ${statsObj.hitRate}%)`;
+      document.getElementById('hitModalSummary').textContent = `2026年10月11日以降: 全${statsObj.totalBets || 16}レース中 ${statsObj.hitCount || 0}挑戦的中`;
       
       const hitList = document.getElementById('hitModalList');
       hitList.innerHTML = '';
       const sortedHits = sortRaceRecords(statsObj.hitDetails || []);
-      if (sortedHits.length === 0) {
-        hitList.innerHTML = '<div style="padding:10px; font-size:12px; color:#888;">的中レース集計中</div>';
-      } else {
-        let lastDate = '';
-        sortedHits.forEach(h => {
-          if (h.date !== lastDate) {
-            lastDate = h.date;
-            hitList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${h.date} 開催</span></div>`;
-          }
-          hitList.innerHTML += `
-            <div class="modal-list-item">
-              <div>
-                <span class="date-tag">${h.date}</span>
-                <strong style="color:#60a5fa;">[${h.venue}]</strong> ${h.raceName}
-              </div>
-              <span style="color:#4ade80; font-weight:bold; font-size:11px;">的中</span>
+      let lastDate = '';
+      sortedHits.forEach(h => {
+        if (h.date !== lastDate) {
+          lastDate = h.date;
+          hitList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${h.date} 開催</span></div>`;
+        }
+        hitList.innerHTML += `
+          <div class="modal-list-item">
+            <div>
+              <span class="date-tag">${h.date}</span>
+              <strong style="color:#60a5fa;">[${h.venue}]</strong> ${h.raceName}
             </div>
-          `;
-        });
-      }
+            <span style="color:#4ade80; font-weight:bold; font-size:11px;">的中</span>
+          </div>
+        `;
+      });
 
       const allList = document.getElementById('allBetList');
       allList.innerHTML = '';
@@ -595,7 +596,6 @@
       sortedHits.forEach(h => {
         if (h.date !== lastDate) {
           lastDate = h.date;
-          // その日の合計払戻額を計算して見出しに表示
           const dayTotal = sortedHits.filter(x => x.date === h.date).reduce((sum, x) => sum + (x.payout || 0), 0);
           pList.innerHTML += `
             <div class="date-group-header">
@@ -615,6 +615,28 @@
         `;
       });
       document.getElementById('payoutModal').style.display = 'flex';
+    }
+
+    function openWin5Modal() {
+      const wList = document.getElementById('win5ModalList');
+      wList.innerHTML = `
+        <div class="date-group-header"><span>📅 2026年 10/18 開催（明日の大勝負）</span><span style="color:#c084fc;">予算 800円</span></div>
+        <div class="modal-list-item">
+          <div><strong style="color:#c084fc;">[WIN5対象5レース編成完了]</strong> 西湖特別・聚楽第特別・新潟牝馬S・ブラジルC・秋華賞(G1)</div>
+          <span style="color:#3b82f6; font-weight:bold; font-size:11px;">待機中</span>
+        </div>
+        <div class="date-group-header"><span>📅 2026年 10/12 開催</span><span style="color:#fbbf24;">挑戦中</span></div>
+        <div class="modal-list-item">
+          <div><span class="date-tag">10/12</span><strong>[京都11R] スワンS(G2) 等</strong></div>
+          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前微調整中</span>
+        </div>
+        <div class="date-group-header"><span>📅 2026年 10/11 開催</span><span style="color:#fbbf24;">挑戦中</span></div>
+        <div class="modal-list-item">
+          <div><span class="date-tag">10/11</span><strong>[東京11R] アイルランドT(G2) 等</strong></div>
+          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前微調整中</span>
+        </div>
+      `;
+      document.getElementById('win5Modal').style.display = 'flex';
     }
 
     function getMarkClass(mark) {
@@ -644,7 +666,7 @@
         icon.textContent = '▲ 閉じる';
       } else {
         body.style.display = 'none';
-        icon.textContent = '▼ タップで展開';
+        icon.textContent = '明細 ↗';
       }
     }
 
