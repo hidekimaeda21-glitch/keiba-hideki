@@ -3,11 +3,11 @@
   "total_bets": 37,
   "hit_count": 26,
   "invest": 37000,
-  "payout": 65450,
+  "payout": 64200,
   "mark_stats": {
     "◎": {
       "total": 37,
-      "top3": 20
+      "top3": 18
     },
     "○": {
       "total": 37,
@@ -19,11 +19,11 @@
     },
     "☆": {
       "total": 37,
-      "top3": 10
+      "top3": 9
     },
     "△": {
       "total": 111,
-      "top3": 19
+      "top3": 22
     }
   },
   "checked_races": [
@@ -160,13 +160,13 @@
       "date": "10/18",
       "venue": "新潟",
       "raceName": "9R 松浜特別",
-      "payout": 520
+      "payout": 290
     },
     {
       "date": "10/18",
       "venue": "新潟",
       "raceName": "11R 新潟牝馬S",
-      "payout": 1610
+      "payout": 1330
     },
     {
       "date": "10/17",
@@ -184,13 +184,13 @@
       "date": "10/18",
       "venue": "東京",
       "raceName": "10R 西湖特別",
-      "payout": 600
+      "payout": 320
     },
     {
       "date": "10/18",
       "venue": "東京",
       "raceName": "11R ブラジルC",
-      "payout": 2230
+      "payout": 1770
     },
     {
       "date": "10/17",

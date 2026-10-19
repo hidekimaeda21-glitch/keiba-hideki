@@ -1,15 +1,15 @@
 {
-  "updatedAt": "2026-10-18 19:55",
-  "targetDate": "2026年10月19日",
+  "updatedAt": "2026-10-19 18:08",
+  "targetDate": "2026年10月20日",
   "stats": {
     "hitRate": 70.3,
-    "recoveryRate": 176.9,
+    "recoveryRate": 173.5,
     "totalBets": 37,
     "hitCount": 26,
     "markRates": {
       "◎": {
-        "rate": 54.1,
-        "count": "20/37"
+        "rate": 48.6,
+        "count": "18/37"
       },
       "○": {
         "rate": 54.1,
@@ -20,12 +20,12 @@
         "count": "16/37"
       },
       "☆": {
-        "rate": 27.0,
-        "count": "10/37"
+        "rate": 24.3,
+        "count": "9/37"
       },
       "△": {
-        "rate": 17.1,
-        "count": "19/111"
+        "rate": 19.8,
+        "count": "22/111"
       }
     },
     "hitDetails": [
@@ -123,13 +123,13 @@
         "date": "10/18",
         "venue": "新潟",
         "raceName": "9R 松浜特別",
-        "payout": 520
+        "payout": 290
       },
       {
         "date": "10/18",
         "venue": "新潟",
         "raceName": "11R 新潟牝馬S",
-        "payout": 1610
+        "payout": 1330
       },
       {
         "date": "10/17",
@@ -147,13 +147,13 @@
         "date": "10/18",
         "venue": "東京",
         "raceName": "10R 西湖特別",
-        "payout": 600
+        "payout": 320
       },
       {
         "date": "10/18",
         "venue": "東京",
         "raceName": "11R ブラジルC",
-        "payout": 2230
+        "payout": 1770
       },
       {
         "date": "10/17",
