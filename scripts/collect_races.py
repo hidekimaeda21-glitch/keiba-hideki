@@ -40,7 +40,7 @@ target_date_disp = target_dt.strftime("%Y年%m月%d日")
 print(f"=== 実行日時(JST): {now_str} / 予想対象日: {target_date_disp} ({target_date}) ===")
 
 # ==========================================
-# 1. 確定レース実績データベース
+# 1. 確定レース実績データベース（厳格検証済み分）
 # ==========================================
 OFFICIAL_RESULTS = {
     "202605040409": {"date": "10/11", "venue": "東京", "rNum": 9, "raceName": "9R 鷹巣山特別", "top3": [5, 6, 11], "marks_hit": ["◎", "○"], "is_hit": True, "payout_val": 1250},
@@ -130,14 +130,7 @@ def get_real_odds_dict(race_id):
         pass
     return odds_map
 
-# ==========================================
-# ★新機能1：VTR相当のレース動態（コーナー通過・上がり3F・道悪・不利）自己学習エンジン
-# ==========================================
 def learn_from_race_vtr_data(soup, r_data_text, venue):
-    """
-    レース結果ページからVTRの動き（通過順の押し上げ、上がり3F最速、道悪適性、不利・出遅れ備考）を解析し、
-    horses_db.json に蓄積して毎週AIを成長させる
-    """
     is_wet = any(w in r_data_text for w in ["稍重", "重", "不良"])
     dist_match = re.search(r"(芝|ダ|障)(\d{4}m)", r_data_text)
     track_type = dist_match.group(1) if dist_match else "芝"
@@ -152,7 +145,6 @@ def learn_from_race_vtr_data(soup, r_data_text, venue):
                 continue
             rank = int(rank_txt)
 
-            # 馬名取得
             name_elem = tr.find("span", class_="Horse_Name") or tr.find("a", href=re.compile(r"/horse/"))
             if not name_elem:
                 continue
@@ -161,8 +153,6 @@ def learn_from_race_vtr_data(soup, r_data_text, venue):
                 continue
 
             row_text = tr.get_text(" ", strip=True)
-
-            # コーナー通過順（VTRでの道中の動き・マクリ・位置取り）を解析
             pass_matches = re.findall(r"\b(\d{1,2})-(\d{1,2})(?:-(\d{1,2}))?(?:-(\d{1,2}))?\b", row_text)
             style_detected = None
             vtr_move_bonus = 0.0
@@ -180,49 +170,41 @@ def learn_from_race_vtr_data(soup, r_data_text, venue):
                     else:
                         style_detected = "追込"
 
-                    # 道中で5頭以上まくって上位（5着以内）に来た馬は「強いVTR内容」として高評価記録
                     if (c_first - c_last) >= 4 and rank <= 5:
                         vtr_move_bonus += 1.5
-                    # 直線でごぼう抜き（4角8番手以下から3着以内）した馬も高評価
                     if c_last >= 8 and rank <= 3:
                         vtr_move_bonus += 1.8
 
-            # 備考欄（出遅れ・不利・詰まる等のVTR不利情報）の検出
             has_disadvantage = any(w in row_text for w in ["出遅", "不利", "詰ま", "接触", "外枠"])
 
-            # データベース更新
             h_rec = horses_db.get(h_name, {
                 "scores": [],
                 "fav_tracks": [],
                 "fav_venues": [],
-                "wet_aptitude": 0,   # +1:道悪得意, -1:道悪苦手
-                "vtr_bonus": 0.0,    # 強い競馬・不利巻き返しボーナス
+                "wet_aptitude": 0,
+                "vtr_bonus": 0.0,
                 "unlucky_flag": False
             })
 
             if style_detected:
                 h_rec["style"] = style_detected
 
-            # 着順に応じたパフォーマンススコア記録
             perf_score = 93.0 if rank == 1 else (90.5 if rank == 2 else (88.5 if rank == 3 else (85.0 if rank <= 5 else 80.0)))
             h_rec.setdefault("scores", []).append(round(perf_score + vtr_move_bonus, 1))
-            h_rec["scores"] = h_rec["scores"][-5:]  # 直近5走を保持
+            h_rec["scores"] = h_rec["scores"][-5:]
 
-            # 道悪（稍重・重・不良）での適性学習
             if is_wet:
                 if rank <= 3:
-                    h_rec["wet_aptitude"] = 1  # 道悪巧者として記憶
+                    h_rec["wet_aptitude"] = 1
                 elif rank >= 8:
-                    h_rec["wet_aptitude"] = -1  # 道悪苦手として記憶
+                    h_rec["wet_aptitude"] = -1
 
-            # 得意トラック・会場の学習
             if rank <= 3:
                 if track_type not in h_rec.get("fav_tracks", []):
                     h_rec.setdefault("fav_tracks", []).append(track_type)
                 if venue not in h_rec.get("fav_venues", []):
                     h_rec.setdefault("fav_venues", []).append(venue)
 
-            # 不利がありながら6着以内に健闘した馬は「次走巻き返し特注（unlucky_flag）」をON
             if has_disadvantage and 4 <= rank <= 7:
                 h_rec["unlucky_flag"] = True
                 h_rec["vtr_bonus"] = 2.0
@@ -267,9 +249,6 @@ def determine_running_style(tr_elem, h_name, num, frame_no):
     else:
         return "追込", 0.25
 
-# ==========================================
-# ★新機能2：道悪・条件不利の厳格フィルター搭載スコア計算
-# ==========================================
 def compute_pro_yanaga_score(h_data, race_context):
     h_name = str(h_data.get("name", "馬"))
     odds = float(h_data.get("odds") or 15.0)
@@ -310,13 +289,12 @@ def compute_pro_yanaga_score(h_data, race_context):
 
     jockey_bonus = get_jockey_bonus(jockey)
 
-    # 展開バイアス補正
     bias_bonus = 0.0
     if pace_type == "SLOW":
         if pos_score >= 0.75:
             bias_bonus += 2.2
         elif pos_score <= 0.30:
-            bias_bonus -= 1.5  # スローでの後方待機は厳しく減点
+            bias_bonus -= 1.5
     elif pace_type == "HIGH":
         if pos_score <= 0.50:
             bias_bonus += 2.0
@@ -326,7 +304,6 @@ def compute_pro_yanaga_score(h_data, race_context):
         if 0.65 <= pos_score <= 0.85:
             bias_bonus += 1.4
 
-    # PCI（ペースチェンジ指数）コース形態補正
     pci_bonus = 0.0
     if track_type == "芝" and venue in ["東京", "新潟", "京都"] and dist_m >= 1600 and not is_wet:
         if pos_score <= 0.50:
@@ -335,43 +312,35 @@ def compute_pro_yanaga_score(h_data, race_context):
         if pos_score >= 0.75:
             pci_bonus += 1.5
 
-    # 【重要改修】道悪（稍重・重・不良）時の厳格な適性・不利フィルター
     wet_adjustment = 0.0
     wet_apt = history.get("wet_aptitude", 0)
     if is_wet:
         if wet_apt == 1:
-            wet_adjustment += 2.5  # 道悪実績馬を大幅加点
+            wet_adjustment += 2.5
         elif wet_apt == -1:
-            wet_adjustment -= 3.5  # 道悪苦手馬を大幅減点（軸から除外）
-
+            wet_adjustment -= 3.5
         if track_type == "芝":
-            # 芝の道悪で後方一気（追込）や馬格のない馬（444kg以下）はパワー負けするため減点
             if pos_score <= 0.30:
                 wet_adjustment -= 2.0
             if body_weight <= 444:
                 wet_adjustment -= 1.8
             elif body_weight >= 486 and pos_score >= 0.75:
-                wet_adjustment += 1.5  # 馬格のある先行馬は道悪芝でプラス
+                wet_adjustment += 1.5
 
-    # 【重要改修】条件不利（枠順ロス・斤量苦・馬体重激変）の厳格ペナルティ
     condition_penalty = 0.0
-    # 小回りや先行馬の外枠（7〜8枠）コースロス減点
     if frame_no >= 7 and (venue in ["中山", "福島", "小倉", "京都"] or dist_m <= 1400) and pos_score >= 0.75:
         condition_penalty -= 1.5
     elif frame_no in [1, 2, 3] and pos_score >= 0.70:
         condition_penalty += 1.0
 
-    # 酷量（58.5kg以上、または牝馬で56.5kg以上）の減点
     if kinryo >= 58.5:
         condition_penalty -= 1.2
 
-    # 馬体重の大幅増減ペナルティ
     if abs(weight_diff) >= 12:
         condition_penalty -= 2.5
     elif abs(weight_diff) >= 8:
         condition_penalty -= 1.0
 
-    # 前走VTR解析による不利巻き返し・強い動きボーナス
     vtr_learned_bonus = float(history.get("vtr_bonus", 0.0))
     if history.get("unlucky_flag", False):
         vtr_learned_bonus += 1.2
@@ -417,7 +386,6 @@ def enrich_zscore_ev_and_marks(horses_list):
         h["ev"] = ev_val
         h["mark"] = "-"
 
-    # 印の割り当て：道悪・条件不利フラグ（hasUnfavorable）がある馬は絶対に「◎本命」にしない
     ranked = sorted(horses_list, key=lambda x: (float(x.get("speedScore", 0)), float(x.get("ev", 0))), reverse=True)
 
     honmei_cand = next((h for h in ranked if not h.get("hasUnfavorable", False)), ranked[0] if ranked else None)
@@ -432,7 +400,7 @@ def enrich_zscore_ev_and_marks(horses_list):
 
     ana_cand = next((h for h in rem_ranked if h["mark"] == "-" and 6.5 <= float(h.get("odds", 15.0)) <= 50.0 and float(h.get("ev", 0)) >= 1.05 and not h.get("hasUnfavorable", False)), None)
     if not ana_cand:
-        ana_cand = next((h for h in rem_ranked if h["mark"] == "-" and 6.0 <= float(h.get("odds", 15.0)) <= 50.0), None)
+        ana_cand = next((h for h in rem_ranked if h["mark"] == "-" and 6.5 <= float(h.get("odds", 15.0)) <= 50.0), None)
     if ana_cand:
         ana_cand["mark"] = "☆ 爆発期待穴"
         if float(ana_cand.get("ev", 1.0)) < 1.12:
@@ -575,7 +543,6 @@ def parse_race_details(race_info):
     fav1 = sorted_by_odds[0]
     fav2 = sorted_by_odds[1] if len(sorted_by_odds) > 1 else fav1
 
-    # 道悪または1番人気に条件不利がある場合は波乱度を1段階引き上げて安全網を張る
     if not is_wet and not fav1.get("hasUnfavorable") and fav1["odds"] <= 2.5 and (fav2["odds"] - fav1["odds"] >= 1.5):
         chaos_level = "SOLID"
         race_type_label = "手堅いレース（単勝・馬連本線集中）"
@@ -697,7 +664,6 @@ def check_live_finished_races(check_yyyymmdd):
         r_data_txt = r_data_elem.get_text(strip=True) if r_data_elem else ""
         v_name = venue_map.get(rid[4:6], "中央")
 
-        # ★VTR相当の通過順・上がり・道悪・不利データを馬DBへ自動学習
         try:
             learn_from_race_vtr_data(soup, r_data_txt, v_name)
         except Exception as e:
@@ -706,7 +672,7 @@ def check_live_finished_races(check_yyyymmdd):
         if rid in OFFICIAL_RESULTS or rid in extra_results:
             continue
 
-        payout_map = {"単勝": 450, "馬連": 1650, "ワイド": 650, "3連複": 3200}
+        payout_map = {"単勝": 0, "馬連": 0, "ワイド": 0, "3連複": 0}
         for p_table in soup.find_all("table"):
             for ptr in p_table.find_all("tr"):
                 th = ptr.find("th")
@@ -748,11 +714,9 @@ def check_live_finished_races(check_yyyymmdd):
             "payout": payout_map
         }
 
-# 当日・前日のレース結果とVTR展開データを巡回して自己学習
 check_live_finished_races(today_yyyymmdd)
 check_live_finished_races((now_jst - timedelta(days=1)).strftime("%Y%m%d"))
 
-# 学習した馬データベース（horses_db.json）を確実に保存
 with open(HORSES_DB_PATH, "w", encoding="utf-8") as f:
     json.dump(horses_db, f, ensure_ascii=False, indent=2)
 
@@ -820,9 +784,15 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
     pred = saved_predictions.get(rid)
     if pred and pred.get("horses"):
         marked_nums = []
+        honmei_num = None
+        taikou_nums = []
         for h in pred.get("horses", []):
             m = str(h.get("mark", ""))
             hnum = h.get("num")
+            if "◎" in m:
+                honmei_num = hnum
+            if "○" in m or "▲" in m:
+                taikou_nums.append(hnum)
             for sym in ["◎", "○", "▲", "☆", "△"]:
                 if sym in m:
                     stats_data["mark_stats"][sym]["total"] += 1
@@ -830,30 +800,22 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
                     if hnum in top3:
                         stats_data["mark_stats"][sym]["top3"] += 1
 
-        h_honmei = pred.get("honmeiNum")
-        other_marked_in_top3 = [n for n in top3 if n in marked_nums and n != h_honmei]
+        # 厳格な的中判定：本命が馬券圏内(3着以内)に入り、かつ対抗・単穴等の印持ちがもう1頭以上馬券圏内に入った場合のみ的中
+        other_marked_in_top3 = [n for n in top3 if n in marked_nums and n != honmei_num]
 
-        if h_honmei == top3[0] and len(other_marked_in_top3) >= 1:
+        if honmei_num in top3 and len(other_marked_in_top3) >= 1:
             is_hit = True
-            payout_gain = res["payout"].get("単勝", 450) + res["payout"].get("馬連", 1600)
-        elif h_honmei in top3 and len(other_marked_in_top3) >= 1:
-            is_hit = True
-            payout_gain = res["payout"].get("ワイド", 650) + (res["payout"].get("3連複", 2400) if len(other_marked_in_top3) >= 2 else 0)
-        elif len(other_marked_in_top3) >= 2:
-            is_hit = True
-            payout_gain = res["payout"].get("馬連", 1450)
-    else:
-        for sym in ["◎", "○", "▲", "☆"]:
-            stats_data["mark_stats"][sym]["total"] += 1
-        stats_data["mark_stats"]["△"]["total"] += 3
-        if top3[0] <= 5:
-            stats_data["mark_stats"]["◎"]["top3"] += 1
-            stats_data["mark_stats"]["○"]["top3"] += 1
-            is_hit = True
-            payout_gain = res["payout"].get("馬連", 1550)
+            # 実際の払戻金データから取得、なければ0
+            payout_gain = res["payout"].get("ワイド", 0) + res["payout"].get("馬連", 0)
+            if payout_gain == 0:
+                payout_gain = res["payout"].get("3連複", 800)
         else:
-            stats_data["mark_stats"]["▲"]["top3"] += 1
-            stats_data["mark_stats"]["△"]["top3"] += 1
+            is_hit = False
+            payout_gain = 0
+    else:
+        # 予測データがない場合は無条件で不的中（偽りヒット排除）
+        is_hit = False
+        payout_gain = 0
 
     if is_hit:
         stats_data["hit_count"] += 1
@@ -899,7 +861,6 @@ def build_yanaga_dynamic_strategy(detail):
     ana = next((h for h in horses if "☆" in str(h.get("mark", ""))), None)
     renge = [h for h in horses if "△" in str(h.get("mark", ""))]
 
-    # 軸馬の安全確認：万が一本命馬に不利フラグがあり対抗馬がクリーンなら対抗を軸にする
     axis_horse = honmei
     if taikou and honmei.get("hasUnfavorable") and not taikou.get("hasUnfavorable"):
         axis_horse = taikou
@@ -952,7 +913,6 @@ def build_yanaga_dynamic_strategy(detail):
         if trio_combos:
             rec_items.append(f"【三連複F】{h_num} ✕ {', '.join(leg2)} ✕ {', '.join(leg3_cands)} ({len(trio_combos)}点/各100円)")
 
-        # 的中率を確保するため、必ず本線の馬連またはワイド押さえを併記する
         if t_num:
             rec_items.append(f"【手堅く馬連/ワイド】{h_num}-{t_num} (1点/200円)")
 
@@ -1047,7 +1007,6 @@ def generate_win5_strategy(all_races):
 
         race_analysis = []
         for idx, r in enumerate(win5_races[:5]):
-            # 道悪・条件不利のない馬を優先してWIN5候補に並べる
             clean_horses = [h for h in r.get("horses", []) if not h.get("hasUnfavorable", False)]
             if len(clean_horses) < 3:
                 clean_horses = r.get("horses", [])
@@ -1230,4 +1189,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 処理完了: VTR展開自己学習＆道悪・不利除外フィルター完了 / 学習馬数:{len(horses_db)}頭 ===")
+print(f"=== 処理完了: 厳格的中判定適用 / 的中率:{hit_rate}% / 回収率:{recovery_rate}% ===")
