@@ -1,1 +1,3175 @@
-{}
+{
+  "テルヴィセクス": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジーティーシンドウ": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ルージュリリック": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジャンヌローサ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ダノンブランニュー": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シャンパンライフ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ゴールドブレス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "コウギョク": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジュナベーラ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クモヒトツナイ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジェゼロ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クイーンズワーフ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シャルムグリーン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "デビューフライト": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハートメテオ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ズイウンゴサイ": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ロゼル": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マイネルアズーロ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マイネルマスター": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ベネスピラ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フルレゾン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "コンフォルツァ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジェットブレード": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジャンビ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フォルテフィオーレ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シルバーリム": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "モズナナスター": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エコロレジーナ": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クムシラコ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "カウスリップ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フィオライア": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ナナオ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ウインアイオライト": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ロードトレイル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "トールキン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スコーピオン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シュラフ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "デュガ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フウセツ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハートホイップ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ヴェントゥーラ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クールベイビー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ポールセン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ビーグラッド": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "メイプルギャング": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "パヴィーア": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アメリカンビヨンド": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サンライズブレイク": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジャスパーメルチェ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レーヴドアンジュ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ゼンノフォトン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エイカイボクサー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シュヴァルツシルト": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リッチハンター": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ノーブルクロンヌ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "オクトーバーナイン": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "パイシャオピン": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ブレゲアン": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ステアハート": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ラストレガシー": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "テーオーライマン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "チザルピーノ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サンカルミア": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マリンバンカー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ラマンシュ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シルバーレイン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クライスレリアーナ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エバーグルーヴ": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マイスターヴェルク": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ロートホルン": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "コスモイシュタル": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スタニングヴュー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レイピカケ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ブラックルビー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "メランジェ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ベルジュロネット": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "メリディアンスター": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ノーブルロジャー": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ヨリノレジェンド": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スリーピース": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ニシキギミッチー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フェルヴェンテ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "タイセイブレイズ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "バトゥーキ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リュウノフライト": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アッチャゴーラ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エコロアゼル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リラエンブレム": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アドバンスファラオ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジャスパーゴールド": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ワイワイレジェンド": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "タイセイジェイド": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ブレスドナイル": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ビンバラ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "プレースメント": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サムワンライクユー": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ライカ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ガーデンカメリア": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "カンレイスキー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レッドエウロス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アルデキングダム": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハギンス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マサッチェハマー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サルファー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "イッペイ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ミランダスマイル": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フランソワーズ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レインインザスカイ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ヴァンクライ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シュヴァルツペルレ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ブレイクガール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ユーダブルワン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "デミアン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "メイショウズイウン": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "カナルビーグル": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クインズショコラ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ゴールデンクラウド": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "オウギノカナメ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ペイシャモノノフ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ミッキーヌチバナ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リアライズカミオン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ギュルヴィ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レヴォントゥレット": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジンセイ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サンマルパトロール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "モンブランミノル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シゲルショウグン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ルヴァンユニベール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アンビシャスヨシノ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ポッドドンナー": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジーベック": {
+    "scores": [
+      90.3
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 1,
+    "vtr_bonus": 1.8,
+    "unlucky_flag": false,
+    "style": "追込"
+  },
+  "ラピダリア": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ソニックステップ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジュルナール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スーパージョック": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フェスティヴドレス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ラヴオントップ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ニホンピロカラット": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ペプチドレオン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "セールヴォラン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": -1,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アカウフリューゲル": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "オタルイーグル": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "イングラム": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ブライティアブーケ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ラブアイミー": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サツキレジーナ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ラブカムーン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "セレブトーチ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シャンクス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ピリカサンライズ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ベルタソ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ゲンテン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ブラヴィーノ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハッピーサプライズ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "テンペストヒロイン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ディープスリー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ケーヴァラ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ルーナディサングエ": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ディアウス": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リバースザトレンド": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ファルコンミノル": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ベルイストワール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "メイショウクーガー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フクチャントウメイ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジェーケーボンバー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ヴァイヴァーイ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クロドラバール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サイモンコーラル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アンドリーナ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エンプレスフレーム": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "セザンワールド": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アラタマフェーヴル": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ミュージシャン": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シンゼンカガ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フクノブルーレイク": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ワイドアラジン": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マイネルフーガ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "タイキラフター": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハニーコム": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ユキワリザクラ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マイネルブリックス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ドラゴンヘッド": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フィオレストラーダ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スピリットサージ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リアライズブラーヴ": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リアライズリバティ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "新潟"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ベルフラム": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ペアレンツギフト": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サンデースマッシュ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レインオンミー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アイアムアヒーロー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マイオウンウェイ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ノアールビーナス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アルスマグナ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ザバルガド": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "オタルグリーン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フクシマコウヨウ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エクヴァータル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サリーチェ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジョワイユノエル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シャルトル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レオアジャイル": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ダガーリング": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ウインイザナミ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アドマイヤジェイ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レイユール": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レイククレセント": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハクサンイーグル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アジュマン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エールトゥヘヴン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "タナスーペルノーバ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "メイケイバートン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ギフテッド": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ブルーサンセット": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サムシャイン": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジェイエルマスター": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リバートゥルー": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "パフ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リフレックス": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ラッキーキッド": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ダンツファイター": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ロカヒ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "トルショー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サノノワンダー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "テリフィックプラン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "デコラシオン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アデランテ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ワイドクリーガー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "パルデンス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ルシフェル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "プルヴィナル": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ローズサルーテ": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "シティオブドリーム": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ファミーリエ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "タプティ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マリアンデール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サトノスプレマシー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "リスグロワール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ホウオウプレマ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジーティーキャリー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ピコベリー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "カナデルペガサス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ベストプラージュ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "トヨサカエ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "トラヴェリンバンド": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "レーティッシュ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "東京"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "マサノユニコーン": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "メッエフアパラ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "キタノライブリー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ショコラキュイ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "チームユートピア": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "セントラルヴァレー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ジェミート": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハッピーウィズユー": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スカイメテオ": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ペアスターロード": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "タケルレジェンド": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フィリップヴィル": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ユウライクスター": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ムーンベリル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ポッドビート": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "クラウスーラ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ラピッドテソーロ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アスミル": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アンダースコア": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サンタンカ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "芝"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "コスモアディラート": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スカイハイ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フライングブレード": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "トーホウディアス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ヨウシタンレイ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ユハンヌス": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ガンマジーティーピ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ハンデンドレイク": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "アンビバレント": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エイムフォーエース": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "モーデン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ウィルオレオール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "タガノアニマシオン": {
+    "scores": [
+      93.0
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "セイントホース": {
+    "scores": [
+      90.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "エアアルチーナ": {
+    "scores": [
+      88.5
+    ],
+    "fav_tracks": [
+      "ダ"
+    ],
+    "fav_venues": [
+      "京都"
+    ],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "スターシップ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ソウルアンドジャズ": {
+    "scores": [
+      85.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "トモジャザーン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "ダブルジャッジ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "コーリンカルベラ": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "フェイトライン": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "サルタール": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "キタノファーンヒル": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  },
+  "オデット": {
+    "scores": [
+      80.0
+    ],
+    "fav_tracks": [],
+    "fav_venues": [],
+    "wet_aptitude": 0,
+    "vtr_bonus": 0.0,
+    "unlucky_flag": false
+  }
+}

@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-10-25 17:57",
+  "updatedAt": "2026-10-25 18:37",
   "targetDate": "2026年10月26日",
   "stats": {
     "hitRate": 67.8,
-    "recoveryRate": 321.1,
+    "recoveryRate": 320.6,
     "totalBets": 59,
     "hitCount": 40,
     "markRates": {
       "◎": {
-        "rate": 35.6,
-        "count": "21/59"
+        "rate": 39.0,
+        "count": "23/59"
       },
       "○": {
-        "rate": 40.7,
-        "count": "24/59"
-      },
-      "▲": {
         "rate": 42.4,
         "count": "25/59"
       },
+      "▲": {
+        "rate": 35.6,
+        "count": "21/59"
+      },
       "☆": {
-        "rate": 23.7,
-        "count": "14/59"
+        "rate": 22.0,
+        "count": "13/59"
       },
       "△": {
-        "rate": 23.2,
-        "count": "41/177"
+        "rate": 24.3,
+        "count": "43/177"
       }
     },
     "hitDetails": [
@@ -195,7 +195,7 @@
         "date": "10/25",
         "venue": "東京",
         "raceName": "10R 山中湖特別",
-        "payout": 4400
+        "payout": 1490
       },
       {
         "date": "10/25",
@@ -261,7 +261,7 @@
         "date": "10/25",
         "venue": "京都",
         "raceName": "10R カノープスS",
-        "payout": 15090
+        "payout": 17730
       },
       {
         "date": "10/25",
@@ -569,21 +569,21 @@
     ]
   },
   "topRecommendation": {
-    "raceId": "202604040410",
-    "raceName": "10R 村上特別 (芝2000m)",
-    "venue": "新潟",
-    "startTime": "14:35",
+    "raceId": "202608040909",
+    "raceName": "9R 萩S (芝1800m)",
+    "venue": "京都",
+    "startTime": "14:25",
     "confidence": "A",
     "confidenceScore": 95,
     "isLowPayout": true,
-    "honmeiNum": 12,
-    "honmeiName": "コンフォルツァ",
-    "honmeiOdds": 2.5,
-    "honmeiScore": 91.7,
-    "aiSummary": "展開予測は【平均ペース】。軸馬12番コンフォルツァ（偏差値:66.3 / EV:0.69）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-    "aiBuy": "【単勝】12 (1点/400円) / 【馬連本線】12 - 2 (1点/600円) / 【馬連押さえ】12 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 12-4, 三連複 12-2-4）を買い足せば的中確率が上がります（＋2点）"
+    "honmeiNum": 7,
+    "honmeiName": "イッペイ",
+    "honmeiOdds": 5.3,
+    "honmeiScore": 97.5,
+    "aiSummary": "展開予測は【平均ペース】。条件不利のない7番イッペイ（偏差値:65.1 / EV:2.06）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+    "aiBuy": "【単勝】7 (1点/600円) / 【馬連本線】7 - 5 (1点/400円) / 【馬連押さえ】7 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 7-3, 三連複 7-5-3）を買い足せば的中確率が上がります（＋2点）"
   },
-  "win5Strategy": "【AI厳選WIN5戦略】計8点（Zスコア突出1頭固定×2戦 ＋ 2頭押さえ×3戦） / 予算800円\n第1戦 [東京10R 山中湖特別]: 2番 クライスレリアーナ, 4番 マイスターヴェルク\n第2戦 [京都10R カノープスS]: 7番 モンブランミノル, 15番 ジンセイ\n第3戦 [新潟11R ルミエールAD]: 14番 カウスリップ, 12番 ナナオ\n第4戦 [東京11R 神無月S]: 16番 ワイワイレジェンド\n第5戦 [京都11R 菊花賞]: 10番 ダノンヒストリー\n狙い: レース内Zスコア（偏差値）突出度から銀行レースを1頭固定。混戦レースには高EV（期待値）馬を配分。",
+  "win5Strategy": "【AI厳選WIN5戦略】計8点（不利なし突出1頭固定×2戦 ＋ 2頭押さえ×3戦） / 予算800円\n第1戦 [東京10R 山中湖特別]: 2番 クライスレリアーナ\n第2戦 [京都10R カノープスS]: 10番 カナルビーグル, 12番 メイショウズイウン\n第3戦 [新潟11R ルミエールAD]: 11番 エコロレジーナ, 10番 クムシラコ\n第4戦 [東京11R 神無月S]: 4番 ベルジュロネット\n第5戦 [京都11R 菊花賞]: 10番 ダノンヒストリー, 9番 ゴーイントゥスカイ\n狙い: 道悪・条件不利馬を完全除外し、VTR動態学習＆Zスコア突出馬を軸に高配当を射抜く。",
   "bestRaces": [
     {
       "raceId": "202604040410",
@@ -605,13 +605,14 @@
           "odds": 7.0,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 90.0,
+          "speedScore": 85.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "▲ 単穴",
-          "zScore": 59.9,
-          "winProb": 13.7,
-          "ev": 1.03
+          "isLongshot": false,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 50.0,
+          "winProb": 1.5,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -620,13 +621,14 @@
           "odds": 7.4,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 90.2,
+          "speedScore": 81.7,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "○ 対抗",
-          "zScore": 60.6,
-          "winProb": 14.6,
-          "ev": 1.15
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -635,13 +637,14 @@
           "odds": 23.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 87.1,
+          "speedScore": 81.9,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 49.0,
-          "winProb": 5.4,
-          "ev": 1.19
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 43.5,
+          "winProb": 0.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -650,13 +653,14 @@
           "odds": 6.5,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 89.6,
+          "speedScore": 94.4,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 58.4,
-          "winProb": 12.1,
-          "ev": 0.87
+          "mark": "○ 対抗",
+          "zScore": 66.2,
+          "winProb": 25.1,
+          "ev": 1.65,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -665,13 +669,14 @@
           "odds": 32.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 83.9,
+          "speedScore": 81.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 36.9,
-          "winProb": 1.9,
-          "ev": 0.58
+          "mark": "△ 連下",
+          "zScore": 43.5,
+          "winProb": 0.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -680,13 +685,14 @@
           "odds": 26.8,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 85.1,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 41.4,
-          "winProb": 2.9,
-          "ev": 0.71
+          "zScore": 41.0,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -695,13 +701,14 @@
           "odds": 7.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.8,
+          "speedScore": 81.7,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 59.1,
-          "winProb": 12.9,
-          "ev": 1.0
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -710,13 +717,14 @@
           "odds": 17.9,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 86.3,
+          "speedScore": 96.9,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "△ 連下",
-          "zScore": 46.0,
-          "winProb": 4.2,
-          "ev": 0.69
+          "isLongshot": true,
+          "mark": "◎ 本命",
+          "zScore": 70.7,
+          "winProb": 55.8,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -725,13 +733,14 @@
           "odds": 14.2,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 85.9,
+          "speedScore": 85.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 44.5,
-          "winProb": 3.7,
-          "ev": 0.48
+          "mark": "△ 連下",
+          "zScore": 50.0,
+          "winProb": 1.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -740,13 +749,14 @@
           "odds": 47.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.3,
+          "speedScore": 92.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 34.7,
-          "winProb": 1.6,
-          "ev": 0.7
+          "mark": "▲ 単穴",
+          "zScore": 62.5,
+          "winProb": 13.2,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -755,13 +765,14 @@
           "odds": 25.5,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 85.6,
+          "speedScore": 81.7,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 43.3,
-          "winProb": 3.4,
-          "ev": 0.79
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -770,21 +781,22 @@
           "odds": 2.5,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 91.7,
+          "speedScore": 81.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
-          "zScore": 66.3,
-          "winProb": 23.6,
-          "ev": 0.69
+          "mark": "-",
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 12,
+      "honmeiNum": 8,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【平均ペース】。軸馬12番コンフォルツァ（偏差値:66.3 / EV:0.69）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-      "aiBuy": "【単勝】12 (1点/400円) / 【馬連本線】12 - 2 (1点/600円) / 【馬連押さえ】12 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 12-4, 三連複 12-2-4）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。条件不利のない8番ハートメテオ（偏差値:70.7 / EV:2.45）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+      "aiBuy": "【単勝】8 (1点/600円) / 【馬連本線】8 - 4 (1点/400円) / 【馬連押さえ】8 - 10 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 8-3, 三連複 8-4-3）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040909",
@@ -806,13 +818,14 @@
           "odds": 8.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.4,
-          "gapScore": 1.2,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 54.1,
-          "winProb": 8.5,
-          "ev": 0.67
+          "speedScore": 83.6,
+          "gapScore": 1.1,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 42.7,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -821,13 +834,14 @@
           "odds": 15.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.9,
+          "speedScore": 82.0,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 47.2,
-          "winProb": 3.8,
-          "ev": 0.55
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 39.6,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -836,13 +850,14 @@
           "odds": 23.7,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 85.0,
+          "speedScore": 91.2,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-",
-          "zScore": 36.4,
-          "winProb": 1.1,
-          "ev": 0.45
+          "isLongshot": true,
+          "mark": "▲ 単穴",
+          "zScore": 57.2,
+          "winProb": 6.6,
+          "ev": 1.43,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -851,13 +866,14 @@
           "odds": 13.3,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 86.8,
+          "speedScore": 85.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "-",
-          "zScore": 41.4,
-          "winProb": 1.9,
-          "ev": 0.45
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 46.3,
+          "winProb": 1.1,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -866,13 +882,14 @@
           "odds": 8.8,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 92.6,
-          "gapScore": 1.2,
+          "speedScore": 97.5,
+          "gapScore": 1.1,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 57.4,
-          "winProb": 12.5,
-          "ev": 1.01
+          "mark": "◎ 本命",
+          "zScore": 69.2,
+          "winProb": 49.2,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -881,13 +898,14 @@
           "odds": 52.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 84.3,
+          "speedScore": 82.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 34.5,
-          "winProb": 0.9,
-          "ev": 0.45
+          "zScore": 39.6,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -896,13 +914,14 @@
           "odds": 6.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.8,
+          "speedScore": 89.4,
           "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "▲ 単穴",
-          "zScore": 60.7,
-          "winProb": 18.3,
-          "ev": 1.26
+          "mark": "☆ 爆発期待穴",
+          "zScore": 53.8,
+          "winProb": 3.7,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -911,13 +930,14 @@
           "odds": 17.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.8,
-          "gapScore": 1.8,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 55.2,
-          "winProb": 9.6,
-          "ev": 1.55
+          "speedScore": 85.1,
+          "gapScore": 1.6,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 45.6,
+          "winProb": 0.9,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -926,13 +946,14 @@
           "odds": 2.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 94.5,
+          "speedScore": 96.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
-          "zScore": 62.6,
-          "winProb": 22.9,
-          "ev": 0.61
+          "mark": "○ 対抗",
+          "zScore": 67.3,
+          "winProb": 35.8,
+          "ev": 0.87,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -941,13 +962,14 @@
           "odds": 30.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 86.2,
+          "speedScore": 84.4,
           "gapScore": 1.4,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 39.7,
-          "winProb": 1.6,
-          "ev": 0.45
+          "zScore": 44.2,
+          "winProb": 0.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -956,21 +978,22 @@
           "odds": 7.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.9,
-          "gapScore": 1.5,
-          "isLongshot": true,
-          "mark": "○ 対抗",
-          "zScore": 60.9,
-          "winProb": 18.9,
-          "ev": 1.45
+          "speedScore": 84.5,
+          "gapScore": 1.4,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 44.4,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 9,
+      "honmeiNum": 5,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬9番パイシャオピン（偏差値:62.6 / EV:0.61）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-      "aiBuy": "【単勝】9 (1点/400円) / 【馬連本線】9 - 11 (1点/600円) / 【馬連押さえ】9 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-1, 三連複 9-11-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。条件不利のない5番オクトーバーナイン（偏差値:69.2 / EV:2.45）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+      "aiBuy": "【単勝】5 (1点/600円) / 【馬連本線】5 - 9 (1点/400円) / 【馬連押さえ】5 - 3 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 5-4, 三連複 5-9-4）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040910",
@@ -992,13 +1015,14 @@
           "odds": 6.1,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.2,
-          "gapScore": 1.4,
+          "speedScore": 88.9,
+          "gapScore": 1.2,
           "isLongshot": false,
-          "mark": "▲ 単穴",
-          "zScore": 59.5,
-          "winProb": 20.1,
-          "ev": 1.28
+          "mark": "☆ 爆発期待穴",
+          "zScore": 51.4,
+          "winProb": 3.4,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -1007,13 +1031,14 @@
           "odds": 1.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 93.9,
+          "speedScore": 97.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "◎ 本命",
-          "zScore": 61.4,
-          "winProb": 25.1,
-          "ev": 0.59
+          "zScore": 66.3,
+          "winProb": 52.6,
+          "ev": 1.07,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -1022,13 +1047,14 @@
           "odds": 20.9,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 85.0,
+          "speedScore": 80.2,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 36.9,
-          "winProb": 1.5,
-          "ev": 0.45
+          "zScore": 36.3,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -1037,13 +1063,14 @@
           "odds": 6.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.8,
-          "gapScore": 1.4,
+          "speedScore": 94.6,
+          "gapScore": 1.2,
           "isLongshot": false,
           "mark": "○ 対抗",
-          "zScore": 61.2,
-          "winProb": 24.4,
-          "ev": 1.58
+          "zScore": 61.3,
+          "winProb": 20.8,
+          "ev": 1.37,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -1052,13 +1079,14 @@
           "odds": 48.7,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 83.2,
+          "speedScore": 82.7,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 32.0,
-          "winProb": 0.8,
-          "ev": 0.45
+          "zScore": 40.6,
+          "winProb": 0.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -1067,13 +1095,14 @@
           "odds": 9.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.0,
-          "gapScore": 1.4,
-          "isLongshot": true,
+          "speedScore": 83.9,
+          "gapScore": 1.2,
+          "isLongshot": false,
           "mark": "△ 連下",
-          "zScore": 53.5,
-          "winProb": 9.9,
-          "ev": 0.9
+          "zScore": 42.7,
+          "winProb": 0.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -1082,13 +1111,14 @@
           "odds": 13.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.4,
+          "speedScore": 94.4,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 43.5,
-          "winProb": 3.1,
-          "ev": 0.45
+          "mark": "▲ 単穴",
+          "zScore": 60.9,
+          "winProb": 19.5,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -1097,13 +1127,14 @@
           "odds": 22.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.7,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 49.9,
-          "winProb": 6.6,
-          "ev": 1.36
+          "speedScore": 84.1,
+          "gapScore": 1.3,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 43.0,
+          "winProb": 0.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -1112,21 +1143,22 @@
           "odds": 7.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.5,
+          "speedScore": 86.7,
           "gapScore": 0.0,
           "isLongshot": true,
           "mark": "△ 連下",
-          "zScore": 52.1,
-          "winProb": 8.5,
-          "ev": 0.62
+          "zScore": 47.5,
+          "winProb": 1.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
       "honmeiNum": 2,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【前残りスロー】。軸馬2番クライスレリアーナ（偏差値:61.4 / EV:0.59）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-6, 三連複 2-4-6）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【前残りスロー】。条件不利のない2番クライスレリアーナ（偏差値:66.3 / EV:1.07）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-6, 三連複 2-4-6）を買い足せば的中確率が上がります（＋2点）"
     }
   ],
   "races": [
@@ -1150,13 +1182,14 @@
           "odds": 19.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.7,
-          "gapScore": 1.9,
+          "speedScore": 97.5,
+          "gapScore": 1.7,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 52.8,
-          "winProb": 6.4,
-          "ev": 1.12
+          "mark": "◎ 本命",
+          "zScore": 73.3,
+          "winProb": 63.2,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -1165,13 +1198,14 @@
           "odds": 4.2,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 92.6,
+          "speedScore": 81.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴",
-          "zScore": 59.1,
-          "winProb": 11.7,
-          "ev": 0.6
+          "mark": "-",
+          "zScore": 40.2,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -1180,13 +1214,14 @@
           "odds": 7.2,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.9,
+          "speedScore": 85.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "-",
-          "zScore": 50.1,
-          "winProb": 4.9,
-          "ev": 0.45
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 48.6,
+          "winProb": 1.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -1195,13 +1230,14 @@
           "odds": 28.8,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 90.3,
-          "gapScore": 1.9,
-          "isLongshot": true,
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
           "mark": "△ 連下",
-          "zScore": 51.4,
-          "winProb": 5.6,
-          "ev": 1.48
+          "zScore": 48.4,
+          "winProb": 1.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -1210,13 +1246,14 @@
           "odds": 18.8,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 92.0,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 57.1,
-          "winProb": 9.6,
-          "ev": 1.67
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 48.4,
+          "winProb": 1.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -1225,13 +1262,14 @@
           "odds": 6.8,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 94.6,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "◎ 本命",
-          "zScore": 65.9,
-          "winProb": 22.1,
-          "ev": 1.53
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 48.4,
+          "winProb": 1.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -1240,13 +1278,14 @@
           "odds": 24.1,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 90.0,
-          "gapScore": 1.9,
+          "speedScore": 90.4,
+          "gapScore": 1.7,
           "isLongshot": true,
-          "mark": "-",
-          "zScore": 50.4,
-          "winProb": 5.1,
-          "ev": 1.13
+          "mark": "▲ 単穴",
+          "zScore": 58.7,
+          "winProb": 6.5,
+          "ev": 1.59,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -1255,13 +1294,14 @@
           "odds": 12.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 87.2,
+          "speedScore": 93.2,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "-",
-          "zScore": 41.0,
-          "winProb": 2.1,
-          "ev": 0.45
+          "mark": "○ 対抗",
+          "zScore": 64.5,
+          "winProb": 16.0,
+          "ev": 2.0,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -1270,13 +1310,14 @@
           "odds": 8.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.9,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "○ 対抗",
-          "zScore": 63.5,
-          "winProb": 17.7,
-          "ev": 1.53
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 48.4,
+          "winProb": 1.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -1285,13 +1326,14 @@
           "odds": 7.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 90.1,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 50.7,
-          "winProb": 5.2,
-          "ev": 0.45
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 38.4,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -1300,13 +1342,14 @@
           "odds": 12.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.1,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 44.0,
-          "winProb": 2.8,
-          "ev": 0.45
+          "zScore": 38.4,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -1315,13 +1358,14 @@
           "odds": 40.0,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 83.0,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 26.9,
-          "winProb": 0.5,
-          "ev": 0.45
+          "zScore": 38.4,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 13,
@@ -1330,13 +1374,14 @@
           "odds": 10.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 86.0,
+          "speedScore": 89.7,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-",
-          "zScore": 37.0,
-          "winProb": 1.4,
-          "ev": 0.45
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 57.3,
+          "winProb": 5.2,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 14,
@@ -1345,21 +1390,22 @@
           "odds": 29.7,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 89.9,
-          "gapScore": 1.9,
-          "isLongshot": true,
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 50.1,
-          "winProb": 4.9,
-          "ev": 1.34
+          "zScore": 48.4,
+          "winProb": 1.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 6,
+      "honmeiNum": 1,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】6-9, 6-2, 6-5 (3点/各200円) / 【馬連BOX】6, 9, 2 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 6-4, ワイド 5-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。道悪や不利条件で危険な人気馬を軽視し、VTR巻き返し判定馬・高EV馬を絡めた【ワイド流し＆馬連BOX】で確実に仕留める。",
+      "aiBuy": "【ワイド流し】1-8, 1-7, 1-13 (3点/各200円) / 【馬連BOX】1, 8, 7 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 1-4, ワイド 13-3）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202604040410",
@@ -1381,13 +1427,14 @@
           "odds": 7.0,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 90.0,
+          "speedScore": 85.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "▲ 単穴",
-          "zScore": 59.9,
-          "winProb": 13.7,
-          "ev": 1.03
+          "isLongshot": false,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 50.0,
+          "winProb": 1.5,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -1396,13 +1443,14 @@
           "odds": 7.4,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 90.2,
+          "speedScore": 81.7,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "○ 対抗",
-          "zScore": 60.6,
-          "winProb": 14.6,
-          "ev": 1.15
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -1411,13 +1459,14 @@
           "odds": 23.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 87.1,
+          "speedScore": 81.9,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 49.0,
-          "winProb": 5.4,
-          "ev": 1.19
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 43.5,
+          "winProb": 0.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -1426,13 +1475,14 @@
           "odds": 6.5,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 89.6,
+          "speedScore": 94.4,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 58.4,
-          "winProb": 12.1,
-          "ev": 0.87
+          "mark": "○ 対抗",
+          "zScore": 66.2,
+          "winProb": 25.1,
+          "ev": 1.65,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -1441,13 +1491,14 @@
           "odds": 32.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 83.9,
+          "speedScore": 81.9,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 36.9,
-          "winProb": 1.9,
-          "ev": 0.58
+          "mark": "△ 連下",
+          "zScore": 43.5,
+          "winProb": 0.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -1456,13 +1507,14 @@
           "odds": 26.8,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 85.1,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 41.4,
-          "winProb": 2.9,
-          "ev": 0.71
+          "zScore": 41.0,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -1471,13 +1523,14 @@
           "odds": 7.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.8,
+          "speedScore": 81.7,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 59.1,
-          "winProb": 12.9,
-          "ev": 1.0
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -1486,13 +1539,14 @@
           "odds": 17.9,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 86.3,
+          "speedScore": 96.9,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "△ 連下",
-          "zScore": 46.0,
-          "winProb": 4.2,
-          "ev": 0.69
+          "isLongshot": true,
+          "mark": "◎ 本命",
+          "zScore": 70.7,
+          "winProb": 55.8,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -1501,13 +1555,14 @@
           "odds": 14.2,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 85.9,
+          "speedScore": 85.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 44.5,
-          "winProb": 3.7,
-          "ev": 0.48
+          "mark": "△ 連下",
+          "zScore": 50.0,
+          "winProb": 1.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -1516,13 +1571,14 @@
           "odds": 47.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.3,
+          "speedScore": 92.4,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 34.7,
-          "winProb": 1.6,
-          "ev": 0.7
+          "mark": "▲ 単穴",
+          "zScore": 62.5,
+          "winProb": 13.2,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -1531,13 +1587,14 @@
           "odds": 25.5,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 85.6,
+          "speedScore": 81.7,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 43.3,
-          "winProb": 3.4,
-          "ev": 0.79
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -1546,21 +1603,22 @@
           "odds": 2.5,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 91.7,
+          "speedScore": 81.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
-          "zScore": 66.3,
-          "winProb": 23.6,
-          "ev": 0.69
+          "mark": "-",
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 12,
+      "honmeiNum": 8,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【平均ペース】。軸馬12番コンフォルツァ（偏差値:66.3 / EV:0.69）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-      "aiBuy": "【単勝】12 (1点/400円) / 【馬連本線】12 - 2 (1点/600円) / 【馬連押さえ】12 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 12-4, 三連複 12-2-4）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。条件不利のない8番ハートメテオ（偏差値:70.7 / EV:2.45）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+      "aiBuy": "【単勝】8 (1点/600円) / 【馬連本線】8 - 4 (1点/400円) / 【馬連押さえ】8 - 10 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 8-3, 三連複 8-4-3）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202604040411",
@@ -1582,13 +1640,14 @@
           "odds": 49.6,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 81.9,
+          "speedScore": 79.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 36.7,
-          "winProb": 0.4,
-          "ev": 0.45
+          "zScore": 38.0,
+          "winProb": 0.1,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -1597,13 +1656,14 @@
           "odds": 82.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 80.3,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 33.1,
+          "zScore": 40.5,
           "winProb": 0.2,
-          "ev": 0.08
+          "ev": 0.05,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -1612,13 +1672,14 @@
           "odds": 11.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.5,
-          "gapScore": 1.9,
-          "isLongshot": true,
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
           "mark": "△ 連下",
-          "zScore": 58.1,
-          "winProb": 8.2,
-          "ev": 1.01
+          "zScore": 48.8,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -1627,13 +1688,14 @@
           "odds": 92.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 78.7,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 29.6,
-          "winProb": 0.1,
-          "ev": 0.05
+          "zScore": 40.5,
+          "winProb": 0.2,
+          "ev": 0.06,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -1642,13 +1704,14 @@
           "odds": 44.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.4,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "-",
-          "zScore": 48.9,
-          "winProb": 2.2,
-          "ev": 0.91
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 48.8,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -1657,13 +1720,14 @@
           "odds": 40.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.3,
-          "gapScore": 1.9,
-          "isLongshot": true,
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 48.7,
-          "winProb": 2.1,
-          "ev": 0.8
+          "zScore": 48.8,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -1672,13 +1736,14 @@
           "odds": 30.4,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 88.6,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 51.6,
-          "winProb": 3.3,
-          "ev": 0.91
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 48.8,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -1687,13 +1752,14 @@
           "odds": 16.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 86.2,
+          "speedScore": 85.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 46.3,
-          "winProb": 1.5,
-          "ev": 0.45
+          "mark": "△ 連下",
+          "zScore": 48.9,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -1702,13 +1768,14 @@
           "odds": 15.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 84.5,
+          "speedScore": 94.2,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-",
-          "zScore": 42.5,
-          "winProb": 0.9,
-          "ev": 0.45
+          "isLongshot": true,
+          "mark": "☆ 爆発期待穴",
+          "zScore": 63.6,
+          "winProb": 13.1,
+          "ev": 2.06,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -1717,13 +1784,14 @@
           "odds": 35.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 88.2,
-          "gapScore": 1.9,
+          "speedScore": 96.1,
+          "gapScore": 1.7,
           "isLongshot": true,
-          "mark": "-",
-          "zScore": 50.7,
-          "winProb": 2.9,
-          "ev": 0.93
+          "mark": "○ 対抗",
+          "zScore": 66.8,
+          "winProb": 24.0,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -1732,13 +1800,14 @@
           "odds": 6.3,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 94.6,
-          "gapScore": 1.9,
+          "speedScore": 97.5,
+          "gapScore": 1.7,
           "isLongshot": false,
-          "mark": "○ 対抗",
-          "zScore": 64.9,
-          "winProb": 22.2,
-          "ev": 1.44
+          "mark": "◎ 本命",
+          "zScore": 69.2,
+          "winProb": 37.5,
+          "ev": 2.32,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -1747,13 +1816,14 @@
           "odds": 11.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.4,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "▲ 単穴",
-          "zScore": 62.3,
-          "winProb": 15.1,
-          "ev": 1.81
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 48.8,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 13,
@@ -1762,13 +1832,14 @@
           "odds": 33.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.3,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 53.2,
-          "winProb": 4.1,
-          "ev": 1.24
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 48.8,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 14,
@@ -1777,13 +1848,14 @@
           "odds": 3.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 94.8,
+          "speedScore": 95.3,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
+          "mark": "▲ 単穴",
           "zScore": 65.4,
-          "winProb": 23.7,
-          "ev": 0.93
+          "winProb": 18.6,
+          "ev": 0.76,
+          "hasUnfavorable": false
         },
         {
           "num": 15,
@@ -1792,13 +1864,14 @@
           "odds": 8.4,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 88.6,
+          "speedScore": 79.0,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 51.6,
-          "winProb": 3.3,
-          "ev": 0.45
+          "zScore": 38.0,
+          "winProb": 0.1,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 16,
@@ -1807,13 +1880,14 @@
           "odds": 13.1,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.2,
-          "gapScore": 1.9,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 57.4,
-          "winProb": 7.5,
-          "ev": 0.9
+          "speedScore": 85.4,
+          "gapScore": 1.7,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 48.8,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 17,
@@ -1822,21 +1896,22 @@
           "odds": 6.8,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 87.5,
+          "speedScore": 79.0,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 49.1,
-          "winProb": 2.3,
-          "ev": 0.45
+          "zScore": 38.0,
+          "winProb": 0.1,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 14,
+      "honmeiNum": 11,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】14-11, 14-12, 14-13 (3点/各200円) / 【馬連BOX】14, 11, 12 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 14-7, ワイド 13-3）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。道悪や不利条件で危険な人気馬を軽視し、VTR巻き返し判定馬・高EV馬を絡めた【ワイド流し＆馬連BOX】で確実に仕留める。",
+      "aiBuy": "【ワイド流し】11-10, 11-14, 11-9 (3点/各200円) / 【馬連BOX】11, 10, 14 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 11-5, ワイド 9-3）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202604040412",
@@ -1858,13 +1933,14 @@
           "odds": 4.2,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 92.8,
+          "speedScore": 82.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
-          "zScore": 64.9,
-          "winProb": 26.2,
-          "ev": 1.16
+          "mark": "△ 連下",
+          "zScore": 42.9,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -1873,13 +1949,14 @@
           "odds": 8.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.4,
+          "speedScore": 91.2,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 49.7,
-          "winProb": 4.6,
-          "ev": 0.45
+          "mark": "▲ 単穴",
+          "zScore": 60.2,
+          "winProb": 11.5,
+          "ev": 1.07,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -1888,13 +1965,14 @@
           "odds": 34.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 87.7,
-          "gapScore": 1.6,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 50.5,
-          "winProb": 5.1,
-          "ev": 1.62
+          "speedScore": 84.9,
+          "gapScore": 1.5,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 48.4,
+          "winProb": 1.5,
+          "ev": 0.49,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -1903,13 +1981,14 @@
           "odds": 33.1,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 84.5,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 41.5,
-          "winProb": 1.8,
-          "ev": 0.56
+          "zScore": 40.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -1918,13 +1997,14 @@
           "odds": 6.8,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 91.8,
+          "speedScore": 82.0,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "○ 対抗",
-          "zScore": 62.1,
-          "winProb": 19.0,
-          "ev": 1.34
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 42.9,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -1933,13 +2013,14 @@
           "odds": 31.0,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 83.9,
+          "speedScore": 95.7,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-",
-          "zScore": 39.9,
-          "winProb": 1.5,
-          "ev": 0.45
+          "isLongshot": true,
+          "mark": "◎ 本命",
+          "zScore": 68.7,
+          "winProb": 48.7,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -1948,13 +2029,14 @@
           "odds": 24.4,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 84.6,
+          "speedScore": 93.2,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-",
-          "zScore": 41.8,
-          "winProb": 1.9,
-          "ev": 0.45
+          "isLongshot": true,
+          "mark": "○ 対抗",
+          "zScore": 64.0,
+          "winProb": 21.9,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -1963,13 +2045,14 @@
           "odds": 11.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 88.4,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 52.5,
-          "winProb": 6.4,
-          "ev": 0.69
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 40.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -1978,13 +2061,14 @@
           "odds": 14.6,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 87.1,
+          "speedScore": 82.0,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 48.9,
-          "winProb": 4.2,
-          "ev": 0.57
+          "zScore": 42.9,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -1993,13 +2077,14 @@
           "odds": 6.0,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.7,
+          "speedScore": 91.2,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下",
-          "zScore": 56.2,
-          "winProb": 9.7,
-          "ev": 0.54
+          "mark": "☆ 爆発期待穴",
+          "zScore": 60.2,
+          "winProb": 11.5,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -2008,13 +2093,14 @@
           "odds": 59.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 80.4,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 30.0,
-          "winProb": 0.5,
-          "ev": 0.45
+          "zScore": 40.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -2023,21 +2109,22 @@
           "odds": 3.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.8,
+          "speedScore": 85.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴",
-          "zScore": 62.1,
-          "winProb": 19.0,
-          "ev": 0.74
+          "mark": "△ 連下",
+          "zScore": 49.5,
+          "winProb": 1.9,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 1,
+      "honmeiNum": 6,
       "confidence": "B",
       "confidenceScore": 88,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】。主軸1番シュヴァルツシルト（偏差値:64.9 / EV:1.16）を指名。PCIコース適性と1/8ケリー資金管理により【3連複フォーメーション】で高期待値目を狙う。",
-      "aiBuy": "【三連複F】1 ✕ 5, 12 ✕ 5, 12, 3, 2, 8 (7点/各100円) / 【保険ワイド】1-3 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（三連複 1-5-8, 三連複 1-5-10）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。道悪・枠順不利をクリアした6番ビーグラッド（偏差値:68.7 / EV:2.45）を主軸に指名。VTR通過動態とPCI適性から【3連複F＋馬連/ワイド】で確実な的中と回収を狙う。",
+      "aiBuy": "【三連複F】6 ✕ 7, 2 ✕ 7, 2, 10, 1, 3 (7点/各100円) / 【手堅く馬連/ワイド】6-7 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（ワイド 6-10, 三連複 6-7-12）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040909",
@@ -2059,13 +2146,14 @@
           "odds": 8.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.4,
-          "gapScore": 1.2,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 54.1,
-          "winProb": 8.5,
-          "ev": 0.67
+          "speedScore": 83.6,
+          "gapScore": 1.1,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 42.7,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -2074,13 +2162,14 @@
           "odds": 15.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.9,
+          "speedScore": 82.0,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 47.2,
-          "winProb": 3.8,
-          "ev": 0.55
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 39.6,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -2089,13 +2178,14 @@
           "odds": 23.7,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 85.0,
+          "speedScore": 91.2,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-",
-          "zScore": 36.4,
-          "winProb": 1.1,
-          "ev": 0.45
+          "isLongshot": true,
+          "mark": "▲ 単穴",
+          "zScore": 57.2,
+          "winProb": 6.6,
+          "ev": 1.43,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -2104,13 +2194,14 @@
           "odds": 13.3,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 86.8,
+          "speedScore": 85.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "-",
-          "zScore": 41.4,
-          "winProb": 1.9,
-          "ev": 0.45
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 46.3,
+          "winProb": 1.1,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -2119,13 +2210,14 @@
           "odds": 8.8,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 92.6,
-          "gapScore": 1.2,
+          "speedScore": 97.5,
+          "gapScore": 1.1,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 57.4,
-          "winProb": 12.5,
-          "ev": 1.01
+          "mark": "◎ 本命",
+          "zScore": 69.2,
+          "winProb": 49.2,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -2134,13 +2226,14 @@
           "odds": 52.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 84.3,
+          "speedScore": 82.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 34.5,
-          "winProb": 0.9,
-          "ev": 0.45
+          "zScore": 39.6,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -2149,13 +2242,14 @@
           "odds": 6.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.8,
+          "speedScore": 89.4,
           "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "▲ 単穴",
-          "zScore": 60.7,
-          "winProb": 18.3,
-          "ev": 1.26
+          "mark": "☆ 爆発期待穴",
+          "zScore": 53.8,
+          "winProb": 3.7,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -2164,13 +2258,14 @@
           "odds": 17.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.8,
-          "gapScore": 1.8,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 55.2,
-          "winProb": 9.6,
-          "ev": 1.55
+          "speedScore": 85.1,
+          "gapScore": 1.6,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 45.6,
+          "winProb": 0.9,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -2179,13 +2274,14 @@
           "odds": 2.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 94.5,
+          "speedScore": 96.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
-          "zScore": 62.6,
-          "winProb": 22.9,
-          "ev": 0.61
+          "mark": "○ 対抗",
+          "zScore": 67.3,
+          "winProb": 35.8,
+          "ev": 0.87,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -2194,13 +2290,14 @@
           "odds": 30.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 86.2,
+          "speedScore": 84.4,
           "gapScore": 1.4,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 39.7,
-          "winProb": 1.6,
-          "ev": 0.45
+          "zScore": 44.2,
+          "winProb": 0.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -2209,21 +2306,22 @@
           "odds": 7.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.9,
-          "gapScore": 1.5,
-          "isLongshot": true,
-          "mark": "○ 対抗",
-          "zScore": 60.9,
-          "winProb": 18.9,
-          "ev": 1.45
+          "speedScore": 84.5,
+          "gapScore": 1.4,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 44.4,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 9,
+      "honmeiNum": 5,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬9番パイシャオピン（偏差値:62.6 / EV:0.61）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-      "aiBuy": "【単勝】9 (1点/400円) / 【馬連本線】9 - 11 (1点/600円) / 【馬連押さえ】9 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 9-1, 三連複 9-11-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。条件不利のない5番オクトーバーナイン（偏差値:69.2 / EV:2.45）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+      "aiBuy": "【単勝】5 (1点/600円) / 【馬連本線】5 - 9 (1点/400円) / 【馬連押さえ】5 - 3 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 5-4, 三連複 5-9-4）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040910",
@@ -2245,13 +2343,14 @@
           "odds": 6.1,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.2,
-          "gapScore": 1.4,
+          "speedScore": 88.9,
+          "gapScore": 1.2,
           "isLongshot": false,
-          "mark": "▲ 単穴",
-          "zScore": 59.5,
-          "winProb": 20.1,
-          "ev": 1.28
+          "mark": "☆ 爆発期待穴",
+          "zScore": 51.4,
+          "winProb": 3.4,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -2260,13 +2359,14 @@
           "odds": 1.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 93.9,
+          "speedScore": 97.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "◎ 本命",
-          "zScore": 61.4,
-          "winProb": 25.1,
-          "ev": 0.59
+          "zScore": 66.3,
+          "winProb": 52.6,
+          "ev": 1.07,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -2275,13 +2375,14 @@
           "odds": 20.9,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 85.0,
+          "speedScore": 80.2,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 36.9,
-          "winProb": 1.5,
-          "ev": 0.45
+          "zScore": 36.3,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -2290,13 +2391,14 @@
           "odds": 6.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 93.8,
-          "gapScore": 1.4,
+          "speedScore": 94.6,
+          "gapScore": 1.2,
           "isLongshot": false,
           "mark": "○ 対抗",
-          "zScore": 61.2,
-          "winProb": 24.4,
-          "ev": 1.58
+          "zScore": 61.3,
+          "winProb": 20.8,
+          "ev": 1.37,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -2305,13 +2407,14 @@
           "odds": 48.7,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 83.2,
+          "speedScore": 82.7,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 32.0,
-          "winProb": 0.8,
-          "ev": 0.45
+          "zScore": 40.6,
+          "winProb": 0.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -2320,13 +2423,14 @@
           "odds": 9.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.0,
-          "gapScore": 1.4,
-          "isLongshot": true,
+          "speedScore": 83.9,
+          "gapScore": 1.2,
+          "isLongshot": false,
           "mark": "△ 連下",
-          "zScore": 53.5,
-          "winProb": 9.9,
-          "ev": 0.9
+          "zScore": 42.7,
+          "winProb": 0.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -2335,13 +2439,14 @@
           "odds": 13.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.4,
+          "speedScore": 94.4,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 43.5,
-          "winProb": 3.1,
-          "ev": 0.45
+          "mark": "▲ 単穴",
+          "zScore": 60.9,
+          "winProb": 19.5,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -2350,13 +2455,14 @@
           "odds": 22.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.7,
-          "gapScore": 1.4,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 49.9,
-          "winProb": 6.6,
-          "ev": 1.36
+          "speedScore": 84.1,
+          "gapScore": 1.3,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 43.0,
+          "winProb": 0.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -2365,21 +2471,22 @@
           "odds": 7.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.5,
+          "speedScore": 86.7,
           "gapScore": 0.0,
           "isLongshot": true,
           "mark": "△ 連下",
-          "zScore": 52.1,
-          "winProb": 8.5,
-          "ev": 0.62
+          "zScore": 47.5,
+          "winProb": 1.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
       "honmeiNum": 2,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【前残りスロー】。軸馬2番クライスレリアーナ（偏差値:61.4 / EV:0.59）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-6, 三連複 2-4-6）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【前残りスロー】。条件不利のない2番クライスレリアーナ（偏差値:66.3 / EV:1.07）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-6, 三連複 2-4-6）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040911",
@@ -2401,13 +2508,14 @@
           "odds": 13.3,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 88.1,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 50.5,
-          "winProb": 3.5,
-          "ev": 0.45
+          "zScore": 39.8,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -2416,13 +2524,14 @@
           "odds": 3.6,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 92.5,
+          "speedScore": 94.2,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "▲ 単穴",
-          "zScore": 61.2,
-          "winProb": 14.3,
-          "ev": 0.62
+          "zScore": 66.8,
+          "winProb": 17.6,
+          "ev": 0.73,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -2431,13 +2540,14 @@
           "odds": 22.0,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.5,
-          "gapScore": 1.2,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 53.9,
-          "winProb": 5.5,
-          "ev": 1.15
+          "speedScore": 83.6,
+          "gapScore": 1.1,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 45.9,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -2446,13 +2556,14 @@
           "odds": 4.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 92.9,
+          "speedScore": 97.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗",
-          "zScore": 62.1,
-          "winProb": 16.2,
-          "ev": 0.79
+          "mark": "◎ 本命",
+          "zScore": 73.3,
+          "winProb": 50.5,
+          "ev": 2.15,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -2461,13 +2572,14 @@
           "odds": 18.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.0,
+          "speedScore": 95.1,
           "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "-",
-          "zScore": 52.7,
-          "winProb": 4.7,
-          "ev": 0.78
+          "mark": "○ 対抗",
+          "zScore": 68.5,
+          "winProb": 23.4,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -2476,13 +2588,14 @@
           "odds": 84.3,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 79.3,
+          "speedScore": 82.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 29.1,
-          "winProb": 0.2,
-          "ev": 0.07
+          "zScore": 42.7,
+          "winProb": 0.4,
+          "ev": 0.12,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -2491,13 +2604,14 @@
           "odds": 12.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.3,
+          "speedScore": 87.0,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 53.4,
-          "winProb": 5.1,
-          "ev": 0.59
+          "mark": "☆ 爆発期待穴",
+          "zScore": 52.6,
+          "winProb": 1.8,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -2506,13 +2620,14 @@
           "odds": 90.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 82.8,
+          "speedScore": 83.6,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 37.6,
+          "zScore": 45.9,
           "winProb": 0.6,
-          "ev": 0.23
+          "ev": 0.21,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -2521,13 +2636,14 @@
           "odds": 19.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.2,
+          "speedScore": 84.4,
           "gapScore": 1.4,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "△ 連下",
-          "zScore": 53.2,
-          "winProb": 5.0,
-          "ev": 0.9
+          "zScore": 47.5,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -2536,13 +2652,14 @@
           "odds": 19.1,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 87.2,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 48.3,
-          "winProb": 2.6,
-          "ev": 0.46
+          "zScore": 39.8,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -2551,13 +2668,14 @@
           "odds": 13.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.2,
+          "speedScore": 82.0,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 53.2,
-          "winProb": 5.0,
-          "ev": 0.63
+          "zScore": 42.7,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -2566,13 +2684,14 @@
           "odds": 22.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.1,
-          "gapScore": 1.8,
-          "isLongshot": true,
-          "mark": "-",
-          "zScore": 52.9,
-          "winProb": 4.8,
-          "ev": 0.99
+          "speedScore": 85.2,
+          "gapScore": 1.6,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 49.0,
+          "winProb": 1.0,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 13,
@@ -2581,13 +2700,14 @@
           "odds": 24.9,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 89.2,
-          "gapScore": 1.2,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 53.2,
-          "winProb": 5.0,
-          "ev": 1.14
+          "speedScore": 83.6,
+          "gapScore": 1.1,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 45.9,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 14,
@@ -2596,13 +2716,14 @@
           "odds": 56.3,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 84.4,
+          "speedScore": 82.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 41.5,
-          "winProb": 1.1,
-          "ev": 0.55
+          "zScore": 43.7,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 15,
@@ -2611,13 +2732,14 @@
           "odds": 112.5,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 80.3,
+          "speedScore": 85.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 31.5,
-          "winProb": 0.3,
-          "ev": 0.13
+          "mark": "△ 連下",
+          "zScore": 49.6,
+          "winProb": 1.1,
+          "ev": 0.49,
+          "hasUnfavorable": false
         },
         {
           "num": 16,
@@ -2626,21 +2748,22 @@
           "odds": 5.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 94.4,
+          "speedScore": 83.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
-          "zScore": 65.8,
-          "winProb": 26.2,
-          "ev": 1.48
+          "mark": "-",
+          "zScore": 46.3,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 16,
+      "honmeiNum": 4,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】16-4, 16-2, 16-3 (3点/各200円) / 【馬連BOX】16, 4, 2 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 16-9, ワイド 3-7）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。道悪や不利条件で危険な人気馬を軽視し、VTR巻き返し判定馬・高EV馬を絡めた【ワイド流し＆馬連BOX】で確実に仕留める。",
+      "aiBuy": "【ワイド流し】4-5, 4-2, 4-7 (3点/各200円) / 【馬連BOX】4, 5, 2 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 4-12, ワイド 7-9）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040912",
@@ -2662,13 +2785,14 @@
           "odds": 12.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.8,
-          "gapScore": 1.8,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 58.9,
-          "winProb": 12.2,
-          "ev": 1.54
+          "speedScore": 85.1,
+          "gapScore": 1.6,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 48.4,
+          "winProb": 1.0,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -2677,13 +2801,14 @@
           "odds": 6.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 94.0,
-          "gapScore": 1.5,
+          "speedScore": 95.2,
+          "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "◎ 本命",
-          "zScore": 64.4,
-          "winProb": 24.7,
-          "ev": 1.67
+          "mark": "○ 対抗",
+          "zScore": 65.7,
+          "winProb": 25.2,
+          "ev": 1.7,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -2692,13 +2817,14 @@
           "odds": 8.6,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 88.8,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 51.4,
-          "winProb": 4.7,
-          "ev": 0.45
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 40.4,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -2707,13 +2833,14 @@
           "odds": 21.3,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 85.2,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 42.4,
-          "winProb": 1.5,
-          "ev": 0.45
+          "zScore": 40.4,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -2722,13 +2849,14 @@
           "odds": 31.0,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 84.2,
+          "speedScore": 82.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 39.9,
-          "winProb": 1.1,
-          "ev": 0.45
+          "zScore": 43.0,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -2737,13 +2865,14 @@
           "odds": 46.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.9,
+          "speedScore": 87.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 39.2,
-          "winProb": 1.0,
-          "ev": 0.45
+          "mark": "☆ 爆発期待穴",
+          "zScore": 52.5,
+          "winProb": 2.1,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -2752,13 +2881,14 @@
           "odds": 17.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 88.3,
-          "gapScore": 1.2,
-          "isLongshot": true,
-          "mark": "-",
-          "zScore": 50.2,
-          "winProb": 4.0,
-          "ev": 0.66
+          "speedScore": 83.6,
+          "gapScore": 1.1,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 45.8,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -2767,13 +2897,14 @@
           "odds": 11.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.5,
+          "speedScore": 94.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 50.7,
-          "winProb": 4.3,
-          "ev": 0.45
+          "mark": "▲ 単穴",
+          "zScore": 64.9,
+          "winProb": 21.5,
+          "ev": 2.42,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -2782,13 +2913,14 @@
           "odds": 47.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 82.6,
+          "speedScore": 82.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 35.9,
-          "winProb": 0.6,
-          "ev": 0.45
+          "zScore": 43.0,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -2797,13 +2929,14 @@
           "odds": 9.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 91.3,
-          "gapScore": 1.0,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 57.7,
-          "winProb": 10.4,
-          "ev": 0.95
+          "speedScore": 81.6,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 42.3,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -2812,13 +2945,14 @@
           "odds": 4.0,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 92.6,
+          "speedScore": 97.0,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴",
-          "zScore": 60.9,
-          "winProb": 15.8,
-          "ev": 0.73
+          "mark": "◎ 本命",
+          "zScore": 68.8,
+          "winProb": 44.8,
+          "ev": 1.8,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -2827,13 +2961,14 @@
           "odds": 3.6,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 93.2,
+          "speedScore": 88.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗",
-          "zScore": 62.4,
-          "winProb": 19.1,
-          "ev": 0.78
+          "mark": "△ 連下",
+          "zScore": 54.2,
+          "winProb": 3.0,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 13,
@@ -2842,21 +2977,22 @@
           "odds": 38.2,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 82.6,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 35.9,
-          "winProb": 0.6,
-          "ev": 0.45
+          "zScore": 40.4,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 2,
+      "honmeiNum": 11,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】2-12, 2-11, 2-1 (3点/各200円) / 【馬連BOX】2, 12, 11 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 2-8, ワイド 1-3）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。道悪や不利条件で危険な人気馬を軽視し、VTR巻き返し判定馬・高EV馬を絡めた【ワイド流し＆馬連BOX】で確実に仕留める。",
+      "aiBuy": "【ワイド流し】11-2, 11-8, 11-6 (3点/各200円) / 【馬連BOX】11, 2, 8 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 11-7, ワイド 6-1）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040909",
@@ -2878,13 +3014,14 @@
           "odds": 11.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 90.9,
-          "gapScore": 1.6,
+          "speedScore": 95.3,
+          "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 48.8,
-          "winProb": 6.5,
-          "ev": 0.69
+          "mark": "▲ 単穴",
+          "zScore": 61.1,
+          "winProb": 19.4,
+          "ev": 2.22,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -2893,13 +3030,14 @@
           "odds": 47.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.7,
+          "speedScore": 82.9,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 27.1,
-          "winProb": 0.6,
-          "ev": 0.45
+          "zScore": 38.4,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -2908,13 +3046,14 @@
           "odds": 9.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 94.0,
-          "gapScore": 1.8,
-          "isLongshot": true,
-          "mark": "▲ 単穴",
-          "zScore": 58.1,
-          "winProb": 17.5,
-          "ev": 1.71
+          "speedScore": 85.1,
+          "gapScore": 1.6,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 42.4,
+          "winProb": 0.7,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -2923,13 +3062,14 @@
           "odds": 2.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 94.9,
+          "speedScore": 88.3,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗",
-          "zScore": 60.8,
-          "winProb": 23.3,
-          "ev": 0.66
+          "mark": "△ 連下",
+          "zScore": 48.3,
+          "winProb": 2.1,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -2938,13 +3078,14 @@
           "odds": 8.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 91.9,
-          "gapScore": 1.5,
+          "speedScore": 97.2,
+          "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 51.8,
-          "winProb": 8.9,
-          "ev": 1.15
+          "mark": "○ 対抗",
+          "zScore": 64.5,
+          "winProb": 35.6,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -2953,13 +3094,14 @@
           "odds": 20.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.2,
-          "gapScore": 0.0,
-          "isLongshot": true,
+          "speedScore": 84.1,
+          "gapScore": 1.3,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 43.7,
-          "winProb": 3.8,
-          "ev": 0.71
+          "zScore": 40.6,
+          "winProb": 0.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -2968,13 +3110,14 @@
           "odds": 5.3,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 91.8,
+          "speedScore": 97.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下",
-          "zScore": 51.5,
-          "winProb": 8.6,
-          "ev": 0.45
+          "mark": "◎ 本命",
+          "zScore": 65.1,
+          "winProb": 39.1,
+          "ev": 2.06,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -2983,13 +3126,14 @@
           "odds": 6.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 95.2,
-          "gapScore": 2.1,
-          "isLongshot": true,
-          "mark": "◎ 本命",
-          "zScore": 61.7,
-          "winProb": 25.6,
-          "ev": 1.71
+          "speedScore": 86.1,
+          "gapScore": 1.9,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 44.3,
+          "winProb": 1.0,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -2998,21 +3142,22 @@
           "odds": 7.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.2,
+          "speedScore": 86.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 46.7,
-          "winProb": 5.2,
-          "ev": 0.45
+          "mark": "☆ 爆発期待穴",
+          "zScore": 45.3,
+          "winProb": 1.2,
+          "ev": 1.15,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 4,
+      "honmeiNum": 7,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【平均ペース】。軸馬4番ヴァンクライ（偏差値:60.8 / EV:0.66）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
-      "aiBuy": "【単勝】4 (1点/400円) / 【馬連本線】4 - 8 (1点/600円) / 【馬連押さえ】4 - 3 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 4-1, 三連複 4-8-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。条件不利のない7番イッペイ（偏差値:65.1 / EV:2.06）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
+      "aiBuy": "【単勝】7 (1点/600円) / 【馬連本線】7 - 5 (1点/400円) / 【馬連押さえ】7 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 7-3, 三連複 7-5-3）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040910",
@@ -3034,13 +3179,14 @@
           "odds": 30.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.0,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 36.5,
-          "winProb": 0.6,
-          "ev": 0.45
+          "zScore": 39.7,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -3049,13 +3195,14 @@
           "odds": 9.5,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.6,
-          "gapScore": 1.6,
-          "isLongshot": true,
-          "mark": "○ 対抗",
-          "zScore": 61.1,
-          "winProb": 16.4,
-          "ev": 1.58
+          "speedScore": 84.9,
+          "gapScore": 1.5,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 48.2,
+          "winProb": 1.0,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -3064,13 +3211,14 @@
           "odds": 10.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 88.5,
+          "speedScore": 91.2,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "-",
-          "zScore": 49.3,
-          "winProb": 3.2,
-          "ev": 0.45
+          "mark": "▲ 単穴",
+          "zScore": 60.4,
+          "winProb": 7.2,
+          "ev": 0.87,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -3079,13 +3227,14 @@
           "odds": 16.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.0,
-          "gapScore": 0.8,
-          "isLongshot": true,
+          "speedScore": 81.5,
+          "gapScore": 0.0,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 50.4,
-          "winProb": 3.8,
-          "ev": 0.57
+          "zScore": 41.6,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -3094,13 +3243,14 @@
           "odds": 8.2,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 91.7,
-          "gapScore": 0.8,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 56.7,
-          "winProb": 8.9,
-          "ev": 0.67
+          "speedScore": 81.7,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 42.0,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -3109,13 +3259,14 @@
           "odds": 4.7,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 92.1,
+          "speedScore": 82.1,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下",
-          "zScore": 57.6,
-          "winProb": 10.1,
-          "ev": 0.45
+          "mark": "-",
+          "zScore": 42.8,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -3124,13 +3275,14 @@
           "odds": 11.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.8,
-          "gapScore": 2.0,
-          "isLongshot": true,
-          "mark": "◎ 本命",
-          "zScore": 61.6,
-          "winProb": 17.5,
-          "ev": 1.98
+          "speedScore": 86.2,
+          "gapScore": 1.9,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 50.7,
+          "winProb": 1.5,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -3139,13 +3291,14 @@
           "odds": 30.4,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 82.5,
+          "speedScore": 85.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 35.4,
-          "winProb": 0.5,
-          "ev": 0.45
+          "mark": "△ 連下",
+          "zScore": 49.3,
+          "winProb": 1.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -3154,13 +3307,14 @@
           "odds": 10.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.5,
-          "gapScore": 1.1,
-          "isLongshot": true,
+          "speedScore": 82.3,
+          "gapScore": 0.0,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 53.9,
-          "winProb": 6.1,
-          "ev": 0.6
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -3169,13 +3323,14 @@
           "odds": 16.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 91.3,
-          "gapScore": 1.5,
+          "speedScore": 97.3,
+          "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 55.8,
-          "winProb": 7.9,
-          "ev": 1.22
+          "mark": "◎ 本命",
+          "zScore": 72.2,
+          "winProb": 51.1,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -3184,13 +3339,14 @@
           "odds": 21.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.3,
-          "gapScore": 1.1,
-          "isLongshot": true,
+          "speedScore": 82.3,
+          "gapScore": 0.0,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 46.5,
-          "winProb": 2.2,
-          "ev": 0.45
+          "zScore": 43.1,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -3199,13 +3355,14 @@
           "odds": 19.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 84.8,
+          "speedScore": 95.7,
           "gapScore": 0.0,
-          "isLongshot": false,
-          "mark": "-",
-          "zScore": 40.7,
-          "winProb": 1.0,
-          "ev": 0.45
+          "isLongshot": true,
+          "mark": "○ 対抗",
+          "zScore": 69.1,
+          "winProb": 30.6,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 13,
@@ -3214,13 +3371,14 @@
           "odds": 4.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 92.9,
+          "speedScore": 87.8,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "▲ 単穴",
-          "zScore": 59.5,
-          "winProb": 13.1,
-          "ev": 0.74
+          "mark": "△ 連下",
+          "zScore": 53.8,
+          "winProb": 2.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 14,
@@ -3229,13 +3387,14 @@
           "odds": 89.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 79.5,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 28.4,
+          "zScore": 39.7,
           "winProb": 0.2,
-          "ev": 0.06
+          "ev": 0.08,
+          "hasUnfavorable": false
         },
         {
           "num": 15,
@@ -3244,21 +3403,22 @@
           "odds": 21.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 91.6,
-          "gapScore": 2.2,
+          "speedScore": 88.1,
+          "gapScore": 2.4,
           "isLongshot": true,
           "mark": "☆ 爆発期待穴",
-          "zScore": 56.5,
-          "winProb": 8.6,
-          "ev": 1.7
+          "zScore": 54.4,
+          "winProb": 2.7,
+          "ev": 1.15,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 7,
+      "honmeiNum": 10,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】7-2, 7-13, 7-15 (3点/各200円) / 【馬連BOX】7, 2, 13 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 7-6, ワイド 15-5）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】で波乱含み。道悪や不利条件で危険な人気馬を軽視し、VTR巻き返し判定馬・高EV馬を絡めた【ワイド流し＆馬連BOX】で確実に仕留める。",
+      "aiBuy": "【ワイド流し】10-12, 10-3, 10-15 (3点/各200円) / 【馬連BOX】10, 12, 3 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 10-8, ワイド 15-7）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608040911",
@@ -3284,9 +3444,10 @@
           "gapScore": 2.2,
           "isLongshot": true,
           "mark": "△ 連下",
-          "zScore": 55.0,
+          "zScore": 55.3,
           "winProb": 3.8,
-          "ev": 1.26
+          "ev": 1.27,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -3299,9 +3460,10 @@
           "gapScore": 2.2,
           "isLongshot": true,
           "mark": "△ 連下",
-          "zScore": 58.7,
-          "winProb": 6.9,
-          "ev": 1.37
+          "zScore": 58.9,
+          "winProb": 7.0,
+          "ev": 1.37,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -3314,9 +3476,10 @@
           "gapScore": 0.0,
           "isLongshot": true,
           "mark": "-",
-          "zScore": 49.9,
+          "zScore": 50.3,
           "winProb": 1.6,
-          "ev": 0.45
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -3329,9 +3492,10 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 43.1,
+          "zScore": 43.6,
           "winProb": 0.5,
-          "ev": 0.46
+          "ev": 0.46,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -3340,13 +3504,14 @@
           "odds": 13.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 92.7,
-          "gapScore": 1.9,
+          "speedScore": 92.5,
+          "gapScore": 1.7,
           "isLongshot": true,
           "mark": "☆ 爆発期待穴",
-          "zScore": 61.1,
-          "winProb": 10.2,
-          "ev": 1.39
+          "zScore": 60.8,
+          "winProb": 9.6,
+          "ev": 1.31,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -3355,13 +3520,14 @@
           "odds": 35.9,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 86.2,
-          "gapScore": 0.9,
+          "speedScore": 84.8,
+          "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 48.4,
-          "winProb": 1.3,
-          "ev": 0.45
+          "zScore": 46.1,
+          "winProb": 0.8,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -3374,9 +3540,10 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 40.4,
+          "zScore": 40.9,
           "winProb": 0.3,
-          "ev": 0.16
+          "ev": 0.16,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -3389,9 +3556,10 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "▲ 単穴",
-          "zScore": 61.5,
+          "zScore": 61.6,
           "winProb": 10.9,
-          "ev": 0.45
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -3400,13 +3568,14 @@
           "odds": 11.5,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 94.9,
-          "gapScore": 2.2,
+          "speedScore": 95.1,
+          "gapScore": 2.4,
           "isLongshot": true,
           "mark": "○ 対抗",
-          "zScore": 65.4,
-          "winProb": 20.6,
-          "ev": 2.33
+          "zScore": 65.8,
+          "winProb": 22.0,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -3420,8 +3589,9 @@
           "isLongshot": false,
           "mark": "◎ 本命",
           "zScore": 68.5,
-          "winProb": 34.4,
-          "ev": 1.48
+          "winProb": 34.5,
+          "ev": 1.48,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -3430,13 +3600,14 @@
           "odds": 23.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 90.9,
-          "gapScore": 2.2,
+          "speedScore": 90.8,
+          "gapScore": 2.1,
           "isLongshot": true,
           "mark": "△ 連下",
           "zScore": 57.6,
-          "winProb": 5.7,
-          "ev": 1.22
+          "winProb": 5.6,
+          "ev": 1.19,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -3445,13 +3616,14 @@
           "odds": 94.1,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 79.0,
+          "speedScore": 78.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 34.3,
+          "zScore": 34.0,
           "winProb": 0.1,
-          "ev": 0.05
+          "ev": 0.04,
+          "hasUnfavorable": false
         },
         {
           "num": 13,
@@ -3464,9 +3636,10 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 43.5,
+          "zScore": 43.9,
           "winProb": 0.6,
-          "ev": 0.18
+          "ev": 0.18,
+          "hasUnfavorable": false
         },
         {
           "num": 14,
@@ -3475,13 +3648,14 @@
           "odds": 42.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 85.1,
-          "gapScore": 1.1,
+          "speedScore": 84.0,
+          "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 46.2,
-          "winProb": 0.9,
-          "ev": 0.45
+          "zScore": 44.5,
+          "winProb": 0.6,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 15,
@@ -3494,9 +3668,10 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 46.0,
+          "zScore": 46.4,
           "winProb": 0.9,
-          "ev": 0.45
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 16,
@@ -3509,9 +3684,10 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 44.1,
+          "zScore": 44.5,
           "winProb": 0.6,
-          "ev": 0.45
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 17,
@@ -3524,9 +3700,10 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 34.3,
+          "zScore": 34.9,
           "winProb": 0.1,
-          "ev": 0.06
+          "ev": 0.06,
+          "hasUnfavorable": false
         },
         {
           "num": 18,
@@ -3539,16 +3716,17 @@
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 41.9,
+          "zScore": 42.4,
           "winProb": 0.4,
-          "ev": 0.25
+          "ev": 0.25,
+          "hasUnfavorable": false
         }
       ],
       "honmeiNum": 10,
       "confidence": "A",
       "confidenceScore": 95,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【差し有利ハイペース】。軸馬10番ダノンヒストリー（偏差値:68.5 / EV:1.48）が突出。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中傾斜。",
+      "aiSummary": "展開予測は【差し有利ハイペース】。条件不利のない10番ダノンヒストリー（偏差値:68.5 / EV:1.48）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
       "aiBuy": "【単勝】10 (1点/600円) / 【馬連本線】10 - 9 (1点/400円) / 【馬連押さえ】10 - 8 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 10-1, 三連複 10-9-1）を買い足せば的中確率が上がります（＋2点）"
     },
     {
@@ -3571,13 +3749,14 @@
           "odds": 5.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.2,
+          "speedScore": 82.3,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "○ 対抗",
-          "zScore": 57.9,
-          "winProb": 11.1,
-          "ev": 0.55
+          "mark": "-",
+          "zScore": 43.0,
+          "winProb": 0.4,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 2,
@@ -3586,13 +3765,14 @@
           "odds": 37.0,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.5,
-          "gapScore": 1.6,
-          "isLongshot": true,
+          "speedScore": 84.9,
+          "gapScore": 1.5,
+          "isLongshot": false,
           "mark": "△ 連下",
-          "zScore": 48.6,
-          "winProb": 4.7,
-          "ev": 1.59
+          "zScore": 47.4,
+          "winProb": 0.9,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 3,
@@ -3601,13 +3781,14 @@
           "odds": 17.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 90.7,
-          "gapScore": 1.6,
-          "isLongshot": true,
-          "mark": "☆ 爆発期待穴",
-          "zScore": 56.2,
-          "winProb": 9.5,
-          "ev": 1.54
+          "speedScore": 84.9,
+          "gapScore": 1.5,
+          "isLongshot": false,
+          "mark": "△ 連下",
+          "zScore": 47.4,
+          "winProb": 0.9,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 4,
@@ -3616,13 +3797,14 @@
           "odds": 12.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.9,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 46.5,
-          "winProb": 3.9,
-          "ev": 0.45
+          "zScore": 40.0,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 5,
@@ -3631,13 +3813,14 @@
           "odds": 5.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 89.7,
+          "speedScore": 95.7,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "△ 連下",
-          "zScore": 52.7,
-          "winProb": 6.9,
-          "ev": 0.45
+          "mark": "○ 対抗",
+          "zScore": 65.5,
+          "winProb": 28.4,
+          "ev": 1.69,
+          "hasUnfavorable": false
         },
         {
           "num": 6,
@@ -3646,13 +3829,14 @@
           "odds": 14.3,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 88.9,
-          "gapScore": 0.8,
-          "isLongshot": true,
-          "mark": "△ 連下",
-          "zScore": 49.9,
-          "winProb": 5.3,
-          "ev": 0.7
+          "speedScore": 81.5,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "mark": "-",
+          "zScore": 41.7,
+          "winProb": 0.3,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 7,
@@ -3661,13 +3845,14 @@
           "odds": 14.2,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 87.5,
-          "gapScore": 0.0,
+          "speedScore": 97.1,
+          "gapScore": 1.4,
           "isLongshot": true,
-          "mark": "-",
-          "zScore": 45.1,
-          "winProb": 3.4,
-          "ev": 0.45
+          "mark": "◎ 本命",
+          "zScore": 67.9,
+          "winProb": 44.5,
+          "ev": 2.45,
+          "hasUnfavorable": false
         },
         {
           "num": 8,
@@ -3676,13 +3861,14 @@
           "odds": 23.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 85.5,
+          "speedScore": 80.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "-",
-          "zScore": 38.2,
-          "winProb": 1.8,
-          "ev": 0.45
+          "zScore": 40.0,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 9,
@@ -3691,13 +3877,14 @@
           "odds": 9.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 88.0,
+          "speedScore": 80.5,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "mark": "-",
-          "zScore": 46.8,
-          "winProb": 4.0,
-          "ev": 0.45
+          "zScore": 40.0,
+          "winProb": 0.2,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 10,
@@ -3706,13 +3893,14 @@
           "odds": 32.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.1,
+          "speedScore": 85.5,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "-",
-          "zScore": 29.9,
-          "winProb": 0.8,
-          "ev": 0.45
+          "mark": "☆ 爆発期待穴",
+          "zScore": 48.4,
+          "winProb": 1.1,
+          "ev": 1.15,
+          "hasUnfavorable": false
         },
         {
           "num": 11,
@@ -3721,13 +3909,14 @@
           "odds": 5.3,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 95.1,
+          "speedScore": 89.6,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "◎ 本命",
-          "zScore": 71.3,
-          "winProb": 38.7,
-          "ev": 2.03
+          "mark": "△ 連下",
+          "zScore": 55.3,
+          "winProb": 4.0,
+          "ev": 0.45,
+          "hasUnfavorable": false
         },
         {
           "num": 12,
@@ -3736,21 +3925,22 @@
           "odds": 4.2,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 90.9,
+          "speedScore": 94.4,
           "gapScore": 0.0,
           "isLongshot": false,
           "mark": "▲ 単穴",
-          "zScore": 56.8,
-          "winProb": 10.1,
-          "ev": 0.45
+          "zScore": 63.3,
+          "winProb": 18.8,
+          "ev": 0.88,
+          "hasUnfavorable": false
         }
       ],
-      "honmeiNum": 11,
+      "honmeiNum": 7,
       "confidence": "C",
       "confidenceScore": 82,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】で波乱含み。高期待値（EV1.1超）の穴馬を絡め、【ワイド流し＆馬連BOX】で高配当を狙い撃つ。",
-      "aiBuy": "【ワイド流し】11-1, 11-12, 11-3 (3点/各200円) / 【馬連BOX】11, 1, 12 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 11-5, ワイド 3-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】で波乱含み。道悪や不利条件で危険な人気馬を軽視し、VTR巻き返し判定馬・高EV馬を絡めた【ワイド流し＆馬連BOX】で確実に仕留める。",
+      "aiBuy": "【ワイド流し】7-5, 7-12, 7-10 (3点/各200円) / 【馬連BOX】7, 5, 12 (3点/各100円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 7-3, ワイド 10-2）を買い足せば的中確率が上がります（＋2点）"
     }
   ]
 }
