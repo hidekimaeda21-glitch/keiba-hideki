@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-10-25 18:37",
+  "updatedAt": "2026-10-25 18:49",
   "targetDate": "2026年10月26日",
   "stats": {
-    "hitRate": 67.8,
-    "recoveryRate": 320.6,
+    "hitRate": 39.0,
+    "recoveryRate": 356.4,
     "totalBets": 59,
-    "hitCount": 40,
+    "hitCount": 23,
     "markRates": {
       "◎": {
-        "rate": 39.0,
-        "count": "23/59"
-      },
-      "○": {
         "rate": 42.4,
         "count": "25/59"
       },
+      "○": {
+        "rate": 47.5,
+        "count": "28/59"
+      },
       "▲": {
-        "rate": 35.6,
-        "count": "21/59"
+        "rate": 40.7,
+        "count": "24/59"
       },
       "☆": {
-        "rate": 22.0,
-        "count": "13/59"
+        "rate": 20.3,
+        "count": "12/59"
       },
       "△": {
-        "rate": 24.3,
-        "count": "43/177"
+        "rate": 19.8,
+        "count": "35/177"
       }
     },
     "hitDetails": [
@@ -105,169 +105,67 @@
         "date": "10/17",
         "venue": "新潟",
         "raceName": "9R 岩船特別",
-        "payout": 450
+        "payout": 1530
       },
       {
         "date": "10/17",
         "venue": "新潟",
         "raceName": "10R 妙高特別",
-        "payout": 18850
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "11R 北陸S",
-        "payout": 4460
+        "payout": 87540
       },
       {
         "date": "10/18",
         "venue": "新潟",
         "raceName": "9R 松浜特別",
-        "payout": 290
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "11R 新潟牝馬S",
-        "payout": 1330
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "11R 魚沼S",
-        "payout": 1960
+        "payout": 810
       },
       {
         "date": "10/25",
         "venue": "新潟",
         "raceName": "9R 柏崎特別",
-        "payout": 16800
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "10R 村上特別",
-        "payout": 6110
+        "payout": 22000
       },
       {
         "date": "10/25",
         "venue": "新潟",
         "raceName": "12R 3歳以上1勝クラス",
-        "payout": 63270
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 1180
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "9R 東京ハイジャンプ",
-        "payout": 4140
+        "payout": 71130
       },
       {
         "date": "10/18",
         "venue": "東京",
         "raceName": "10R 西湖特別",
-        "payout": 320
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "11R ブラジルC",
-        "payout": 1770
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 580
+        "payout": 430
       },
       {
         "date": "10/25",
         "venue": "東京",
         "raceName": "9R 三鷹特別",
-        "payout": 440
+        "payout": 690
       },
       {
         "date": "10/25",
         "venue": "東京",
         "raceName": "10R 山中湖特別",
-        "payout": 1490
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "11R 神無月S",
-        "payout": 590
+        "payout": 1850
       },
       {
         "date": "10/17",
         "venue": "京都",
         "raceName": "10R 清滝特別",
-        "payout": 740
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "11R トルマリンS",
-        "payout": 4030
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 3200
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "9R 宝ケ池特別",
-        "payout": 590
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "10R 聚楽第特別",
-        "payout": 3370
+        "payout": 820
       },
       {
         "date": "10/24",
         "venue": "京都",
         "raceName": "9R なでしこ賞",
-        "payout": 1330
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "10R 長岡京S",
-        "payout": 2140
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 9930
+        "payout": 1780
       },
       {
         "date": "10/25",
         "venue": "京都",
         "raceName": "9R 萩S",
-        "payout": 1710
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "10R カノープスS",
-        "payout": 17730
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "12R 嵯峨野特別",
-        "payout": 880
+        "payout": 2220
       }
     ],
     "allBetRaces": [
@@ -1018,10 +916,10 @@
           "speedScore": 88.9,
           "gapScore": 1.2,
           "isLongshot": false,
-          "mark": "☆ 爆発期待穴",
+          "mark": "△ 連下",
           "zScore": 51.4,
           "winProb": 3.4,
-          "ev": 1.15,
+          "ev": 0.45,
           "hasUnfavorable": false
         },
         {
@@ -1146,10 +1044,10 @@
           "speedScore": 86.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
+          "mark": "☆ 爆発期待穴",
           "zScore": 47.5,
           "winProb": 1.7,
-          "ev": 0.45,
+          "ev": 1.15,
           "hasUnfavorable": false
         }
       ],
@@ -1158,7 +1056,7 @@
       "confidenceScore": 95,
       "isLowPayout": true,
       "aiSummary": "展開予測は【前残りスロー】。条件不利のない2番クライスレリアーナ（偏差値:66.3 / EV:1.07）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
-      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-6, 三連複 2-4-6）を買い足せば的中確率が上がります（＋2点）"
+      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-1, 三連複 2-4-1）を買い足せば的中確率が上がります（＋2点）"
     }
   ],
   "races": [
@@ -1968,10 +1866,10 @@
           "speedScore": 84.9,
           "gapScore": 1.5,
           "isLongshot": false,
-          "mark": "△ 連下",
+          "mark": "☆ 爆発期待穴",
           "zScore": 48.4,
           "winProb": 1.5,
-          "ev": 0.49,
+          "ev": 1.15,
           "hasUnfavorable": false
         },
         {
@@ -2080,10 +1978,10 @@
           "speedScore": 91.2,
           "gapScore": 0.0,
           "isLongshot": false,
-          "mark": "☆ 爆発期待穴",
+          "mark": "△ 連下",
           "zScore": 60.2,
           "winProb": 11.5,
-          "ev": 1.15,
+          "ev": 0.79,
           "hasUnfavorable": false
         },
         {
@@ -2124,7 +2022,7 @@
       "confidenceScore": 88,
       "isLowPayout": false,
       "aiSummary": "展開予測は【平均ペース】。道悪・枠順不利をクリアした6番ビーグラッド（偏差値:68.7 / EV:2.45）を主軸に指名。VTR通過動態とPCI適性から【3連複F＋馬連/ワイド】で確実な的中と回収を狙う。",
-      "aiBuy": "【三連複F】6 ✕ 7, 2 ✕ 7, 2, 10, 1, 3 (7点/各100円) / 【手堅く馬連/ワイド】6-7 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（ワイド 6-10, 三連複 6-7-12）を買い足せば的中確率が上がります（＋2点）"
+      "aiBuy": "【三連複F】6 ✕ 7, 2 ✕ 7, 2, 3, 1, 10 (7点/各100円) / 【手堅く馬連/ワイド】6-7 (1点/200円) [本線計8点] ★【確率UPプラス】あと2点（ワイド 6-3, 三連複 6-7-12）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040909",
@@ -2346,10 +2244,10 @@
           "speedScore": 88.9,
           "gapScore": 1.2,
           "isLongshot": false,
-          "mark": "☆ 爆発期待穴",
+          "mark": "△ 連下",
           "zScore": 51.4,
           "winProb": 3.4,
-          "ev": 1.15,
+          "ev": 0.45,
           "hasUnfavorable": false
         },
         {
@@ -2474,10 +2372,10 @@
           "speedScore": 86.7,
           "gapScore": 0.0,
           "isLongshot": true,
-          "mark": "△ 連下",
+          "mark": "☆ 爆発期待穴",
           "zScore": 47.5,
           "winProb": 1.7,
-          "ev": 0.45,
+          "ev": 1.15,
           "hasUnfavorable": false
         }
       ],
@@ -2486,7 +2384,7 @@
       "confidenceScore": 95,
       "isLowPayout": true,
       "aiSummary": "展開予測は【前残りスロー】。条件不利のない2番クライスレリアーナ（偏差値:66.3 / EV:1.07）が盤石。1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。",
-      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-6, 三連複 2-4-6）を買い足せば的中確率が上がります（＋2点）"
+      "aiBuy": "【単勝】2 (1点/400円) / 【馬連本線】2 - 4 (1点/600円) / 【馬連押さえ】2 - 7 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 2-1, 三連複 2-4-1）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605040911",
