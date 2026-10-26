@@ -238,10 +238,31 @@
       border-bottom: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .race-title-row {
+      display: flex;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .race-title { font-size: 15px; font-weight: bold; }
-    .race-meta { font-size: 11px; color: var(--text-sub); }
+    .race-detail-btn {
+      background: rgba(59, 130, 246, 0.18);
+      color: #93c5fd;
+      border: 1px solid #3b82f6;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 3px 7px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .race-detail-btn:active {
+      transform: scale(0.96);
+    }
+    .race-meta { font-size: 11px; color: var(--text-sub); margin-top: 3px; }
 
     .ai-box {
       margin: 12px 14px;
@@ -274,548 +295,36 @@
       color: var(--gold-color);
     }
 
+    .ai-legend-bar {
+      margin: 0 14px 8px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 6px;
+      font-size: 10px;
+      color: #9ca3af;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
     .horse-table {
       width: 100%;
       border-collapse: collapse;
     }
     .horse-table th, .horse-table td {
-      padding: 8px 10px;
+      padding: 7px 6px;
       text-align: left;
       font-size: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
     }
-    .horse-table th { color: var(--text-sub); font-size: 10px; }
-    .horse-num { font-weight: bold; width: 24px; text-align: center; }
-    .horse-name { font-weight: bold; font-size: 13px; }
-    .horse-sub { font-size: 10px; color: var(--text-sub); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
-    .style-tag {
-      font-size: 9px;
-      padding: 1px 4px;
-      border-radius: 3px;
-      font-weight: bold;
-    }
-    .style-nige { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
-    .style-senkou { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
-    .style-sashi { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
-    .style-oikomi { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
-
-    .horse-odds { text-align: right; font-weight: bold; font-size: 13px; }
-    .horse-score { font-size: 10px; color: #60a5fa; text-align: right; }
-    .ev-high { color: #fbbf24; font-weight: 800; font-size: 10px; text-align: right; }
-    .ev-normal { color: #9ca3af; font-size: 9px; text-align: right; }
-    
-    .mark-honmei { color: #f87171; font-weight: bold; }
-    .mark-taikou { color: #60a5fa; font-weight: bold; }
-    .mark-tanana { color: #fbbf24; font-weight: bold; }
-    .mark-ana { color: #c084fc; font-weight: bold; }
-    .mark-renge { color: #34d399; font-weight: bold; }
-
-    .custom-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.85);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-    }
-    .modal-content {
-      background: linear-gradient(145deg, #1c1d29, #12131c);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 420px;
-      max-height: 82vh;
-      overflow-y: auto;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-      position: relative;
-    }
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      background: none;
-      border: none;
-      font-size: 24px;
-      color: #9ca3af;
-      cursor: pointer;
-    }
-    .modal-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 12px;
+    .horse-table th { color: var(--text-sub); font-size: 9px; line-height: 1.2; }
+    .horse-num { font-weight: bold; width: 22px; text-align: center; }
+    .horse-name-wrap {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      flex-wrap: wrap;
     }
-    .date-group-header {
-      background: rgba(59, 130, 246, 0.15);
-      color: #93c5fd;
-      font-size: 11px;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-left: 3px solid #3b82f6;
-      margin-top: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .modal-list-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 12px;
-    }
-    .modal-list-item:last-child { border-bottom: none; }
-    .date-tag {
-      background: rgba(59, 130, 246, 0.2);
-      color: #93c5fd;
-      padding: 1px 5px;
-      border-radius: 4px;
-      font-size: 10px;
-      margin-right: 6px;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- 的中実績モーダル -->
-  <div id="hitModal" class="custom-modal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeAllModals()">&times;</button>
-      <div class="modal-title" style="color: #60a5fa;">🎯 的中実績・全予想レース</div>
-      <div id="hitModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【的中レース一覧】</div>
-      <div id="hitModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 14px; max-height: 220px; overflow-y: auto;"></div>
-      <div style="font-size: 11px; font-weight: bold; color: #9ca3af; margin-bottom: 6px;">【全予想対象レース】</div>
-      <div id="allBetList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 180px; overflow-y: auto;"></div>
-    </div>
-  </div>
-
-  <!-- 回収配当モーダル -->
-  <div id="payoutModal" class="custom-modal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeAllModals()">&times;</button>
-      <div class="modal-title" style="color: var(--gold-color);">💰 払戻・配当金明細（日付・レース順）</div>
-      <div id="payoutModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;"></div>
-      <div id="payoutModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 380px; overflow-y: auto;"></div>
-    </div>
-  </div>
-
-  <!-- WIN5実績モーダル -->
-  <div id="win5Modal" class="custom-modal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeAllModals()">&times;</button>
-      <div class="modal-title" style="color: #c084fc;">🎯 WIN5 的中実績・詳細買い目</div>
-      <div id="win5ModalSummary" style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;">AI厳選WIN5（予算800円フォーメーション）の買い目＆結果明細</div>
-      <div id="win5ModalList" style="background: rgba(255,255,255,0.03); border-radius: 8px; max-height: 360px; overflow-y: auto;"></div>
-    </div>
-  </div>
-
-  <header>
-    <h1>🧠 ジェミ予想 AI Predictor</h1>
-    <div class="update-time" id="updateTime">データ読み込み中...</div>
-    <button class="reload-btn" onclick="loadData()">更新 ⟳</button>
-  </header>
-
-  <div class="stats-bar">
-    <div class="stat-card" onclick="openHitModal()">
-      <div class="stat-label">AI 的中率 <span>詳細</span></div>
-      <div class="stat-value val-hit" id="hitRateDisplay">--%</div>
-      <div class="stat-sub" id="hitCountDisplay">--R 的中</div>
-    </div>
-    <div class="stat-card" onclick="openPayoutModal()">
-      <div class="stat-label">AI 通算回収率 (ROI) <span>明細</span></div>
-      <div class="stat-value val-rec" id="recoveryRateDisplay">--%</div>
-      <div class="stat-sub">ケリー基準・EV特化</div>
-    </div>
-  </div>
-
-  <div class="mark-rate-card">
-    <div class="mark-rate-header">📊 印別 複勝圏内率（3着内確率）</div>
-    <div class="mark-rate-body">
-      <div class="mark-item">
-        <div class="mark-item-symbol mark-honmei">◎ 本命</div>
-        <div class="mark-item-pct" id="markPctHonmei">--%</div>
-        <div class="mark-item-sub" id="markCountHonmei">--/--</div>
-      </div>
-      <div class="mark-item">
-        <div class="mark-item-symbol mark-taikou">○ 対抗</div>
-        <div class="mark-item-pct" id="markPctTaikou">--%</div>
-        <div class="mark-item-sub" id="markCountTaikou">--/--</div>
-      </div>
-      <div class="mark-item">
-        <div class="mark-item-symbol mark-tanana">▲ 単穴</div>
-        <div class="mark-item-pct" id="markPctTanana">--%</div>
-        <div class="mark-item-sub" id="markCountTanana">--/--</div>
-      </div>
-      <div class="mark-item">
-        <div class="mark-item-symbol mark-ana">☆ 穴</div>
-        <div class="mark-item-pct" id="markPctAna">--%</div>
-        <div class="mark-item-sub" id="markCountAna">--/--</div>
-      </div>
-      <div class="mark-item">
-        <div class="mark-item-symbol mark-renge">△ 連下</div>
-        <div class="mark-item-pct" id="markPctRenge">--%</div>
-        <div class="mark-item-sub" id="markCountRenge">--/--</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="win5-card" id="win5Card">
-    <div class="win5-header" onclick="openWin5Modal()">
-      <div class="win5-title">🎯 WIN5 AI厳選戦略（タップで詳細買い目・実績）</div>
-      <div class="win5-toggle-icon" id="win5ToggleIcon">明細 ↗</div>
-    </div>
-    <div class="win5-body" id="win5Body" onclick="toggleWin5()" style="display: none; cursor: pointer;"></div>
-  </div>
-
-  <div class="venue-tabs" id="venueTabs">
-    <div class="tab-btn active" onclick="filterVenue('ALL')">全会場</div>
-  </div>
-
-  <main id="raceContainer"></main>
-
-  <script>
-    let globalRaces = [];
-    let currentFilter = 'ALL';
-    let statsObj = null;
-    let cachedWin5Text = '';
-
-    function closeAllModals() {
-      document.getElementById('hitModal').style.display = 'none';
-      document.getElementById('payoutModal').style.display = 'none';
-      document.getElementById('win5Modal').style.display = 'none';
-    }
-
-    function parseDateVal(dateStr) {
-      if (!dateStr) return 0;
-      const parts = String(dateStr).split('/');
-      if (parts.length === 2) {
-        return parseInt(parts[0], 10) * 100 + parseInt(parts[1], 10);
-      }
-      return 0;
-    }
-
-    function parseRaceNum(raceName) {
-      if (!raceName) return 99;
-      const m = String(raceName).match(/(\d+)R/);
-      return m ? parseInt(m[1], 10) : 99;
-    }
-
-    function getVenueOrder(venue) {
-      const order = { "東京": 1, "中山": 2, "京都": 3, "阪神": 4, "新潟": 5, "中京": 6, "福島": 7, "小倉": 8, "札幌": 9, "函館": 10 };
-      return order[venue] || 99;
-    }
-
-    function sortRaceRecords(list) {
-      const uniqueMap = new Map();
-      (list || []).forEach(item => {
-        const rNum = parseRaceNum(item.raceName);
-        const key = `${item.date}_${item.venue}_${rNum}`;
-        uniqueMap.set(key, item);
-      });
-      const uniqueList = Array.from(uniqueMap.values());
-
-      return uniqueList.sort((a, b) => {
-        const dA = parseDateVal(a.date);
-        const dB = parseDateVal(b.date);
-        if (dA !== dB) {
-          return dB - dA;
-        }
-        const vA = getVenueOrder(a.venue);
-        const vB = getVenueOrder(b.venue);
-        if (vA !== vB) {
-          return vA - vB;
-        }
-        return parseRaceNum(a.raceName) - parseRaceNum(b.raceName);
-      });
-    }
-
-    function openHitModal() {
-      if (!statsObj) return;
-      document.getElementById('hitModalSummary').textContent = `2026年10月11日以降: 全${statsObj.totalBets || 16}レース中 ${statsObj.hitCount || 0}挑戦的中`;
-      
-      const hitList = document.getElementById('hitModalList');
-      hitList.innerHTML = '';
-      const sortedHits = sortRaceRecords(statsObj.hitDetails || []);
-      let lastDate = '';
-      sortedHits.forEach(h => {
-        if (h.date !== lastDate) {
-          lastDate = h.date;
-          hitList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${h.date} 開催</span></div>`;
-        }
-        hitList.innerHTML += `
-          <div class="modal-list-item">
-            <div>
-              <span class="date-tag">${h.date}</span>
-              <strong style="color:#60a5fa;">[${h.venue}]</strong> ${h.raceName}
-            </div>
-            <span style="color:#4ade80; font-weight:bold; font-size:11px;">的中</span>
-          </div>
-        `;
-      });
-
-      const allList = document.getElementById('allBetList');
-      allList.innerHTML = '';
-      const sortedAll = sortRaceRecords(statsObj.allBetRaces || []);
-      let lastAllDate = '';
-      sortedAll.forEach(r => {
-        if (r.date !== lastAllDate) {
-          lastAllDate = r.date;
-          allList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${r.date} 開催</span></div>`;
-        }
-        allList.innerHTML += `
-          <div class="modal-list-item">
-            <div>
-              <span class="date-tag">${r.date}</span>
-              <strong style="color:#94a3b8;">[${r.venue}]</strong> ${r.raceName}
-            </div>
-          </div>
-        `;
-      });
-
-      document.getElementById('hitModal').style.display = 'flex';
-    }
-
-    function openPayoutModal() {
-      if (!statsObj) return;
-      document.getElementById('payoutModalSummary').textContent = `通算回収率: ${statsObj.recoveryRate}% (全${statsObj.totalBets || 16}戦・日付別レース順明細)`;
-      const pList = document.getElementById('payoutModalList');
-      pList.innerHTML = '';
-      const sortedHits = sortRaceRecords(statsObj.hitDetails || []);
-      
-      let lastDate = '';
-      sortedHits.forEach(h => {
-        if (h.date !== lastDate) {
-          lastDate = h.date;
-          const dayTotal = sortedHits.filter(x => x.date === h.date).reduce((sum, x) => sum + (x.payout || 0), 0);
-          pList.innerHTML += `
-            <div class="date-group-header">
-              <span>📅 2026年 ${h.date} 開催</span>
-              <span style="color:#fbbf24;">日計: ${dayTotal.toLocaleString()}円</span>
-            </div>
-          `;
-        }
-        pList.innerHTML += `
-          <div class="modal-list-item">
-            <div>
-              <span class="date-tag">${h.date}</span>
-              <strong style="color:var(--gold-color);">[${h.venue}]</strong> ${h.raceName}
-            </div>
-            <div style="font-weight:800; color:#fbbf24;">${h.payout ? h.payout.toLocaleString() + '円' : '的中'}</div>
-          </div>
-        `;
-      });
-      document.getElementById('payoutModal').style.display = 'flex';
-    }
-
-    function openWin5Modal() {
-      const wList = document.getElementById('win5ModalList');
-      wList.innerHTML = `
-        <div class="date-group-header"><span>📅 2026年 10/18 開催（明日の大勝負・秋華賞デー）</span><span style="color:#c084fc;">予算 800円</span></div>
-        <div style="padding:10px; font-size:11px; line-height:1.5; color:#e2e8f0; white-space:pre-wrap; background:rgba(139, 92, 246, 0.08); border-radius:6px; margin-bottom:8px;">${cachedWin5Text || 'WIN5買い目読み込み中'}</div>
-        <div class="date-group-header"><span>📅 2026年 10/12 開催</span><span style="color:#fbbf24;">挑戦記録</span></div>
-        <div class="modal-list-item">
-          <div><span class="date-tag">10/12</span><strong>[京都11R] スワンS(G2)等</strong></div>
-          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前挑戦</span>
-        </div>
-        <div class="date-group-header"><span>📅 2026年 10/11 開催</span><span style="color:#fbbf24;">挑戦記録</span></div>
-        <div class="modal-list-item">
-          <div><span class="date-tag">10/11</span><strong>[東京11R] アイルランドT(G2)等</strong></div>
-          <span style="color:#9ca3af; font-weight:bold; font-size:11px;">直前挑戦</span>
-        </div>
-      `;
-      document.getElementById('win5Modal').style.display = 'flex';
-    }
-
-    function getMarkClass(mark) {
-      if (!mark) return '';
-      if (mark.includes('◎')) return 'mark-honmei';
-      if (mark.includes('○')) return 'mark-taikou';
-      if (mark.includes('▲')) return 'mark-tanana';
-      if (mark.includes('☆')) return 'mark-ana';
-      if (mark.includes('△')) return 'mark-renge';
-      return '';
-    }
-
-    function getStyleBadge(style) {
-      const st = style || '先行';
-      if (st === '逃げ') return '<span class="style-tag style-nige">逃げ</span>';
-      if (st === '先行') return '<span class="style-tag style-senkou">先行</span>';
-      if (st === '差し') return '<span class="style-tag style-sashi">差し</span>';
-      if (st === '追込') return '<span class="style-tag style-oikomi">追込</span>';
-      return `<span class="style-tag style-senkou">${st}</span>`;
-    }
-
-    function toggleWin5() {
-      const body = document.getElementById('win5Body');
-      const icon = document.getElementById('win5ToggleIcon');
-      if (body.style.display === 'none') {
-        body.style.display = 'block';
-        icon.textContent = '▲ 閉じる';
-      } else {
-        body.style.display = 'none';
-        icon.textContent = '明細 ↗';
-      }
-    }
-
-    function filterVenue(venue) {
-      currentFilter = venue;
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.venue === venue || (venue === 'ALL' && btn.dataset.venue === undefined));
-      });
-      renderRaces();
-    }
-
-    function renderRaces() {
-      const container = document.getElementById('raceContainer');
-      container.innerHTML = '';
-      const filtered = currentFilter === 'ALL' ? globalRaces : globalRaces.filter(r => r.venue === currentFilter);
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<div style="text-align:center; padding:40px; color:#888;">該当するレースはありません</div>';
-        return;
-      }
-
-      filtered.forEach(r => {
-        const card = document.createElement('div');
-        card.className = 'race-card';
-        const badges = [];
-        if (r.isGraded) badges.push('<span class="badge badge-grade">重賞</span>');
-        if (r.isWin5) badges.push('<span class="badge badge-win5">WIN5対象</span>');
-        if (r.raceType) badges.push(`<span class="badge badge-type">${r.raceType}</span>`);
-
-        let horseRows = '';
-        r.horses.forEach(h => {
-          const markClass = getMarkClass(h.mark);
-          const styleBadge = getStyleBadge(h.runningStyle);
-          const evVal = h.ev ? Number(h.ev).toFixed(2) : '0.85';
-          const evClass = Number(evVal) >= 1.10 ? 'ev-high' : 'ev-normal';
-          const evLabel = Number(evVal) >= 1.10 ? `★EV:${evVal}` : `EV:${evVal}`;
-
-          horseRows += `
-            <tr>
-              <td class="horse-num">${h.num}</td>
-              <td>
-                <div class="horse-name">${h.name}</div>
-                <div class="horse-sub"><span>${h.jockey}</span> ${styleBadge}</div>
-              </td>
-              <td style="text-align:center;">
-                <span class="${markClass}">${h.mark || '-'}</span>
-              </td>
-              <td>
-                <div class="horse-odds">${h.odds ? h.odds.toFixed(1) + '倍' : '-'}</div>
-                <div class="horse-score">指数:${h.speedScore || '-'}</div>
-                <div class="${evClass}">${evLabel}</div>
-              </td>
-            </tr>
-          `;
-        });
-
-        card.innerHTML = `
-          <div class="race-header">
-            <div>
-              <div class="race-title">${r.venue} ${r.raceName}</div>
-              <div class="race-meta">${r.startTime} 発走</div>
-            </div>
-            <div>${badges.join(' ')}</div>
-          </div>
-          <div class="ai-box">
-            <div class="ai-box-title">
-              <span>🧠 ジェミ予想 AI見解</span>
-              <span>信頼度: ${r.confidence || 'B'} (${r.confidenceScore || 88}点)</span>
-            </div>
-            <div class="ai-summary">${r.aiSummary || ''}</div>
-            <div class="ai-buy">推奨買い目: ${r.aiBuy || 'データ準備中'}</div>
-          </div>
-          <table class="horse-table">
-            <thead>
-              <tr>
-                <th style="width:24px; text-align:center;">馬番</th>
-                <th>馬名 / 騎手・脚質</th>
-                <th style="width:70px; text-align:center;">印</th>
-                <th style="width:75px; text-align:right;">オッズ/指数/EV</th>
-              </tr>
-            </thead>
-            <tbody>${horseRows}</tbody>
-          </table>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    async function loadData() {
-      try {
-        const res = await fetch(`data/today.json?nocache=${new Date().getTime()}`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('データが見つかりません');
-        const data = await res.json();
-
-        document.getElementById('updateTime').textContent = `${data.targetDate || ''} | 更新: ${data.updatedAt || '未更新'}`;
-
-        if (data.stats) {
-          statsObj = data.stats;
-          document.getElementById('hitRateDisplay').textContent = `${data.stats.hitRate}%`;
-          document.getElementById('hitCountDisplay').textContent = `${data.stats.totalBets}戦 ${data.stats.hitCount}的中`;
-          document.getElementById('recoveryRateDisplay').textContent = `${data.stats.recoveryRate}%`;
-
-          const mr = data.stats.markRates || {};
-          if (mr['◎']) {
-            document.getElementById('markPctHonmei').textContent = `${mr['◎'].rate}%`;
-            document.getElementById('markCountHonmei').textContent = mr['◎'].count;
-          }
-          if (mr['○']) {
-            document.getElementById('markPctTaikou').textContent = `${mr['○'].rate}%`;
-            document.getElementById('markCountTaikou').textContent = mr['○'].count;
-          }
-          if (mr['▲']) {
-            document.getElementById('markPctTanana').textContent = `${mr['▲'].rate}%`;
-            document.getElementById('markCountTanana').textContent = mr['▲'].count;
-          }
-          if (mr['☆']) {
-            document.getElementById('markPctAna').textContent = `${mr['☆'].rate}%`;
-            document.getElementById('markCountAna').textContent = mr['☆'].count;
-          }
-          if (mr['△']) {
-            document.getElementById('markPctRenge').textContent = `${mr['△'].rate}%`;
-            document.getElementById('markCountRenge').textContent = mr['△'].count;
-          }
-        }
-
-        if (data.win5Strategy) {
-          cachedWin5Text = data.win5Strategy;
-          document.getElementById('win5Body').textContent = data.win5Strategy;
-          document.getElementById('win5Card').style.display = 'block';
-        }
-
-        globalRaces = data.races || [];
-        const venues = [...new Set(globalRaces.map(r => r.venue))];
-        const tabsContainer = document.getElementById('venueTabs');
-        tabsContainer.innerHTML = '<div class="tab-btn active" onclick="filterVenue(\'ALL\')">全会場</div>';
-        venues.forEach(v => {
-          const btn = document.createElement('div');
-          btn.className = 'tab-btn';
-          btn.dataset.venue = v;
-          btn.textContent = v;
-          btn.onclick = () => filterVenue(v);
-          tabsContainer.appendChild(btn);
-        });
-
-        renderRaces();
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    window.onload = loadData;
-  </script>
-</body>
-</html>
+    .horse-name { font-weight: bold; font-size: 12px; cursor: pointer; }
+    .past3-mini-
