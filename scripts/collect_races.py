@@ -29,13 +29,11 @@ now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
 today_yyyymmdd = now_jst.strftime("%Y%m%d")
 
-# 17時以降、または金曜日(weekday==4)は翌日(土曜日)を対象にする
 if now_jst.hour >= 17 or now_jst.weekday() == 4:
     target_dt = now_jst + timedelta(days=1)
 else:
     target_dt = now_jst
 
-# 対象日が平日(月〜金)なら直近の土曜日へ進める
 while target_dt.weekday() not in [5, 6]:
     target_dt += timedelta(days=1)
 
@@ -44,9 +42,6 @@ target_date_disp = target_dt.strftime("%Y年%m月%d日")
 
 print(f"=== 実行日時(JST): {now_str} / 予想対象日: {target_date_disp} ({target_date}) ===")
 
-# ==========================================
-# 1. 確定レース実績データベース
-# ==========================================
 OFFICIAL_RESULTS = {
     "202605040409": {"date": "10/11", "venue": "東京", "rNum": 9, "raceName": "9R 鷹巣山特別", "top3": [5, 6, 11], "marks_hit": ["◎", "○"], "is_hit": True, "payout_val": 1250},
     "202608040409": {"date": "10/11", "venue": "京都", "rNum": 9, "raceName": "9R 長久手特別", "top3": [3, 7, 2], "marks_hit": ["○", "▲", "△"], "is_hit": True, "payout_val": 750},
@@ -99,7 +94,6 @@ def fetch_data(target_url, referer_url=None):
     }
     if referer_url:
         headers["Referer"] = referer_url
-
     if proxy_base and proxy_base.startswith("http"):
         try:
             encoded_url = urllib.parse.quote(target_url, safe="")
@@ -109,7 +103,6 @@ def fetch_data(target_url, referer_url=None):
                 return res.text
         except Exception:
             pass
-
     try:
         res = requests.get(target_url, headers=headers, timeout=6)
         if res.status_code == 200 and len(res.text) > 100:
@@ -117,7 +110,6 @@ def fetch_data(target_url, referer_url=None):
             return res.text
     except Exception:
         pass
-
     return ""
 
 def get_real_odds_dict(race_id):
@@ -813,117 +805,6 @@ def build_weekend_guaranteed_schedule(target_yyyymmdd):
         built_races.append(det)
 
     return built_races
-
-def assign_exact_win5_races(races_list):
-    for r in races_list:
-        r["isWin5"] = False
-
-    cands = []
-    for r in races_list:
-        rn = r.get("rNum")
-        vn = r.get("venue", "")
-        if rn == 11:
-            cands.append(r)
-        elif rn == 10 and vn in ["東京", "京都", "中山", "阪神"]:
-            cands.append(r)
-
-    if len(cands) < 5:
-        cands = [r for r in races_list if r.get("rNum") in [10, 11]]
-
-    cands_sorted = sorted(cands, key=lambda x: (str(x.get("startTime", "15:00")), int(x.get("rNum", 10))))
-    win5_selected = cands_sorted[-5:] if len(cands_sorted) >= 5 else cands_sorted
-
-    for r in win5_selected:
-        r["isWin5"] = True
-
-    return win5_selected
-
-def generate_win5_strategy(all_races):
-    try:
-        win5_races = assign_exact_win5_races(all_races)
-        if len(win5_races) < 5:
-            return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
-
-        race_analysis = []
-        for idx, r in enumerate(win5_races[:5]):
-            clean_horses = [h for h in r.get("horses", []) if not h.get("hasUnfavorable", False)]
-            if len(clean_horses) < 3:
-                clean_horses = r.get("horses", [])
-            sorted_h = sorted(clean_horses, key=lambda x: float(x.get("speedScore") or 80.0), reverse=True)
-            h1 = sorted_h[0] if len(sorted_h) > 0 else {"num": 1, "name": "有力馬", "speedScore": 90.0, "zScore": 65.0}
-            h2 = sorted_h[1] if len(sorted_h) > 1 else {"num": 2, "name": "対抗馬", "speedScore": 88.0, "zScore": 58.0}
-            gap = round(float(h1.get("zScore", 62.0)) - float(h2.get("zScore", 56.0)), 1)
-            raw_title = r.get("rawRaceName") or r.get("raceName", f"{r.get('rNum', 10)}R")
-
-            race_analysis.append({
-                "idx": idx,
-                "race": f"{r.get('venue', '中央')}{r.get('rNum', '')}R {raw_title}",
-                "gap": gap,
-                "horses": sorted_h
-            })
-
-        ranked_by_gap = sorted(race_analysis, key=lambda x: x["gap"], reverse=True)
-        alloc_counts = [1, 1, 2, 2, 2]
-        plan_name = "計8点（不利なし突出1頭固定×2戦 ＋ 2頭押さえ×3戦）"
-
-        picks_by_race_idx = {}
-        for rank_i, r_info in enumerate(ranked_by_gap):
-            take_n = alloc_counts[rank_i]
-            h_list = r_info["horses"]
-
-            if take_n == 1 or len(h_list) <= 1:
-                picks_by_race_idx[r_info["idx"]] = [f"{h_list[0]['num']}番 {h_list[0]['name']}"]
-            else:
-                selected = [f"{h_list[0]['num']}番 {h_list[0]['name']}"]
-                sub_cands = sorted(h_list[1:6], key=lambda x: float(x.get("ev", 1.0)) * float(x.get("speedScore", 80.0)), reverse=True)
-                for s in sub_cands[:(take_n - 1)]:
-                    selected.append(f"{s['num']}番 {s['name']}")
-                picks_by_race_idx[r_info["idx"]] = selected
-
-        lines = [
-            f"【AI厳選WIN5戦略】{plan_name} / 予算800円",
-            f"第1戦 [{race_analysis[0]['race']}]: {', '.join(picks_by_race_idx[0])}",
-            f"第2戦 [{race_analysis[1]['race']}]: {', '.join(picks_by_race_idx[1])}",
-            f"第3戦 [{race_analysis[2]['race']}]: {', '.join(picks_by_race_idx[2])}",
-            f"第4戦 [{race_analysis[3]['race']}]: {', '.join(picks_by_race_idx[3])}",
-            f"第5戦 [{race_analysis[4]['race']}]: {', '.join(picks_by_race_idx[4])}",
-            f"狙い: 道悪・条件不利馬を完全除外し、4AI合議＆Zスコア突出馬を軸に高配当を射抜く。"
-        ]
-        return "\n".join(lines)
-    except Exception:
-        return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
-
-def select_top_recommended_race(final_races):
-    best_candidate = None
-    best_val = -1.0
-    for r in final_races:
-        horses = r.get("horses", [])
-        honmei = next((h for h in horses if h.get("num") == r.get("honmeiNum")), None)
-        if not honmei and horses:
-            honmei = horses[0]
-        if not honmei:
-            continue
-        c_score = float(r.get("confidenceScore") or 80)
-        odds = float(honmei.get("odds") or 5.0)
-        bonus = 14.0 if 2.5 <= odds <= 8.5 else (7.0 if 1.8 <= odds < 2.5 else 4.0)
-        if (c_score + bonus) > best_val:
-            best_val = c_score + bonus
-            best_candidate = {
-                "raceId": r.get("raceId", ""),
-                "raceName": r.get("raceName", ""),
-                "venue": r.get("venue", ""),
-                "startTime": r.get("startTime", ""),
-                "confidence": r.get("confidence", "B"),
-                "confidenceScore": int(c_score),
-                "isLowPayout": r.get("isLowPayout", False),
-                "honmeiNum": honmei.get("num", 1),
-                "honmeiName": honmei.get("name", ""),
-                "honmeiOdds": odds,
-                "honmeiScore": honmei.get("speedScore", 90.0),
-                "aiSummary": r.get("aiSummary", ""),
-                "aiBuy": r.get("aiBuy", "")
-            }
-    return best_candidate
 
 saved_predictions = {}
 today_json_path = "data/today.json"
