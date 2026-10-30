@@ -2,18 +2,17 @@ name: Auto Keiba AI Predictor
 
 on:
   schedule:
-    - cron: '0 11 * * 5,6' # 金曜・土曜 JST 20:00 (出馬表初期クローリング)
-    - cron: '30 23 * * 5,6' # 土曜・日曜 JST 08:30 (直前オッズ更新)
-    - cron: '30 8 * * 0,1'  # 日曜・月曜 JST 17:30 (レース確定後学習・成績集計)
+    - cron: '18 * * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -23,19 +22,19 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install requests beautifulsoup4 google-genai
 
-      - name: Run Prediction & Stats Collection
+      - name: Run race collection script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PROXY_URL: ${{ secrets.PROXY_URL }}
         run: |
           python scripts/collect_races.py
 
-      - name: Commit and push changes
+      - name: Commit and push updated data
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add data/
-          git diff --quiet && git diff --staged --quiet || git commit -m "Auto update predictions and stats"
-          git push
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update race data" && git pull --rebase origin main && git push origin main)
