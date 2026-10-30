@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,7 +36,9 @@ jobs:
 
       - name: Commit and push updated data
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add data/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update race data" && git pull --rebase origin main && git push origin main)
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add -f data/today.json data/stats.json data/horses_db.json
+          git commit -m "Update race data $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
+          git pull --rebase -X theirs origin main || true
+          git push origin HEAD:main --force
