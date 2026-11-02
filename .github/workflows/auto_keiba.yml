@@ -2,7 +2,9 @@ name: Auto Keiba AI Predictor
 
 on:
   schedule:
-    - cron: '18 * * * *'
+    # JRA開催のある「金曜夜・土曜・日曜・月曜朝」のみ毎時実行（平日の無駄な実行とエラーメールを防止）
+    # UTC 21:00〜11:00 (JST 6:00〜20:00) の金・土・日・月
+    - cron: '18 21-23,0-11 * * 5,6,0,1'
   workflow_dispatch:
 
 permissions:
@@ -32,13 +34,18 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PROXY_URL: ${{ secrets.PROXY_URL }}
         run: |
-          python scripts/collect_races.py
+          # 平日などでレースがなくてもエラー終了させない
+          python scripts/collect_races.py || echo "Race collection finished or skipped"
 
       - name: Commit and push updated data
         run: |
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-          git add -f data/today.json data/stats.json data/horses_db.json
-          git commit -m "Update race data $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
-          git pull --rebase -X theirs origin main || true
-          git push origin HEAD:main --force
+          git add -f data/today.json data/stats.json data/horses_db.json || true
+          if git diff --staged --quiet; then
+            echo "変更差分がないため、プッシュをスキップします。"
+          else
+            git commit -m "Update race data $(date +'%Y-%m-%d %H:%M')"
+            git pull --rebase -X theirs origin main || true
+            git push origin HEAD:main --force
+          fi
