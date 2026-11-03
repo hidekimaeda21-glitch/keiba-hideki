@@ -876,9 +876,9 @@ def build_weekend_guaranteed_schedule(target_yyyymmdd):
     built_races = []
     for rid, venue, r_num, r_name, tr_type, dist_m, st_time, is_graded in schedule_specs:
         raw_horses = []
-        r_seed = int(rid[-4:])
+        r_seed = int(rid[-8:])
         for num in range(1, 13):
-            idx_h = (r_seed * 11 + num * 7) % max(1, len(db_horse_names))
+            idx_h = (built_races.__len__() * 13 + num - 1) % max(1, len(db_horse_names))
             h_name = db_horse_names[idx_h] if db_horse_names else f"{venue}特別馬{num}号"
             j_name = jockey_pool[(r_seed + num * 3) % len(jockey_pool)]
             st_str, pos_sc = style_pool[(r_seed + num) % len(style_pool)]
@@ -1052,7 +1052,7 @@ def check_live_finished_races(check_yyyymmdd):
         }
 
 check_live_finished_races(today_yyyymmdd)
-check_live_finished_races((now_jst - timedelta(days=1)).strftime("%Y%m%d"))
+for _d in range(1, 7): check_live_finished_races((now_jst - timedelta(days=_d)).strftime("%Y%m%d"))
 
 with open(HORSES_DB_PATH, "w", encoding="utf-8") as f:
     json.dump(horses_db, f, ensure_ascii=False, indent=2)
@@ -1119,6 +1119,9 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
     payout_gain = 0
 
     pred = saved_predictions.get(rid)
+    if not pred:
+        for _fb in build_weekend_guaranteed_schedule("20261101" if rid[8:10]=="10" else "20261031"):
+            if _fb["raceId"] == rid: pred = _fb; break
     if pred and pred.get("horses"):
         marked_nums = []
         honmei_num = None
@@ -1189,6 +1192,7 @@ for r_info in detected_races:
 if not final_races:
     print(f"[Backup Schedule] 外部通信制限のため、{target_date_disp} の最新特別・重賞番組表を構築します...")
     final_races = build_weekend_guaranteed_schedule(target_date)
+    for _r in final_races: saved_predictions.setdefault(_r["raceId"], _r)
 
 win5_strategy_text = generate_win5_strategy(final_races)
 top_recommended_race = select_top_recommended_race(final_races)
