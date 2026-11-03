@@ -164,7 +164,7 @@ def fetch_past3_races_map(race_id, raw_horses, current_track_type, current_dist_
             else:
                 rk = (s_val % 10) + 5
 
-            v_pick = hist.get("fav_venues", [sample_venues[(seed_base + i) % len(sample_venues)]])[0]
+            v_pick = (hist.get("fav_venues") or [sample_venues[(seed_base + i) % len(sample_venues)]])[0]
             baba_pick = "重" if (hist.get("wet_aptitude") == 1 and i == 1) else ("稍" if (s_val % 5 == 0) else "良")
             dist_variation = current_dist_m + (200 if (s_val % 3 == 0 and i > 0) else (-200 if (s_val % 4 == 0 and i > 0) else 0))
             dist_variation = max(1000, min(3000, dist_variation))
