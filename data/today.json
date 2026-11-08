@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-11-08 16:22",
+  "updatedAt": "2026-11-09 00:13",
   "targetDate": "2026年11月14日",
   "stats": {
-    "hitRate": 36.7,
-    "recoveryRate": 293.4,
-    "totalBets": 90,
+    "hitRate": 36.3,
+    "recoveryRate": 290.2,
+    "totalBets": 91,
     "hitCount": 33,
     "markRates": {
       "◎": {
-        "rate": 38.9,
-        "count": "35/90"
+        "rate": 38.5,
+        "count": "35/91"
       },
       "○": {
-        "rate": 42.2,
-        "count": "38/90"
+        "rate": 41.8,
+        "count": "38/91"
       },
       "▲": {
-        "rate": 36.7,
-        "count": "33/90"
+        "rate": 37.4,
+        "count": "34/91"
       },
       "☆": {
-        "rate": 15.6,
-        "count": "14/90"
+        "rate": 15.4,
+        "count": "14/91"
       },
       "△": {
-        "rate": 21.1,
-        "count": "57/270"
+        "rate": 20.9,
+        "count": "57/273"
       }
     },
     "hitDetails": [
@@ -678,6 +678,11 @@
         "date": "11/8",
         "venue": "京都",
         "raceName": "11R みやこS"
+      },
+      {
+        "date": "11/8",
+        "venue": "京都",
+        "raceName": "12R 3歳以上1勝クラス"
       }
     ]
   },
