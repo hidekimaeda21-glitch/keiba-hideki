@@ -1,1 +1,58 @@
-
+{
+  "targetDate": "2026-11-14",
+  "updatedAt": "2026-11-09 17:00",
+  "races": [
+    {
+      "venue": "福島",
+      "raceName": "9R 3歳以上1勝クラス",
+      "startTime": "14:15",
+      "raceType": "芝2000m",
+      "isGraded": false,
+      "isWin5": false,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "福島コース適性の高い先行馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "テイエムテスト",
+          "jockey": "騎手",
+          "runningStyle": "先行",
+          "odds": 4.5,
+          "speedScore": 88,
+          "ev": 1.15,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "マイネルサンプル",
+          "jockey": "騎手",
+          "runningStyle": "差し",
+          "odds": 7.2,
+          "speedScore": 85,
+          "ev": 1.02,
+          "markJemi": "○",
+          "markAna": "▲"
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "hitRate": 36.3,
+    "totalBets": 91,
+    "hitCount": 33,
+    "recoveryRate": 290.2,
+    "markRates": {
+      "◎": { "rate": 38.5, "count": "35/91" },
+      "○": { "rate": 41.8, "count": "38/91" },
+      "▲": { "rate": 37.4, "count": "34/91" },
+      "☆": { "rate": 15.4, "count": "14/91" },
+      "△": { "rate": 20.9, "count": "57/273" }
+    },
+    "hitDetails": [],
+    "allBetRaces": []
+  },
+  "win5Strategy": "【AI厳選WIN5戦略】計8点（不利なし突出1頭固定×2戦 ＋ 2頭押さえ×3戦） / 予算800円"
+}
