@@ -1,7 +1,79 @@
 {
   "targetDate": "2026-11-14",
-  "updatedAt": "2026-11-09 17:00",
+  "updatedAt": "2026-11-09 17:30",
   "races": [
+    {
+      "venue": "東京",
+      "raceName": "9R オキザリス賞",
+      "startTime": "14:20",
+      "raceType": "ダ1400m",
+      "isGraded": false,
+      "isWin5": false,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "東京ダート1400mの適性が高い先行馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "テルヴィセクス",
+          "jockey": "騎手A",
+          "runningStyle": "先行",
+          "odds": 3.8,
+          "speedScore": 89,
+          "ev": 1.12,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "ハートメテオ",
+          "jockey": "騎手B",
+          "runningStyle": "差し",
+          "odds": 6.5,
+          "speedScore": 86,
+          "ev": 1.05,
+          "markJemi": "○",
+          "markAna": "▲"
+        }
+      ]
+    },
+    {
+      "venue": "京都",
+      "raceName": "9R 醍醐特別",
+      "startTime": "14:35",
+      "raceType": "芝1200m",
+      "isGraded": false,
+      "isWin5": true,
+      "confidence": "A",
+      "confidenceScore": 91,
+      "aiSummary": "スピードと瞬発力に優れた馬を中心に組み立て。",
+      "aiBuy": "馬連・三連複",
+      "horses": [
+        {
+          "num": 6,
+          "name": "ブレゲアン",
+          "jockey": "騎手C",
+          "runningStyle": "逃げ",
+          "odds": 4.1,
+          "speedScore": 90,
+          "ev": 1.18,
+          "markJemi": "◎",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "オクトーバーナイン",
+          "jockey": "騎手D",
+          "runningStyle": "先行",
+          "odds": 8.0,
+          "speedScore": 84,
+          "ev": 1.01,
+          "markJemi": "▲",
+          "markAna": "△"
+        }
+      ]
+    },
     {
       "venue": "福島",
       "raceName": "9R 3歳以上1勝クラス",
@@ -17,7 +89,7 @@
         {
           "num": 1,
           "name": "テイエムテスト",
-          "jockey": "騎手",
+          "jockey": "騎手E",
           "runningStyle": "先行",
           "odds": 4.5,
           "speedScore": 88,
@@ -25,10 +97,10 @@
           "markJemi": "◎",
           "markAna": "○"
         },
-        {
+     {
           "num": 2,
           "name": "マイネルサンプル",
-          "jockey": "騎手",
+          "jockey": "騎手F",
           "runningStyle": "差し",
           "odds": 7.2,
           "speedScore": 85,
