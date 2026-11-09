@@ -29,7 +29,7 @@ now_str = now_jst.strftime("%Y-%m-%d %H:%M")
 
 today_yyyymmdd = now_jst.strftime("%Y%m%d")
 
-# 16時以降は翌日のレースを予想対象にする
+# 16譎ゆｻ･髯阪・鄙梧律縺ｮ繝ｬ繝ｼ繧ｹ繧剃ｺ域Φ蟇ｾ雎｡縺ｫ縺吶ｋ
 if now_jst.hour >= 16 or now_jst.weekday() == 4:
     target_dt = now_jst + timedelta(days=1)
 else:
@@ -39,36 +39,36 @@ while target_dt.weekday() not in [5, 6]:
     target_dt += timedelta(days=1)
 
 target_date = target_dt.strftime("%Y%m%d")
-target_date_disp = target_dt.strftime("%Y年%m月%d日")
+target_date_disp = target_dt.strftime("%Y蟷ｴ%m譛・d譌･")
 
-print(f"=== 実行日時(JST): {now_str} / 予想対象日: {target_date_disp} ({target_date}) ===")
+print(f"=== 螳溯｡梧律譎・JST): {now_str} / 莠域Φ蟇ｾ雎｡譌･: {target_date_disp} ({target_date}) ===")
 
 OFFICIAL_RESULTS = {
-    "202605040409": {"date": "10/11", "venue": "東京", "rNum": 9, "raceName": "9R 鷹巣山特別", "top3": [5, 6, 11], "marks_hit": ["◎", "○"], "is_hit": True, "payout_val": 1250},
-    "202608040409": {"date": "10/11", "venue": "京都", "rNum": 9, "raceName": "9R 長久手特別", "top3": [3, 7, 2], "marks_hit": ["○", "▲", "△"], "is_hit": True, "payout_val": 750},
-    "202605040410": {"date": "10/11", "venue": "東京", "rNum": 10, "raceName": "10R テレビ静岡賞", "top3": [12, 4, 8], "marks_hit": ["◎", "○", "△"], "is_hit": True, "payout_val": 1850},
-    "202608040410": {"date": "10/11", "venue": "京都", "rNum": 10, "raceName": "10R 藤森S", "top3": [2, 11, 5], "marks_hit": ["◎", "▲"], "is_hit": True, "payout_val": 920},
-    "202605040411": {"date": "10/11", "venue": "東京", "rNum": 11, "raceName": "11R アイルランドT(G2)", "top3": [16, 15, 11], "marks_hit": ["◎", "○", "▲"], "is_hit": True, "payout_val": 1450},
-    "202608040411": {"date": "10/11", "venue": "京都", "rNum": 11, "raceName": "11R 京都大賞典(G2)", "top3": [1, 7, 4], "marks_hit": ["◎", "○"], "is_hit": True, "payout_val": 950},
-    "202605040412": {"date": "10/11", "venue": "東京", "rNum": 12, "raceName": "12R 3歳以上2勝クラス", "top3": [8, 3, 14], "marks_hit": ["○", "△"], "is_hit": False, "payout_val": 0},
-    "202608040412": {"date": "10/11", "venue": "京都", "rNum": 12, "raceName": "12R 平城京S", "top3": [5, 9, 2], "marks_hit": ["◎", "☆", "△"], "is_hit": True, "payout_val": 1920},
-    "202605040509": {"date": "10/12", "venue": "東京", "rNum": 9, "raceName": "9R 3歳以上1勝クラス", "top3": [4, 9, 2], "marks_hit": ["○", "▲", "☆"], "is_hit": False, "payout_val": 0},
-    "202608040509": {"date": "10/12", "venue": "京都", "rNum": 9, "raceName": "9R 蹴上特別", "top3": [1, 4, 10], "marks_hit": ["◎", "○", "△"], "is_hit": True, "payout_val": 2860},
-    "202605040510": {"date": "10/12", "venue": "東京", "rNum": 10, "raceName": "10R 昇仙峡S", "top3": [1, 11, 4], "marks_hit": ["◎", "○", "▲"], "is_hit": True, "payout_val": 1820},
-    "202608040510": {"date": "10/12", "venue": "京都", "rNum": 10, "raceName": "10R 堀川特別", "top3": [2, 7, 5], "marks_hit": ["◎", "○", "△"], "is_hit": True, "payout_val": 1290},
-    "202605040511": {"date": "10/12", "venue": "東京", "rNum": 11, "raceName": "11R オクトーバーS", "top3": [7, 2, 9], "marks_hit": ["◎", "○", "▲"], "is_hit": True, "payout_val": 1580},
-    "202608040511": {"date": "10/12", "venue": "京都", "rNum": 11, "raceName": "11R スワンS(G2)", "top3": [1, 4, 9], "marks_hit": ["○", "☆", "△"], "is_hit": False, "payout_val": 0},
-    "202605040512": {"date": "10/12", "venue": "東京", "rNum": 12, "raceName": "12R 3歳以上1勝クラス", "top3": [11, 7, 3], "marks_hit": ["○", "▲", "△"], "is_hit": False, "payout_val": 0},
-    "202608040512": {"date": "10/12", "venue": "京都", "rNum": 12, "raceName": "12R 3歳以上2勝クラス", "top3": [6, 12, 1], "marks_hit": ["▲", "☆", "△"], "is_hit": False, "payout_val": 0},
-    "202608040712": {"date": "10/18", "venue": "京都", "rNum": 12, "raceName": "12R 桂川S", "top3": [8, 3, 5], "marks_hit": ["◎", "○", "▲"], "is_hit": True, "payout_val": 2840}
+    "202605040409": {"date": "10/11", "venue": "譚ｱ莠ｬ", "rNum": 9, "raceName": "9R 鮃ｹ蟾｣螻ｱ迚ｹ蛻･", "top3": [5, 6, 11], "marks_hit": ["笳・, "笳・], "is_hit": True, "payout_val": 1250},
+    "202608040409": {"date": "10/11", "venue": "莠ｬ驛ｽ", "rNum": 9, "raceName": "9R 髟ｷ荵・焔迚ｹ蛻･", "top3": [3, 7, 2], "marks_hit": ["笳・, "笆ｲ", "笆ｳ"], "is_hit": True, "payout_val": 750},
+    "202605040410": {"date": "10/11", "venue": "譚ｱ莠ｬ", "rNum": 10, "raceName": "10R 繝・Ξ繝馴撕蟯｡雉・, "top3": [12, 4, 8], "marks_hit": ["笳・, "笳・, "笆ｳ"], "is_hit": True, "payout_val": 1850},
+    "202608040410": {"date": "10/11", "venue": "莠ｬ驛ｽ", "rNum": 10, "raceName": "10R 阯､譽ｮS", "top3": [2, 11, 5], "marks_hit": ["笳・, "笆ｲ"], "is_hit": True, "payout_val": 920},
+    "202605040411": {"date": "10/11", "venue": "譚ｱ莠ｬ", "rNum": 11, "raceName": "11R 繧｢繧､繝ｫ繝ｩ繝ｳ繝欝(G2)", "top3": [16, 15, 11], "marks_hit": ["笳・, "笳・, "笆ｲ"], "is_hit": True, "payout_val": 1450},
+    "202608040411": {"date": "10/11", "venue": "莠ｬ驛ｽ", "rNum": 11, "raceName": "11R 莠ｬ驛ｽ螟ｧ雉槫・(G2)", "top3": [1, 7, 4], "marks_hit": ["笳・, "笳・], "is_hit": True, "payout_val": 950},
+    "202605040412": {"date": "10/11", "venue": "譚ｱ莠ｬ", "rNum": 12, "raceName": "12R 3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "top3": [8, 3, 14], "marks_hit": ["笳・, "笆ｳ"], "is_hit": False, "payout_val": 0},
+    "202608040412": {"date": "10/11", "venue": "莠ｬ驛ｽ", "rNum": 12, "raceName": "12R 蟷ｳ蝓惹ｺｬS", "top3": [5, 9, 2], "marks_hit": ["笳・, "笘・, "笆ｳ"], "is_hit": True, "payout_val": 1920},
+    "202605040509": {"date": "10/12", "venue": "譚ｱ莠ｬ", "rNum": 9, "raceName": "9R 3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "top3": [4, 9, 2], "marks_hit": ["笳・, "笆ｲ", "笘・], "is_hit": False, "payout_val": 0},
+    "202608040509": {"date": "10/12", "venue": "莠ｬ驛ｽ", "rNum": 9, "raceName": "9R 雹ｴ荳顔音蛻･", "top3": [1, 4, 10], "marks_hit": ["笳・, "笳・, "笆ｳ"], "is_hit": True, "payout_val": 2860},
+    "202605040510": {"date": "10/12", "venue": "譚ｱ莠ｬ", "rNum": 10, "raceName": "10R 譏・ｻ吝ｳ｡S", "top3": [1, 11, 4], "marks_hit": ["笳・, "笳・, "笆ｲ"], "is_hit": True, "payout_val": 1820},
+    "202608040510": {"date": "10/12", "venue": "莠ｬ驛ｽ", "rNum": 10, "raceName": "10R 蝣蟾晉音蛻･", "top3": [2, 7, 5], "marks_hit": ["笳・, "笳・, "笆ｳ"], "is_hit": True, "payout_val": 1290},
+    "202605040511": {"date": "10/12", "venue": "譚ｱ莠ｬ", "rNum": 11, "raceName": "11R 繧ｪ繧ｯ繝医・繝舌・S", "top3": [7, 2, 9], "marks_hit": ["笳・, "笳・, "笆ｲ"], "is_hit": True, "payout_val": 1580},
+    "202608040511": {"date": "10/12", "venue": "莠ｬ驛ｽ", "rNum": 11, "raceName": "11R 繧ｹ繝ｯ繝ｳS(G2)", "top3": [1, 4, 9], "marks_hit": ["笳・, "笘・, "笆ｳ"], "is_hit": False, "payout_val": 0},
+    "202605040512": {"date": "10/12", "venue": "譚ｱ莠ｬ", "rNum": 12, "raceName": "12R 3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "top3": [11, 7, 3], "marks_hit": ["笳・, "笆ｲ", "笆ｳ"], "is_hit": False, "payout_val": 0},
+    "202608040512": {"date": "10/12", "venue": "莠ｬ驛ｽ", "rNum": 12, "raceName": "12R 3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "top3": [6, 12, 1], "marks_hit": ["笆ｲ", "笘・, "笆ｳ"], "is_hit": False, "payout_val": 0},
+    "202608040712": {"date": "10/18", "venue": "莠ｬ驛ｽ", "rNum": 12, "raceName": "12R 譯ょｷ抓", "top3": [8, 3, 5], "marks_hit": ["笳・, "笳・, "笆ｲ"], "is_hit": True, "payout_val": 2840}
 }
 
 JOCKEY_BONUS_MAP = {
-    "ルメール": 2.8, "川田": 2.8, "戸崎圭": 2.3, "坂井": 2.3, "武豊": 2.1, "レーン": 2.8, "モレイラ": 2.8,
-    "横山武": 1.8, "松山": 1.8, "鮫島駿": 1.5, "西村淳": 1.7, "三浦": 1.5, "田辺": 1.5,
-    "岩田望": 1.7, "岩田康": 1.4, "横山和": 1.4, "横山典": 1.6, "佐々木": 1.6, "団野": 1.4,
-    "菅原明": 1.5, "津村": 1.4, "浜中": 1.4, "池添": 1.5, "藤岡佑": 1.3, "Ｍ．デム": 1.6, "Ｃ．デム": 2.6,
-    "マーカンド": 2.2, "デムーロ": 2.4
+    "繝ｫ繝｡繝ｼ繝ｫ": 2.8, "蟾晉伐": 2.8, "謌ｸ蟠主惆": 2.3, "蝮ゆｺ・: 2.3, "豁ｦ雎・: 2.1, "繝ｬ繝ｼ繝ｳ": 2.8, "繝｢繝ｬ繧､繝ｩ": 2.8,
+    "讓ｪ螻ｱ豁ｦ": 1.8, "譚ｾ螻ｱ": 1.8, "魄ｫ蟲ｶ鬧ｿ": 1.5, "隘ｿ譚第ｷｳ": 1.7, "荳画ｵｦ": 1.5, "逕ｰ霎ｺ": 1.5,
+    "蟯ｩ逕ｰ譛・: 1.7, "蟯ｩ逕ｰ蠎ｷ": 1.4, "讓ｪ螻ｱ蜥・: 1.4, "讓ｪ螻ｱ蜈ｸ": 1.6, "菴舌・惠": 1.6, "蝗｣驥・: 1.4,
+    "闖・次譏・: 1.5, "豢･譚・: 1.4, "豬應ｸｭ": 1.4, "豎豺ｻ": 1.5, "阯､蟯｡菴・: 1.3, "・ｭ・弱ョ繝": 1.6, "・｣・弱ョ繝": 2.6,
+    "繝槭・繧ｫ繝ｳ繝・: 2.2, "繝・Β繝ｼ繝ｭ": 2.4
 }
 
 def get_jockey_bonus(jockey_name):
@@ -136,14 +136,14 @@ def get_real_odds_dict(race_id):
 
 def fetch_past3_races_map(race_id, raw_horses, current_track_type, current_dist_m):
     past_map = {}
-    sample_venues = ["東京", "京都", "中山", "阪神", "新潟", "中京", "福島"]
-    sample_classes = ["前走特別", "3歳上2勝C", "3歳上1勝C", "オープン特別", "重賞トライアル"]
+    sample_venues = ["譚ｱ莠ｬ", "莠ｬ驛ｽ", "荳ｭ螻ｱ", "髦ｪ逾・, "譁ｰ貎・, "荳ｭ莠ｬ", "遖丞ｳｶ"]
+    sample_classes = ["蜑崎ｵｰ迚ｹ蛻･", "3豁ｳ荳・蜍戮", "3豁ｳ荳・蜍戮", "繧ｪ繝ｼ繝励Φ迚ｹ蛻･", "驥崎ｳ槭ヨ繝ｩ繧､繧｢繝ｫ"]
     for h in raw_horses:
         num = h["num"]
-        h_name = str(h.get("name", "馬"))
+        h_name = str(h.get("name", "鬥ｬ"))
         odds = float(h.get("odds", 10.0))
-        jockey = str(h.get("jockey", "騎手"))
-        style = str(h.get("runningStyle", "先行"))
+        jockey = str(h.get("jockey", "鬨取焔"))
+        style = str(h.get("runningStyle", "蜈郁｡・))
         hist = horses_db.get(h_name, {})
         past_runs = hist.get("past_runs", [])
 
@@ -165,31 +165,31 @@ def fetch_past3_races_map(race_id, raw_horses, current_track_type, current_dist_
                 rk = (s_val % 10) + 5
 
             v_pick = (hist.get("fav_venues") or [sample_venues[(seed_base + i) % len(sample_venues)]])[0]
-            baba_pick = "重" if (hist.get("wet_aptitude") == 1 and i == 1) else ("稍" if (s_val % 5 == 0) else "良")
+            baba_pick = "驥・ if (hist.get("wet_aptitude") == 1 and i == 1) else ("遞・ if (s_val % 5 == 0) else "濶ｯ")
             dist_variation = current_dist_m + (200 if (s_val % 3 == 0 and i > 0) else (-200 if (s_val % 4 == 0 and i > 0) else 0))
             dist_variation = max(1000, min(3000, dist_variation))
 
-            if style == "逃げ":
+            if style == "騾・￡":
                 p_str = "1-1" if rk <= 3 else "1-2"
                 ag_str = f"{34.8 + (rk * 0.2):.1f}"
-            elif style == "先行":
+            elif style == "蜈郁｡・:
                 p_str = "3-3" if rk <= 3 else "4-5"
                 ag_str = f"{34.4 + (rk * 0.15):.1f}"
-            elif style == "差し":
+            elif style == "蟾ｮ縺・:
                 p_str = "8-7" if rk <= 3 else "10-9"
                 ag_str = f"{33.8 + (rk * 0.15):.1f}"
             else:
                 p_str = "12-11" if rk <= 3 else "14-13"
                 ag_str = f"{33.5 + (rk * 0.15):.1f}"
 
-            note_tag = " [道悪激走]" if (baba_pick in ["重", "稍"] and rk <= 3) else (" [不利・度外視]" if (rk >= 6 and odds <= 8.0 and i == 0) else "")
+            note_tag = " [驕捺が豼襍ｰ]" if (baba_pick in ["驥・, "遞・] and rk <= 3) else (" [荳榊茜繝ｻ蠎ｦ螟冶ｦ望" if (rk >= 6 and odds <= 8.0 and i == 0) else "")
             generated.append({
-                "label": f"{i+1}走前",
+                "label": f"{i+1}襍ｰ蜑・,
                 "dateVenue": f"{v_pick}",
                 "raceName": f"{sample_classes[(seed_base + i) % len(sample_classes)]}",
-                "rank": f"{rk}着",
+                "rank": f"{rk}逹",
                 "condition": f"{current_track_type}{dist_variation}m({baba_pick})",
-                "detail": f"騎手:{jockey[:4]} / 通過:{p_str} (上り{ag_str}){note_tag}"
+                "detail": f"鬨取焔:{jockey[:4]} / 騾夐℃:{p_str} (荳翫ｊ{ag_str}){note_tag}"
             })
         past_map[num] = generated
 
@@ -203,36 +203,36 @@ def determine_running_style(tr_elem, h_name, num, frame_no):
         if first_corners:
             avg_pos = sum(first_corners) / len(first_corners)
             if avg_pos <= 1.8:
-                return "逃げ", 0.92
+                return "騾・￡", 0.92
             elif avg_pos <= 4.5:
-                return "先行", 0.78
+                return "蜈郁｡・, 0.78
             elif avg_pos <= 9.5:
-                return "差し", 0.48
+                return "蟾ｮ縺・, 0.48
             else:
-                return "追込", 0.25
+                return "霑ｽ霎ｼ", 0.25
 
     hist = horses_db.get(str(h_name), {})
     if "style" in hist:
         st = hist["style"]
-        score_map = {"逃げ": 0.90, "先行": 0.78, "差し": 0.48, "追込": 0.25}
+        score_map = {"騾・￡": 0.90, "蜈郁｡・: 0.78, "蟾ｮ縺・: 0.48, "霑ｽ霎ｼ": 0.25}
         return st, score_map.get(st, 0.5)
 
     seed = (sum(ord(c) for c in str(h_name)) + int(num) + int(frame_no)) % 10
     if seed in [0, 1]:
-        return "逃げ", 0.90
+        return "騾・￡", 0.90
     elif seed in [2, 3, 4]:
-        return "先行", 0.78
+        return "蜈郁｡・, 0.78
     elif seed in [5, 6, 7]:
-        return "差し", 0.48
+        return "蟾ｮ縺・, 0.48
     else:
-        return "追込", 0.25
+        return "霑ｽ霎ｼ", 0.25
 
 def compute_pro_yanaga_score(h_data, race_context):
-    h_name = str(h_data.get("name", "馬"))
+    h_name = str(h_data.get("name", "鬥ｬ"))
     odds = float(h_data.get("odds") or 15.0)
-    jockey = str(h_data.get("jockey", "未定"))
-    venue = race_context.get("venue", "東京")
-    track_type = race_context.get("track_type", "芝")
+    jockey = str(h_data.get("jockey", "譛ｪ螳・))
+    venue = race_context.get("venue", "譚ｱ莠ｬ")
+    track_type = race_context.get("track_type", "闃・)
     dist_m = int(race_context.get("dist_m", 1600))
     is_wet = race_context.get("is_wet", False)
     pace_type = race_context.get("pace_type", "NORMAL")
@@ -283,10 +283,10 @@ def compute_pro_yanaga_score(h_data, race_context):
             bias_bonus += 1.4
 
     pci_bonus = 0.0
-    if track_type == "芝" and venue in ["東京", "新潟", "京都"] and dist_m >= 1600 and not is_wet:
+    if track_type == "闃・ and venue in ["譚ｱ莠ｬ", "譁ｰ貎・, "莠ｬ驛ｽ"] and dist_m >= 1600 and not is_wet:
         if pos_score <= 0.50:
             pci_bonus += 1.2
-    elif track_type == "ダ" or venue in ["中山", "福島", "小倉", "函館", "札幌"] or is_wet:
+    elif track_type == "繝" or venue in ["荳ｭ螻ｱ", "遖丞ｳｶ", "蟆丞・, "蜃ｽ鬢ｨ", "譛ｭ蟷・] or is_wet:
         if pos_score >= 0.75:
             pci_bonus += 1.5
 
@@ -297,7 +297,7 @@ def compute_pro_yanaga_score(h_data, race_context):
             wet_adjustment += 2.5
         elif wet_apt == -1:
             wet_adjustment -= 3.5
-        if track_type == "芝":
+        if track_type == "闃・:
             if pos_score <= 0.30:
                 wet_adjustment -= 2.0
             if body_weight <= 444:
@@ -306,7 +306,7 @@ def compute_pro_yanaga_score(h_data, race_context):
                 wet_adjustment += 1.5
 
     condition_penalty = 0.0
-    if frame_no >= 7 and (venue in ["中山", "福島", "小倉", "京都"] or dist_m <= 1400) and pos_score >= 0.75:
+    if frame_no >= 7 and (venue in ["荳ｭ螻ｱ", "遖丞ｳｶ", "蟆丞・, "莠ｬ驛ｽ"] or dist_m <= 1400) and pos_score >= 0.75:
         condition_penalty -= 1.5
     elif frame_no in [1, 2, 3] and pos_score >= 0.70:
         condition_penalty += 1.0
@@ -374,31 +374,31 @@ def enrich_zscore_ev_and_marks(horses_list):
     ranked = sorted(horses_list, key=lambda x: (float(x.get("speedScore", 0)), float(x.get("ev", 0))), reverse=True)
     honmei_cand = next((h for h in ranked if not h.get("hasUnfavorable", False)), ranked[0] if ranked else None)
     if honmei_cand:
-        honmei_cand["mark"] = "◎ 本命"
-        honmei_cand["markJemi"] = "◎"
+        honmei_cand["mark"] = "笳・譛ｬ蜻ｽ"
+        honmei_cand["markJemi"] = "笳・
 
     rem_ranked = [h for h in ranked if h["mark"] == "-"]
     if len(rem_ranked) > 0:
-        rem_ranked[0]["mark"] = "○ 対抗"
-        rem_ranked[0]["markJemi"] = "○"
+        rem_ranked[0]["mark"] = "笳・蟇ｾ謚・
+        rem_ranked[0]["markJemi"] = "笳・
     if len(rem_ranked) > 1:
-        rem_ranked[1]["mark"] = "▲ 単穴"
-        rem_ranked[1]["markJemi"] = "▲"
+        rem_ranked[1]["mark"] = "笆ｲ 蜊倡ｩｴ"
+        rem_ranked[1]["markJemi"] = "笆ｲ"
 
     ana_cand = next((h for h in rem_ranked if h["mark"] == "-" and 6.5 <= float(h.get("odds", 15.0)) <= 50.0 and float(h.get("ev", 0)) >= 1.05 and not h.get("hasUnfavorable", False)), None)
     if not ana_cand:
         ana_cand = next((h for h in rem_ranked if h["mark"] == "-" and 6.5 <= float(h.get("odds", 15.0)) <= 50.0), None)
     if ana_cand:
-        ana_cand["mark"] = "☆ 爆発期待穴"
-        ana_cand["markJemi"] = "☆"
+        ana_cand["mark"] = "笘・辷・匱譛溷ｾ・ｩｴ"
+        ana_cand["markJemi"] = "笘・
         if float(ana_cand.get("ev", 1.0)) < 1.12:
             ana_cand["ev"] = 1.15
 
     sub_c = 0
     for h in rem_ranked:
         if h["mark"] == "-" and sub_c < 3:
-            h["mark"] = "△ 連下"
-            h["markJemi"] = "△"
+            h["mark"] = "笆ｳ 騾｣荳・
+            h["markJemi"] = "笆ｳ"
             sub_c += 1
 
     ana_ranked = sorted(
@@ -409,7 +409,7 @@ def enrich_zscore_ev_and_marks(horses_list):
         ),
         reverse=True
     )
-    symbols_ana = ["◎", "○", "▲", "☆", "△", "△"]
+    symbols_ana = ["笳・, "笳・, "笆ｲ", "笘・, "笆ｳ", "笆ｳ"]
     for i, h in enumerate(ana_ranked[:len(symbols_ana)]):
         h["markAna"] = symbols_ana[i]
 
@@ -418,7 +418,7 @@ def enrich_zscore_ev_and_marks(horses_list):
         key=lambda x: (float(x.get("pureSpeedScore", x.get("speedScore", 80.0))), -float(x.get("odds", 99.0))),
         reverse=True
     )
-    symbols_spd = ["◎", "○", "▲", "☆", "△", "△"]
+    symbols_spd = ["笳・, "笳・, "笆ｲ", "笘・, "笆ｳ", "笆ｳ"]
     for i, h in enumerate(spd_ranked[:len(symbols_spd)]):
         h["markSpeed"] = symbols_spd[i]
 
@@ -427,7 +427,7 @@ def enrich_zscore_ev_and_marks(horses_list):
         key=lambda x: (float(x.get("paceBiasScore", 80.0)), float(x.get("speedScore", 80.0))),
         reverse=True
     )
-    symbols_pace = ["◎", "○", "▲", "☆", "△", "△"]
+    symbols_pace = ["笳・, "笳・, "笆ｲ", "笘・, "笆ｳ", "笆ｳ"]
     for i, h in enumerate(pace_ranked[:len(symbols_pace)]):
         h["markPace"] = symbols_pace[i]
 
@@ -436,20 +436,20 @@ def build_yanaga_dynamic_strategy(detail):
     if not horses:
         return {
             "honmei_num": 1, "confidence": "B", "confidenceScore": 85,
-            "isLowPayout": False, "summary": "データ解析中", "recommendation": "データ準備中"
+            "isLowPayout": False, "summary": "繝・・繧ｿ隗｣譫蝉ｸｭ", "recommendation": "繝・・繧ｿ貅門ｙ荳ｭ"
         }
 
     chaos_level = detail.get("chaosLevel", "SEMI_CHAOS")
     pace_type = detail.get("paceType", "NORMAL")
     is_wet = detail.get("isWet", False)
-    pace_label = "前残りスロー" if pace_type == "SLOW" else ("差し有利ハイペース" if pace_type == "HIGH" else "平均ペース")
-    wet_note = "【道悪・パワー適性重視】" if is_wet else ""
+    pace_label = "蜑肴ｮ九ｊ繧ｹ繝ｭ繝ｼ" if pace_type == "SLOW" else ("蟾ｮ縺玲怏蛻ｩ繝上う繝壹・繧ｹ" if pace_type == "HIGH" else "蟷ｳ蝮・・繝ｼ繧ｹ")
+    wet_note = "縲宣％謔ｪ繝ｻ繝代Ρ繝ｼ驕ｩ諤ｧ驥崎ｦ悶・ if is_wet else ""
 
-    honmei = next((h for h in horses if "◎" in str(h.get("mark", ""))), horses[0])
-    taikou = next((h for h in horses if "○" in str(h.get("mark", ""))), None)
-    tanana = next((h for h in horses if "▲" in str(h.get("mark", ""))), None)
-    ana = next((h for h in horses if "☆" in str(h.get("mark", ""))), None)
-    renge = [h for h in horses if "△" in str(h.get("mark", ""))]
+    honmei = next((h for h in horses if "笳・ in str(h.get("mark", ""))), horses[0])
+    taikou = next((h for h in horses if "笳・ in str(h.get("mark", ""))), None)
+    tanana = next((h for h in horses if "笆ｲ" in str(h.get("mark", ""))), None)
+    ana = next((h for h in horses if "笘・ in str(h.get("mark", ""))), None)
+    renge = [h for h in horses if "笆ｳ" in str(h.get("mark", ""))]
 
     axis_horse = honmei
     if taikou and honmei.get("hasUnfavorable") and not taikou.get("hasUnfavorable"):
@@ -467,20 +467,20 @@ def build_yanaga_dynamic_strategy(detail):
     if chaos_level == "SOLID":
         tan_yen = 600 if h_ev >= 1.10 else 400
         uma_yen = 1000 - tan_yen
-        rec_items.append(f"【単勝】{h_num} (1点/{tan_yen}円)")
+        rec_items.append(f"縲仙腰蜍昴捜h_num} (1轤ｹ/{tan_yen}蜀・")
         if t_num:
-            rec_items.append(f"【馬連本線】{h_num} - {t_num} (1点/{uma_yen}円)")
+            rec_items.append(f"縲宣ｦｬ騾｣譛ｬ邱壹捜h_num} - {t_num} (1轤ｹ/{uma_yen}蜀・")
         if tan_num:
-            rec_items.append(f"【馬連押さえ】{h_num} - {tan_num} (1点/200円)")
+            rec_items.append(f"縲宣ｦｬ騾｣謚ｼ縺輔∴縲捜h_num} - {tan_num} (1轤ｹ/200蜀・")
 
         if renge:
-            plus_items.append(f"ワイド {h_num}-{renge[0]['num']}")
+            plus_items.append(f"繝ｯ繧､繝・{h_num}-{renge[0]['num']}")
             if len(renge) > 1 and t_num:
-                plus_items.append(f"三連複 {h_num}-{t_num}-{renge[0]['num']}")
+                plus_items.append(f"荳蛾｣隍・{h_num}-{t_num}-{renge[0]['num']}")
 
         summary_text = (
-            f"{wet_note}展開予測は【{pace_label}】。条件不利のない{h_num}番{axis_horse['name']}（偏差値:{h_z} / EV:{h_ev}）が盤石。"
-            f"1/8ケリー基準に基づき【単勝＋馬連本線】へ資金を集中。"
+            f"{wet_note}螻暮幕莠域ｸｬ縺ｯ縲須pace_label}縲代よ擅莉ｶ荳榊茜縺ｮ縺ｪ縺кh_num}逡ｪ{axis_horse['name']}・亥￥蟾ｮ蛟､:{h_z} / EV:{h_ev}・峨′逶､遏ｳ縲・
+            f"1/8繧ｱ繝ｪ繝ｼ蝓ｺ貅悶↓蝓ｺ縺･縺阪仙腰蜍晢ｼ矩ｦｬ騾｣譛ｬ邱壹代∈雉・≡繧帝寔荳ｭ縲・
         )
 
     elif chaos_level == "SEMI_CHAOS":
@@ -501,45 +501,45 @@ def build_yanaga_dynamic_strategy(detail):
 
         trio_combos = trio_combos[:7]
         if trio_combos:
-            rec_items.append(f"【三連複F】{h_num} ✕ {', '.join(leg2)} ✕ {', '.join(leg3_cands)} ({len(trio_combos)}点/各100円)")
+            rec_items.append(f"縲蝉ｸ蛾｣隍⑦縲捜h_num} 笨・{', '.join(leg2)} 笨・{', '.join(leg3_cands)} ({len(trio_combos)}轤ｹ/蜷・00蜀・")
 
         if t_num:
-            rec_items.append(f"【手堅く馬連/ワイド】{h_num}-{t_num} (1点/200円)")
+            rec_items.append(f"縲先焔蝣・￥鬥ｬ騾｣/繝ｯ繧､繝峨捜h_num}-{t_num} (1轤ｹ/200蜀・")
 
         extra_target = [str(x["num"]) for x in renge[1:3]]
         if extra_target and leg2:
-            plus_items.append(f"ワイド {h_num}-{ana['num']}" if ana else f"三連複 {h_num}-{leg2[0]}-{extra_target[0]}")
+            plus_items.append(f"繝ｯ繧､繝・{h_num}-{ana['num']}" if ana else f"荳蛾｣隍・{h_num}-{leg2[0]}-{extra_target[0]}")
             if len(extra_target) > 1:
-                plus_items.append(f"三連複 {h_num}-{leg2[0]}-{extra_target[1]}")
+                plus_items.append(f"荳蛾｣隍・{h_num}-{leg2[0]}-{extra_target[1]}")
 
         summary_text = (
-            f"{wet_note}展開予測は【{pace_label}】。道悪・枠順不利をクリアした{h_num}番{axis_horse['name']}（偏差値:{h_z} / EV:{h_ev}）を主軸に指名。"
-            f"4AI比較とPCI適性から【3連複F＋馬連/ワイド】で確実な的中と回収を狙う。"
+            f"{wet_note}螻暮幕莠域ｸｬ縺ｯ縲須pace_label}縲代る％謔ｪ繝ｻ譫鬆・ｸ榊茜繧偵け繝ｪ繧｢縺励◆{h_num}逡ｪ{axis_horse['name']}・亥￥蟾ｮ蛟､:{h_z} / EV:{h_ev}・峨ｒ荳ｻ霆ｸ縺ｫ謖・錐縲・
+            f"4AI豈碑ｼ・→PCI驕ｩ諤ｧ縺九ｉ縲・騾｣隍⑦・矩ｦｬ騾｣/繝ｯ繧､繝峨代〒遒ｺ螳溘↑逧・ｸｭ縺ｨ蝗槫庶繧堤漁縺・・
         )
 
     else:
         top_group = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x][:4]
         w_main = [f"{h_num}-{x}" for x in top_group[1:]]
-        rec_items.append(f"【ワイド流し】{', '.join(w_main)} ({len(w_main)}点/各200円)")
+        rec_items.append(f"縲舌Ρ繧､繝画ｵ√＠縲捜', '.join(w_main)} ({len(w_main)}轤ｹ/蜷・00蜀・")
         if len(top_group) >= 3:
-            rec_items.append(f"【馬連BOX】{', '.join(top_group[:3])} (3点/各100円)")
+            rec_items.append(f"縲宣ｦｬ騾｣BOX縲捜', '.join(top_group[:3])} (3轤ｹ/蜷・00蜀・")
 
         if len(renge) > 1:
-            plus_items.append(f"ワイド {h_num}-{renge[1]['num']}")
+            plus_items.append(f"繝ｯ繧､繝・{h_num}-{renge[1]['num']}")
             if ana and renge:
-                plus_items.append(f"ワイド {ana['num']}-{renge[0]['num']}")
+                plus_items.append(f"繝ｯ繧､繝・{ana['num']}-{renge[0]['num']}")
 
         summary_text = (
-            f"{wet_note}展開予測は【{pace_label}】で波乱含み。道悪や不利条件で危険な人気馬を軽視し、"
-            f"穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆馬連BOX】で確実に仕留める。"
+            f"{wet_note}螻暮幕莠域ｸｬ縺ｯ縲須pace_label}縲代〒豕｢荵ｱ蜷ｫ縺ｿ縲る％謔ｪ繧・ｸ榊茜譚｡莉ｶ縺ｧ蜊ｱ髯ｺ縺ｪ莠ｺ豌鈴ｦｬ繧定ｻｽ隕悶＠縲・
+            f"遨ｴ蜈哂I謗ｨ螂ｨ鬥ｬ繝ｻ鬮櫓V鬥ｬ繧堤ｵ｡繧√◆縲舌Ρ繧､繝画ｵ√＠・・ｦｬ騾｣BOX縲代〒遒ｺ螳溘↓莉慕蕗繧√ｋ縲・
         )
 
-    total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点', s)] if m])
-    rec_text = " / ".join(rec_items) + f" [本線計{total_pts}点]"
+    total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)轤ｹ', s)] if m])
+    rec_text = " / ".join(rec_items) + f" [譛ｬ邱夊ｨ・total_pts}轤ｹ]"
 
     plus_items = plus_items[:3]
     if plus_items:
-        plus_text = f" ★【確率UPプラス】あと{len(plus_items)}点（{', '.join(plus_items)}）を買い足せば的中確率が上がります（＋{len(plus_items)}点）"
+        plus_text = f" 笘・千｢ｺ邇ⅡP繝励Λ繧ｹ縲代≠縺ｨ{len(plus_items)}轤ｹ・・', '.join(plus_items)}・峨ｒ雋ｷ縺・ｶｳ縺帙・逧・ｸｭ遒ｺ邇・′荳翫′繧翫∪縺呻ｼ茨ｼ宮len(plus_items)}轤ｹ・・
         rec_text += plus_text
 
     return {
@@ -552,16 +552,16 @@ def build_yanaga_dynamic_strategy(detail):
     }
 
 # ==========================================
-# ★決定版修正：2場開催（東京・京都のみ等）でも9Rを含めて確実にWIN5の5レースを抽出する
+# 笘・ｱｺ螳夂沿菫ｮ豁｣・・蝣ｴ髢句ぎ・域擲莠ｬ繝ｻ莠ｬ驛ｽ縺ｮ縺ｿ遲会ｼ峨〒繧・R繧貞性繧√※遒ｺ螳溘↓WIN5縺ｮ5繝ｬ繝ｼ繧ｹ繧呈歓蜃ｺ縺吶ｋ
 # ==========================================
 def assign_exact_win5_races(races_list):
     for r in races_list:
         r["isWin5"] = False
 
-    # まず10R・11Rを抽出
+    # 縺ｾ縺・0R繝ｻ11R繧呈歓蜃ｺ
     cands = [r for r in races_list if r.get("rNum") in [10, 11]]
 
-    # 2場開催などで10R・11Rだけでは5レースに満たない場合、9R〜11Rすべてを候補にして発走時刻・R番号順の後半5レースをWIN5とする
+    # 2蝣ｴ髢句ぎ縺ｪ縺ｩ縺ｧ10R繝ｻ11R縺縺代〒縺ｯ5繝ｬ繝ｼ繧ｹ縺ｫ貅縺溘↑縺・ｴ蜷医・R縲・1R縺吶∋縺ｦ繧貞呵｣懊↓縺励※逋ｺ襍ｰ譎ょ綾繝ｻR逡ｪ蜿ｷ鬆・・蠕悟濠5繝ｬ繝ｼ繧ｹ繧淡IN5縺ｨ縺吶ｋ
     if len(cands) < 5:
         cands = [r for r in races_list if r.get("rNum") in [9, 10, 11]]
 
@@ -580,7 +580,7 @@ def generate_win5_strategy(all_races):
     try:
         win5_races = assign_exact_win5_races(all_races)
         if not win5_races:
-            return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
+            return "WIN5蟇ｾ雎｡繝ｬ繝ｼ繧ｹ縺ｮ蜃ｺ襍ｰ陦ｨ縺檎｢ｺ螳壽ｬ｡隨ｬ縲∝宍驕ｸ雋ｷ縺・岼繧帝・菫｡縺励∪縺吶・
 
         race_analysis = []
         for idx, r in enumerate(win5_races[:5]):
@@ -588,15 +588,15 @@ def generate_win5_strategy(all_races):
             if len(clean_horses) < 3:
                 clean_horses = r.get("horses", [])
             sorted_h = sorted(clean_horses, key=lambda x: float(x.get("speedScore") or 80.0), reverse=True)
-            h1 = sorted_h[0] if len(sorted_h) > 0 else {"num": 1, "name": "有力馬", "speedScore": 90.0, "zScore": 65.0}
-            h2 = sorted_h[1] if len(sorted_h) > 1 else {"num": 2, "name": "対抗馬", "speedScore": 88.0, "zScore": 58.0}
+            h1 = sorted_h[0] if len(sorted_h) > 0 else {"num": 1, "name": "譛牙鴨鬥ｬ", "speedScore": 90.0, "zScore": 65.0}
+            h2 = sorted_h[1] if len(sorted_h) > 1 else {"num": 2, "name": "蟇ｾ謚鈴ｦｬ", "speedScore": 88.0, "zScore": 58.0}
             gap = round(float(h1.get("zScore", 62.0)) - float(h2.get("zScore", 56.0)), 1)
             raw_title = r.get("rawRaceName") or r.get("raceName", f"{r.get('rNum', 10)}R")
             raw_title = re.sub(r"^\d+R\s*", "", raw_title)
 
             race_analysis.append({
                 "idx": idx,
-                "race": f"{r.get('venue', '中央')}{r.get('rNum', '')}R {raw_title}",
+                "race": f"{r.get('venue', '荳ｭ螟ｮ')}{r.get('rNum', '')}R {raw_title}",
                 "gap": gap,
                 "horses": sorted_h
             })
@@ -604,19 +604,19 @@ def generate_win5_strategy(all_races):
         while len(race_analysis) < 5:
             race_analysis.append({
                 "idx": len(race_analysis),
-                "race": f"対象第{len(race_analysis)+1}戦",
+                "race": f"蟇ｾ雎｡隨ｬ{len(race_analysis)+1}謌ｦ",
                 "gap": 2.0,
-                "horses": [{"num": 1, "name": "有力馬", "ev": 1.2, "speedScore": 90.0}, {"num": 2, "name": "対抗馬", "ev": 1.1, "speedScore": 88.0}]
+                "horses": [{"num": 1, "name": "譛牙鴨鬥ｬ", "ev": 1.2, "speedScore": 90.0}, {"num": 2, "name": "蟇ｾ謚鈴ｦｬ", "ev": 1.1, "speedScore": 88.0}]
             })
 
         ranked_by_gap = sorted(race_analysis, key=lambda x: x["gap"], reverse=True)
         if ranked_by_gap[2]["gap"] >= 4.5:
             alloc_counts = [1, 1, 1, 3, 3]
-            plan_name = "計9点（不利なし突出1頭固定×3戦 ＋ 混戦3頭×2戦）"
+            plan_name = "險・轤ｹ・井ｸ榊茜縺ｪ縺礼ｪ∝・1鬆ｭ蝗ｺ螳堙・謌ｦ ・・豺ｷ謌ｦ3鬆ｭﾃ・謌ｦ・・
             total_cost = 900
         else:
             alloc_counts = [1, 1, 2, 2, 2]
-            plan_name = "計8点（不利なし突出1頭固定×2戦 ＋ 2頭押さえ×3戦）"
+            plan_name = "險・轤ｹ・井ｸ榊茜縺ｪ縺礼ｪ∝・1鬆ｭ蝗ｺ螳堙・謌ｦ ・・2鬆ｭ謚ｼ縺輔∴ﾃ・謌ｦ・・
             total_cost = 800
 
         picks_by_race_idx = {}
@@ -625,27 +625,27 @@ def generate_win5_strategy(all_races):
             h_list = r_info["horses"]
 
             if take_n == 1 or len(h_list) <= 1:
-                picks_by_race_idx[r_info["idx"]] = [f"{h_list[0]['num']}番 {h_list[0]['name']}"]
+                picks_by_race_idx[r_info["idx"]] = [f"{h_list[0]['num']}逡ｪ {h_list[0]['name']}"]
             else:
-                selected = [f"{h_list[0]['num']}番 {h_list[0]['name']}"]
+                selected = [f"{h_list[0]['num']}逡ｪ {h_list[0]['name']}"]
                 sub_cands = sorted(h_list[1:6], key=lambda x: float(x.get("ev", 1.0)) * float(x.get("speedScore", 80.0)), reverse=True)
                 for s in sub_cands[:(take_n - 1)]:
-                    selected.append(f"{s['num']}番 {s['name']}")
+                    selected.append(f"{s['num']}逡ｪ {s['name']}")
                 picks_by_race_idx[r_info["idx"]] = selected
 
         lines = [
-            f"【AI厳選WIN5戦略】{plan_name} / 予算{total_cost}円",
-            f"第1戦 [{race_analysis[0]['race']}]: {', '.join(picks_by_race_idx[0])}",
-            f"第2戦 [{race_analysis[1]['race']}]: {', '.join(picks_by_race_idx[1])}",
-            f"第3戦 [{race_analysis[2]['race']}]: {', '.join(picks_by_race_idx[2])}",
-            f"第4戦 [{race_analysis[3]['race']}]: {', '.join(picks_by_race_idx[3])}",
-            f"第5戦 [{race_analysis[4]['race']}]: {', '.join(picks_by_race_idx[4])}",
-            f"狙い: 道悪・条件不利馬を完全除外し、4AI合議＆Zスコア突出馬を軸に高配当を射抜く。"
+            f"縲植I蜴ｳ驕ｸWIN5謌ｦ逡･縲捜plan_name} / 莠育ｮ養total_cost}蜀・,
+            f"隨ｬ1謌ｦ [{race_analysis[0]['race']}]: {', '.join(picks_by_race_idx[0])}",
+            f"隨ｬ2謌ｦ [{race_analysis[1]['race']}]: {', '.join(picks_by_race_idx[1])}",
+            f"隨ｬ3謌ｦ [{race_analysis[2]['race']}]: {', '.join(picks_by_race_idx[2])}",
+            f"隨ｬ4謌ｦ [{race_analysis[3]['race']}]: {', '.join(picks_by_race_idx[3])}",
+            f"隨ｬ5謌ｦ [{race_analysis[4]['race']}]: {', '.join(picks_by_race_idx[4])}",
+            f"迢吶＞: 驕捺が繝ｻ譚｡莉ｶ荳榊茜鬥ｬ繧貞ｮ悟・髯､螟悶＠縲・AI蜷郁ｭｰ・・繧ｹ繧ｳ繧｢遯∝・鬥ｬ繧定ｻｸ縺ｫ鬮倬・蠖薙ｒ蟆・栢縺上・
         ]
         return "\n".join(lines)
     except Exception as e:
-        print(f"[WIN5生成エラー] {e}")
-        return "WIN5対象レースの出走表が確定次第、厳選買い目を配信します。"
+        print(f"[WIN5逕滓・繧ｨ繝ｩ繝ｼ] {e}")
+        return "WIN5蟇ｾ雎｡繝ｬ繝ｼ繧ｹ縺ｮ蜃ｺ襍ｰ陦ｨ縺檎｢ｺ螳壽ｬ｡隨ｬ縲∝宍驕ｸ雋ｷ縺・岼繧帝・菫｡縺励∪縺吶・
 
 def select_top_recommended_race(final_races):
     best_candidate = None
@@ -713,18 +713,18 @@ def parse_race_details(race_info):
     r_name = r_name_elem.get_text(strip=True) if r_name_elem else f"{race_info['r_num']}R"
     r_data_elem = soup.find("div", class_="RaceData01")
     r_data = r_data_elem.get_text(strip=True) if r_data_elem else ""
-    dist_match = re.search(r"(芝|ダ|障)(\d{4}m)", r_data)
+    dist_match = re.search(r"(闃掟繝|髫・(\d{4}m)", r_data)
     dist_str = f" ({dist_match.group(0)})" if dist_match else ""
-    track_type = dist_match.group(1) if dist_match else "芝"
+    track_type = dist_match.group(1) if dist_match else "闃・
     dist_m = int(dist_match.group(2).replace("m", "")) if dist_match else 1600
-    time_match = re.search(r"(\d{2}:\d{2})発走", r_data)
+    time_match = re.search(r"(\d{2}:\d{2})逋ｺ襍ｰ", r_data)
     start_time = time_match.group(1) if time_match else "15:00"
-    is_wet = any(w in r_data for w in ["稍重", "重", "不良"])
+    is_wet = any(w in r_data for w in ["遞埼㍾", "驥・, "荳崎憶"])
 
-    venue_map = {"01":"札幌","02":"函館","03":"福島","04":"新潟","05":"東京","06":"中山","07":"中京","08":"京都","09":"阪神","10":"小倉"}
-    venue = venue_map.get(race_id[4:6], "中央")
+    venue_map = {"01":"譛ｭ蟷・,"02":"蜃ｽ鬢ｨ","03":"遖丞ｳｶ","04":"譁ｰ貎・,"05":"譚ｱ莠ｬ","06":"荳ｭ螻ｱ","07":"荳ｭ莠ｬ","08":"莠ｬ驛ｽ","09":"髦ｪ逾・,"10":"蟆丞・}
+    venue = venue_map.get(race_id[4:6], "荳ｭ螟ｮ")
     r_num = race_info["r_num"]
-    cond_label = "【道悪注意】" if is_wet else ""
+    cond_label = "縲宣％謔ｪ豕ｨ諢上・ if is_wet else ""
     full_race_title = f"{r_num}R {r_name}{dist_str}{cond_label}"
 
     real_odds_dict = get_real_odds_dict(race_id)
@@ -746,7 +746,7 @@ def parse_race_details(race_info):
                 continue
             frame_no = int(frame_td.get_text(strip=True)) if frame_td and frame_td.get_text(strip=True).isdigit() else 4
             h_name = name_td.get_text(strip=True)
-            jockey_str = jockey_td.get_text(strip=True) if jockey_td else "未定"
+            jockey_str = jockey_td.get_text(strip=True) if jockey_td else "譛ｪ螳・
 
             odds_val = real_odds_dict.get(num, 0.0)
             if odds_val <= 1.0:
@@ -817,13 +817,13 @@ def parse_race_details(race_info):
 
     if not is_wet and not fav1.get("hasUnfavorable") and fav1["odds"] <= 2.5 and (fav2["odds"] - fav1["odds"] >= 1.5):
         chaos_level = "SOLID"
-        race_type_label = "手堅いレース（単勝・馬連本線集中）"
+        race_type_label = "謇句・＞繝ｬ繝ｼ繧ｹ・亥腰蜍昴・鬥ｬ騾｣譛ｬ邱夐寔荳ｭ・・
     elif is_wet or fav1["odds"] >= 3.5 or fav1.get("hasUnfavorable") or (fav2["odds"] - fav1["odds"] <= 0.8 and fav1["odds"] >= 2.8):
         chaos_level = "CHAOS"
-        race_type_label = "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）"
+        race_type_label = "豕｢荵ｱ繝ｻ驕捺が隴ｦ謌抵ｼ井ｸｭ遨ｴ繝ｯ繧､繝画ｵ√＠・・ｦｬ騾｣BOX・・
     else:
         chaos_level = "SEMI_CHAOS"
-        race_type_label = "ちょい荒れレース（3連複10点フォーメーション）"
+        race_type_label = "縺｡繧・＞闕偵ｌ繝ｬ繝ｼ繧ｹ・・騾｣隍・0轤ｹ繝輔か繝ｼ繝｡繝ｼ繧ｷ繝ｧ繝ｳ・・
 
     return {
         "raceId": race_id,
@@ -832,7 +832,7 @@ def parse_race_details(race_info):
         "raceName": full_race_title,
         "rawRaceName": r_name,
         "startTime": start_time,
-        "isGraded": "重賞" in r_name or "(G" in r_name or "(L" in r_name,
+        "isGraded": "驥崎ｳ・ in r_name or "(G" in r_name or "(L" in r_name,
         "isWin5": False,
         "isWet": is_wet,
         "chaosLevel": chaos_level,
@@ -844,34 +844,38 @@ def parse_race_details(race_info):
 def build_weekend_guaranteed_schedule(target_yyyymmdd):
     if target_yyyymmdd == "20261101" or target_dt.weekday() == 6:
         schedule_specs = [
-            ("202605041009", "東京", 9, "国立特別", "芝", 1600, "14:25", False),
-            ("202605041010", "東京", 10, "秋嶺ステークス", "ダ", 1300, "15:00", False),
-            ("202605041011", "東京", 11, "天皇賞(秋)(G1)", "芝", 2000, "15:40", True),
-            ("202605041012", "東京", 12, "ペルセウスS", "ダ", 1400, "16:25", False),
-            ("202608051009", "京都", 9, "北野特別", "芝", 2000, "14:35", False),
-            ("202608051010", "京都", 10, "八坂ステークス", "芝", 2200, "15:10", False),
-            ("202608051011", "京都", 11, "カシオペアS(L)", "芝", 1800, "15:50", True),
-            ("202608051012", "京都", 12, "3歳以上2勝クラス", "ダ", 1400, "16:30", False),
-            ("202603030209", "福島", 9, "磐梯山特別", "芝", 2600, "14:15", False),
-            ("202603030210", "福島", 10, "五色沼特別", "芝", 1800, "14:50", False),
-            ("202603030211", "福島", 11, "福島民友カップ(L)", "ダ", 1700, "15:25", True),
-            ("202603030212", "福島", 12, "3歳以上1勝クラス", "芝", 1200, "16:05", False),
+            ("202605041009", "譚ｱ莠ｬ", 9, "蝗ｽ遶狗音蛻･", "闃・, 1600, "14:25", False),
+            ("202605041010", "譚ｱ莠ｬ", 10, "遘句ｶｺ繧ｹ繝・・繧ｯ繧ｹ", "繝", 1300, "15:00", False),
+            ("202605041011", "譚ｱ莠ｬ", 11, "螟ｩ逧・ｳ・遘・(G1)", "闃・, 2000, "15:40", True),
+            ("202605041012", "譚ｱ莠ｬ", 12, "繝壹Ν繧ｻ繧ｦ繧ｹS", "繝", 1400, "16:25", False),
+            ("202608051009", "莠ｬ驛ｽ", 9, "蛹鈴㍽迚ｹ蛻･", "闃・, 2000, "14:35", False),
+            ("202608051010", "莠ｬ驛ｽ", 10, "蜈ｫ蝮ゅせ繝・・繧ｯ繧ｹ", "闃・, 2200, "15:10", False),
+            ("202608051011", "莠ｬ驛ｽ", 11, "繧ｫ繧ｷ繧ｪ繝壹いS(L)", "闃・, 1800, "15:50", True),
+            ("202608051012", "莠ｬ驛ｽ", 12, "3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "繝", 1400, "16:30", False),
+            ("202603030209", "遖丞ｳｶ", 9, "逎先｢ｯ螻ｱ迚ｹ蛻･", "闃・, 2600, "14:15", False),
+            ("202603030210", "遖丞ｳｶ", 10, "莠碑牡豐ｼ迚ｹ蛻･", "闃・, 1800, "14:50", False),
+            ("202603030211", "遖丞ｳｶ", 11, "遖丞ｳｶ豌大暑繧ｫ繝・・(L)", "繝", 1700, "15:25", True),
+            ("202603030212", "遖丞ｳｶ", 12, "3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "闃・, 1200, "16:05", False),
         ]
     else:
         schedule_specs = [
-            ("202605040909", "東京", 9, "オキザリス賞", "ダ", 1400, "14:20", False),
-            ("202605040910", "東京", 10, "紅葉ステークス", "芝", 1600, "14:55", False),
-            ("202605040911", "東京", 11, "アルテミスS(G3)", "芝", 1600, "15:35", True),
-            ("202605040912", "東京", 12, "3歳以上2勝クラス", "ダ", 1600, "16:10", False),
-            ("202608050909", "京都", 9, "醍醐特別", "芝", 1200, "14:30", False),
-            ("202608050910", "京都", 10, "古都ステークス", "芝", 3000, "15:05", False),
-            ("202608050911", "京都", 11, "ファンタジーS(G3)", "芝", 1400, "15:45", True),
-            ("202608050912", "京都", 12, "3歳以上2勝クラス", "ダ", 1200, "16:20", False),
+            ("202605040909", "譚ｱ莠ｬ", 9, "繧ｪ繧ｭ繧ｶ繝ｪ繧ｹ雉・, "繝", 1400, "14:20", False),
+            ("202605040910", "譚ｱ莠ｬ", 10, "邏・痩繧ｹ繝・・繧ｯ繧ｹ", "闃・, 1600, "14:55", False),
+            ("202605040911", "譚ｱ莠ｬ", 11, "繧｢繝ｫ繝・Α繧ｹS(G3)", "闃・, 1600, "15:35", True),
+            ("202605040912", "譚ｱ莠ｬ", 12, "3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "繝", 1600, "16:10", False),
+            ("202608050909", "莠ｬ驛ｽ", 9, "驢埼・迚ｹ蛻･", "闃・, 1200, "14:30", False),
+            ("202608050910", "莠ｬ驛ｽ", 10, "蜿､驛ｽ繧ｹ繝・・繧ｯ繧ｹ", "闃・, 3000, "15:05", False),
+            ("202608050911", "莠ｬ驛ｽ", 11, "繝輔ぃ繝ｳ繧ｿ繧ｸ繝ｼS(G3)", "闃・, 1400, "15:45", True),
+            ("202608050912", "莠ｬ驛ｽ", 12, "3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "繝", 1200, "16:20", False),
+        ("202603030109", "遖丞ｳｶ", 9, "3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "闃・, 2000, "14:15", False),
+        ("202603030110", "遖丞ｳｶ", 10, "鬟ｯ蝮よｸｩ豕臥音蛻･", "闃・, 1200, "14:50", False),
+        ("202603030111", "遖丞ｳｶ", 11, "繧ｭ繝薙ち繧ｭS", "闃・, 1200, "15:25", False),
+        ("202603030112", "遖丞ｳｶ", 12, "3豁ｳ莉･荳・蜍昴け繝ｩ繧ｹ", "繝", 1700, "16:05", False),
         ]
 
     db_horse_names = list(horses_db.keys())
-    jockey_pool = ["ルメール", "川田", "戸崎圭", "武豊", "坂井", "松山", "横山武", "西村淳", "鮫島駿", "岩田望", "三浦", "菅原明", "津村", "団野"]
-    style_pool = [("逃げ", 0.90), ("先行", 0.78), ("先行", 0.78), ("差し", 0.48), ("差し", 0.48), ("追込", 0.25)]
+    jockey_pool = ["繝ｫ繝｡繝ｼ繝ｫ", "蟾晉伐", "謌ｸ蟠主惆", "豁ｦ雎・, "蝮ゆｺ・, "譚ｾ螻ｱ", "讓ｪ螻ｱ豁ｦ", "隘ｿ譚第ｷｳ", "魄ｫ蟲ｶ鬧ｿ", "蟯ｩ逕ｰ譛・, "荳画ｵｦ", "闖・次譏・, "豢･譚・, "蝗｣驥・]
+    style_pool = [("騾・￡", 0.90), ("蜈郁｡・, 0.78), ("蜈郁｡・, 0.78), ("蟾ｮ縺・, 0.48), ("蟾ｮ縺・, 0.48), ("霑ｽ霎ｼ", 0.25)]
 
     built_races = []
     for rid, venue, r_num, r_name, tr_type, dist_m, st_time, is_graded in schedule_specs:
@@ -879,7 +883,7 @@ def build_weekend_guaranteed_schedule(target_yyyymmdd):
         r_seed = int(rid[-8:])
         for num in range(1, 13):
             idx_h = (built_races.__len__() * 13 + num - 1) % max(1, len(db_horse_names))
-            h_name = db_horse_names[idx_h] if db_horse_names else f"{venue}特別馬{num}号"
+            h_name = db_horse_names[idx_h] if db_horse_names else f"{venue}迚ｹ蛻･鬥ｬ{num}蜿ｷ"
             j_name = jockey_pool[(r_seed + num * 3) % len(jockey_pool)]
             st_str, pos_sc = style_pool[(r_seed + num) % len(style_pool)]
             odds_v = round(2.2 + ((num * 5 + r_seed) % 38) * 1.1, 1)
@@ -909,7 +913,7 @@ def build_weekend_guaranteed_schedule(target_yyyymmdd):
 
         enrich_zscore_ev_and_marks(processed_horses)
         chaos_level = "SOLID" if r_num == 9 else ("SEMI_CHAOS" if r_num in [10, 11] else "CHAOS")
-        race_type_label = "手堅いレース（単勝・馬連本線集中）" if chaos_level == "SOLID" else ("ちょい荒れレース（3連複10点フォーメーション）" if chaos_level == "SEMI_CHAOS" else "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）")
+        race_type_label = "謇句・＞繝ｬ繝ｼ繧ｹ・亥腰蜍昴・鬥ｬ騾｣譛ｬ邱夐寔荳ｭ・・ if chaos_level == "SOLID" else ("縺｡繧・＞闕偵ｌ繝ｬ繝ｼ繧ｹ・・騾｣隍・0轤ｹ繝輔か繝ｼ繝｡繝ｼ繧ｷ繝ｧ繝ｳ・・ if chaos_level == "SEMI_CHAOS" else "豕｢荵ｱ繝ｻ驕捺が隴ｦ謌抵ｼ井ｸｭ遨ｴ繝ｯ繧､繝画ｵ√＠・・ｦｬ騾｣BOX・・)
 
         det = {
             "raceId": rid, "rNum": r_num, "venue": venue,
@@ -999,7 +1003,7 @@ def check_live_finished_races(check_yyyymmdd):
     if not rids:
         return
 
-    venue_map = {"01":"札幌","02":"函館","03":"福島","04":"新潟","05":"東京","06":"中山","07":"中京","08":"京都","09":"阪神","10":"小倉"}
+    venue_map = {"01":"譛ｭ蟷・,"02":"蜃ｽ鬢ｨ","03":"遖丞ｳｶ","04":"譁ｰ貎・,"05":"譚ｱ莠ｬ","06":"荳ｭ螻ｱ","07":"荳ｭ莠ｬ","08":"莠ｬ驛ｽ","09":"髦ｪ逾・,"10":"蟆丞・}
     date_label = f"{int(check_yyyymmdd[4:6])}/{int(check_yyyymmdd[6:8])}"
 
     for rid in sorted(list(rids)):
@@ -1017,11 +1021,11 @@ def check_live_finished_races(check_yyyymmdd):
         if len(top3) < 3:
             continue
 
-        v_name = venue_map.get(rid[4:6], "中央")
+        v_name = venue_map.get(rid[4:6], "荳ｭ螟ｮ")
         r_title_elem = soup.find("div", class_="RaceName") or soup.find("h1", class_="RaceName")
         r_title = r_title_elem.get_text(strip=True) if r_title_elem else f"{r_num}R"
 
-        payout_map = {"単勝": 0, "馬連": 0, "ワイド": 0, "3連複": 0}
+        payout_map = {"蜊伜享": 0, "鬥ｬ騾｣": 0, "繝ｯ繧､繝・: 0, "3騾｣隍・: 0}
         for p_table in soup.find_all("table"):
             for ptr in p_table.find_all("tr"):
                 th = ptr.find("th")
@@ -1030,13 +1034,13 @@ def check_live_finished_races(check_yyyymmdd):
                 th_txt = th.get_text(strip=True)
                 tds = ptr.find_all("td")
                 if len(tds) >= 2:
-                    yens = re.findall(r"[\d,]+円", tds[1].get_text(strip=True))
+                    yens = re.findall(r"[\d,]+蜀・, tds[1].get_text(strip=True))
                     if not yens:
                         yens = re.findall(r"[\d,]+", tds[1].get_text(strip=True))
                     if yens:
                         try:
-                            val = int(yens[0].replace("円", "").replace(",", ""))
-                            for k in ["単勝", "馬連", "ワイド", "3連複"]:
+                            val = int(yens[0].replace("蜀・, "").replace(",", ""))
+                            for k in ["蜊伜享", "鬥ｬ騾｣", "繝ｯ繧､繝・, "3騾｣隍・]:
                                 if k in th_txt and val >= 100:
                                     payout_map[k] = val
                         except ValueError:
@@ -1064,11 +1068,11 @@ stats_data = {
     "invest": 0,
     "payout": 0,
     "mark_stats": {
-        "◎": {"total": 0, "top3": 0},
-        "○": {"total": 0, "top3": 0},
-        "▲": {"total": 0, "top3": 0},
-        "☆": {"total": 0, "top3": 0},
-        "△": {"total": 0, "top3": 0}
+        "笳・: {"total": 0, "top3": 0},
+        "笳・: {"total": 0, "top3": 0},
+        "笆ｲ": {"total": 0, "top3": 0},
+        "笘・: {"total": 0, "top3": 0},
+        "笆ｳ": {"total": 0, "top3": 0}
     },
     "checked_races": [],
     "hit_details": [],
@@ -1083,9 +1087,9 @@ for rid, res in OFFICIAL_RESULTS.items():
     r_date = res["date"]
     stats_data["all_bet_races"].append({"date": r_date, "venue": res["venue"], "raceName": res["raceName"]})
 
-    for sym in ["◎", "○", "▲", "☆"]:
+    for sym in ["笳・, "笳・, "笆ｲ", "笘・]:
         stats_data["mark_stats"][sym]["total"] += 1
-    stats_data["mark_stats"]["△"]["total"] += 3
+    stats_data["mark_stats"]["笆ｳ"]["total"] += 3
 
     for hit_sym in res.get("marks_hit", []):
         if hit_sym in stats_data["mark_stats"]:
@@ -1109,7 +1113,7 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
     stats_data["total_bets"] += 1
     stats_data["invest"] += 1000
     r_date = res.get("date", "10/31")
-    v_name = res.get("venue", "中央")
+    v_name = res.get("venue", "荳ｭ螟ｮ")
     r_name = res.get("raceName", "")
 
     stats_data["all_bet_races"].append({"date": r_date, "venue": v_name, "raceName": r_name})
@@ -1128,9 +1132,9 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
         for h in pred.get("horses", []):
             m = str(h.get("mark", ""))
             hnum = h.get("num")
-            if "◎" in m:
+            if "笳・ in m:
                 honmei_num = hnum
-            for sym in ["◎", "○", "▲", "☆", "△"]:
+            for sym in ["笳・, "笳・, "笆ｲ", "笘・, "笆ｳ"]:
                 if sym in m:
                     stats_data["mark_stats"][sym]["total"] += 1
                     marked_nums.append(hnum)
@@ -1141,9 +1145,9 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
 
         if honmei_num in top3 and len(other_marked_in_top3) >= 1:
             is_hit = True
-            payout_gain = res["payout"].get("ワイド", 0) + res["payout"].get("馬連", 0)
+            payout_gain = res["payout"].get("繝ｯ繧､繝・, 0) + res["payout"].get("鬥ｬ騾｣", 0)
             if payout_gain == 0:
-                payout_gain = res["payout"].get("3連複", 800)
+                payout_gain = res["payout"].get("3騾｣隍・, 800)
 
     if is_hit:
         stats_data["hit_count"] += 1
@@ -1169,7 +1173,7 @@ for m, data in stats_data.get("mark_stats", {}).items():
         "count": f"{k}/{t}"
     }
 
-print("=== 2. レース情報の動的クローリング開始 ===")
+print("=== 2. 繝ｬ繝ｼ繧ｹ諠・ｱ縺ｮ蜍慕噪繧ｯ繝ｭ繝ｼ繝ｪ繝ｳ繧ｰ髢句ｧ・===")
 detected_races = collect_target_races_dynamically(target_date)
 
 final_races = []
@@ -1187,10 +1191,10 @@ for r_info in detected_races:
             final_races.append(detail)
             saved_predictions[detail["raceId"]] = detail
     except Exception as e:
-        print(f"[レース解析スキップ] {e}")
+        print(f"[繝ｬ繝ｼ繧ｹ隗｣譫舌せ繧ｭ繝・・] {e}")
 
 if not final_races:
-    print(f"[Backup Schedule] 外部通信制限のため、{target_date_disp} の最新特別・重賞番組表を構築します...")
+    print(f"[Backup Schedule] 螟夜Κ騾壻ｿ｡蛻ｶ髯舌・縺溘ａ縲＋target_date_disp} 縺ｮ譛譁ｰ迚ｹ蛻･繝ｻ驥崎ｳ樒分邨・｡ｨ繧呈ｧ狗ｯ峨＠縺ｾ縺・..")
     final_races = build_weekend_guaranteed_schedule(target_date)
     for _r in final_races: saved_predictions.setdefault(_r["raceId"], _r)
 
@@ -1222,4 +1226,4 @@ output_data = {
 with open("data/today.json", "w", encoding="utf-8") as f:
     json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-print(f"=== 処理完了: 対象日 {target_date_disp} / 出力レース数:{len(final_races)} ===")
+print(f"=== 蜃ｦ逅・ｮ御ｺ・ 蟇ｾ雎｡譌･ {target_date_disp} / 蜃ｺ蜉帙Ξ繝ｼ繧ｹ謨ｰ:{len(final_races)} ===")
