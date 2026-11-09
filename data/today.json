@@ -1,6 +1,6 @@
 {
   "targetDate": "2026-11-14",
-  "updatedAt": "2026-11-09 17:30",
+  "updatedAt": "2026-11-09 18:20",
   "races": [
     {
       "venue": "東京",
@@ -97,7 +97,7 @@
           "markJemi": "◎",
           "markAna": "○"
         },
-     {
+        {
           "num": 2,
           "name": "マイネルサンプル",
           "jockey": "騎手F",
