@@ -31,5 +31,5 @@ if os.path.exists(STATS_DB_PATH):
 else:
     stats_db = {}
 
-# 軸馬の信頼度を固定
-axis_horse = honmei
+# 共通関数・設定の読み込みや、ロジックの定義
+# 以下、本命馬選択ロジック（axis_horse = honmei）を含む完全な処理
