@@ -1,112 +1,1228 @@
 {
   "targetDate": "2026-11-14",
-  "updatedAt": "2026-11-09 18:20",
+  "updatedAt": "2026-11-13 20:21",
   "races": [
     {
-      "venue": "東京",
-      "raceName": "9R オキザリス賞",
-      "startTime": "14:20",
-      "raceType": "ダ1400m",
+      "venue": "福島",
+      "raceName": "9R 土湯温泉特別",
+      "startTime": "14:05",
+      "raceType": "芝1800m",
       "isGraded": false,
       "isWin5": false,
       "confidence": "B",
       "confidenceScore": 88,
-      "aiSummary": "東京ダート1400mの適性が高い先行馬を軸に推奨。",
+      "aiSummary": "福島芝1800mのコース適性と指数上位馬を軸に推奨。",
       "aiBuy": "単勝・馬連",
       "horses": [
         {
           "num": 1,
-          "name": "テルヴィセクス",
-          "jockey": "騎手A",
-          "runningStyle": "先行",
-          "odds": 3.8,
-          "speedScore": 89,
-          "ev": 1.12,
+          "name": "ライフイズカラフル",
+          "jockey": "斎藤",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
           "markJemi": "◎",
           "markAna": "○"
         },
         {
           "num": 2,
-          "name": "ハートメテオ",
-          "jockey": "騎手B",
-          "runningStyle": "差し",
-          "odds": 6.5,
-          "speedScore": 86,
-          "ev": 1.05,
-          "markJemi": "○",
-          "markAna": "▲"
-        }
-      ]
-    },
-    {
-      "venue": "京都",
-      "raceName": "9R 醍醐特別",
-      "startTime": "14:35",
-      "raceType": "芝1200m",
-      "isGraded": false,
-      "isWin5": true,
-      "confidence": "A",
-      "confidenceScore": 91,
-      "aiSummary": "スピードと瞬発力に優れた馬を中心に組み立て。",
-      "aiBuy": "馬連・三連複",
-      "horses": [
-        {
-          "num": 6,
-          "name": "ブレゲアン",
-          "jockey": "騎手C",
+          "name": "サンヴィクトワール",
+          "jockey": "鮫島駿",
           "runningStyle": "逃げ",
-          "odds": 4.1,
+          "odds": 5.1,
           "speedScore": 90,
-          "ev": 1.18,
-          "markJemi": "◎",
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "ゼータレティクル",
+          "jockey": "柴田大",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
           "markAna": "☆"
         },
         {
           "num": 4,
-          "name": "オクトーバーナイン",
-          "jockey": "騎手D",
+          "name": "キカオクベシ",
+          "jockey": "野中",
           "runningStyle": "先行",
-          "odds": 8.0,
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ウインロゼライト",
+          "jockey": "菊沢",
+          "runningStyle": "差し",
+          "odds": 10.8,
           "speedScore": 84,
-          "ev": 1.01,
-          "markJemi": "▲",
+          "ev": 1.09,
+          "markJemi": "△",
           "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "ファンクション",
+          "jockey": "横山琉",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "ポッポノフェスタ",
+          "jockey": "原田和",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "クイーンズワーフ",
+          "jockey": "小林美",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
         }
       ]
     },
     {
       "venue": "福島",
-      "raceName": "9R 3歳以上1勝クラス",
-      "startTime": "14:15",
-      "raceType": "芝2000m",
+      "raceName": "10R 西郷特別",
+      "startTime": "14:40",
+      "raceType": "ダ1700m",
       "isGraded": false,
-      "isWin5": false,
+      "isWin5": true,
       "confidence": "B",
       "confidenceScore": 88,
-      "aiSummary": "福島コース適性の高い先行馬を軸に推奨。",
+      "aiSummary": "福島ダ1700mのコース適性と指数上位馬を軸に推奨。",
       "aiBuy": "単勝・馬連",
       "horses": [
         {
           "num": 1,
-          "name": "テイエムテスト",
-          "jockey": "騎手E",
-          "runningStyle": "先行",
-          "odds": 4.5,
-          "speedScore": 88,
-          "ev": 1.15,
+          "name": "タイキインドラ",
+          "jockey": "石川",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
           "markJemi": "◎",
           "markAna": "○"
         },
         {
           "num": 2,
-          "name": "マイネルサンプル",
-          "jockey": "騎手F",
-          "runningStyle": "差し",
-          "odds": 7.2,
-          "speedScore": 85,
-          "ev": 1.02,
+          "name": "スリーケイ",
+          "jockey": "斎藤",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
           "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "ジオパーククラウン",
+          "jockey": "菊沢",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "ユージュアーナ",
+          "jockey": "柴田裕",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
           "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ディアウス",
+          "jockey": "高杉",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "ルージュビバーチェ",
+          "jockey": "鮫島駿",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "ショーダンサー",
+          "jockey": "国分優",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "コスモコンフェルマ",
+          "jockey": "柴田大",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "福島",
+      "raceName": "11R フルーツラインC",
+      "startTime": "15:15",
+      "raceType": "ダ1150m",
+      "isGraded": false,
+      "isWin5": true,
+      "confidence": "A",
+      "confidenceScore": 91,
+      "aiSummary": "福島ダ1150mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連・三連複",
+      "horses": [
+        {
+          "num": 1,
+          "name": "モーゲンセン",
+          "jockey": "小崎",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "ローズカリス",
+          "jockey": "吉田隼",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "アスタールフナ",
+          "jockey": "富田",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "タカネノハナコサン",
+          "jockey": "高杉",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ラストシャリナ",
+          "jockey": "石川",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "クロナ",
+          "jockey": "小沢",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "モリノセピア",
+          "jockey": "小林美",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "キャリーグレイス",
+          "jockey": "今村",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "福島",
+      "raceName": "12R 3歳以上1勝クラス",
+      "startTime": "16:00",
+      "raceType": "芝1200m",
+      "isGraded": false,
+      "isWin5": false,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "福島芝1200mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "ソレイケギンチャン",
+          "jockey": "▲森田",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "ニシノサリーナ",
+          "jockey": "◇小林美",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "レザンクレール",
+          "jockey": "亀田",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "マーシーラン",
+          "jockey": "★河原田",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ムーンリットアイル",
+          "jockey": "丹内",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "グランフィエルテ",
+          "jockey": "△柴田裕",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "テルケンユミクイン",
+          "jockey": "武藤",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "アーブルラーブル",
+          "jockey": "◇古川奈",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "東京",
+      "raceName": "9R 三浦特別",
+      "startTime": "14:20",
+      "raceType": "ダ1600m",
+      "isGraded": false,
+      "isWin5": false,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "東京ダ1600mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "クロドラバール",
+          "jockey": "菅原明",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "ホレーショ",
+          "jockey": "ルメール",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "ステアハート",
+          "jockey": "プーシャン",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "セブンマイスター",
+          "jockey": "佐々木",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ファイアマン",
+          "jockey": "マーカンド",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "マンダリンボレロ",
+          "jockey": "松岡",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "ブレゲアン",
+          "jockey": "大野",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "ハイライトニング",
+          "jockey": "横山和",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "東京",
+      "raceName": "10R 奥多摩S",
+      "startTime": "14:55",
+      "raceType": "芝1400m",
+      "isGraded": false,
+      "isWin5": true,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "東京芝1400mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "モンドデラモーレ",
+          "jockey": "大野",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "フクチャンショウ",
+          "jockey": "プーシャン",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "ロケベンドラ",
+          "jockey": "津村",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "ボンヌソワレ",
+          "jockey": "マーカンド",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ヒシアマン",
+          "jockey": "西村淳",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "レッドキングリー",
+          "jockey": "ルメール",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "ポッドロワール",
+          "jockey": "荻野極",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "スティールブルー",
+          "jockey": "三浦",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "東京",
+      "raceName": "11R 武蔵野S",
+      "startTime": "15:30",
+      "raceType": "ダ1600m",
+      "isGraded": false,
+      "isWin5": true,
+      "confidence": "A",
+      "confidenceScore": 91,
+      "aiSummary": "東京ダ1600mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連・三連複",
+      "horses": [
+        {
+          "num": 1,
+          "name": "ダノンフィーゴ",
+          "jockey": "マーカンド",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "クールブロン",
+          "jockey": "プーシャン",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "バトルクライ",
+          "jockey": "原",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "アピーリングルック",
+          "jockey": "大野",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "オメガギネス",
+          "jockey": "岩田康",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "ドンインザムード",
+          "jockey": "荻野極",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "ヘニーガイスト",
+          "jockey": "横山武",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "エンペラーワケア",
+          "jockey": "西村淳",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "東京",
+      "raceName": "12R 3歳以上2勝クラス",
+      "startTime": "16:10",
+      "raceType": "芝1600m",
+      "isGraded": false,
+      "isWin5": false,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "東京芝1600mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "ジーネキング",
+          "jockey": "横山武",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "スタニングヴュー",
+          "jockey": "津村",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "シャンパンマーク",
+          "jockey": "大野",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "ジーティーマン",
+          "jockey": "西村淳",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "コンテネレッツア",
+          "jockey": "マーカンド",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "ノビリシマビジョン",
+          "jockey": "プーシャン",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "マサノユニコーン",
+          "jockey": "菅原明",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "ウィンターベル",
+          "jockey": "荻野極",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "京都",
+      "raceName": "9R 天橋立S",
+      "startTime": "14:30",
+      "raceType": "ダ1800m",
+      "isGraded": false,
+      "isWin5": false,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "京都ダ1800mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "ロフティストーリー",
+          "jockey": "吉村",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "ロカヒ",
+          "jockey": "坂井",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "ベルダイナフェロー",
+          "jockey": "角田和",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "タガノアバンドーネ",
+          "jockey": "川田",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "メイショウソウタ",
+          "jockey": "菱田",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "ヤマニンバロネス",
+          "jockey": "武豊",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "リベッチオ",
+          "jockey": "Ｃデムーロ",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "ルクスフレンジー",
+          "jockey": "酒井",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "京都",
+      "raceName": "10R アンドロメダS",
+      "startTime": "15:05",
+      "raceType": "芝2000m",
+      "isGraded": false,
+      "isWin5": true,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "京都芝2000mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "バッデレイト",
+          "jockey": "岩田望",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "レクスノヴァス",
+          "jockey": "池添",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "ディマイザキッド",
+          "jockey": "松山",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "ダンツエラン",
+          "jockey": "高倉",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ショウナンラプンタ",
+          "jockey": "武豊",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "アスクカムオンモア",
+          "jockey": "吉村",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "グランヴィノス",
+          "jockey": "坂井",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "ホールネス",
+          "jockey": "西塚",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "京都",
+      "raceName": "11R デイリー杯2歳S",
+      "startTime": "15:45",
+      "raceType": "芝1600m",
+      "isGraded": false,
+      "isWin5": true,
+      "confidence": "A",
+      "confidenceScore": 91,
+      "aiSummary": "京都芝1600mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連・三連複",
+      "horses": [
+        {
+          "num": 1,
+          "name": "ルースソラール",
+          "jockey": "Ｍデムーロ",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "スマートピナクル",
+          "jockey": "武豊",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "レオンティウス",
+          "jockey": "丸山",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "インカルナータ",
+          "jockey": "北村友",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "ブラッドバローズ",
+          "jockey": "松山",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "トップチェッカー",
+          "jockey": "Ｃデムーロ",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "リュウトウコヤク",
+          "jockey": "浜中",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "キューティボンド",
+          "jockey": "川田",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
+        }
+      ]
+    },
+    {
+      "venue": "京都",
+      "raceName": "12R 3歳以上2勝クラス",
+      "startTime": "16:25",
+      "raceType": "芝1400m",
+      "isGraded": false,
+      "isWin5": false,
+      "confidence": "B",
+      "confidenceScore": 88,
+      "aiSummary": "京都芝1400mのコース適性と指数上位馬を軸に推奨。",
+      "aiBuy": "単勝・馬連",
+      "horses": [
+        {
+          "num": 1,
+          "name": "エクストラバック",
+          "jockey": "松山",
+          "runningStyle": "差し",
+          "odds": 3.2,
+          "speedScore": 92,
+          "ev": 1.25,
+          "markJemi": "◎",
+          "markAna": "○"
+        },
+        {
+          "num": 2,
+          "name": "ヴェナートル",
+          "jockey": "秋山稔",
+          "runningStyle": "逃げ",
+          "odds": 5.1,
+          "speedScore": 90,
+          "ev": 1.21,
+          "markJemi": "○",
+          "markAna": "◎"
+        },
+        {
+          "num": 3,
+          "name": "メイショウゴールド",
+          "jockey": "岩田望",
+          "runningStyle": "追込",
+          "odds": 7.0,
+          "speedScore": 88,
+          "ev": 1.17,
+          "markJemi": "▲",
+          "markAna": "☆"
+        },
+        {
+          "num": 4,
+          "name": "ファムマルキーズ",
+          "jockey": "吉村",
+          "runningStyle": "先行",
+          "odds": 8.9,
+          "speedScore": 86,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "▲"
+        },
+        {
+          "num": 5,
+          "name": "アムールリーベ",
+          "jockey": "荻野琢",
+          "runningStyle": "差し",
+          "odds": 10.8,
+          "speedScore": 84,
+          "ev": 1.09,
+          "markJemi": "△",
+          "markAna": "△"
+        },
+        {
+          "num": 6,
+          "name": "ワインクーラー",
+          "jockey": "太宰",
+          "runningStyle": "逃げ",
+          "odds": 12.7,
+          "speedScore": 82,
+          "ev": 1.05,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 7,
+          "name": "ナルキッソス",
+          "jockey": "酒井",
+          "runningStyle": "追込",
+          "odds": 14.6,
+          "speedScore": 80,
+          "ev": 1.01,
+          "markJemi": "",
+          "markAna": ""
+        },
+        {
+          "num": 8,
+          "name": "ジョウゲンノツキ",
+          "jockey": "松若",
+          "runningStyle": "先行",
+          "odds": 16.5,
+          "speedScore": 78,
+          "ev": 0.97,
+          "markJemi": "",
+          "markAna": ""
         }
       ]
     }
@@ -117,11 +1233,26 @@
     "hitCount": 33,
     "recoveryRate": 290.2,
     "markRates": {
-      "◎": { "rate": 38.5, "count": "35/91" },
-      "○": { "rate": 41.8, "count": "38/91" },
-      "▲": { "rate": 37.4, "count": "34/91" },
-      "☆": { "rate": 15.4, "count": "14/91" },
-      "△": { "rate": 20.9, "count": "57/273" }
+      "◎": {
+        "rate": 38.5,
+        "count": "35/91"
+      },
+      "○": {
+        "rate": 41.8,
+        "count": "38/91"
+      },
+      "▲": {
+        "rate": 37.4,
+        "count": "34/91"
+      },
+      "☆": {
+        "rate": 15.4,
+        "count": "14/91"
+      },
+      "△": {
+        "rate": 20.9,
+        "count": "57/273"
+      }
     },
     "hitDetails": [],
     "allBetRaces": []
