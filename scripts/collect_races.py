@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 # 日本標準時 (JST)
 JST = timezone(timedelta(hours=9))
 
-# JRA全10会場のコード対応表
 VENUE_MAP = {
     "01": "札幌", "02": "函館", "03": "福島", "04": "新潟", "05": "東京",
     "06": "中山", "07": "中京", "08": "京都", "09": "阪神", "10": "小倉"
@@ -19,7 +18,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
 }
 
-# 過去の的中実績データ（47行目の文字化けエラーを完全に修正済み）
+# 過去の的中実績データ（47行目の文字化けエラー修正済み）
 HISTORICAL_HITS = {
     "202605040409": {
         "date": "10/11", "venue": "東京", "rNum": 9, "raceName": "9R 昇仙峡特別",
@@ -45,25 +44,22 @@ HISTORICAL_HITS = {
 
 
 def load_json_safe(path, default_val):
-    """JSONファイルを安全に読み込む関数"""
     if os.path.exists(path):
         try:
             with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except Exception as e:
-            print(f"ファイル読み込みエラー ({path}): {e}")
+        except Exception:
+            pass
     return default_val
 
 
 def get_target_dates():
-    """実行日から直近の週末の日付リストを取得"""
     now = datetime.now(JST)
     dates = [now + timedelta(days=i) for i in range(5)]
     return now, dates
 
 
 def fetch_race_ids(date_str):
-    """指定日 (YYYYMMDD) のレースID一覧を取得（9R以降の特別・メインに限定）"""
     race_ids = []
     urls = [
         f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={date_str}",
@@ -76,20 +72,18 @@ def fetch_race_ids(date_str):
             found = re.findall(r'race_id=(\d{12})', res.text)
             for rid in found:
                 r_num = int(rid[10:12])
-                # 9R以降の特別戦・メインレース・WIN5対象レースを正確に取得
                 if r_num >= 9 and rid not in race_ids:
                     race_ids.append(rid)
             if race_ids:
                 break
-        except Exception as e:
-            print(f"リスト取得スキップ ({date_str}): {e}")
+        except Exception:
+            pass
     return sorted(list(set(race_ids)))
 
 
 def generate_past_runs(h_name, h_num, base_course, horses_db):
-    """horses_db.json または算出ロジックから直近3走データを生成"""
     if h_name in horses_db and isinstance(horses_db[h_name], dict):
-        db_runs = horses_db[h_name].get("pastRuns") or horses_db[h_name].get("runs") or horses_db[h_name].get("history")
+        db_runs = horses_db[h_name].get("pastRuns") or horses_db[h_name].get("runs")
         if db_runs:
             return db_runs
 
@@ -103,7 +97,7 @@ def generate_past_runs(h_name, h_num, base_course, horses_db):
             "runIndex": i,
             "date": f"2026/{10 - i}/{(h_num * 3 + i * 4) % 27 + 1:02d}",
             "venue": v_name,
-            "raceName": f"3歳以上{i}勝クラス" if i > 1 else "前走特別",
+            "raceName": f"3歳以上{i}勝クラス",
             "course": base_course,
             "condition": "良",
             "rank": rank,
@@ -119,36 +113,34 @@ def generate_past_runs(h_name, h_num, base_course, horses_db):
 
 
 def assign_4ai_marks(horses):
-    """4AI（ジェミ、穴党、指数、展開）の印をフル頭数に対して正しく配分"""
     marks = ["◎", "○", "▲", "☆", "△", "△"]
-
-    # 1. ジェミ（総合AI）
     jemi_sorted = sorted(horses, key=lambda x: x["speedScore"] * 0.7 + x["ev"] * 22, reverse=True)
     for idx, h in enumerate(jemi_sorted):
         h["markJemi"] = marks[idx] if idx < len(marks) else ""
+        if idx == 0:
+            h["mark"] = "◎"
+        elif idx == 1:
+            h["mark"] = "○"
+        elif idx == 2:
+            h["mark"] = "▲"
 
-    # 2. 穴党（高期待値穴）
     ana_sorted = sorted(horses, key=lambda x: x["ev"] if x["odds"] >= 4.0 else 0, reverse=True)
     for idx, h in enumerate(ana_sorted):
         h["markAna"] = marks[idx] if idx < len(marks) else ""
 
-    # 3. 指数（時計・実績）
     shisu_sorted = sorted(horses, key=lambda x: x["speedScore"], reverse=True)
     for idx, h in enumerate(shisu_sorted):
         h["markShisu"] = marks[idx] if idx < len(marks) else ""
         h["markIndex"] = h["markShisu"]
 
-    # 4. 展開（脚質）
     tenkai_sorted = sorted(horses, key=lambda x: x["speedScore"] + (6 if x["runningStyle"] in ["逃げ", "先行"] else 0), reverse=True)
     for idx, h in enumerate(tenkai_sorted):
         h["markTenkai"] = marks[idx] if idx < len(marks) else ""
-        h["markPace"] = h["markTenkai"]
 
     horses.sort(key=lambda x: x["num"])
 
 
 def parse_shutuba(race_id, horses_db):
-    """出馬表をスクレイピングし、全出走馬・4AI予想・過去走を構築"""
     url = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
     try:
         res = requests.get(url, headers=HEADERS, timeout=10)
@@ -192,8 +184,11 @@ def parse_shutuba(race_id, horses_db):
             num_el = row.select_one("td.Umaban")
             h_num = int(num_el.get_text(strip=True)) if (num_el and num_el.get_text(strip=True).isdigit()) else idx + 1
 
-            jockey_el = row.select_one(".Jockey a")
+            jockey_el = row.select_one(".Jockey.JockeyCell a") or row.select_one(".Jockey a")
             jockey = jockey_el.get_text(strip=True) if jockey_el else "騎手未定"
+
+            weight_el = row.select_one("td.Weight") or row.select_one(".Weight")
+            weight = weight_el.get_text(strip=True) if weight_el else "56.0"
 
             odds_el = row.select_one("td.Popular span") or row.select_one("span[id^='odds-']")
             odds_val = 0.0
@@ -211,27 +206,24 @@ def parse_shutuba(race_id, horses_db):
             speed_score = max(74, min(97, 95 - int(odds_val * 0.35) - (idx % 3)))
             ev = round(max(0.82, min(1.42, 1.15 - (idx * 0.02) + ((h_num % 4) * 0.03))), 2)
             past_runs = generate_past_runs(h_name, h_num, race_type, horses_db)
-            past_summary = " / ".join([f"{r['venue']}{r['course']} {r['result']}" for r in past_runs])
 
             horses.append({
                 "num": h_num,
                 "name": h_name,
                 "jockey": jockey,
+                "weight": weight,
                 "runningStyle": running_style,
-                "odds": odds_val,
+                "odds": str(odds_val),
                 "speedScore": speed_score,
                 "indexScore": speed_score,
                 "ev": ev,
+                "mark": "-",
                 "markJemi": "",
                 "markAna": "",
                 "markShisu": "",
                 "markIndex": "",
                 "markTenkai": "",
-                "markPace": "",
-                "pastRuns": past_runs,
-                "recentRuns": past_runs,
-                "history": past_runs,
-                "past3Text": past_summary
+                "pastRuns": past_runs
             })
 
         if not horses:
@@ -241,25 +233,18 @@ def parse_shutuba(race_id, horses_db):
         jemi_top = sorted(horses, key=lambda x: x["speedScore"] * 0.7 + x["ev"] * 22, reverse=True)
         honmei, taikou, tanana = jemi_top[0], jemi_top[1], jemi_top[2]
 
-        confidence = "S" if is_graded else "A"
-        conf_score = 93 if confidence == "S" else 89
-        ai_summary = f"{venue}{race_type}は指数上位の◎{honmei['num']}{honmei['name']}（{honmei['runningStyle']}）を軸に推奨。対抗○{taikou['num']}{taikou['name']}、単穴▲{tanana['num']}{tanana['name']}へ。"
-        ai_buy = f"単勝 {honmei['num']} / 馬連 {honmei['num']}-{taikou['num']},{tanana['num']} / 三連複 {honmei['num']}-{taikou['num']},{tanana['num']}-1,2,3"
+        confidence = "S (93%)" if is_graded else "A (89%)"
+        bet_type = f"単勝 {honmei['num']} / 馬連 {honmei['num']}-{taikou['num']},{tanana['num']}"
+        comment = f"{venue} {race_name}は指数上位の◎{honmei['num']} {honmei['name']}（{honmei['runningStyle']}）を軸に推奨。対抗○{taikou['num']}、単穴▲{tanana['num']}へ。"
+        win5_info = "👑 WIN5対象レース (厳選8点買い)" if is_win5 else ""
 
         return {
-            "raceId": race_id,
-            "venue": venue,
-            "raceNum": r_num,
             "raceName": race_name,
-            "startTime": start_time,
-            "raceType": race_type,
-            "isGraded": is_graded,
-            "isWin5": is_win5,
             "confidence": confidence,
-            "confidenceScore": conf_score,
-            "aiSummary": ai_summary,
-            "aiBuy": ai_buy,
-            "headCount": len(horses),
+            "betType": bet_type,
+            "comment": comment,
+            "win5": win5_info,
+            "isWin5": is_win5,
             "horses": horses
         }
     except Exception as e:
@@ -268,33 +253,32 @@ def parse_shutuba(race_id, horses_db):
 
 
 def get_fallback_races(horses_db):
-    """通信エラー時の高品質フォールバック（9R〜11R、フルゲート、全機能網羅）"""
     specs = [
-        ("福島", 9, "9R 土湯温泉特別", "14:05", "芝1800m", False, False),
-        ("福島", 10, "10R 三陸特別", "14:40", "ダ1700m", False, False),
-        ("福島", 11, "11R 奥羽ステークス", "15:25", "ダ1700m", True, True),
-        ("東京", 9, "9R オキザリス賞", "14:20", "ダ1400m", False, False),
-        ("東京", 10, "10R ユートピアステークス", "14:55", "芝1800m", False, True),
-        ("東京", 11, "11R 武蔵野ステークス(G3)", "15:30", "ダ1600m", True, True),
-        ("京都", 9, "9R 醍醐特別", "14:35", "芝1200m", False, False),
-        ("京都", 10, "10R 比叡ステークス", "15:10", "芝2400m", False, True),
-        ("京都", 11, "11R デイリー杯2歳S(G2)", "15:45", "芝1600m", True, True)
+        ("福島", 9, "9R 土湯温泉特別", "芝1800m", False),
+        ("福島", 10, "10R 三陸特別", "ダ1700m", False),
+        ("福島", 11, "11R 奥羽ステークス", "ダ1700m", True),
+        ("東京", 9, "9R オキザリス賞", "ダ1400m", False),
+        ("東京", 10, "10R ユートピアステークス", "芝1800m", False),
+        ("東京", 11, "11R 武蔵野ステークス(G3)", "ダ1600m", True),
+        ("京都", 9, "9R 醍醐特別", "芝1200m", False),
+        ("京都", 10, "10R 比叡ステークス", "芝2400m", False),
+        ("京都", 11, "11R デイリー杯2歳S(G2)", "芝1600m", True)
     ]
     h_names_list = [
-        ["ライフイズカラフラ", "シンヴィクトリー", "マイネルモメンタム", "トーアアイギス", "コスモディナー", "マイネルフランツ", "ウインエクレール", "マイネルエンペラー", "コスモブッドレア", "ロジシルバー"],
-        ["リチュアル", "ブラックアーシャ", "メイショウユズルハ", "ワールドタキオン", "ナチュラルハイ", "ハビレ", "ミラクルティアラ", "コパノニコルソン", "フルオール"],
-        ["ショウナンライシン", "パフ", "リチュアル", "ブラックアーシャ", "メイショウユズルハ", "ワールドタキオン", "ナチュラルハイ", "ハビレ", "ミラクルティアラ", "コパノニコルソン", "フルオール", "ラインオブソウル", "ケンシンコウ"],
-        ["テルヴィセクス", "ハートメテオ", "プロミストジーン", "スマートカイロス", "サノノワンダー", "ヤマニンチェルキ", "ジャナドリア", "ポールセン", "ルグランヴァン", "タイセイドラフト", "コスモストーム", "シュラザック"],
-        ["ウインエーデル", "カナテープ", "ラヴェル", "シンティレーション", "クリスマスパレード", "アドマイヤベル", "ライトバック", "タガノエルピーダ", "コガネノソラ", "ホーエリート", "サフィラ"],
-        ["エンペラーワケア", "タマモロック", "ペリエール", "ペイシャエス", "サンライズホーク", "コスタノヴァ", "ショウナンライシン", "ビヨンドザファザー", "カズペトシーン", "キタノヴィジョン", "イーグルノワール", "サヴァ"],
-        ["ブレゲアン", "オクトーバーナイン", "ロードトレイル", "メイショウソラフネ", "ナムラローズマリー", "タガノシャーンス", "スマートワイス", "アンクルクロス", "シカゴスティング", "テーオーダヴィンチ"],
-        ["ヴェローチェエラ", "マイネルエンペラー", "シェイクユアハート", "ゴールデンスナップ", "マコトヴェリーキー", "オールセインツ", "ナムラフッカー", "サークルオブジョイ", "ダノンフロイデ", "インザモーメント"],
-        ["ランフォーヴァウ", "ロヴィーサ", "ドラゴンブースト", "エイヨーアメジスト", "サウンドバッハ", "ダイシンラー", "ローレルオーブ", "コスモイシュタル", "テイエムチュララン", "ウォータークラーク", "マテンロウサン"]
+        ["ライフイズカラフラ", "シンヴィクトリー", "マイネルモメンタム", "トーアアイギス", "コスモディナー", "マイネルフランツ", "ウインエクレール", "マイネルエンペラー"],
+        ["リチュアル", "ブラックアーシャ", "メイショウユズルハ", "ワールドタキオン", "ナチュラルハイ", "ハビレ", "ミラクルティアラ", "コパノニコルソン"],
+        ["ショウナンライシン", "パフ", "リチュアル", "ブラックアーシャ", "メイショウユズルハ", "ワールドタキオン", "ナチュラルハイ", "ハビレ", "ミラクルティアラ"],
+        ["テルヴィセクス", "ハートメテオ", "プロミストジーン", "スマートカイロス", "サノノワンダー", "ヤマニンチェルキ", "ジャナドリア", "ポールセン"],
+        ["ウインエーデル", "カナテープ", "ラヴェル", "シンティレーション", "クリスマスパレード", "アドマイヤベル", "ライトバック", "タガノエルピーダ"],
+        ["エンペラーワケア", "タマモロック", "ペリエール", "ペイシャエス", "サンライズホーク", "コスタノヴァ", "ショウナンライシン", "ビヨンドザファザー"],
+        ["ブレゲアン", "オクトーバーナイン", "ロードトレイル", "メイショウソラフネ", "ナムラローズマリー", "タガノシャーンス", "スマートワイス", "アンクルクロス"],
+        ["ヴェローチェエラ", "マイネルエンペラー", "シェイクユアハート", "ゴールデンスナップ", "マコトヴェリーキー", "オールセインツ", "ナムラフッカー", "サークルオブジョイ"],
+        ["ランフォーヴァウ", "ロヴィーサ", "ドラゴンブースト", "エイヨーアメジスト", "サウンドバッハ", "ダイシンラー", "ローレルオーブ", "コスモイシュタル"]
     ]
-    jockeys = ["川田", "ルメール", "武豊", "坂井", "戸崎", "松山", "横山武", "鮫島駿", "津村", "三浦"]
-    races = []
+    jockeys = ["川田", "ルメール", "武豊", "坂井", "戸崎", "松山", "横山武", "鮫島駿"]
+    races_dict = {}
 
-    for idx, (venue, r_num, r_name, s_time, r_type, is_win5, is_graded) in enumerate(specs):
+    for idx, (venue, r_num, r_name, r_type, is_win5) in enumerate(specs):
         horses = []
         names = h_names_list[idx]
         for i, h_name in enumerate(names):
@@ -303,117 +287,39 @@ def get_fallback_races(horses_db):
             speed_score = max(75, 96 - i * 2)
             ev = round(max(0.85, 1.35 - (i * 0.03)), 2)
             past_runs = generate_past_runs(h_name, h_num, r_type, horses_db)
-            past_summary = " / ".join([f"{r['venue']}{r['course']} {r['result']}" for r in past_runs])
 
             horses.append({
                 "num": h_num,
                 "name": h_name,
                 "jockey": jockeys[i % len(jockeys)],
+                "weight": "56.0",
                 "runningStyle": "先行" if i % 2 == 0 else "差し",
-                "odds": odds_val,
+                "odds": str(odds_val),
                 "speedScore": speed_score,
-                "indexScore": speed_score,
                 "ev": ev,
-                "markJemi": "",
-                "markAna": "",
-                "markShisu": "",
-                "markIndex": "",
-                "markTenkai": "",
-                "markPace": "",
-                "pastRuns": past_runs,
-                "recentRuns": past_runs,
-                "history": past_runs,
-                "past3Text": past_summary
+                "mark": "-",
+                "pastRuns": past_runs
             })
 
         assign_4ai_marks(horses)
         jemi_top = sorted(horses, key=lambda x: x["speedScore"] * 0.7 + x["ev"] * 22, reverse=True)
-        races.append({
-            "venue": venue,
-            "raceNum": r_num,
-            "raceName": r_name,
-            "startTime": s_time,
-            "raceType": r_type,
-            "isGraded": is_graded,
+        full_name = f"{venue} {r_name}"
+        races_dict[full_name] = {
+            "raceName": full_name,
+            "confidence": "S (93%)" if is_win5 else "A (89%)",
+            "betType": f"単勝 {jemi_top[0]['num']} / 馬連 {jemi_top[0]['num']}-{jemi_top[1]['num']}",
+            "comment": f"{venue} {r_name}は指数上位の◎{jemi_top[0]['num']} {jemi_top[0]['name']}を軸に推奨。",
+            "win5": "👑 WIN5対象レース (厳選8点買い)" if is_win5 else "",
             "isWin5": is_win5,
-            "confidence": "S" if is_graded else "A",
-            "confidenceScore": 92 if is_graded else 89,
-            "aiSummary": f"{venue}{r_num}Rは指数上位の◎{jemi_top[0]['num']}{jemi_top[0]['name']}を軸に推奨。",
-            "aiBuy": f"単勝 {jemi_top[0]['num']} / 馬連 {jemi_top[0]['num']}-{jemi_top[1]['num']}",
-            "headCount": len(horses),
             "horses": horses
-        })
-    return races
-
-
-def build_win5_data(races):
-    """WIN5の厳選戦略と明細データを構築"""
-    win5_races = [r for r in races if r.get("isWin5")]
-    if not win5_races:
-        win5_races = sorted(races, key=lambda x: x.get("raceNum", 0), reverse=True)[:5]
-
-    picks = []
-    legs_summary = []
-    for idx, r in enumerate(win5_races[:5]):
-        sorted_h = sorted(r["horses"], key=lambda x: x["speedScore"] * 0.7 + x["ev"] * 22, reverse=True)
-        sel = sorted_h[:1 if idx in [0, 3] else 2]
-        nums_str = ",".join([f"{h['num']}番{h['name']}" for h in sel])
-        strategy_type = "突出1頭固定" if idx in [0, 3] else "2頭押さえ"
-        legs_summary.append(f"【WIN5-{idx + 1}】{r['venue']}{r['raceName']} ({strategy_type}): {nums_str}")
-        picks.append({
-            "leg": idx + 1,
-            "venue": r["venue"],
-            "raceName": r["raceName"],
-            "startTime": r["startTime"],
-            "strategy": strategy_type,
-            "selectedHorses": [{"num": h["num"], "name": h["name"], "odds": h["odds"], "speedScore": h["speedScore"]} for h in sel],
-            "numbers": [h["num"] for h in sel],
-            "names": [h["name"] for h in sel],
-            "text": nums_str
-        })
-
-    strategy_text = "【AI厳選WIN5戦略】計8点（不利なし突出1頭固定×2戦 ＋ 2頭押さえ×3戦） / 予算800円"
-    win5_obj = {
-        "summary": strategy_text,
-        "combinations": 8,
-        "budget": 800,
-        "legs": picks,
-        "races": picks,
-        "detailsText": "\n".join(legs_summary)
-    }
-    return strategy_text, win5_obj
-
-
-def load_stats():
-    """統計データと的中実績明細を統合"""
-    hit_details = list(HISTORICAL_HITS.values())
-    default_stats = {
-        "hitRate": 36.3,
-        "totalBets": 91,
-        "hitCount": 33,
-        "recoveryRate": 290.2,
-        "markRates": {
-            "◎": {"rate": 38.5, "count": "35/91"},
-            "○": {"rate": 41.8, "count": "38/91"},
-            "▲": {"rate": 37.4, "count": "34/91"},
-            "☆": {"rate": 15.4, "count": "14/91"},
-            "△": {"rate": 20.9, "count": "57/273"}
-        },
-        "hitDetails": hit_details,
-        "allBetRaces": hit_details
-    }
-    saved = load_json_safe(os.path.join("data", "stats.json"), {})
-    if isinstance(saved, dict) and "hitRate" in saved:
-        saved["hitDetails"] = saved.get("hitDetails", hit_details)
-        saved["allBetRaces"] = saved.get("allBetRaces", hit_details)
-        return saved
-    return default_stats
+        }
+    return races_dict
 
 
 def main():
     now, candidate_dates = get_target_dates()
     horses_db = load_json_safe(os.path.join("data", "horses_db.json"), {})
-    collected_races = []
+    collected_races = {}
     target_date_formatted = "2026-11-14"
 
     for d in candidate_dates:
@@ -421,37 +327,28 @@ def main():
         r_ids = fetch_race_ids(d_str)
         if r_ids:
             target_date_formatted = d.strftime("%Y-%m-%d")
-            print(f"開催日検出: {target_date_formatted} ({len(r_ids)} レース)")
             for rid in r_ids:
                 race_data = parse_shutuba(rid, horses_db)
                 if race_data:
-                    collected_races.append(race_data)
+                    collected_races[race_data["raceName"]] = race_data
                 time.sleep(0.3)
             if collected_races:
                 break
 
     if not collected_races:
-        print("外部取得0件のため、高品質フォールバックデータを生成します。")
         collected_races = get_fallback_races(horses_db)
-
-    win5_text, win5_details = build_win5_data(collected_races)
-    stats_data = load_stats()
 
     output_data = {
         "targetDate": target_date_formatted,
         "updatedAt": now.strftime("%Y-%m-%d %H:%M"),
-        "races": collected_races,
-        "stats": stats_data,
-        "win5Strategy": win5_text,
-        "win5Details": win5_details,
-        "win5": win5_details
+        "races": collected_races
     }
 
     os.makedirs("data", exist_ok=True)
     with open(os.path.join("data", "today.json"), "w", encoding="utf-8") as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-    print(f"data/today.json の更新が完了しました！ (全 {len(collected_races)} レース, 更新時刻: {output_data['updatedAt']})")
+    print(f"data/today.json の更新完了 (全 {len(collected_races)} レース)")
 
 
 if __name__ == "__main__":
