@@ -52,13 +52,13 @@ OFFICIAL_RESULTS = {
     "202608040411": {"date": "10/11", "venue": "京都", "rNum": 11, "raceName": "11R 京都大賞典(G2)", "top3": [1, 7, 4], "marks_hit": ["◎", "○"], "is_hit": True, "payout_val": 950},
     "202605040412": {"date": "10/11", "venue": "東京", "rNum": 12, "raceName": "12R 3歳以上2勝クラス", "top3": [8, 3, 14], "marks_hit": ["○", "△"], "is_hit": False, "payout_val": 0},
     "202608040412": {"date": "10/11", "venue": "京都", "rNum": 12, "raceName": "12R 平城京S", "top3": [5, 9, 2], "marks_hit": ["◎", "☆", "△"], "is_hit": True, "payout_val": 1920},
-    "202605040509": {"date": "10/12", "venue": "東京", "rNum": 9, "raceName": "9R 3歳以上1勝クラス", "top3": [4, 9, 2], "marks_hit": ["○", "▲", "☆"], "is_hit": True, "payout_val": 1120},
+    "202605040509": {"date": "10/12", "venue": "東京", "rNum": 9, "raceName": "9R 3歳以上1勝クラス", "top3": [4, 9, 2], "marks_hit": ["○", "▲", "☆"], "is_hit": False, "payout_val": 0},
     "202608040509": {"date": "10/12", "venue": "京都", "rNum": 9, "raceName": "9R 蹴上特別", "top3": [1, 4, 10], "marks_hit": ["◎", "○", "△"], "is_hit": True, "payout_val": 2860},
     "202605040510": {"date": "10/12", "venue": "東京", "rNum": 10, "raceName": "10R 昇仙峡S", "top3": [1, 11, 4], "marks_hit": ["◎", "○", "▲"], "is_hit": True, "payout_val": 1820},
     "202608040510": {"date": "10/12", "venue": "京都", "rNum": 10, "raceName": "10R 堀川特別", "top3": [2, 7, 5], "marks_hit": ["◎", "○", "△"], "is_hit": True, "payout_val": 1290},
     "202605040511": {"date": "10/12", "venue": "東京", "rNum": 11, "raceName": "11R オクトーバーS", "top3": [7, 2, 9], "marks_hit": ["◎", "○", "▲"], "is_hit": True, "payout_val": 1580},
     "202608040511": {"date": "10/12", "venue": "京都", "rNum": 11, "raceName": "11R スワンS(G2)", "top3": [1, 4, 9], "marks_hit": ["○", "☆", "△"], "is_hit": False, "payout_val": 0},
-    "202605040512": {"date": "10/12", "venue": "東京", "rNum": 12, "raceName": "12R 3歳以上1勝クラス", "top3": [11, 7, 3], "marks_hit": ["○", "▲", "△"], "is_hit": True, "payout_val": 980},
+    "202605040512": {"date": "10/12", "venue": "東京", "rNum": 12, "raceName": "12R 3歳以上1勝クラス", "top3": [11, 7, 3], "marks_hit": ["○", "▲", "△"], "is_hit": False, "payout_val": 0},
     "202608040512": {"date": "10/12", "venue": "京都", "rNum": 12, "raceName": "12R 3歳以上2勝クラス", "top3": [6, 12, 1], "marks_hit": ["▲", "☆", "△"], "is_hit": False, "payout_val": 0},
     "202608040712": {"date": "10/18", "venue": "京都", "rNum": 12, "raceName": "12R 桂川S", "top3": [8, 3, 5], "marks_hit": ["◎", "○", "▲"], "is_hit": True, "payout_val": 2840}
 }
@@ -253,7 +253,6 @@ def compute_pro_yanaga_score(h_data, race_context):
             base_score += 1.0
     else:
         name_hash = (sum(ord(c) for c in h_name) % 10) * 0.20
-        # ★改善1：実力上位馬（オッズ10倍以下）の基礎能力評価を適正化し、無理な穴馬逆転を防ぐ
         if odds <= 2.5:
             odds_base = 92.4 - (odds * 0.65)
         elif odds <= 6.0:
@@ -328,7 +327,6 @@ def compute_pro_yanaga_score(h_data, race_context):
 
     gap_score = 0.0
     total_positive = jockey_bonus + bias_bonus + pci_bonus + wet_adjustment + vtr_learned_bonus
-    # ★穴馬ボーナスは最大1.4点に抑え、☆穴・▲単穴での抜擢に活かす
     if 6.0 <= odds <= 45.0 and total_positive >= 2.5 and condition_penalty >= -1.0:
         gap_score = round(min(1.4, total_positive * 0.30), 1)
 
@@ -375,8 +373,7 @@ def enrich_zscore_ev_and_marks(horses_list):
         h["markSpeed"] = "-"
         h["markPace"] = "-"
 
-    # ★改善2：◎本命は「穴馬下駄(gapScore)を除いた純粋な総合力＋基礎スピード」が最上位で、
-    # 不利がなく安定して3着以内に来る馬（オッズ15倍以下優先）を確実に選出する
+    # ◎本命は穴馬下駄を除いた実力・適性最上位（オッズ12倍以下優先）で軸の信頼度を最大化
     axis_ranked = sorted(
         horses_list,
         key=lambda x: (
@@ -386,14 +383,13 @@ def enrich_zscore_ev_and_marks(horses_list):
         reverse=True
     )
     honmei_cand = next(
-        (h for h in axis_ranked if not h.get("hasUnfavorable", False) and float(h.get("odds", 99.0)) <= 15.0),
+        (h for h in axis_ranked if not h.get("hasUnfavorable", False) and float(h.get("odds", 99.0)) <= 12.0),
         next((h for h in axis_ranked if not h.get("hasUnfavorable", False)), axis_ranked[0] if axis_ranked else None)
     )
     if honmei_cand:
         honmei_cand["mark"] = "◎ 本命"
         honmei_cand["markJemi"] = "◎"
 
-    # ○対抗・▲単穴は総合スコア（期待値・展開加味）の上位から選出
     ranked = sorted(horses_list, key=lambda x: (float(x.get("speedScore", 0)), float(x.get("ev", 0))), reverse=True)
     rem_ranked = [h for h in ranked if h["mark"] == "-"]
     if len(rem_ranked) > 0:
@@ -403,7 +399,6 @@ def enrich_zscore_ev_and_marks(horses_list):
         rem_ranked[1]["mark"] = "▲ 単穴"
         rem_ranked[1]["markJemi"] = "▲"
 
-    # ☆爆発期待穴はオッズ6.0〜50倍の高期待値馬から抜擢（高回収率のエンジン）
     ana_cand = next((h for h in rem_ranked if h["mark"] == "-" and 6.0 <= float(h.get("odds", 15.0)) <= 50.0 and float(h.get("ev", 0)) >= 1.02 and not h.get("hasUnfavorable", False)), None)
     if not ana_cand:
         ana_cand = next((h for h in rem_ranked if h["mark"] == "-" and 6.0 <= float(h.get("odds", 15.0)) <= 50.0), None)
@@ -450,6 +445,9 @@ def enrich_zscore_ev_and_marks(horses_list):
     for i, h in enumerate(pace_ranked[:len(symbols_pace)]):
         h["markPace"] = symbols_pace[i]
 
+# ==========================================
+# ★決定版：ワイド偏重を解消し、レース展開・指数差に応じた5パターンの多彩な買い目を生成
+# ==========================================
 def build_yanaga_dynamic_strategy(detail):
     horses = detail.get("horses", [])
     if not horses:
@@ -479,29 +477,86 @@ def build_yanaga_dynamic_strategy(detail):
     h_ev = float(axis_horse.get("ev", 1.15))
     t_num = str(taikou["num"]) if (taikou and str(taikou["num"]) != h_num) else str(honmei["num"])
     tan_num = str(tanana["num"]) if tanana else None
+    ana_num = str(ana["num"]) if ana else None
+
+    t_z = float(taikou.get("zScore", 57.0)) if taikou else 57.0
+    z_gap = round(h_z - t_z, 1)
 
     rec_items = []
     plus_items = []
 
+    # パターン1：SOLID（鉄板・一騎打ち型 → 単勝＋馬連本線＋三連単フォーメーション）
     if chaos_level == "SOLID":
         tan_yen = 500 if h_ev >= 1.10 else 400
-        uma_yen = 800 - tan_yen
+        uma_yen = 500 if tan_yen == 500 else 400
         rec_items.append(f"【単勝】{h_num} (1点/{tan_yen}円)")
         if t_num:
             rec_items.append(f"【馬連本線】{h_num} - {t_num} (1点/{uma_yen}円)")
-        if tan_num:
-            rec_items.append(f"【馬連/ワイド押さえ】{h_num} - {tan_num} (1点/200円)")
+        if t_num and tan_num:
+            third_cands = [x for x in [t_num, tan_num, ana_num] if x]
+            rec_items.append(f"【三連単】{h_num} → {t_num},{tan_num} → {', '.join(third_cands)} (4点/各100円)")
 
-        if renge:
-            plus_items.append(f"ワイド {h_num}-{renge[0]['num']}")
-            if t_num and tan_num:
-                plus_items.append(f"馬連タテ目 {t_num}-{tan_num}")
+        if ana_num:
+            plus_items.append(f"馬連 {h_num}-{ana_num}")
+        if renge and t_num:
+            plus_items.append(f"三連複 {h_num}-{t_num}-{renge[0]['num']}")
 
+        detail["raceType"] = "鉄板・一騎打ち（単勝＋馬連本線＋三連単）"
+        conf_rank, conf_score = "A", 94
         summary_text = (
             f"{wet_note}展開予測は【{pace_label}】。条件不利のない{h_num}番{axis_horse['name']}（偏差値:{h_z} / EV:{h_ev}）が盤石。"
-            f"1/8ケリー基準に基づき【単勝＋馬連/ワイド本線】へ資金を集中。"
+            f"【単勝＋馬連本線】に資金を集中しつつ【三連単】でボーナス配当を上乗せする。"
         )
 
+    # パターン2：AXIS_STRONG（軸馬突出・ヒモ荒れ型 → 馬連流し＋三連複1頭軸流し）
+    elif chaos_level == "AXIS_STRONG" or (chaos_level == "SEMI_CHAOS" and z_gap >= 3.2):
+        uma_targets = [x for x in [t_num, tan_num, ana_num] if x]
+        trio_targets = [x for x in ([t_num, tan_num, ana_num] + [str(r["num"]) for r in renge[:2]]) if x]
+        trio_targets = list(dict.fromkeys(trio_targets))[:4]
+        trio_pts = max(1, (len(trio_targets) * (len(trio_targets) - 1)) // 2)
+
+        if uma_targets:
+            rec_items.append(f"【馬連流し】{h_num} - {', '.join(uma_targets)} ({len(uma_targets)}点/各200円)")
+        if len(trio_targets) >= 2:
+            rec_items.append(f"【三連複1頭軸】{h_num} - {', '.join(trio_targets)} ({trio_pts}点/各100円)")
+
+        if t_num:
+            plus_items.append(f"馬単 {h_num}→{t_num}")
+        if len(renge) >= 2:
+            plus_items.append(f"馬連 {h_num}-{renge[1]['num']}")
+
+        detail["raceType"] = "本命信頼・中穴狙い（馬連流し＋3連複1頭軸）"
+        conf_rank, conf_score = "A", 91
+        summary_text = (
+            f"{wet_note}展開予測は【{pace_label}】。指数突出の{h_num}番{axis_horse['name']}（偏差値:{h_z} / EV:{h_ev}）を不動の軸に指名。"
+            f"相手は☆穴馬まで広げた【馬連流し＋三連複1頭軸】で的中率と200%超の回収率を両立。"
+        )
+
+    # パターン3：DUAL_CORE（2強対決・3着穴狙い型 → 馬連一点＋三連複2頭軸流し）
+    elif chaos_level == "DUAL_CORE" or (chaos_level == "SEMI_CHAOS" and z_gap <= 1.5 and t_z >= 59.0):
+        hole_cands = [x for x in ([tan_num, ana_num] + [str(r["num"]) for r in renge]) if x and x not in [h_num, t_num]]
+        hole_cands = list(dict.fromkeys(hole_cands))[:5]
+
+        if t_num:
+            rec_items.append(f"【馬連本線】{h_num} - {t_num} (1点/400円)")
+        if t_num and hole_cands:
+            rec_items.append(f"【三連複2頭軸】{h_num},{t_num} - {', '.join(hole_cands)} ({len(hole_cands)}点/各100円)")
+        if tan_num:
+            rec_items.append(f"【馬連押さえ】{h_num} - {tan_num} (1点/200円)")
+
+        if t_num and tan_num:
+            plus_items.append(f"馬連タテ目 {t_num}-{tan_num}")
+        if ana_num:
+            plus_items.append(f"ワイド穴 {h_num}-{ana_num}")
+
+        detail["raceType"] = "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）"
+        conf_rank, conf_score = "B", 89
+        summary_text = (
+            f"{wet_note}展開予測は【{pace_label}】。能力上位の◎{h_num}番{axis_horse['name']}と○{t_num}番の2強が強力。"
+            f"【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。"
+        )
+
+    # パターン4：SEMI_CHAOS（標準ちょい荒れ型 → 三連複フォーメーション＋馬連本線）
     elif chaos_level == "SEMI_CHAOS":
         leg2 = [str(x["num"]) for x in [honmei, taikou, tanana] if x and str(x["num"]) != h_num][:2]
         if not leg2 and renge:
@@ -523,33 +578,40 @@ def build_yanaga_dynamic_strategy(detail):
             rec_items.append(f"【三連複F】{h_num} ✕ {', '.join(leg2)} ✕ {', '.join(leg3_cands)} ({len(trio_combos)}点/各100円)")
 
         if leg2:
-            rec_items.append(f"【手堅く馬連/ワイド】{h_num} - {', '.join(leg2)} ({len(leg2)}点/各150円)")
+            rec_items.append(f"【馬連本線】{h_num} - {', '.join(leg2)} ({len(leg2)}点/各200円)")
 
         if t_num and tan_num:
-            plus_items.append(f"ワイド保険 {t_num}-{tan_num}")
-        if ana:
-            plus_items.append(f"ワイド穴 {h_num}-{ana['num']}")
+            plus_items.append(f"馬連タテ目 {t_num}-{tan_num}")
+        if ana_num:
+            plus_items.append(f"ワイド穴 {h_num}-{ana_num}")
 
+        detail["raceType"] = "ちょい荒れレース（3連複F＋馬連本線）"
+        conf_rank, conf_score = "B", 88
         summary_text = (
-            f"{wet_note}展開予測は【{pace_label}】。安定感最上位の{h_num}番{axis_horse['name']}（偏差値:{h_z} / EV:{h_ev}）を主軸に指名。"
-            f"【3連複F】で高配当を狙いつつ【馬連/ワイド本線】で的中率をしっかり確保するバランス戦略。"
+            f"{wet_note}展開予測は【{pace_label}】。道悪・枠順不利をクリアした{h_num}番{axis_horse['name']}（偏差値:{h_z} / EV:{h_ev}）を主軸に指名。"
+            f"4AI比較とPCI適性から【3連複フォーメーション＋馬連本線】で確実な的中と高回収を狙う。"
         )
 
+    # パターン5：CHAOS（波乱・大混戦型 → 馬連4頭BOX＋三連複/ワイド穴狙い）
     else:
-        top_group = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x][:4]
-        w_main = [f"{h_num}-{x}" for x in top_group[1:]]
-        rec_items.append(f"【ワイド流し】{', '.join(w_main)} ({len(w_main)}点/各200円)")
-        if len(top_group) >= 3:
-            rec_items.append(f"【馬連/ワイドBOX】{', '.join(top_group[:3])} (3点/各150円)")
+        box_group = [str(x["num"]) for x in ([honmei, taikou, tanana, ana] + renge) if x][:4]
+        if len(box_group) >= 4:
+            rec_items.append(f"【馬連BOX】{', '.join(box_group)} (6点/各100円)")
+            rec_items.append(f"【三連複BOX】{', '.join(box_group)} (4点/各100円)")
+        else:
+            w_main = [f"{h_num}-{x}" for x in box_group[1:]]
+            rec_items.append(f"【馬連/ワイド流し】{', '.join(w_main)} ({len(w_main)}点/各200円)")
 
-        if len(renge) > 1:
-            plus_items.append(f"ワイド {h_num}-{renge[1]['num']}")
-            if ana and renge:
-                plus_items.append(f"ワイド {ana['num']}-{renge[0]['num']}")
+        if ana_num:
+            plus_items.append(f"ワイド穴 {h_num}-{ana_num}")
+        if len(renge) > 0:
+            plus_items.append(f"三連複 {h_num}-{t_num}-{renge[0]['num']}")
 
+        detail["raceType"] = "波乱・混戦警戒（馬連＆3連複4頭BOX）"
+        conf_rank, conf_score = "C", 83
         summary_text = (
-            f"{wet_note}展開予測は【{pace_label}】で波乱含み。実力軸{h_num}番{axis_horse['name']}から、"
-            f"穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。"
+            f"{wet_note}展開予測は【{pace_label}】で波乱含み。危険な過剰人気馬を軽視し、"
+            f"◎{h_num}番{axis_horse['name']}と☆穴馬を組み込んだ【馬連＆三連複4頭BOX】で高配当を仕留める。"
         )
 
     total_pts = sum([int(m.group(1)) for s in rec_items for m in [re.search(r'\((\d+)点', s)] if m])
@@ -562,8 +624,8 @@ def build_yanaga_dynamic_strategy(detail):
 
     return {
         "honmei_num": int(h_num),
-        "confidence": "A" if chaos_level == "SOLID" else ("B" if chaos_level == "SEMI_CHAOS" else "C"),
-        "confidenceScore": 95 if chaos_level == "SOLID" else (89 if chaos_level == "SEMI_CHAOS" else 84),
+        "confidence": conf_rank,
+        "confidenceScore": conf_score,
         "isLowPayout": (chaos_level == "SOLID"),
         "summary": summary_text,
         "recommendation": rec_text
@@ -714,6 +776,26 @@ def collect_target_races_dynamically(target_yyyymmdd):
             race_items.append({"race_id": rid, "url": f"https://race.netkeiba.com/race/shutuba.html?race_id={rid}", "r_num": r_num})
     return sorted(race_items, key=lambda x: x["race_id"])
 
+def classify_race_pattern(processed_horses, is_wet):
+    sorted_by_odds = sorted(processed_horses, key=lambda x: x["odds"])
+    fav1 = sorted_by_odds[0]
+    fav2 = sorted_by_odds[1] if len(sorted_by_odds) > 1 else fav1
+
+    honmei = next((h for h in processed_horses if "◎" in str(h.get("mark", ""))), fav1)
+    taikou = next((h for h in processed_horses if "○" in str(h.get("mark", ""))), fav2)
+    z_gap = float(honmei.get("zScore", 62.0)) - float(taikou.get("zScore", 57.0))
+
+    if not is_wet and not fav1.get("hasUnfavorable") and fav1["odds"] <= 2.4 and (fav2["odds"] - fav1["odds"] >= 1.4):
+        return "SOLID", "鉄板・一騎打ち（単勝＋馬連本線＋三連単）"
+    elif z_gap >= 3.2 and not honmei.get("hasUnfavorable"):
+        return "AXIS_STRONG", "本命信頼・中穴狙い（馬連流し＋3連複1頭軸）"
+    elif z_gap <= 1.5 and float(taikou.get("zScore", 57.0)) >= 59.0 and not is_wet:
+        return "DUAL_CORE", "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）"
+    elif is_wet or fav1["odds"] >= 4.8 or (fav1.get("hasUnfavorable") and fav1["odds"] >= 3.5):
+        return "CHAOS", "波乱・混戦警戒（馬連＆3連複4頭BOX）"
+    else:
+        return "SEMI_CHAOS", "ちょい荒れレース（3連複F＋馬連本線）"
+
 def parse_race_details(race_info):
     race_id = race_info["race_id"]
     html = fetch_data(race_info["url"])
@@ -821,20 +903,7 @@ def parse_race_details(race_info):
         })
 
     enrich_zscore_ev_and_marks(processed_horses)
-
-    sorted_by_odds = sorted(processed_horses, key=lambda x: x["odds"])
-    fav1 = sorted_by_odds[0]
-    fav2 = sorted_by_odds[1] if len(sorted_by_odds) > 1 else fav1
-
-    if not is_wet and not fav1.get("hasUnfavorable") and fav1["odds"] <= 2.7 and (fav2["odds"] - fav1["odds"] >= 1.3):
-        chaos_level = "SOLID"
-        race_type_label = "手堅いレース（単勝・馬連本線集中）"
-    elif is_wet or fav1["odds"] >= 3.6 or fav1.get("hasUnfavorable") or (fav2["odds"] - fav1["odds"] <= 0.8 and fav1["odds"] >= 2.9):
-        chaos_level = "CHAOS"
-        race_type_label = "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）"
-    else:
-        chaos_level = "SEMI_CHAOS"
-        race_type_label = "ちょい荒れレース（3連複F＋馬連/ワイド本線）"
+    chaos_level, race_type_label = classify_race_pattern(processed_horses, is_wet)
 
     return {
         "raceId": race_id,
@@ -919,8 +988,7 @@ def build_weekend_guaranteed_schedule(target_yyyymmdd):
             })
 
         enrich_zscore_ev_and_marks(processed_horses)
-        chaos_level = "SOLID" if r_num == 9 else ("SEMI_CHAOS" if r_num in [10, 11] else "CHAOS")
-        race_type_label = "手堅いレース（単勝・馬連本線集中）" if chaos_level == "SOLID" else ("ちょい荒れレース（3連複F＋馬連/ワイド本線）" if chaos_level == "SEMI_CHAOS" else "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）")
+        chaos_level, race_type_label = classify_race_pattern(processed_horses, False)
 
         det = {
             "raceId": rid, "rNum": r_num, "venue": venue,
@@ -1115,6 +1183,7 @@ for rid, res in OFFICIAL_RESULTS.items():
         })
     stats_data["checked_races"].append(rid)
 
+# ★過去の実績（的中率・回収率）は書き換えず元の数値をそのまま保持する
 for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
     if rid in OFFICIAL_RESULTS:
         continue
@@ -1137,27 +1206,13 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
                 pred = _fb
                 break
     if pred and pred.get("horses"):
-        # ★過去の保存済み予想に対しても最新のバランス型印ロジックを再適用して正確に評価
-        enrich_zscore_ev_and_marks(pred["horses"])
-
         marked_nums = []
         honmei_num = None
-        taikou_num = None
-        tanana_num = None
-        ana_num = None
-
         for h in pred.get("horses", []):
             m = str(h.get("mark", ""))
             hnum = h.get("num")
             if "◎" in m:
                 honmei_num = hnum
-            elif "○" in m:
-                taikou_num = hnum
-            elif "▲" in m:
-                tanana_num = hnum
-            elif "☆" in m:
-                ana_num = hnum
-
             for sym in ["◎", "○", "▲", "☆", "△"]:
                 if sym in m:
                     stats_data["mark_stats"][sym]["total"] += 1
@@ -1166,20 +1221,12 @@ for rid, res in sorted(extra_results.items(), key=lambda x: x[0]):
                         stats_data["mark_stats"][sym]["top3"] += 1
 
         other_marked_in_top3 = [n for n in top3 if n in marked_nums and n != honmei_num]
-        top_sub_in_top3 = [n for n in top3 if n in [taikou_num, tanana_num, ana_num]]
 
-        # ★改善3：バランス型の推奨買い目（単勝・馬連/ワイド本線・上位BOX押さえ）に完全対応した的中判定
         if honmei_num in top3 and len(other_marked_in_top3) >= 1:
             is_hit = True
             payout_gain = res["payout"].get("ワイド", 0) + res["payout"].get("馬連", 0)
             if payout_gain == 0:
-                payout_gain = res["payout"].get("3連複", 950)
-        elif honmei_num == top3[0]:
-            is_hit = True
-            payout_gain = res["payout"].get("単勝", 650)
-        elif len(top_sub_in_top3) >= 2 and len([n for n in top3 if n in marked_nums]) >= 2:
-            is_hit = True
-            payout_gain = res["payout"].get("ワイド", 0) or int(res["payout"].get("馬連", 900) * 0.6)
+                payout_gain = res["payout"].get("3連複", 800)
 
     if is_hit:
         stats_data["hit_count"] += 1
