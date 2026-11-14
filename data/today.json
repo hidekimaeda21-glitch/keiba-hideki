@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-14 19:57",
+  "updatedAt": "2026-11-14 20:08",
   "targetDate": "2026年11月15日",
   "stats": {
-    "hitRate": 52.4,
-    "recoveryRate": 225.4,
+    "hitRate": 37.9,
+    "recoveryRate": 192.1,
     "totalBets": 103,
-    "hitCount": 54,
+    "hitCount": 39,
     "markRates": {
       "◎": {
         "rate": 44.7,
@@ -73,12 +73,6 @@
       },
       {
         "date": "10/12",
-        "venue": "東京",
-        "raceName": "9R 3歳以上1勝クラス",
-        "payout": 1120
-      },
-      {
-        "date": "10/12",
         "venue": "京都",
         "raceName": "9R 蹴上特別",
         "payout": 2860
@@ -102,22 +96,10 @@
         "payout": 1580
       },
       {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 980
-      },
-      {
         "date": "10/18",
         "venue": "京都",
         "raceName": "12R 桂川S",
         "payout": 2840
-      },
-      {
-        "date": "11/7",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 13770
       },
       {
         "date": "11/8",
@@ -150,12 +132,6 @@
         "payout": 87540
       },
       {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "11R 北陸S",
-        "payout": 1420
-      },
-      {
         "date": "10/18",
         "venue": "新潟",
         "raceName": "9R 松浜特別",
@@ -166,30 +142,6 @@
         "venue": "新潟",
         "raceName": "9R 柏崎特別",
         "payout": 22000
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 7860
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "10R 伊勢佐木S",
-        "payout": 760
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 450
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "9R 東京ハイジャンプ",
-        "payout": 700
       },
       {
         "date": "10/18",
@@ -206,12 +158,6 @@
       {
         "date": "10/24",
         "venue": "東京",
-        "raceName": "11R アルテミスS",
-        "payout": 290
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
         "raceName": "12R 3歳以上2勝クラス",
         "payout": 860
       },
@@ -224,20 +170,8 @@
       {
         "date": "10/25",
         "venue": "東京",
-        "raceName": "10R 山中湖特別",
-        "payout": 520
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
         "raceName": "11R 神無月S",
         "payout": 870
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 520
       },
       {
         "date": "10/31",
@@ -270,12 +204,6 @@
         "payout": 710
       },
       {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "10R 錦秋S",
-        "payout": 4270
-      },
-      {
         "date": "10/17",
         "venue": "京都",
         "raceName": "10R 清滝特別",
@@ -296,12 +224,6 @@
       {
         "date": "10/24",
         "venue": "京都",
-        "raceName": "9R なでしこ賞",
-        "payout": 450
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
         "raceName": "12R 3歳以上2勝クラス",
         "payout": 11590
       },
@@ -310,12 +232,6 @@
         "venue": "京都",
         "raceName": "9R 萩S",
         "payout": 2220
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "12R 嵯峨野特別",
-        "payout": 620
       },
       {
         "date": "10/31",
@@ -328,12 +244,6 @@
         "venue": "京都",
         "raceName": "9R 愛宕特別",
         "payout": 4460
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "10R 古都S",
-        "payout": 570
       },
       {
         "date": "11/7",
@@ -877,17 +787,17 @@
     "raceName": "12R 3歳以上1勝クラス (芝2000m)",
     "venue": "福島",
     "startTime": "15:55",
-    "confidence": "B",
-    "confidenceScore": 89,
+    "confidence": "A",
+    "confidenceScore": 91,
     "isLowPayout": false,
     "honmeiNum": 7,
     "honmeiName": "ウイルソン",
     "honmeiOdds": 3.4,
     "honmeiScore": 94.3,
-    "aiSummary": "展開予測は【差し有利ハイペース】。安定感最上位の7番ウイルソン（偏差値:68.0 / EV:0.98）を主軸に指名。【3連複F】で高配当を狙いつつ【馬連/ワイド本線】で的中率をしっかり確保するバランス戦略。",
-    "aiBuy": "【三連複F】7 ✕ 2, 10 ✕ 2, 10, 1, 3, 15 (7点/各100円) / 【手堅く馬連/ワイド】7 - 2, 10 (2点/各150円) [本線計9点] ★【確率UPプラス】あと2点（ワイド保険 2-10, ワイド穴 7-1）を買い足せば的中確率が上がります（＋2点）"
+    "aiSummary": "展開予測は【差し有利ハイペース】。指数突出の7番ウイルソン（偏差値:68.0 / EV:0.98）を不動の軸に指名。相手は☆穴馬まで広げた【馬連流し＋三連複1頭軸】で的中率と200%超の回収率を両立。",
+    "aiBuy": "【馬連流し】7 - 2, 10, 1 (3点/各200円) / 【三連複1頭軸】7 - 2, 10, 1, 3 (6点/各100円) [本線計9点] ★【確率UPプラス】あと2点（馬単 7→2, 馬連 7-15）を買い足せば的中確率が上がります（＋2点）"
   },
-  "win5Strategy": "【AI厳選WIN5戦略】計9点（不利なし突出1頭固定×3戦 ＋ 混戦3頭×2戦） / 予算900円\n第1戦 [東京10R ユートピアS]: 4番 ハートメテオ, 8番 クリニクラウン, 11番 ファムクラジューズ\n第2戦 [京都10R 花背特別]: 3番 ダディーズトリップ\n第3戦 [福島11R 福島民友C]: 1番 ワイドブリザード\n第4戦 [東京11R オーロC]: 10番 セフィロ\n第5戦 [京都11R エリザベス女王杯]: 9番 クイーンズウォーク, 13番 ジョスラン, 6番 ヴーレヴー\n狙い: 道悪・条件不利馬を完全除外し、4AI合議＆Zスコア突出馬を軸に高配当を射抜く。",
+  "win5Strategy": "【AI厳選WIN5戦略】計8点（不利なし突出1頭固定×2戦 ＋ 2頭押さえ×3戦） / 予算800円\n第1戦 [東京10R ユートピアS]: 4番 ハートメテオ, 8番 クリニクラウン\n第2戦 [京都10R 花背特別]: 3番 ダディーズトリップ\n第3戦 [福島11R 福島民友C]: 1番 ワイドブリザード, 14番 ドバイブルース\n第4戦 [東京11R オーロC]: 10番 セフィロ\n第5戦 [京都11R エリザベス女王杯]: 9番 クイーンズウォーク, 13番 ジョスラン\n狙い: 道悪・条件不利馬を完全除外し、4AI合議＆Zスコア突出馬を軸に高配当を射抜く。",
   "bestRaces": [
     {
       "raceId": "202605050410",
@@ -901,7 +811,7 @@
       "isWet": false,
       "chaosLevel": "SOLID",
       "paceType": "NORMAL",
-      "raceType": "手堅いレース（単勝・馬連本線集中）",
+      "raceType": "鉄板・一騎打ち（単勝＋馬連本線＋三連単）",
       "horses": [
         {
           "num": 1,
@@ -1434,10 +1344,896 @@
       ],
       "honmeiNum": 4,
       "confidence": "A",
-      "confidenceScore": 95,
+      "confidenceScore": 94,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【平均ペース】。条件不利のない4番ハートメテオ（偏差値:67.0 / EV:1.06）が盤石。1/8ケリー基準に基づき【単勝＋馬連/ワイド本線】へ資金を集中。",
-      "aiBuy": "【単勝】4 (1点/400円) / 【馬連本線】4 - 11 (1点/400円) / 【馬連/ワイド押さえ】4 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 4-2, 馬連タテ目 11-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。条件不利のない4番ハートメテオ（偏差値:67.0 / EV:1.06）が盤石。【単勝＋馬連本線】に資金を集中しつつ【三連単】でボーナス配当を上乗せする。",
+      "aiBuy": "【単勝】4 (1点/400円) / 【馬連本線】4 - 11 (1点/400円) / 【三連単】4 → 11,1 → 11, 1, 8 (4点/各100円) [本線計6点] ★【確率UPプラス】あと2点（馬連 4-8, 三連複 4-11-2）を買い足せば的中確率が上がります（＋2点）"
+    },
+    {
+      "raceId": "202605050412",
+      "rNum": 12,
+      "venue": "東京",
+      "raceName": "12R 3歳以上1勝クラス (芝2000m)",
+      "rawRaceName": "3歳以上1勝クラス",
+      "startTime": "16:10",
+      "isGraded": false,
+      "isWin5": false,
+      "isWet": false,
+      "chaosLevel": "SOLID",
+      "paceType": "HIGH",
+      "raceType": "鉄板・一騎打ち（単勝＋馬連本線＋三連単）",
+      "horses": [
+        {
+          "num": 1,
+          "name": "プラウディッツ",
+          "jockey": "横山和",
+          "odds": 1.3,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 96.8,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 94.7,
+          "paceBiasScore": 91.3,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "阪神",
+              "raceName": "重賞トライアル",
+              "rank": "1着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:横山和 / 通過:8-7 (上り33.9)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "新潟",
+              "raceName": "前走特別",
+              "rank": "4着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:横山和 / 通過:10-9 (上り34.4)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "中京",
+              "raceName": "3歳上2勝C",
+              "rank": "3着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:横山和 / 通過:8-7 (上り34.2)"
+            }
+          ],
+          "mark": "◎ 本命",
+          "zScore": 73.9,
+          "winProb": 56.0,
+          "ev": 0.82,
+          "markJemi": "◎",
+          "markAna": "-",
+          "markSpeed": "◎",
+          "markPace": "▲"
+        },
+        {
+          "num": 2,
+          "name": "エリュグレイス",
+          "jockey": "佐々木",
+          "odds": 12.5,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 89.2,
+          "gapScore": 0.0,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 90.8,
+          "paceBiasScore": 75.5,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "京都",
+              "raceName": "前走特別",
+              "rank": "5着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:佐々木 / 通過:1-2 (上り35.8)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "中山",
+              "raceName": "3歳上2勝C",
+              "rank": "4着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:佐々木 / 通過:1-2 (上り35.6)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "阪神",
+              "raceName": "3歳上1勝C",
+              "rank": "3着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:佐々木 / 通過:1-1 (上り35.4)"
+            }
+          ],
+          "mark": "△ 連下",
+          "zScore": 57.6,
+          "winProb": 4.9,
+          "ev": 0.57,
+          "markJemi": "△",
+          "markAna": "△",
+          "markSpeed": "○",
+          "markPace": "-"
+        },
+        {
+          "num": 3,
+          "name": "ベルウッドバイオ",
+          "jockey": "横山武",
+          "odds": 31.7,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 88.6,
+          "gapScore": 1.4,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 85.2,
+          "paceBiasScore": 91.5,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "京都",
+              "raceName": "オープン特別",
+              "rank": "8着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:横山武 / 通過:10-9 (上り35.0)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "中山",
+              "raceName": "重賞トライアル",
+              "rank": "5着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:横山武 / 通過:10-9 (上り34.5)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "阪神",
+              "raceName": "前走特別",
+              "rank": "12着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:横山武 / 通過:10-9 (上り35.6)"
+            }
+          ],
+          "mark": "☆ 爆発期待穴",
+          "zScore": 56.3,
+          "winProb": 4.1,
+          "ev": 1.18,
+          "markJemi": "☆",
+          "markAna": "▲",
+          "markSpeed": "-",
+          "markPace": "○"
+        },
+        {
+          "num": 4,
+          "name": "ディアボリカドンナ",
+          "jockey": "☆長浜",
+          "odds": 40.2,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 84.0,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 83.9,
+          "paceBiasScore": 80.2,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "福島",
+              "raceName": "3歳上2勝C",
+              "rank": "6着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:☆長浜 / 通過:4-5 (上り35.3)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "東京",
+              "raceName": "3歳上1勝C",
+              "rank": "13着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:☆長浜 / 通過:4-5 (上り36.4)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "京都",
+              "raceName": "オープン特別",
+              "rank": "10着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:☆長浜 / 通過:4-5 (上り35.9)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 46.4,
+          "winProb": 0.9,
+          "ev": 0.45,
+          "markJemi": "-",
+          "markAna": "△",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 5,
+          "name": "サトノスターライト",
+          "jockey": "Ｍデムーロ",
+          "odds": 75.4,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 82.5,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 82.8,
+          "paceBiasScore": 81.2,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "阪神",
+              "raceName": "重賞トライアル",
+              "rank": "14着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:Ｍデムー / 通過:4-5 (上り36.5)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "新潟",
+              "raceName": "前走特別",
+              "rank": "11着",
+              "condition": "芝1800m(良)",
+              "detail": "騎手:Ｍデムー / 通過:4-5 (上り36.0)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "中京",
+              "raceName": "3歳上2勝C",
+              "rank": "8着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:Ｍデムー / 通過:4-5 (上り35.6)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 43.2,
+          "winProb": 0.6,
+          "ev": 0.17,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 6,
+          "name": "ウインドラート",
+          "jockey": "木幡巧",
+          "odds": 24.1,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 86.2,
+          "gapScore": 0.0,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 86.1,
+          "paceBiasScore": 80.2,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "中山",
+              "raceName": "3歳上2勝C",
+              "rank": "4着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:木幡巧 / 通過:4-5 (上り35.0)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "阪神",
+              "raceName": "3歳上1勝C",
+              "rank": "3着",
+              "condition": "芝1800m(良)",
+              "detail": "騎手:木幡巧 / 通過:3-3 (上り34.9)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "新潟",
+              "raceName": "オープン特別",
+              "rank": "10着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:木幡巧 / 通過:4-5 (上り35.9)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 51.2,
+          "winProb": 1.9,
+          "ev": 0.45,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 7,
+          "name": "ヤマニンリンキング",
+          "jockey": "原",
+          "odds": 37.7,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 87.5,
+          "gapScore": 1.1,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 84.1,
+          "paceBiasScore": 90.8,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "新潟",
+              "raceName": "重賞トライアル",
+              "rank": "9着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:原 / 通過:14-13 (上り34.9)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "中京",
+              "raceName": "前走特別",
+              "rank": "6着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:原 / 通過:14-13 (上り34.4)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "福島",
+              "raceName": "3歳上2勝C",
+              "rank": "13着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:原 / 通過:14-13 (上り35.5)"
+            }
+          ],
+          "mark": "△ 連下",
+          "zScore": 54.0,
+          "winProb": 2.9,
+          "ev": 0.99,
+          "markJemi": "△",
+          "markAna": "☆",
+          "markSpeed": "-",
+          "markPace": "△"
+        },
+        {
+          "num": 8,
+          "name": "インテンスゲイズ",
+          "jockey": "武藤",
+          "odds": 50.2,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 85.0,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 82.7,
+          "paceBiasScore": 90.8,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "新潟",
+              "raceName": "オープン特別",
+              "rank": "8着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:武藤 / 通過:10-9 (上り35.0)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "中京",
+              "raceName": "重賞トライアル",
+              "rank": "5着",
+              "condition": "芝1800m(稍)",
+              "detail": "騎手:武藤 / 通過:10-9 (上り34.5)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "福島",
+              "raceName": "前走特別",
+              "rank": "12着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:武藤 / 通過:10-9 (上り35.6)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 48.6,
+          "winProb": 1.3,
+          "ev": 0.59,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 9,
+          "name": "サンセットビュー",
+          "jockey": "プーシャン",
+          "odds": 75.4,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 82.4,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 80.1,
+          "paceBiasScore": 90.8,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "中山",
+              "raceName": "3歳上2勝C",
+              "rank": "6着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:プーシャ / 通過:10-9 (上り34.7)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "阪神",
+              "raceName": "3歳上1勝C",
+              "rank": "13着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:プーシャ / 通過:10-9 (上り35.8)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "新潟",
+              "raceName": "オープン特別",
+              "rank": "10着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:プーシャ / 通過:10-9 (上り35.3)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 43.0,
+          "winProb": 0.6,
+          "ev": 0.17,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 10,
+          "name": "ストレートブラック",
+          "jockey": "松岡",
+          "odds": 120.6,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 81.6,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 79.3,
+          "paceBiasScore": 90.8,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "中山",
+              "raceName": "3歳上1勝C",
+              "rank": "7着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:松岡 / 通過:10-9 (上り34.8)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "阪神",
+              "raceName": "オープン特別",
+              "rank": "14着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:松岡 / 通過:10-9 (上り35.9)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "新潟",
+              "raceName": "重賞トライアル",
+              "rank": "11着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:松岡 / 通過:10-9 (上り35.4)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 41.3,
+          "winProb": 0.4,
+          "ev": 0.21,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 11,
+          "name": "レッドレガリア",
+          "jockey": "岩田康",
+          "odds": 25.1,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 89.9,
+          "gapScore": 1.4,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 86.4,
+          "paceBiasScore": 91.3,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "中京",
+              "raceName": "オープン特別",
+              "rank": "8着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:岩田康 / 通過:14-13 (上り34.7)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "福島",
+              "raceName": "重賞トライアル",
+              "rank": "5着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:岩田康 / 通過:14-13 (上り34.2)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "東京",
+              "raceName": "前走特別",
+              "rank": "12着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:岩田康 / 通過:14-13 (上り35.3)"
+            }
+          ],
+          "mark": "▲ 単穴",
+          "zScore": 59.1,
+          "winProb": 6.2,
+          "ev": 1.57,
+          "markJemi": "▲",
+          "markAna": "○",
+          "markSpeed": "△",
+          "markPace": "☆"
+        },
+        {
+          "num": 12,
+          "name": "パワポケウォーズ",
+          "jockey": "野中",
+          "odds": 75.4,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 77.9,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 80.3,
+          "paceBiasScore": 75.0,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "阪神",
+              "raceName": "前走特別",
+              "rank": "10着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:野中 / 通過:1-2 (上り36.8)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "新潟",
+              "raceName": "3歳上2勝C",
+              "rank": "7着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:野中 / 通過:1-2 (上り36.2)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "中京",
+              "raceName": "3歳上1勝C",
+              "rank": "14着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:野中 / 通過:1-2 (上り37.6)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 33.4,
+          "winProb": 0.1,
+          "ev": 0.04,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 13,
+          "name": "メアヴィア",
+          "jockey": "伊藤",
+          "odds": 150.8,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 82.4,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 80.1,
+          "paceBiasScore": 90.8,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "新潟",
+              "raceName": "重賞トライアル",
+              "rank": "14着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:伊藤 / 通過:10-9 (上り35.9)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "中京",
+              "raceName": "前走特別",
+              "rank": "11着",
+              "condition": "芝1800m(良)",
+              "detail": "騎手:伊藤 / 通過:10-9 (上り35.4)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "福島",
+              "raceName": "3歳上2勝C",
+              "rank": "8着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:伊藤 / 通過:10-9 (上り35.0)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 43.0,
+          "winProb": 0.6,
+          "ev": 0.34,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 14,
+          "name": "エバーシャンティ",
+          "jockey": "戸崎圭",
+          "odds": 20.8,
+          "runningStyle": "差し",
+          "pos_score": 0.48,
+          "speedScore": 92.4,
+          "gapScore": 1.4,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 89.1,
+          "paceBiasScore": 91.8,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "東京",
+              "raceName": "前走特別",
+              "rank": "7着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.8)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "京都",
+              "raceName": "3歳上2勝C",
+              "rank": "6着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.7)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "中山",
+              "raceName": "3歳上1勝C",
+              "rank": "5着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.5)"
+            }
+          ],
+          "mark": "○ 対抗",
+          "zScore": 64.5,
+          "winProb": 13.7,
+          "ev": 2.45,
+          "markJemi": "○",
+          "markAna": "◎",
+          "markSpeed": "☆",
+          "markPace": "◎"
+        },
+        {
+          "num": 15,
+          "name": "ディエスルージュ",
+          "jockey": "▲遠藤",
+          "odds": 120.6,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 78.3,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 80.7,
+          "paceBiasScore": 75.0,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "中山",
+              "raceName": "重賞トライアル",
+              "rank": "9着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:▲遠藤 / 通過:1-2 (上り36.6)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "阪神",
+              "raceName": "前走特別",
+              "rank": "6着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:▲遠藤 / 通過:1-2 (上り36.0)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "新潟",
+              "raceName": "3歳上2勝C",
+              "rank": "13着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:▲遠藤 / 通過:1-2 (上り37.4)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 34.2,
+          "winProb": 0.2,
+          "ev": 0.07,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
+        },
+        {
+          "num": 16,
+          "name": "ダイユウアレグロ",
+          "jockey": "田辺",
+          "odds": 16.7,
+          "runningStyle": "逃げ",
+          "pos_score": 0.9,
+          "speedScore": 86.6,
+          "gapScore": 0.0,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 89.2,
+          "paceBiasScore": 75.5,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "東京",
+              "raceName": "オープン特別",
+              "rank": "6着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:田辺 / 通過:1-2 (上り36.0)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "京都",
+              "raceName": "重賞トライアル",
+              "rank": "5着",
+              "condition": "芝2200m(稍)",
+              "detail": "騎手:田辺 / 通過:1-2 (上り35.8)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "中山",
+              "raceName": "前走特別",
+              "rank": "4着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:田辺 / 通過:1-2 (上り35.6)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 52.0,
+          "winProb": 2.1,
+          "ev": 0.45,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "▲",
+          "markPace": "-"
+        },
+        {
+          "num": 17,
+          "name": "ユーディキウム",
+          "jockey": "菅原明",
+          "odds": 86.1,
+          "runningStyle": "追込",
+          "pos_score": 0.25,
+          "speedScore": 82.8,
+          "gapScore": 0.0,
+          "isLongshot": false,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 80.7,
+          "paceBiasScore": 91.3,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "阪神",
+              "raceName": "前走特別",
+              "rank": "5着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:菅原明 / 通過:14-13 (上り34.2)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "新潟",
+              "raceName": "3歳上2勝C",
+              "rank": "12着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:菅原明 / 通過:14-13 (上り35.3)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "中京",
+              "raceName": "3歳上1勝C",
+              "rank": "9着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:菅原明 / 通過:14-13 (上り34.9)"
+            }
+          ],
+          "mark": "-",
+          "zScore": 43.9,
+          "winProb": 0.6,
+          "ev": 0.22,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "△"
+        },
+        {
+          "num": 18,
+          "name": "イニスフェイル",
+          "jockey": "石橋脩",
+          "odds": 14.7,
+          "runningStyle": "先行",
+          "pos_score": 0.78,
+          "speedScore": 87.7,
+          "gapScore": 0.0,
+          "isLongshot": true,
+          "hasUnfavorable": false,
+          "pureSpeedScore": 88.6,
+          "paceBiasScore": 80.2,
+          "past3Races": [
+            {
+              "label": "1走前",
+              "dateVenue": "中京",
+              "raceName": "前走特別",
+              "rank": "4着",
+              "condition": "芝2000m(稍)",
+              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.0)"
+            },
+            {
+              "label": "2走前",
+              "dateVenue": "福島",
+              "raceName": "3歳上2勝C",
+              "rank": "3着",
+              "condition": "芝2200m(良)",
+              "detail": "騎手:石橋脩 / 通過:3-3 (上り34.9)"
+            },
+            {
+              "label": "3走前",
+              "dateVenue": "東京",
+              "raceName": "3歳上1勝C",
+              "rank": "10着",
+              "condition": "芝2000m(良)",
+              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.9)"
+            }
+          ],
+          "mark": "△ 連下",
+          "zScore": 54.4,
+          "winProb": 3.0,
+          "ev": 0.45,
+          "markJemi": "△",
+          "markAna": "-",
+          "markSpeed": "△",
+          "markPace": "-"
+        }
+      ],
+      "honmeiNum": 1,
+      "confidence": "A",
+      "confidenceScore": 94,
+      "isLowPayout": true,
+      "aiSummary": "展開予測は【差し有利ハイペース】。条件不利のない1番プラウディッツ（偏差値:73.9 / EV:0.82）が盤石。【単勝＋馬連本線】に資金を集中しつつ【三連単】でボーナス配当を上乗せする。",
+      "aiBuy": "【単勝】1 (1点/400円) / 【馬連本線】1 - 14 (1点/400円) / 【三連単】1 → 14,11 → 14, 11, 3 (4点/各100円) [本線計6点] ★【確率UPプラス】あと2点（馬連 1-3, 三連複 1-14-2）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202603030412",
@@ -1449,9 +2245,9 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "SEMI_CHAOS",
+      "chaosLevel": "AXIS_STRONG",
       "paceType": "HIGH",
-      "raceType": "ちょい荒れレース（3連複F＋馬連/ワイド本線）",
+      "raceType": "本命信頼・中穴狙い（馬連流し＋3連複1頭軸）",
       "horses": [
         {
           "num": 1,
@@ -2223,897 +3019,11 @@
         }
       ],
       "honmeiNum": 7,
-      "confidence": "B",
-      "confidenceScore": 89,
+      "confidence": "A",
+      "confidenceScore": 91,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】。安定感最上位の7番ウイルソン（偏差値:68.0 / EV:0.98）を主軸に指名。【3連複F】で高配当を狙いつつ【馬連/ワイド本線】で的中率をしっかり確保するバランス戦略。",
-      "aiBuy": "【三連複F】7 ✕ 2, 10 ✕ 2, 10, 1, 3, 15 (7点/各100円) / 【手堅く馬連/ワイド】7 - 2, 10 (2点/各150円) [本線計9点] ★【確率UPプラス】あと2点（ワイド保険 2-10, ワイド穴 7-1）を買い足せば的中確率が上がります（＋2点）"
-    },
-    {
-      "raceId": "202605050412",
-      "rNum": 12,
-      "venue": "東京",
-      "raceName": "12R 3歳以上1勝クラス (芝2000m)",
-      "rawRaceName": "3歳以上1勝クラス",
-      "startTime": "16:10",
-      "isGraded": false,
-      "isWin5": false,
-      "isWet": false,
-      "chaosLevel": "SEMI_CHAOS",
-      "paceType": "HIGH",
-      "raceType": "ちょい荒れレース（3連複F＋馬連/ワイド本線）",
-      "horses": [
-        {
-          "num": 1,
-          "name": "プラウディッツ",
-          "jockey": "横山和",
-          "odds": 999.9,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 82.7,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.6,
-          "paceBiasScore": 91.3,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "阪神",
-              "raceName": "重賞トライアル",
-              "rank": "9着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:横山和 / 通過:10-9 (上り35.1)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "新潟",
-              "raceName": "前走特別",
-              "rank": "6着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:横山和 / 通過:10-9 (上り34.7)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "中京",
-              "raceName": "3歳上2勝C",
-              "rank": "13着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:横山和 / 通過:10-9 (上り35.8)"
-            }
-          ],
-          "mark": "△ 連下",
-          "zScore": 50.0,
-          "winProb": 1.6,
-          "ev": 0.65,
-          "markJemi": "△",
-          "markAna": "▲",
-          "markSpeed": "-",
-          "markPace": "☆"
-        },
-        {
-          "num": 2,
-          "name": "エリュグレイス",
-          "jockey": "佐々木",
-          "odds": 999.9,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 80.2,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 81.8,
-          "paceBiasScore": 75.5,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "京都",
-              "raceName": "前走特別",
-              "rank": "5着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:佐々木 / 通過:1-2 (上り35.8)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "中山",
-              "raceName": "3歳上2勝C",
-              "rank": "12着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:佐々木 / 通過:1-2 (上り37.2)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "阪神",
-              "raceName": "3歳上1勝C",
-              "rank": "9着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:佐々木 / 通過:1-2 (上り36.6)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 43.3,
-          "winProb": 0.7,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "☆",
-          "markSpeed": "△",
-          "markPace": "-"
-        },
-        {
-          "num": 3,
-          "name": "ベルウッドバイオ",
-          "jockey": "横山武",
-          "odds": 999.9,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 82.5,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.5,
-          "paceBiasScore": 91.5,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "京都",
-              "raceName": "オープン特別",
-              "rank": "8着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:横山武 / 通過:10-9 (上り35.0)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "中山",
-              "raceName": "重賞トライアル",
-              "rank": "5着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:横山武 / 通過:10-9 (上り34.5)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "阪神",
-              "raceName": "前走特別",
-              "rank": "12着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:横山武 / 通過:10-9 (上り35.6)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 49.4,
-          "winProb": 1.5,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "△",
-          "markSpeed": "-",
-          "markPace": "○"
-        },
-        {
-          "num": 4,
-          "name": "ディアボリカドンナ",
-          "jockey": "☆長浜",
-          "odds": 999.9,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 80.4,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.3,
-          "paceBiasScore": 80.2,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "福島",
-              "raceName": "3歳上2勝C",
-              "rank": "6着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:☆長浜 / 通過:4-5 (上り35.3)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "東京",
-              "raceName": "3歳上1勝C",
-              "rank": "13着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:☆長浜 / 通過:4-5 (上り36.4)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "京都",
-              "raceName": "オープン特別",
-              "rank": "10着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:☆長浜 / 通過:4-5 (上り35.9)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 43.9,
-          "winProb": 0.8,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "△",
-          "markSpeed": "-",
-          "markPace": "-"
-        },
-        {
-          "num": 5,
-          "name": "サトノスターライト",
-          "jockey": "Ｍデムーロ",
-          "odds": 999.9,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 81.7,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 82.0,
-          "paceBiasScore": 81.2,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "阪神",
-              "raceName": "重賞トライアル",
-              "rank": "14着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:Ｍデムー / 通過:4-5 (上り36.5)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "新潟",
-              "raceName": "前走特別",
-              "rank": "11着",
-              "condition": "芝1800m(良)",
-              "detail": "騎手:Ｍデムー / 通過:4-5 (上り36.0)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "中京",
-              "raceName": "3歳上2勝C",
-              "rank": "8着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:Ｍデムー / 通過:4-5 (上り35.6)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 47.3,
-          "winProb": 1.2,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "☆",
-          "markPace": "-"
-        },
-        {
-          "num": 6,
-          "name": "ウインドラート",
-          "jockey": "木幡巧",
-          "odds": 1.6,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 93.9,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 93.8,
-          "paceBiasScore": 80.2,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "中山",
-              "raceName": "3歳上2勝C",
-              "rank": "1着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:木幡巧 / 通過:3-3 (上り34.5)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "阪神",
-              "raceName": "3歳上1勝C",
-              "rank": "1着",
-              "condition": "芝1800m(良)",
-              "detail": "騎手:木幡巧 / 通過:3-3 (上り34.5)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "新潟",
-              "raceName": "オープン特別",
-              "rank": "4着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:木幡巧 / 通過:4-5 (上り35.0)"
-            }
-          ],
-          "mark": "◎ 本命",
-          "zScore": 79.6,
-          "winProb": 57.7,
-          "ev": 1.0,
-          "markJemi": "◎",
-          "markAna": "◎",
-          "markSpeed": "◎",
-          "markPace": "-"
-        },
-        {
-          "num": 7,
-          "name": "ヤマニンリンキング",
-          "jockey": "原",
-          "odds": 999.9,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 82.6,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.3,
-          "paceBiasScore": 90.8,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "新潟",
-              "raceName": "重賞トライアル",
-              "rank": "9着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:原 / 通過:14-13 (上り34.9)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "中京",
-              "raceName": "前走特別",
-              "rank": "6着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:原 / 通過:14-13 (上り34.4)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "福島",
-              "raceName": "3歳上2勝C",
-              "rank": "13着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:原 / 通過:14-13 (上り35.5)"
-            }
-          ],
-          "mark": "△ 連下",
-          "zScore": 49.7,
-          "winProb": 1.6,
-          "ev": 0.65,
-          "markJemi": "△",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "△"
-        },
-        {
-          "num": 8,
-          "name": "インテンスゲイズ",
-          "jockey": "武藤",
-          "odds": 999.9,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 82.2,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 79.9,
-          "paceBiasScore": 90.8,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "新潟",
-              "raceName": "オープン特別",
-              "rank": "8着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:武藤 / 通過:10-9 (上り35.0)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "中京",
-              "raceName": "重賞トライアル",
-              "rank": "5着",
-              "condition": "芝1800m(稍)",
-              "detail": "騎手:武藤 / 通過:10-9 (上り34.5)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "福島",
-              "raceName": "前走特別",
-              "rank": "12着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:武藤 / 通過:10-9 (上り35.6)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 48.6,
-          "winProb": 1.4,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "-"
-        },
-        {
-          "num": 9,
-          "name": "サンセットビュー",
-          "jockey": "プーシャン",
-          "odds": 999.9,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 81.6,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 79.3,
-          "paceBiasScore": 90.8,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "中山",
-              "raceName": "3歳上2勝C",
-              "rank": "6着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:プーシャ / 通過:10-9 (上り34.7)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "阪神",
-              "raceName": "3歳上1勝C",
-              "rank": "13着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:プーシャ / 通過:10-9 (上り35.8)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "新潟",
-              "raceName": "オープン特別",
-              "rank": "10着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:プーシャ / 通過:10-9 (上り35.3)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 47.0,
-          "winProb": 1.1,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "-"
-        },
-        {
-          "num": 10,
-          "name": "ストレートブラック",
-          "jockey": "松岡",
-          "odds": 999.9,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 81.6,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 79.3,
-          "paceBiasScore": 90.8,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "中山",
-              "raceName": "3歳上1勝C",
-              "rank": "7着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:松岡 / 通過:10-9 (上り34.8)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "阪神",
-              "raceName": "オープン特別",
-              "rank": "14着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:松岡 / 通過:10-9 (上り35.9)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "新潟",
-              "raceName": "重賞トライアル",
-              "rank": "11着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:松岡 / 通過:10-9 (上り35.4)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 47.0,
-          "winProb": 1.1,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "-"
-        },
-        {
-          "num": 11,
-          "name": "レッドレガリア",
-          "jockey": "岩田康",
-          "odds": 999.9,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 82.5,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.4,
-          "paceBiasScore": 91.3,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "中京",
-              "raceName": "オープン特別",
-              "rank": "8着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:岩田康 / 通過:14-13 (上り34.7)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "福島",
-              "raceName": "重賞トライアル",
-              "rank": "5着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:岩田康 / 通過:14-13 (上り34.2)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "東京",
-              "raceName": "前走特別",
-              "rank": "12着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:岩田康 / 通過:14-13 (上り35.3)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 49.4,
-          "winProb": 1.5,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "△"
-        },
-        {
-          "num": 12,
-          "name": "パワポケウォーズ",
-          "jockey": "野中",
-          "odds": 1.6,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 91.0,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 93.4,
-          "paceBiasScore": 75.0,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "阪神",
-              "raceName": "前走特別",
-              "rank": "3着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:野中 / 通過:1-1 (上り35.4) [道悪激走]"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "新潟",
-              "raceName": "3歳上2勝C",
-              "rank": "3着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:野中 / 通過:1-1 (上り35.4)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "中京",
-              "raceName": "3歳上1勝C",
-              "rank": "2着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:野中 / 通過:1-1 (上り35.2)"
-            }
-          ],
-          "mark": "○ 対抗",
-          "zScore": 71.9,
-          "winProb": 22.8,
-          "ev": 0.49,
-          "markJemi": "○",
-          "markAna": "○",
-          "markSpeed": "○",
-          "markPace": "-"
-        },
-        {
-          "num": 13,
-          "name": "メアヴィア",
-          "jockey": "伊藤",
-          "odds": 999.9,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 82.4,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.1,
-          "paceBiasScore": 90.8,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "新潟",
-              "raceName": "重賞トライアル",
-              "rank": "14着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:伊藤 / 通過:10-9 (上り35.9)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "中京",
-              "raceName": "前走特別",
-              "rank": "11着",
-              "condition": "芝1800m(良)",
-              "detail": "騎手:伊藤 / 通過:10-9 (上り35.4)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "福島",
-              "raceName": "3歳上2勝C",
-              "rank": "8着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:伊藤 / 通過:10-9 (上り35.0)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 49.2,
-          "winProb": 1.5,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "-"
-        },
-        {
-          "num": 14,
-          "name": "エバーシャンティ",
-          "jockey": "戸崎圭",
-          "odds": 999.9,
-          "runningStyle": "差し",
-          "pos_score": 0.48,
-          "speedScore": 84.2,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 82.3,
-          "paceBiasScore": 91.8,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "東京",
-              "raceName": "前走特別",
-              "rank": "5着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.5)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "京都",
-              "raceName": "3歳上2勝C",
-              "rank": "12着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:戸崎圭 / 通過:10-9 (上り35.6)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "中山",
-              "raceName": "3歳上1勝C",
-              "rank": "9着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:戸崎圭 / 通過:10-9 (上り35.1)"
-            }
-          ],
-          "mark": "▲ 単穴",
-          "zScore": 53.9,
-          "winProb": 2.6,
-          "ev": 2.45,
-          "markJemi": "▲",
-          "markAna": "-",
-          "markSpeed": "▲",
-          "markPace": "◎"
-        },
-        {
-          "num": 15,
-          "name": "ディエスルージュ",
-          "jockey": "▲遠藤",
-          "odds": 999.9,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 78.3,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.7,
-          "paceBiasScore": 75.0,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "中山",
-              "raceName": "重賞トライアル",
-              "rank": "9着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:▲遠藤 / 通過:1-2 (上り36.6)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "阪神",
-              "raceName": "前走特別",
-              "rank": "6着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:▲遠藤 / 通過:1-2 (上り36.0)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "新潟",
-              "raceName": "3歳上2勝C",
-              "rank": "13着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:▲遠藤 / 通過:1-2 (上り37.4)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 38.3,
-          "winProb": 0.4,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "-"
-        },
-        {
-          "num": 16,
-          "name": "ダイユウアレグロ",
-          "jockey": "田辺",
-          "odds": 999.9,
-          "runningStyle": "逃げ",
-          "pos_score": 0.9,
-          "speedScore": 78.9,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 81.5,
-          "paceBiasScore": 75.5,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "東京",
-              "raceName": "オープン特別",
-              "rank": "8着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:田辺 / 通過:1-2 (上り36.4)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "京都",
-              "raceName": "重賞トライアル",
-              "rank": "5着",
-              "condition": "芝2200m(稍)",
-              "detail": "騎手:田辺 / 通過:1-2 (上り35.8)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "中山",
-              "raceName": "前走特別",
-              "rank": "12着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:田辺 / 通過:1-2 (上り37.2)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 39.9,
-          "winProb": 0.5,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "△",
-          "markPace": "-"
-        },
-        {
-          "num": 17,
-          "name": "ユーディキウム",
-          "jockey": "菅原明",
-          "odds": 999.9,
-          "runningStyle": "追込",
-          "pos_score": 0.25,
-          "speedScore": 82.8,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.7,
-          "paceBiasScore": 91.3,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "阪神",
-              "raceName": "前走特別",
-              "rank": "5着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:菅原明 / 通過:14-13 (上り34.2)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "新潟",
-              "raceName": "3歳上2勝C",
-              "rank": "12着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:菅原明 / 通過:14-13 (上り35.3)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "中京",
-              "raceName": "3歳上1勝C",
-              "rank": "9着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:菅原明 / 通過:14-13 (上り34.9)"
-            }
-          ],
-          "mark": "△ 連下",
-          "zScore": 50.2,
-          "winProb": 1.7,
-          "ev": 0.65,
-          "markJemi": "△",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "▲"
-        },
-        {
-          "num": 18,
-          "name": "イニスフェイル",
-          "jockey": "石橋脩",
-          "odds": 999.9,
-          "runningStyle": "先行",
-          "pos_score": 0.78,
-          "speedScore": 79.4,
-          "gapScore": 0.0,
-          "isLongshot": false,
-          "hasUnfavorable": false,
-          "pureSpeedScore": 80.3,
-          "paceBiasScore": 80.2,
-          "past3Races": [
-            {
-              "label": "1走前",
-              "dateVenue": "中京",
-              "raceName": "前走特別",
-              "rank": "10着",
-              "condition": "芝2000m(稍)",
-              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.9)"
-            },
-            {
-              "label": "2走前",
-              "dateVenue": "福島",
-              "raceName": "3歳上2勝C",
-              "rank": "7着",
-              "condition": "芝2200m(良)",
-              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.4)"
-            },
-            {
-              "label": "3走前",
-              "dateVenue": "東京",
-              "raceName": "3歳上1勝C",
-              "rank": "14着",
-              "condition": "芝2000m(良)",
-              "detail": "騎手:石橋脩 / 通過:4-5 (上り36.5)"
-            }
-          ],
-          "mark": "-",
-          "zScore": 41.2,
-          "winProb": 0.6,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "-"
-        }
-      ],
-      "honmeiNum": 6,
-      "confidence": "B",
-      "confidenceScore": 89,
-      "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】。安定感最上位の6番ウインドラート（偏差値:79.6 / EV:1.0）を主軸に指名。【3連複F】で高配当を狙いつつ【馬連/ワイド本線】で的中率をしっかり確保するバランス戦略。",
-      "aiBuy": "【三連複F】6 ✕ 12, 14 ✕ 12, 14, 1, 7, 17 (7点/各100円) / 【手堅く馬連/ワイド】6 - 12, 14 (2点/各150円) [本線計9点] ★【確率UPプラス】あと1点（ワイド保険 12-14）を買い足せば的中確率が上がります（＋1点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。指数突出の7番ウイルソン（偏差値:68.0 / EV:0.98）を不動の軸に指名。相手は☆穴馬まで広げた【馬連流し＋三連複1頭軸】で的中率と200%超の回収率を両立。",
+      "aiBuy": "【馬連流し】7 - 2, 10, 1 (3点/各200円) / 【三連複1頭軸】7 - 2, 10, 1, 3 (6点/各100円) [本線計9点] ★【確率UPプラス】あと2点（馬単 7→2, 馬連 7-15）を買い足せば的中確率が上がります（＋2点）"
     }
   ],
   "races": [
@@ -3127,9 +3037,9 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "DUAL_CORE",
       "paceType": "HIGH",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）",
       "horses": [
         {
           "num": 1,
@@ -3709,11 +3619,11 @@
         }
       ],
       "honmeiNum": 5,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "B",
+      "confidenceScore": 89,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。実力軸5番イトウカカリチョウから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】5-4, 5-3, 5-6 (3点/各200円) / 【馬連/ワイドBOX】5, 4, 3 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 5-10, ワイド 6-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。能力上位の◎5番イトウカカリチョウと○4番の2強が強力。【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。",
+      "aiBuy": "【馬連本線】5 - 4 (1点/400円) / 【三連複2頭軸】5,4 - 3, 6, 1, 10, 12 (5点/各100円) / 【馬連押さえ】5 - 3 (1点/200円) [本線計7点] ★【確率UPプラス】あと2点（馬連タテ目 4-3, ワイド穴 5-6）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202603030410",
@@ -3725,9 +3635,9 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "DUAL_CORE",
       "paceType": "HIGH",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）",
       "horses": [
         {
           "num": 1,
@@ -4499,11 +4409,11 @@
         }
       ],
       "honmeiNum": 10,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "B",
+      "confidenceScore": 89,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。実力軸10番オルトパラティウムから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】10-2, 10-1, 10-13 (3点/各200円) / 【馬連/ワイドBOX】10, 2, 1 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 10-11, ワイド 13-3）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。能力上位の◎10番オルトパラティウムと○2番の2強が強力。【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。",
+      "aiBuy": "【馬連本線】10 - 2 (1点/400円) / 【三連複2頭軸】10,2 - 1, 13, 3, 11, 12 (5点/各100円) / 【馬連押さえ】10 - 1 (1点/200円) [本線計7点] ★【確率UPプラス】あと2点（馬連タテ目 2-1, ワイド穴 10-13）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202603030411",
@@ -4515,22 +4425,22 @@
       "isGraded": false,
       "isWin5": true,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "DUAL_CORE",
       "paceType": "HIGH",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）",
       "horses": [
         {
           "num": 1,
           "name": "ワイドブリザード",
           "jockey": "鮫島駿",
-          "odds": 6.7,
+          "odds": 6.8,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.7,
+          "speedScore": 93.6,
           "gapScore": 0.9,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 91.4,
+          "pureSpeedScore": 91.3,
           "paceBiasScore": 85.2,
           "past3Races": [
             {
@@ -4558,27 +4468,27 @@
               "detail": "騎手:鮫島駿 / 通過:3-3 (上り34.5)"
             }
           ],
-          "mark": "◎ 本命",
-          "zScore": 68.0,
-          "winProb": 27.6,
-          "ev": 1.85,
-          "markJemi": "◎",
+          "mark": "○ 対抗",
+          "zScore": 61.7,
+          "winProb": 19.4,
+          "ev": 1.36,
+          "markJemi": "○",
           "markAna": "◎",
-          "markSpeed": "○",
+          "markSpeed": "▲",
           "markPace": "-"
         },
         {
           "num": 2,
           "name": "オーケーバーディー",
           "jockey": "横山琉",
-          "odds": 10.4,
+          "odds": 6.3,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 90.2,
+          "speedScore": 91.6,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 90.1,
+          "pureSpeedScore": 91.5,
           "paceBiasScore": 79.5,
           "past3Races": [
             {
@@ -4587,15 +4497,15 @@
               "raceName": "重賞トライアル",
               "rank": "6着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:横山琉 / 通過:1-2 (上り36.0)"
+              "detail": "騎手:横山琉 / 通過:1-2 (上り36.0) [不利・度外視]"
             },
             {
               "label": "2走前",
               "dateVenue": "中山",
               "raceName": "前走特別",
-              "rank": "5着",
+              "rank": "3着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:横山琉 / 通過:1-2 (上り35.8)"
+              "detail": "騎手:横山琉 / 通過:1-1 (上り35.4)"
             },
             {
               "label": "3走前",
@@ -4607,23 +4517,23 @@
             }
           ],
           "mark": "△ 連下",
-          "zScore": 57.4,
-          "winProb": 9.0,
-          "ev": 0.86,
+          "zScore": 57.7,
+          "winProb": 10.2,
+          "ev": 0.59,
           "markJemi": "△",
           "markAna": "-",
-          "markSpeed": "▲",
+          "markSpeed": "○",
           "markPace": "-"
         },
         {
           "num": 3,
           "name": "レヴォントゥレット",
           "jockey": "丸山",
-          "odds": 14.1,
+          "odds": 45.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.3,
-          "gapScore": 0.8,
+          "speedScore": 82.5,
+          "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
           "pureSpeedScore": 81.4,
@@ -4633,9 +4543,9 @@
               "label": "1走前",
               "dateVenue": "東京",
               "raceName": "オープン特別",
-              "rank": "6着",
+              "rank": "8着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:丸山 / 通過:10-9 (上り34.7)"
+              "detail": "騎手:丸山 / 通過:10-9 (上り35.0)"
             },
             {
               "label": "2走前",
@@ -4649,14 +4559,14 @@
               "label": "3走前",
               "dateVenue": "中山",
               "raceName": "前走特別",
-              "rank": "4着",
+              "rank": "12着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:丸山 / 通過:10-9 (上り34.4)"
+              "detail": "騎手:丸山 / 通過:10-9 (上り35.6)"
             }
           ],
           "mark": "-",
-          "zScore": 36.5,
-          "winProb": 1.0,
+          "zScore": 39.8,
+          "winProb": 0.6,
           "ev": 0.45,
           "markJemi": "-",
           "markAna": "-",
@@ -4667,7 +4577,7 @@
           "num": 4,
           "name": "スナークラファエロ",
           "jockey": "富田",
-          "odds": 17.8,
+          "odds": 18.1,
           "runningStyle": "差し",
           "pos_score": 0.48,
           "speedScore": 89.8,
@@ -4702,27 +4612,27 @@
               "detail": "騎手:富田 / 通過:10-9 (上り34.8)"
             }
           ],
-          "mark": "☆ 爆発期待穴",
-          "zScore": 56.2,
-          "winProb": 7.9,
-          "ev": 1.3,
-          "markJemi": "☆",
-          "markAna": "▲",
-          "markSpeed": "△",
-          "markPace": "○"
+          "mark": "△ 連下",
+          "zScore": 54.2,
+          "winProb": 5.7,
+          "ev": 0.96,
+          "markJemi": "△",
+          "markAna": "☆",
+          "markSpeed": "-",
+          "markPace": "☆"
         },
         {
           "num": 5,
           "name": "シンビリーブ",
           "jockey": "松本",
-          "odds": 21.5,
+          "odds": 12.9,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 88.2,
+          "speedScore": 90.4,
           "gapScore": 0.0,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 86.6,
+          "pureSpeedScore": 88.8,
           "paceBiasScore": 84.8,
           "past3Races": [
             {
@@ -4750,116 +4660,116 @@
               "detail": "騎手:松本 / 通過:4-5 (上り35.4)"
             }
           ],
-          "mark": "-",
-          "zScore": 51.4,
-          "winProb": 4.8,
-          "ev": 0.94,
-          "markJemi": "-",
+          "mark": "△ 連下",
+          "zScore": 55.4,
+          "winProb": 7.0,
+          "ev": 0.83,
+          "markJemi": "△",
           "markAna": "△",
-          "markSpeed": "-",
+          "markSpeed": "△",
           "markPace": "-"
         },
         {
           "num": 6,
           "name": "シュラザック",
           "jockey": "国分優",
-          "odds": 25.2,
+          "odds": 7.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 87.8,
+          "speedScore": 92.7,
           "gapScore": 0.8,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 85.9,
+          "pureSpeedScore": 90.8,
           "paceBiasScore": 87.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "阪神",
               "raceName": "3歳上2勝C",
-              "rank": "6着",
+              "rank": "3着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:国分優 / 通過:10-9 (上り34.7)"
+              "detail": "騎手:国分優 / 通過:8-7 (上り34.2)"
             },
             {
               "label": "2走前",
               "dateVenue": "新潟",
               "raceName": "3歳上1勝C",
-              "rank": "13着",
+              "rank": "3着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:国分優 / 通過:10-9 (上り35.8)"
+              "detail": "騎手:国分優 / 通過:8-7 (上り34.2)"
             },
             {
               "label": "3走前",
               "dateVenue": "中京",
               "raceName": "オープン特別",
-              "rank": "10着",
+              "rank": "4着",
               "condition": "ダ1900m(稍)",
-              "detail": "騎手:国分優 / 通過:10-9 (上り35.3)"
+              "detail": "騎手:国分優 / 通過:10-9 (上り34.4)"
             }
           ],
-          "mark": "-",
-          "zScore": 50.2,
-          "winProb": 4.2,
-          "ev": 0.97,
-          "markJemi": "-",
-          "markAna": "△",
-          "markSpeed": "-",
-          "markPace": "△"
+          "mark": "▲ 単穴",
+          "zScore": 59.9,
+          "winProb": 14.5,
+          "ev": 1.11,
+          "markJemi": "▲",
+          "markAna": "▲",
+          "markSpeed": "☆",
+          "markPace": "○"
         },
         {
           "num": 7,
           "name": "ゴッドブルービー",
           "jockey": "角田和",
-          "odds": 28.9,
+          "odds": 4.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 86.8,
-          "gapScore": 0.8,
-          "isLongshot": true,
+          "speedScore": 92.9,
+          "gapScore": 0.0,
+          "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 84.9,
+          "pureSpeedScore": 91.8,
           "paceBiasScore": 87.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "東京",
               "raceName": "3歳上2勝C",
-              "rank": "6着",
+              "rank": "3着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:角田和 / 通過:10-9 (上り34.7)"
+              "detail": "騎手:角田和 / 通過:8-7 (上り34.2)"
             },
             {
               "label": "2走前",
               "dateVenue": "京都",
               "raceName": "3歳上1勝C",
-              "rank": "13着",
+              "rank": "5着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:角田和 / 通過:10-9 (上り35.8)"
+              "detail": "騎手:角田和 / 通過:10-9 (上り34.5)"
             },
             {
               "label": "3走前",
               "dateVenue": "中山",
               "raceName": "オープン特別",
-              "rank": "10着",
+              "rank": "6着",
               "condition": "ダ1700m(稍)",
-              "detail": "騎手:角田和 / 通過:10-9 (上り35.3)"
+              "detail": "騎手:角田和 / 通過:10-9 (上り34.7)"
             }
           ],
-          "mark": "-",
-          "zScore": 47.1,
-          "winProb": 3.0,
-          "ev": 0.81,
-          "markJemi": "-",
+          "mark": "◎ 本命",
+          "zScore": 60.3,
+          "winProb": 15.5,
+          "ev": 0.83,
+          "markJemi": "◎",
           "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "△"
+          "markSpeed": "◎",
+          "markPace": "◎"
         },
         {
           "num": 8,
           "name": "モンブランミノル",
           "jockey": "小沢",
-          "odds": 32.6,
+          "odds": 9.2,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
           "speedScore": 80.5,
@@ -4873,30 +4783,30 @@
               "label": "1走前",
               "dateVenue": "東京",
               "raceName": "前走特別",
-              "rank": "10着",
+              "rank": "2着",
               "condition": "ダ1700m(稍)",
-              "detail": "騎手:小沢 / 通過:1-2 (上り36.8)"
+              "detail": "騎手:小沢 / 通過:1-1 (上り35.2) [道悪激走]"
             },
             {
               "label": "2走前",
               "dateVenue": "京都",
               "raceName": "3歳上2勝C",
-              "rank": "7着",
+              "rank": "1着",
               "condition": "ダ1900m(良)",
-              "detail": "騎手:小沢 / 通過:1-2 (上り36.2)"
+              "detail": "騎手:小沢 / 通過:1-1 (上り35.0)"
             },
             {
               "label": "3走前",
               "dateVenue": "中山",
               "raceName": "3歳上1勝C",
-              "rank": "14着",
+              "rank": "2着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:小沢 / 通過:1-2 (上り37.6)"
+              "detail": "騎手:小沢 / 通過:1-1 (上り35.2)"
             }
           ],
           "mark": "-",
-          "zScore": 28.1,
-          "winProb": 0.4,
+          "zScore": 35.9,
+          "winProb": 0.3,
           "ev": 0.45,
           "markJemi": "-",
           "markAna": "-",
@@ -4907,108 +4817,108 @@
           "num": 9,
           "name": "オンザライン",
           "jockey": "小崎",
-          "odds": 36.3,
+          "odds": 18.9,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 85.3,
+          "speedScore": 88.6,
           "gapScore": 0.8,
-          "isLongshot": false,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 83.4,
+          "pureSpeedScore": 86.7,
           "paceBiasScore": 87.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "中山",
               "raceName": "3歳上1勝C",
-              "rank": "7着",
+              "rank": "3着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:小崎 / 通過:10-9 (上り34.8)"
+              "detail": "騎手:小崎 / 通過:8-7 (上り34.2)"
             },
             {
               "label": "2走前",
               "dateVenue": "阪神",
               "raceName": "オープン特別",
-              "rank": "14着",
+              "rank": "10着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:小崎 / 通過:10-9 (上り35.9)"
+              "detail": "騎手:小崎 / 通過:10-9 (上り35.3)"
             },
             {
               "label": "3走前",
               "dateVenue": "新潟",
               "raceName": "重賞トライアル",
-              "rank": "11着",
+              "rank": "9着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:小崎 / 通過:10-9 (上り35.4)"
+              "detail": "騎手:小崎 / 通過:10-9 (上り35.1)"
             }
           ],
           "mark": "-",
-          "zScore": 42.6,
-          "winProb": 1.9,
-          "ev": 0.63,
+          "zScore": 51.8,
+          "winProb": 3.9,
+          "ev": 0.68,
           "markJemi": "-",
-          "markAna": "-",
+          "markAna": "△",
           "markSpeed": "-",
-          "markPace": "-"
+          "markPace": "△"
         },
         {
           "num": 10,
           "name": "レアンダー",
           "jockey": "丸田",
-          "odds": 5.0,
+          "odds": 86.4,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 91.0,
+          "speedScore": 79.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 91.9,
+          "pureSpeedScore": 79.9,
           "paceBiasScore": 79.5,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "新潟",
               "raceName": "前走特別",
-              "rank": "2着",
+              "rank": "10着",
               "condition": "ダ1700m(稍)",
-              "detail": "騎手:丸田 / 通過:1-1 (上り35.2) [道悪激走]"
+              "detail": "騎手:丸田 / 通過:1-2 (上り36.8)"
             },
             {
               "label": "2走前",
               "dateVenue": "中京",
               "raceName": "3歳上2勝C",
-              "rank": "1着",
+              "rank": "7着",
               "condition": "ダ1900m(良)",
-              "detail": "騎手:丸田 / 通過:1-1 (上り35.0)"
+              "detail": "騎手:丸田 / 通過:1-2 (上り36.2)"
             },
             {
               "label": "3走前",
               "dateVenue": "福島",
               "raceName": "3歳上1勝C",
-              "rank": "2着",
+              "rank": "14着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:丸田 / 通過:1-1 (上り35.2)"
+              "detail": "騎手:丸田 / 通過:1-2 (上り37.6)"
             }
           ],
-          "mark": "▲ 単穴",
-          "zScore": 59.8,
-          "winProb": 11.6,
-          "ev": 0.69,
-          "markJemi": "▲",
+          "mark": "-",
+          "zScore": 32.9,
+          "winProb": 0.2,
+          "ev": 0.06,
+          "markJemi": "-",
           "markAna": "-",
-          "markSpeed": "◎",
+          "markSpeed": "-",
           "markPace": "-"
         },
         {
           "num": 11,
           "name": "スリーピース",
           "jockey": "石神道",
-          "odds": 8.7,
+          "odds": 129.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 88.3,
-          "gapScore": 0.8,
-          "isLongshot": true,
+          "speedScore": 87.5,
+          "gapScore": 0.0,
+          "isLongshot": false,
           "hasUnfavorable": false,
           "pureSpeedScore": 86.4,
           "paceBiasScore": 87.2,
@@ -5017,65 +4927,65 @@
               "label": "1走前",
               "dateVenue": "中京",
               "raceName": "重賞トライアル",
-              "rank": "6着",
+              "rank": "14着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:石神道 / 通過:10-9 (上り34.7)"
+              "detail": "騎手:石神道 / 通過:10-9 (上り35.9)"
             },
             {
               "label": "2走前",
               "dateVenue": "福島",
               "raceName": "前走特別",
-              "rank": "1着",
+              "rank": "11着",
               "condition": "ダ1900m(良)",
-              "detail": "騎手:石神道 / 通過:8-7 (上り33.9)"
+              "detail": "騎手:石神道 / 通過:10-9 (上り35.4)"
             },
             {
               "label": "3走前",
               "dateVenue": "東京",
               "raceName": "3歳上2勝C",
-              "rank": "2着",
+              "rank": "8着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:石神道 / 通過:8-7 (上り34.1)"
+              "detail": "騎手:石神道 / 通過:10-9 (上り35.0)"
             }
           ],
-          "mark": "△ 連下",
-          "zScore": 51.7,
-          "winProb": 4.9,
-          "ev": 0.45,
-          "markJemi": "△",
+          "mark": "-",
+          "zScore": 49.7,
+          "winProb": 2.8,
+          "ev": 0.65,
+          "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
-          "markPace": "☆"
+          "markPace": "△"
         },
         {
           "num": 12,
           "name": "ホールシバン",
           "jockey": "秋山稔",
-          "odds": 12.4,
+          "odds": 35.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 91.5,
+          "speedScore": 86.4,
           "gapScore": 0.8,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 89.6,
+          "pureSpeedScore": 84.5,
           "paceBiasScore": 87.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "中京",
               "raceName": "前走特別",
-              "rank": "3着",
+              "rank": "5着",
               "condition": "ダ1700m(稍)",
-              "detail": "騎手:秋山稔 / 通過:8-7 (上り34.2) [道悪激走]"
+              "detail": "騎手:秋山稔 / 通過:10-9 (上り34.5)"
             },
             {
               "label": "2走前",
               "dateVenue": "福島",
               "raceName": "3歳上2勝C",
-              "rank": "10着",
+              "rank": "12着",
               "condition": "ダ1900m(良)",
-              "detail": "騎手:秋山稔 / 通過:10-9 (上り35.3)"
+              "detail": "騎手:秋山稔 / 通過:10-9 (上り35.6)"
             },
             {
               "label": "3走前",
@@ -5086,57 +4996,57 @@
               "detail": "騎手:秋山稔 / 通過:10-9 (上り35.1)"
             }
           ],
-          "mark": "○ 対抗",
-          "zScore": 61.4,
-          "winProb": 13.7,
-          "ev": 1.71,
-          "markJemi": "○",
-          "markAna": "○",
-          "markSpeed": "☆",
-          "markPace": "◎"
+          "mark": "-",
+          "zScore": 47.5,
+          "winProb": 1.9,
+          "ev": 0.63,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
+          "markPace": "-"
         },
         {
           "num": 13,
           "name": "ゲイルライダー",
           "jockey": "斎藤",
-          "odds": 16.1,
+          "odds": 9.3,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 86.6,
+          "speedScore": 88.9,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": true,
-          "pureSpeedScore": 85.7,
+          "pureSpeedScore": 88.0,
           "paceBiasScore": 84.8,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "阪神",
               "raceName": "3歳上1勝C",
-              "rank": "10着",
+              "rank": "4着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:斎藤 / 通過:4-5 (上り35.9)"
+              "detail": "騎手:斎藤 / 通過:4-5 (上り35.0)"
             },
             {
               "label": "2走前",
               "dateVenue": "新潟",
               "raceName": "オープン特別",
-              "rank": "9着",
+              "rank": "1着",
               "condition": "ダ1900m(良)",
-              "detail": "騎手:斎藤 / 通過:4-5 (上り35.8)"
+              "detail": "騎手:斎藤 / 通過:3-3 (上り34.5)"
             },
             {
               "label": "3走前",
               "dateVenue": "中京",
               "raceName": "重賞トライアル",
-              "rank": "8着",
+              "rank": "2着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:斎藤 / 通過:4-5 (上り35.6)"
+              "detail": "騎手:斎藤 / 通過:3-3 (上り34.7)"
             }
           ],
           "mark": "-",
-          "zScore": 46.5,
-          "winProb": 2.8,
+          "zScore": 52.4,
+          "winProb": 4.3,
           "ev": 0.45,
           "markJemi": "-",
           "markAna": "-",
@@ -5147,47 +5057,47 @@
           "num": 14,
           "name": "ドバイブルース",
           "jockey": "石川",
-          "odds": 19.8,
+          "odds": 7.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 88.8,
+          "speedScore": 92.5,
           "gapScore": 0.8,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 86.9,
+          "pureSpeedScore": 90.6,
           "paceBiasScore": 87.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "阪神",
               "raceName": "重賞トライアル",
-              "rank": "4着",
+              "rank": "6着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:石川 / 通過:10-9 (上り34.4)"
+              "detail": "騎手:石川 / 通過:10-9 (上り34.7) [不利・度外視]"
             },
             {
               "label": "2走前",
               "dateVenue": "新潟",
               "raceName": "前走特別",
-              "rank": "3着",
+              "rank": "1着",
               "condition": "ダ1900m(良)",
-              "detail": "騎手:石川 / 通過:8-7 (上り34.2)"
+              "detail": "騎手:石川 / 通過:8-7 (上り33.9)"
             },
             {
               "label": "3走前",
               "dateVenue": "中京",
               "raceName": "3歳上2勝C",
-              "rank": "6着",
+              "rank": "4着",
               "condition": "ダ1900m(良)",
-              "detail": "騎手:石川 / 通過:10-9 (上り34.7)"
+              "detail": "騎手:石川 / 通過:10-9 (上り34.4)"
             }
           ],
-          "mark": "△ 連下",
-          "zScore": 53.2,
-          "winProb": 5.8,
-          "ev": 1.05,
-          "markJemi": "△",
-          "markAna": "☆",
+          "mark": "☆ 爆発期待穴",
+          "zScore": 59.5,
+          "winProb": 13.6,
+          "ev": 1.13,
+          "markJemi": "☆",
+          "markAna": "○",
           "markSpeed": "△",
           "markPace": "▲"
         },
@@ -5195,57 +5105,57 @@
           "num": 15,
           "name": "サンライズアリオン",
           "jockey": "藤懸",
-          "odds": 23.5,
+          "odds": 129.7,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 84.4,
+          "speedScore": 78.1,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": true,
-          "pureSpeedScore": 85.0,
+          "pureSpeedScore": 78.7,
           "paceBiasScore": 79.5,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "阪神",
               "raceName": "オープン特別",
-              "rank": "10着",
+              "rank": "8着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:藤懸 / 通過:1-2 (上り36.8)"
+              "detail": "騎手:藤懸 / 通過:1-2 (上り36.4)"
             },
             {
               "label": "2走前",
               "dateVenue": "新潟",
               "raceName": "重賞トライアル",
-              "rank": "9着",
+              "rank": "5着",
               "condition": "ダ1900m(稍)",
-              "detail": "騎手:藤懸 / 通過:1-2 (上り36.6)"
+              "detail": "騎手:藤懸 / 通過:1-2 (上り35.8)"
             },
             {
               "label": "3走前",
               "dateVenue": "中京",
               "raceName": "前走特別",
-              "rank": "8着",
+              "rank": "12着",
               "condition": "ダ1700m(良)",
-              "detail": "騎手:藤懸 / 通過:1-2 (上り36.4)"
+              "detail": "騎手:藤懸 / 通過:1-2 (上り37.2)"
             }
           ],
           "mark": "-",
-          "zScore": 39.9,
-          "winProb": 1.4,
-          "ev": 0.45,
+          "zScore": 31.2,
+          "winProb": 0.1,
+          "ev": 0.07,
           "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
           "markPace": "-"
         }
       ],
-      "honmeiNum": 1,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "honmeiNum": 7,
+      "confidence": "B",
+      "confidenceScore": 89,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。実力軸1番ワイドブリザードから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】1-12, 1-10, 1-4 (3点/各200円) / 【馬連/ワイドBOX】1, 12, 10 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 1-11, ワイド 4-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。能力上位の◎7番ゴッドブルービーと○1番の2強が強力。【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。",
+      "aiBuy": "【馬連本線】7 - 1 (1点/400円) / 【三連複2頭軸】7,1 - 6, 14, 2, 4, 5 (5点/各100円) / 【馬連押さえ】7 - 6 (1点/200円) [本線計7点] ★【確率UPプラス】あと2点（馬連タテ目 1-6, ワイド穴 7-14）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202603030412",
@@ -5257,9 +5167,9 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "SEMI_CHAOS",
+      "chaosLevel": "AXIS_STRONG",
       "paceType": "HIGH",
-      "raceType": "ちょい荒れレース（3連複F＋馬連/ワイド本線）",
+      "raceType": "本命信頼・中穴狙い（馬連流し＋3連複1頭軸）",
       "horses": [
         {
           "num": 1,
@@ -6031,11 +5941,11 @@
         }
       ],
       "honmeiNum": 7,
-      "confidence": "B",
-      "confidenceScore": 89,
+      "confidence": "A",
+      "confidenceScore": 91,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】。安定感最上位の7番ウイルソン（偏差値:68.0 / EV:0.98）を主軸に指名。【3連複F】で高配当を狙いつつ【馬連/ワイド本線】で的中率をしっかり確保するバランス戦略。",
-      "aiBuy": "【三連複F】7 ✕ 2, 10 ✕ 2, 10, 1, 3, 15 (7点/各100円) / 【手堅く馬連/ワイド】7 - 2, 10 (2点/各150円) [本線計9点] ★【確率UPプラス】あと2点（ワイド保険 2-10, ワイド穴 7-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。指数突出の7番ウイルソン（偏差値:68.0 / EV:0.98）を不動の軸に指名。相手は☆穴馬まで広げた【馬連流し＋三連複1頭軸】で的中率と200%超の回収率を両立。",
+      "aiBuy": "【馬連流し】7 - 2, 10, 1 (3点/各200円) / 【三連複1頭軸】7 - 2, 10, 1, 3 (6点/各100円) [本線計9点] ★【確率UPプラス】あと2点（馬単 7→2, 馬連 7-15）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605050409",
@@ -6047,9 +5957,9 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "DUAL_CORE",
       "paceType": "NORMAL",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）",
       "horses": [
         {
           "num": 1,
@@ -6821,11 +6731,11 @@
         }
       ],
       "honmeiNum": 1,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "B",
+      "confidenceScore": 89,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】で波乱含み。実力軸1番キョウエイカンセから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】1-8, 1-10, 1-5 (3点/各200円) / 【馬連/ワイドBOX】1, 8, 10 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 1-11, ワイド 5-3）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。能力上位の◎1番キョウエイカンセと○8番の2強が強力。【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。",
+      "aiBuy": "【馬連本線】1 - 8 (1点/400円) / 【三連複2頭軸】1,8 - 10, 5, 3, 11, 13 (5点/各100円) / 【馬連押さえ】1 - 10 (1点/200円) [本線計7点] ★【確率UPプラス】あと2点（馬連タテ目 8-10, ワイド穴 1-5）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605050410",
@@ -6839,7 +6749,7 @@
       "isWet": false,
       "chaosLevel": "SOLID",
       "paceType": "NORMAL",
-      "raceType": "手堅いレース（単勝・馬連本線集中）",
+      "raceType": "鉄板・一騎打ち（単勝＋馬連本線＋三連単）",
       "horses": [
         {
           "num": 1,
@@ -7372,10 +7282,10 @@
       ],
       "honmeiNum": 4,
       "confidence": "A",
-      "confidenceScore": 95,
+      "confidenceScore": 94,
       "isLowPayout": true,
-      "aiSummary": "展開予測は【平均ペース】。条件不利のない4番ハートメテオ（偏差値:67.0 / EV:1.06）が盤石。1/8ケリー基準に基づき【単勝＋馬連/ワイド本線】へ資金を集中。",
-      "aiBuy": "【単勝】4 (1点/400円) / 【馬連本線】4 - 11 (1点/400円) / 【馬連/ワイド押さえ】4 - 1 (1点/200円) [本線計3点] ★【確率UPプラス】あと2点（ワイド 4-2, 馬連タテ目 11-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。条件不利のない4番ハートメテオ（偏差値:67.0 / EV:1.06）が盤石。【単勝＋馬連本線】に資金を集中しつつ【三連単】でボーナス配当を上乗せする。",
+      "aiBuy": "【単勝】4 (1点/400円) / 【馬連本線】4 - 11 (1点/400円) / 【三連単】4 → 11,1 → 11, 1, 8 (4点/各100円) [本線計6点] ★【確率UPプラス】あと2点（馬連 4-8, 三連複 4-11-2）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605050411",
@@ -7387,9 +7297,9 @@
       "isGraded": false,
       "isWin5": true,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "AXIS_STRONG",
       "paceType": "HIGH",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "本命信頼・中穴狙い（馬連流し＋3連複1頭軸）",
       "horses": [
         {
           "num": 1,
@@ -8257,11 +8167,11 @@
         }
       ],
       "honmeiNum": 10,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "A",
+      "confidenceScore": 91,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。実力軸10番セフィロから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】10-11, 10-1, 10-14 (3点/各200円) / 【馬連/ワイドBOX】10, 11, 1 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 10-8, ワイド 14-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。指数突出の10番セフィロ（偏差値:70.2 / EV:1.26）を不動の軸に指名。相手は☆穴馬まで広げた【馬連流し＋三連複1頭軸】で的中率と200%超の回収率を両立。",
+      "aiBuy": "【馬連流し】10 - 11, 1, 14 (3点/各200円) / 【三連複1頭軸】10 - 11, 1, 14, 2 (6点/各100円) [本線計9点] ★【確率UPプラス】あと2点（馬単 10→11, 馬連 10-8）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202605050412",
@@ -8273,70 +8183,70 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "SEMI_CHAOS",
+      "chaosLevel": "SOLID",
       "paceType": "HIGH",
-      "raceType": "ちょい荒れレース（3連複F＋馬連/ワイド本線）",
+      "raceType": "鉄板・一騎打ち（単勝＋馬連本線＋三連単）",
       "horses": [
         {
           "num": 1,
           "name": "プラウディッツ",
           "jockey": "横山和",
-          "odds": 999.9,
+          "odds": 1.3,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 82.7,
+          "speedScore": 96.8,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 80.6,
+          "pureSpeedScore": 94.7,
           "paceBiasScore": 91.3,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "阪神",
               "raceName": "重賞トライアル",
-              "rank": "9着",
+              "rank": "1着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:横山和 / 通過:10-9 (上り35.1)"
+              "detail": "騎手:横山和 / 通過:8-7 (上り33.9)"
             },
             {
               "label": "2走前",
               "dateVenue": "新潟",
               "raceName": "前走特別",
-              "rank": "6着",
+              "rank": "4着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:横山和 / 通過:10-9 (上り34.7)"
+              "detail": "騎手:横山和 / 通過:10-9 (上り34.4)"
             },
             {
               "label": "3走前",
               "dateVenue": "中京",
               "raceName": "3歳上2勝C",
-              "rank": "13着",
+              "rank": "3着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:横山和 / 通過:10-9 (上り35.8)"
+              "detail": "騎手:横山和 / 通過:8-7 (上り34.2)"
             }
           ],
-          "mark": "△ 連下",
-          "zScore": 50.0,
-          "winProb": 1.6,
-          "ev": 0.65,
-          "markJemi": "△",
-          "markAna": "▲",
-          "markSpeed": "-",
-          "markPace": "☆"
+          "mark": "◎ 本命",
+          "zScore": 73.9,
+          "winProb": 56.0,
+          "ev": 0.82,
+          "markJemi": "◎",
+          "markAna": "-",
+          "markSpeed": "◎",
+          "markPace": "▲"
         },
         {
           "num": 2,
           "name": "エリュグレイス",
           "jockey": "佐々木",
-          "odds": 999.9,
+          "odds": 12.5,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 80.2,
+          "speedScore": 89.2,
           "gapScore": 0.0,
-          "isLongshot": false,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 81.8,
+          "pureSpeedScore": 90.8,
           "paceBiasScore": 75.5,
           "past3Races": [
             {
@@ -8351,40 +8261,40 @@
               "label": "2走前",
               "dateVenue": "中山",
               "raceName": "3歳上2勝C",
-              "rank": "12着",
+              "rank": "4着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:佐々木 / 通過:1-2 (上り37.2)"
+              "detail": "騎手:佐々木 / 通過:1-2 (上り35.6)"
             },
             {
               "label": "3走前",
               "dateVenue": "阪神",
               "raceName": "3歳上1勝C",
-              "rank": "9着",
+              "rank": "3着",
               "condition": "芝2200m(良)",
-              "detail": "騎手:佐々木 / 通過:1-2 (上り36.6)"
+              "detail": "騎手:佐々木 / 通過:1-1 (上り35.4)"
             }
           ],
-          "mark": "-",
-          "zScore": 43.3,
-          "winProb": 0.7,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "☆",
-          "markSpeed": "△",
+          "mark": "△ 連下",
+          "zScore": 57.6,
+          "winProb": 4.9,
+          "ev": 0.57,
+          "markJemi": "△",
+          "markAna": "△",
+          "markSpeed": "○",
           "markPace": "-"
         },
         {
           "num": 3,
           "name": "ベルウッドバイオ",
           "jockey": "横山武",
-          "odds": 999.9,
+          "odds": 31.7,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 82.5,
-          "gapScore": 0.0,
-          "isLongshot": false,
+          "speedScore": 88.6,
+          "gapScore": 1.4,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 80.5,
+          "pureSpeedScore": 85.2,
           "paceBiasScore": 91.5,
           "past3Races": [
             {
@@ -8412,12 +8322,12 @@
               "detail": "騎手:横山武 / 通過:10-9 (上り35.6)"
             }
           ],
-          "mark": "-",
-          "zScore": 49.4,
-          "winProb": 1.5,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "△",
+          "mark": "☆ 爆発期待穴",
+          "zScore": 56.3,
+          "winProb": 4.1,
+          "ev": 1.18,
+          "markJemi": "☆",
+          "markAna": "▲",
           "markSpeed": "-",
           "markPace": "○"
         },
@@ -8425,14 +8335,14 @@
           "num": 4,
           "name": "ディアボリカドンナ",
           "jockey": "☆長浜",
-          "odds": 999.9,
+          "odds": 40.2,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 80.4,
+          "speedScore": 84.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 80.3,
+          "pureSpeedScore": 83.9,
           "paceBiasScore": 80.2,
           "past3Races": [
             {
@@ -8461,9 +8371,9 @@
             }
           ],
           "mark": "-",
-          "zScore": 43.9,
-          "winProb": 0.8,
-          "ev": 0.65,
+          "zScore": 46.4,
+          "winProb": 0.9,
+          "ev": 0.45,
           "markJemi": "-",
           "markAna": "△",
           "markSpeed": "-",
@@ -8473,14 +8383,14 @@
           "num": 5,
           "name": "サトノスターライト",
           "jockey": "Ｍデムーロ",
-          "odds": 999.9,
+          "odds": 75.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 81.7,
+          "speedScore": 82.5,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 82.0,
+          "pureSpeedScore": 82.8,
           "paceBiasScore": 81.2,
           "past3Races": [
             {
@@ -8509,74 +8419,74 @@
             }
           ],
           "mark": "-",
-          "zScore": 47.3,
-          "winProb": 1.2,
-          "ev": 0.65,
+          "zScore": 43.2,
+          "winProb": 0.6,
+          "ev": 0.17,
           "markJemi": "-",
           "markAna": "-",
-          "markSpeed": "☆",
+          "markSpeed": "-",
           "markPace": "-"
         },
         {
           "num": 6,
           "name": "ウインドラート",
           "jockey": "木幡巧",
-          "odds": 1.6,
+          "odds": 24.1,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 93.9,
+          "speedScore": 86.2,
           "gapScore": 0.0,
-          "isLongshot": false,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 93.8,
+          "pureSpeedScore": 86.1,
           "paceBiasScore": 80.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "中山",
               "raceName": "3歳上2勝C",
-              "rank": "1着",
+              "rank": "4着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:木幡巧 / 通過:3-3 (上り34.5)"
+              "detail": "騎手:木幡巧 / 通過:4-5 (上り35.0)"
             },
             {
               "label": "2走前",
               "dateVenue": "阪神",
               "raceName": "3歳上1勝C",
-              "rank": "1着",
+              "rank": "3着",
               "condition": "芝1800m(良)",
-              "detail": "騎手:木幡巧 / 通過:3-3 (上り34.5)"
+              "detail": "騎手:木幡巧 / 通過:3-3 (上り34.9)"
             },
             {
               "label": "3走前",
               "dateVenue": "新潟",
               "raceName": "オープン特別",
-              "rank": "4着",
+              "rank": "10着",
               "condition": "芝2000m(稍)",
-              "detail": "騎手:木幡巧 / 通過:4-5 (上り35.0)"
+              "detail": "騎手:木幡巧 / 通過:4-5 (上り35.9)"
             }
           ],
-          "mark": "◎ 本命",
-          "zScore": 79.6,
-          "winProb": 57.7,
-          "ev": 1.0,
-          "markJemi": "◎",
-          "markAna": "◎",
-          "markSpeed": "◎",
+          "mark": "-",
+          "zScore": 51.2,
+          "winProb": 1.9,
+          "ev": 0.45,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
           "markPace": "-"
         },
         {
           "num": 7,
           "name": "ヤマニンリンキング",
           "jockey": "原",
-          "odds": 999.9,
+          "odds": 37.7,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 82.6,
-          "gapScore": 0.0,
-          "isLongshot": false,
+          "speedScore": 87.5,
+          "gapScore": 1.1,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 80.3,
+          "pureSpeedScore": 84.1,
           "paceBiasScore": 90.8,
           "past3Races": [
             {
@@ -8605,11 +8515,11 @@
             }
           ],
           "mark": "△ 連下",
-          "zScore": 49.7,
-          "winProb": 1.6,
-          "ev": 0.65,
+          "zScore": 54.0,
+          "winProb": 2.9,
+          "ev": 0.99,
           "markJemi": "△",
-          "markAna": "-",
+          "markAna": "☆",
           "markSpeed": "-",
           "markPace": "△"
         },
@@ -8617,14 +8527,14 @@
           "num": 8,
           "name": "インテンスゲイズ",
           "jockey": "武藤",
-          "odds": 999.9,
+          "odds": 50.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 82.2,
+          "speedScore": 85.0,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 79.9,
+          "pureSpeedScore": 82.7,
           "paceBiasScore": 90.8,
           "past3Races": [
             {
@@ -8654,8 +8564,8 @@
           ],
           "mark": "-",
           "zScore": 48.6,
-          "winProb": 1.4,
-          "ev": 0.65,
+          "winProb": 1.3,
+          "ev": 0.59,
           "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
@@ -8665,14 +8575,14 @@
           "num": 9,
           "name": "サンセットビュー",
           "jockey": "プーシャン",
-          "odds": 999.9,
+          "odds": 75.4,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 81.6,
+          "speedScore": 82.4,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 79.3,
+          "pureSpeedScore": 80.1,
           "paceBiasScore": 90.8,
           "past3Races": [
             {
@@ -8701,9 +8611,9 @@
             }
           ],
           "mark": "-",
-          "zScore": 47.0,
-          "winProb": 1.1,
-          "ev": 0.65,
+          "zScore": 43.0,
+          "winProb": 0.6,
+          "ev": 0.17,
           "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
@@ -8713,7 +8623,7 @@
           "num": 10,
           "name": "ストレートブラック",
           "jockey": "松岡",
-          "odds": 999.9,
+          "odds": 120.6,
           "runningStyle": "差し",
           "pos_score": 0.48,
           "speedScore": 81.6,
@@ -8749,9 +8659,9 @@
             }
           ],
           "mark": "-",
-          "zScore": 47.0,
-          "winProb": 1.1,
-          "ev": 0.65,
+          "zScore": 41.3,
+          "winProb": 0.4,
+          "ev": 0.21,
           "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
@@ -8761,14 +8671,14 @@
           "num": 11,
           "name": "レッドレガリア",
           "jockey": "岩田康",
-          "odds": 999.9,
+          "odds": 25.1,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 82.5,
-          "gapScore": 0.0,
-          "isLongshot": false,
+          "speedScore": 89.9,
+          "gapScore": 1.4,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 80.4,
+          "pureSpeedScore": 86.4,
           "paceBiasScore": 91.3,
           "past3Races": [
             {
@@ -8796,68 +8706,68 @@
               "detail": "騎手:岩田康 / 通過:14-13 (上り35.3)"
             }
           ],
-          "mark": "-",
-          "zScore": 49.4,
-          "winProb": 1.5,
-          "ev": 0.65,
-          "markJemi": "-",
-          "markAna": "-",
-          "markSpeed": "-",
-          "markPace": "△"
+          "mark": "▲ 単穴",
+          "zScore": 59.1,
+          "winProb": 6.2,
+          "ev": 1.57,
+          "markJemi": "▲",
+          "markAna": "○",
+          "markSpeed": "△",
+          "markPace": "☆"
         },
         {
           "num": 12,
           "name": "パワポケウォーズ",
           "jockey": "野中",
-          "odds": 1.6,
+          "odds": 75.4,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 91.0,
+          "speedScore": 77.9,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 93.4,
+          "pureSpeedScore": 80.3,
           "paceBiasScore": 75.0,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "阪神",
               "raceName": "前走特別",
-              "rank": "3着",
+              "rank": "10着",
               "condition": "芝2000m(稍)",
-              "detail": "騎手:野中 / 通過:1-1 (上り35.4) [道悪激走]"
+              "detail": "騎手:野中 / 通過:1-2 (上り36.8)"
             },
             {
               "label": "2走前",
               "dateVenue": "新潟",
               "raceName": "3歳上2勝C",
-              "rank": "3着",
+              "rank": "7着",
               "condition": "芝2200m(良)",
-              "detail": "騎手:野中 / 通過:1-1 (上り35.4)"
+              "detail": "騎手:野中 / 通過:1-2 (上り36.2)"
             },
             {
               "label": "3走前",
               "dateVenue": "中京",
               "raceName": "3歳上1勝C",
-              "rank": "2着",
+              "rank": "14着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:野中 / 通過:1-1 (上り35.2)"
+              "detail": "騎手:野中 / 通過:1-2 (上り37.6)"
             }
           ],
-          "mark": "○ 対抗",
-          "zScore": 71.9,
-          "winProb": 22.8,
-          "ev": 0.49,
-          "markJemi": "○",
-          "markAna": "○",
-          "markSpeed": "○",
+          "mark": "-",
+          "zScore": 33.4,
+          "winProb": 0.1,
+          "ev": 0.04,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
           "markPace": "-"
         },
         {
           "num": 13,
           "name": "メアヴィア",
           "jockey": "伊藤",
-          "odds": 999.9,
+          "odds": 150.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
           "speedScore": 82.4,
@@ -8893,9 +8803,9 @@
             }
           ],
           "mark": "-",
-          "zScore": 49.2,
-          "winProb": 1.5,
-          "ev": 0.65,
+          "zScore": 43.0,
+          "winProb": 0.6,
+          "ev": 0.34,
           "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
@@ -8905,55 +8815,55 @@
           "num": 14,
           "name": "エバーシャンティ",
           "jockey": "戸崎圭",
-          "odds": 999.9,
+          "odds": 20.8,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 84.2,
-          "gapScore": 0.0,
-          "isLongshot": false,
+          "speedScore": 92.4,
+          "gapScore": 1.4,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 82.3,
+          "pureSpeedScore": 89.1,
           "paceBiasScore": 91.8,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "東京",
               "raceName": "前走特別",
-              "rank": "5着",
+              "rank": "7着",
               "condition": "芝2000m(稍)",
-              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.5)"
+              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.8)"
             },
             {
               "label": "2走前",
               "dateVenue": "京都",
               "raceName": "3歳上2勝C",
-              "rank": "12着",
+              "rank": "6着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:戸崎圭 / 通過:10-9 (上り35.6)"
+              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.7)"
             },
             {
               "label": "3走前",
               "dateVenue": "中山",
               "raceName": "3歳上1勝C",
-              "rank": "9着",
+              "rank": "5着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:戸崎圭 / 通過:10-9 (上り35.1)"
+              "detail": "騎手:戸崎圭 / 通過:10-9 (上り34.5)"
             }
           ],
-          "mark": "▲ 単穴",
-          "zScore": 53.9,
-          "winProb": 2.6,
+          "mark": "○ 対抗",
+          "zScore": 64.5,
+          "winProb": 13.7,
           "ev": 2.45,
-          "markJemi": "▲",
-          "markAna": "-",
-          "markSpeed": "▲",
+          "markJemi": "○",
+          "markAna": "◎",
+          "markSpeed": "☆",
           "markPace": "◎"
         },
         {
           "num": 15,
           "name": "ディエスルージュ",
           "jockey": "▲遠藤",
-          "odds": 999.9,
+          "odds": 120.6,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
           "speedScore": 78.3,
@@ -8989,9 +8899,9 @@
             }
           ],
           "mark": "-",
-          "zScore": 38.3,
-          "winProb": 0.4,
-          "ev": 0.65,
+          "zScore": 34.2,
+          "winProb": 0.2,
+          "ev": 0.07,
           "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
@@ -9001,23 +8911,23 @@
           "num": 16,
           "name": "ダイユウアレグロ",
           "jockey": "田辺",
-          "odds": 999.9,
+          "odds": 16.7,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 78.9,
+          "speedScore": 86.6,
           "gapScore": 0.0,
-          "isLongshot": false,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 81.5,
+          "pureSpeedScore": 89.2,
           "paceBiasScore": 75.5,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "東京",
               "raceName": "オープン特別",
-              "rank": "8着",
+              "rank": "6着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:田辺 / 通過:1-2 (上り36.4)"
+              "detail": "騎手:田辺 / 通過:1-2 (上り36.0)"
             },
             {
               "label": "2走前",
@@ -9031,25 +8941,25 @@
               "label": "3走前",
               "dateVenue": "中山",
               "raceName": "前走特別",
-              "rank": "12着",
+              "rank": "4着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:田辺 / 通過:1-2 (上り37.2)"
+              "detail": "騎手:田辺 / 通過:1-2 (上り35.6)"
             }
           ],
           "mark": "-",
-          "zScore": 39.9,
-          "winProb": 0.5,
-          "ev": 0.65,
+          "zScore": 52.0,
+          "winProb": 2.1,
+          "ev": 0.45,
           "markJemi": "-",
           "markAna": "-",
-          "markSpeed": "△",
+          "markSpeed": "▲",
           "markPace": "-"
         },
         {
           "num": 17,
           "name": "ユーディキウム",
           "jockey": "菅原明",
-          "odds": 999.9,
+          "odds": 86.1,
           "runningStyle": "追込",
           "pos_score": 0.25,
           "speedScore": 82.8,
@@ -9084,70 +8994,70 @@
               "detail": "騎手:菅原明 / 通過:14-13 (上り34.9)"
             }
           ],
-          "mark": "△ 連下",
-          "zScore": 50.2,
-          "winProb": 1.7,
-          "ev": 0.65,
-          "markJemi": "△",
+          "mark": "-",
+          "zScore": 43.9,
+          "winProb": 0.6,
+          "ev": 0.22,
+          "markJemi": "-",
           "markAna": "-",
           "markSpeed": "-",
-          "markPace": "▲"
+          "markPace": "△"
         },
         {
           "num": 18,
           "name": "イニスフェイル",
           "jockey": "石橋脩",
-          "odds": 999.9,
+          "odds": 14.7,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 79.4,
+          "speedScore": 87.7,
           "gapScore": 0.0,
-          "isLongshot": false,
+          "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 80.3,
+          "pureSpeedScore": 88.6,
           "paceBiasScore": 80.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "中京",
               "raceName": "前走特別",
-              "rank": "10着",
+              "rank": "4着",
               "condition": "芝2000m(稍)",
-              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.9)"
+              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.0)"
             },
             {
               "label": "2走前",
               "dateVenue": "福島",
               "raceName": "3歳上2勝C",
-              "rank": "7着",
+              "rank": "3着",
               "condition": "芝2200m(良)",
-              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.4)"
+              "detail": "騎手:石橋脩 / 通過:3-3 (上り34.9)"
             },
             {
               "label": "3走前",
               "dateVenue": "東京",
               "raceName": "3歳上1勝C",
-              "rank": "14着",
+              "rank": "10着",
               "condition": "芝2000m(良)",
-              "detail": "騎手:石橋脩 / 通過:4-5 (上り36.5)"
+              "detail": "騎手:石橋脩 / 通過:4-5 (上り35.9)"
             }
           ],
-          "mark": "-",
-          "zScore": 41.2,
-          "winProb": 0.6,
-          "ev": 0.65,
-          "markJemi": "-",
+          "mark": "△ 連下",
+          "zScore": 54.4,
+          "winProb": 3.0,
+          "ev": 0.45,
+          "markJemi": "△",
           "markAna": "-",
-          "markSpeed": "-",
+          "markSpeed": "△",
           "markPace": "-"
         }
       ],
-      "honmeiNum": 6,
-      "confidence": "B",
-      "confidenceScore": 89,
-      "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】。安定感最上位の6番ウインドラート（偏差値:79.6 / EV:1.0）を主軸に指名。【3連複F】で高配当を狙いつつ【馬連/ワイド本線】で的中率をしっかり確保するバランス戦略。",
-      "aiBuy": "【三連複F】6 ✕ 12, 14 ✕ 12, 14, 1, 7, 17 (7点/各100円) / 【手堅く馬連/ワイド】6 - 12, 14 (2点/各150円) [本線計9点] ★【確率UPプラス】あと1点（ワイド保険 12-14）を買い足せば的中確率が上がります（＋1点）"
+      "honmeiNum": 1,
+      "confidence": "A",
+      "confidenceScore": 94,
+      "isLowPayout": true,
+      "aiSummary": "展開予測は【差し有利ハイペース】。条件不利のない1番プラウディッツ（偏差値:73.9 / EV:0.82）が盤石。【単勝＋馬連本線】に資金を集中しつつ【三連単】でボーナス配当を上乗せする。",
+      "aiBuy": "【単勝】1 (1点/400円) / 【馬連本線】1 - 14 (1点/400円) / 【三連単】1 → 14,11 → 14, 11, 3 (4点/各100円) [本線計6点] ★【確率UPプラス】あと2点（馬連 1-3, 三連複 1-14-2）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608050409",
@@ -9159,9 +9069,9 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "DUAL_CORE",
       "paceType": "NORMAL",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）",
       "horses": [
         {
           "num": 1,
@@ -9597,11 +9507,11 @@
         }
       ],
       "honmeiNum": 1,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "B",
+      "confidenceScore": 89,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】で波乱含み。実力軸1番サイモンレガシーから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】1-9, 1-5, 1-6 (3点/各200円) / 【馬連/ワイドBOX】1, 9, 5 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 1-3, ワイド 6-2）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。能力上位の◎1番サイモンレガシーと○9番の2強が強力。【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。",
+      "aiBuy": "【馬連本線】1 - 9 (1点/400円) / 【三連複2頭軸】1,9 - 5, 6, 2, 3, 4 (5点/各100円) / 【馬連押さえ】1 - 5 (1点/200円) [本線計7点] ★【確率UPプラス】あと2点（馬連タテ目 9-5, ワイド穴 1-6）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608050410",
@@ -9613,22 +9523,22 @@
       "isGraded": false,
       "isWin5": true,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "AXIS_STRONG",
       "paceType": "NORMAL",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "本命信頼・中穴狙い（馬連流し＋3連複1頭軸）",
       "horses": [
         {
           "num": 1,
           "name": "マーウォルス",
           "jockey": "北村友",
-          "odds": 6.7,
+          "odds": 11.5,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 90.5,
+          "speedScore": 88.8,
           "gapScore": 0.0,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 91.4,
+          "pureSpeedScore": 89.7,
           "paceBiasScore": 80.2,
           "past3Races": [
             {
@@ -9643,40 +9553,40 @@
               "label": "2走前",
               "dateVenue": "阪神",
               "raceName": "重賞トライアル",
-              "rank": "6着",
+              "rank": "4着",
               "condition": "ダ1800m(稍)",
-              "detail": "騎手:北村友 / 通過:14-13 (上り34.4)"
+              "detail": "騎手:北村友 / 通過:14-13 (上り34.1)"
             },
             {
               "label": "3走前",
               "dateVenue": "新潟",
               "raceName": "前走特別",
-              "rank": "1着",
+              "rank": "3着",
               "condition": "ダ2000m(良)",
-              "detail": "騎手:北村友 / 通過:12-11 (上り33.6)"
+              "detail": "騎手:北村友 / 通過:12-11 (上り34.0)"
             }
           ],
           "mark": "△ 連下",
-          "zScore": 55.9,
-          "winProb": 10.2,
-          "ev": 0.63,
+          "zScore": 51.0,
+          "winProb": 4.0,
+          "ev": 0.45,
           "markJemi": "△",
-          "markAna": "-",
-          "markSpeed": "○",
+          "markAna": "△",
+          "markSpeed": "△",
           "markPace": "-"
         },
         {
           "num": 2,
           "name": "ユーヴェリア",
           "jockey": "国分恭",
-          "odds": 10.4,
+          "odds": 19.2,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
-          "speedScore": 91.7,
+          "speedScore": 89.1,
           "gapScore": 0.0,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 90.1,
+          "pureSpeedScore": 87.5,
           "paceBiasScore": 84.8,
           "past3Races": [
             {
@@ -9704,68 +9614,68 @@
               "detail": "騎手:国分恭 / 通過:1-2 (上り35.6)"
             }
           ],
-          "mark": "▲ 単穴",
-          "zScore": 58.5,
-          "winProb": 14.9,
-          "ev": 1.58,
-          "markJemi": "▲",
-          "markAna": "▲",
-          "markSpeed": "☆",
+          "mark": "☆ 爆発期待穴",
+          "zScore": 51.6,
+          "winProb": 4.4,
+          "ev": 1.15,
+          "markJemi": "☆",
+          "markAna": "○",
+          "markSpeed": "△",
           "markPace": "△"
         },
         {
           "num": 3,
           "name": "ダディーズトリップ",
           "jockey": "横山典",
-          "odds": 14.1,
+          "odds": 5.4,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 94.4,
-          "gapScore": 1.3,
-          "isLongshot": true,
+          "speedScore": 96.4,
+          "gapScore": 0.0,
+          "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 90.3,
+          "pureSpeedScore": 93.6,
           "paceBiasScore": 90.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "新潟",
               "raceName": "3歳上2勝C",
-              "rank": "10着",
+              "rank": "3着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:横山典 / 通過:4-5 (上り35.9)"
+              "detail": "騎手:横山典 / 通過:3-3 (上り34.9)"
             },
             {
               "label": "2走前",
               "dateVenue": "中京",
               "raceName": "3歳上1勝C",
-              "rank": "9着",
+              "rank": "3着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:横山典 / 通過:4-5 (上り35.8)"
+              "detail": "騎手:横山典 / 通過:3-3 (上り34.9)"
             },
             {
               "label": "3走前",
               "dateVenue": "福島",
               "raceName": "オープン特別",
-              "rank": "8着",
+              "rank": "4着",
               "condition": "ダ2000m(稍)",
-              "detail": "騎手:横山典 / 通過:4-5 (上り35.6)"
+              "detail": "騎手:横山典 / 通過:4-5 (上り35.0)"
             }
           ],
           "mark": "◎ 本命",
-          "zScore": 64.4,
-          "winProb": 35.5,
-          "ev": 2.45,
+          "zScore": 65.4,
+          "winProb": 45.2,
+          "ev": 2.39,
           "markJemi": "◎",
           "markAna": "◎",
-          "markSpeed": "▲",
+          "markSpeed": "◎",
           "markPace": "◎"
         },
         {
           "num": 4,
           "name": "テーオーライマン",
           "jockey": "松山",
-          "odds": 17.8,
+          "odds": 5.0,
           "runningStyle": "差し",
           "pos_score": 0.48,
           "speedScore": 81.8,
@@ -9779,17 +9689,17 @@
               "label": "1走前",
               "dateVenue": "中京",
               "raceName": "3歳上1勝C",
-              "rank": "5着",
+              "rank": "4着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:松山 / 通過:10-9 (上り34.5)"
+              "detail": "騎手:松山 / 通過:10-9 (上り34.4)"
             },
             {
               "label": "2走前",
               "dateVenue": "福島",
               "raceName": "オープン特別",
-              "rank": "4着",
+              "rank": "2着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:松山 / 通過:10-9 (上り34.4)"
+              "detail": "騎手:松山 / 通過:8-7 (上り34.1)"
             },
             {
               "label": "3走前",
@@ -9801,8 +9711,8 @@
             }
           ],
           "mark": "-",
-          "zScore": 36.9,
-          "winProb": 0.6,
+          "zScore": 37.8,
+          "winProb": 0.4,
           "ev": 0.45,
           "markJemi": "-",
           "markAna": "-",
@@ -9813,62 +9723,62 @@
           "num": 5,
           "name": "テンエースワン",
           "jockey": "幸",
-          "odds": 21.5,
+          "odds": 32.9,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 89.4,
+          "speedScore": 87.1,
           "gapScore": 1.0,
           "isLongshot": true,
           "hasUnfavorable": false,
-          "pureSpeedScore": 86.4,
+          "pureSpeedScore": 84.1,
           "paceBiasScore": 89.7,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "東京",
               "raceName": "重賞トライアル",
-              "rank": "4着",
+              "rank": "14着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:幸 / 通過:4-5 (上り35.0)"
+              "detail": "騎手:幸 / 通過:4-5 (上り36.5)"
             },
             {
               "label": "2走前",
               "dateVenue": "京都",
               "raceName": "前走特別",
-              "rank": "3着",
+              "rank": "11着",
               "condition": "ダ1600m(良)",
-              "detail": "騎手:幸 / 通過:3-3 (上り34.9)"
+              "detail": "騎手:幸 / 通過:4-5 (上り36.0)"
             },
             {
               "label": "3走前",
               "dateVenue": "中山",
               "raceName": "3歳上2勝C",
-              "rank": "10着",
+              "rank": "8着",
               "condition": "ダ2000m(良)",
-              "detail": "騎手:幸 / 通過:4-5 (上り35.9)"
+              "detail": "騎手:幸 / 通過:4-5 (上り35.6)"
             }
           ],
-          "mark": "☆ 爆発期待穴",
-          "zScore": 53.5,
-          "winProb": 7.2,
-          "ev": 1.42,
-          "markJemi": "☆",
+          "mark": "△ 連下",
+          "zScore": 47.8,
+          "winProb": 2.3,
+          "ev": 0.7,
+          "markJemi": "△",
           "markAna": "☆",
-          "markSpeed": "△",
+          "markSpeed": "-",
           "markPace": "▲"
         },
         {
           "num": 6,
           "name": "アートレスマインド",
           "jockey": "Ｃデムーロ",
-          "odds": 25.2,
+          "odds": 999.9,
           "runningStyle": "追込",
           "pos_score": 0.25,
-          "speedScore": 87.3,
+          "speedScore": 81.3,
           "gapScore": 0.0,
-          "isLongshot": true,
+          "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 88.6,
+          "pureSpeedScore": 82.6,
           "paceBiasScore": 81.2,
           "past3Races": [
             {
@@ -9896,68 +9806,68 @@
               "detail": "騎手:Ｃデムー / 通過:14-13 (上り35.3)"
             }
           ],
-          "mark": "△ 連下",
-          "zScore": 48.9,
-          "winProb": 3.7,
-          "ev": 0.85,
-          "markJemi": "△",
-          "markAna": "△",
-          "markSpeed": "△",
+          "mark": "-",
+          "zScore": 36.8,
+          "winProb": 0.4,
+          "ev": 0.65,
+          "markJemi": "-",
+          "markAna": "-",
+          "markSpeed": "-",
           "markPace": "△"
         },
         {
           "num": 7,
           "name": "シーミハットク",
           "jockey": "高杉",
-          "odds": 28.9,
+          "odds": 4.2,
           "runningStyle": "差し",
           "pos_score": 0.48,
-          "speedScore": 83.4,
+          "speedScore": 90.7,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": false,
-          "pureSpeedScore": 84.3,
+          "pureSpeedScore": 91.6,
           "paceBiasScore": 80.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "東京",
               "raceName": "オープン特別",
-              "rank": "13着",
+              "rank": "5着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:高杉 / 通過:10-9 (上り35.8)"
+              "detail": "騎手:高杉 / 通過:10-9 (上り34.5)"
             },
             {
               "label": "2走前",
               "dateVenue": "京都",
               "raceName": "重賞トライアル",
-              "rank": "10着",
+              "rank": "6着",
               "condition": "ダ1800m(稍)",
-              "detail": "騎手:高杉 / 通過:10-9 (上り35.3)"
+              "detail": "騎手:高杉 / 通過:10-9 (上り34.7)"
             },
             {
               "label": "3走前",
               "dateVenue": "中山",
               "raceName": "前走特別",
-              "rank": "7着",
+              "rank": "1着",
               "condition": "ダ2000m(良)",
-              "detail": "騎手:高杉 / 通過:10-9 (上り34.8)"
+              "detail": "騎手:高杉 / 通過:8-7 (上り33.9)"
             }
           ],
-          "mark": "-",
-          "zScore": 40.4,
-          "winProb": 1.0,
+          "mark": "△ 連下",
+          "zScore": 54.6,
+          "winProb": 7.3,
           "ev": 0.45,
-          "markJemi": "-",
+          "markJemi": "△",
           "markAna": "-",
-          "markSpeed": "-",
+          "markSpeed": "☆",
           "markPace": "-"
         },
         {
           "num": 8,
           "name": "セイントホース",
           "jockey": "菱田",
-          "odds": 32.6,
+          "odds": 6.4,
           "runningStyle": "逃げ",
           "pos_score": 0.9,
           "speedScore": 93.2,
@@ -9971,89 +9881,89 @@
               "label": "1走前",
               "dateVenue": "京都",
               "raceName": "重賞トライアル",
-              "rank": "9着",
+              "rank": "6着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:菱田 / 通過:1-2 (上り36.6)"
+              "detail": "騎手:菱田 / 通過:1-2 (上り36.0) [不利・度外視]"
             },
             {
               "label": "2走前",
               "dateVenue": "京都",
               "raceName": "前走特別",
-              "rank": "6着",
+              "rank": "4着",
               "condition": "ダ2000m(良)",
-              "detail": "騎手:菱田 / 通過:1-2 (上り36.0)"
+              "detail": "騎手:菱田 / 通過:1-2 (上り35.6)"
             },
             {
               "label": "3走前",
               "dateVenue": "京都",
               "raceName": "3歳上2勝C",
-              "rank": "13着",
+              "rank": "5着",
               "condition": "ダ1600m(良)",
-              "detail": "騎手:菱田 / 通過:1-2 (上り37.4)"
+              "detail": "騎手:菱田 / 通過:1-2 (上り35.8)"
             }
           ],
-          "mark": "○ 対抗",
-          "zScore": 61.8,
-          "winProb": 24.2,
-          "ev": 2.45,
-          "markJemi": "○",
-          "markAna": "○",
-          "markSpeed": "◎",
+          "mark": "▲ 単穴",
+          "zScore": 59.3,
+          "winProb": 16.2,
+          "ev": 1.1,
+          "markJemi": "▲",
+          "markAna": "▲",
+          "markSpeed": "○",
           "markPace": "☆"
         },
         {
           "num": 9,
           "name": "タイセイドラード",
           "jockey": "西村淳",
-          "odds": 36.3,
+          "odds": 5.6,
           "runningStyle": "先行",
           "pos_score": 0.78,
-          "speedScore": 85.9,
+          "speedScore": 93.8,
           "gapScore": 0.0,
           "isLongshot": false,
           "hasUnfavorable": true,
-          "pureSpeedScore": 83.8,
+          "pureSpeedScore": 91.7,
           "paceBiasScore": 90.2,
           "past3Races": [
             {
               "label": "1走前",
               "dateVenue": "中山",
               "raceName": "3歳上2勝C",
-              "rank": "11着",
+              "rank": "3着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:西村淳 / 通過:4-5 (上り36.0)"
+              "detail": "騎手:西村淳 / 通過:3-3 (上り34.9)"
             },
             {
               "label": "2走前",
               "dateVenue": "阪神",
               "raceName": "3歳上1勝C",
-              "rank": "8着",
+              "rank": "2着",
               "condition": "ダ1800m(良)",
-              "detail": "騎手:西村淳 / 通過:4-5 (上り35.6)"
+              "detail": "騎手:西村淳 / 通過:3-3 (上り34.7)"
             },
             {
               "label": "3走前",
               "dateVenue": "新潟",
               "raceName": "オープン特別",
-              "rank": "5着",
+              "rank": "3着",
               "condition": "ダ1600m(稍)",
-              "detail": "騎手:西村淳 / 通過:4-5 (上り35.1)"
+              "detail": "騎手:西村淳 / 通過:3-3 (上り34.9) [道悪激走]"
             }
           ],
-          "mark": "△ 連下",
-          "zScore": 45.8,
-          "winProb": 2.3,
-          "ev": 0.78,
-          "markJemi": "△",
+          "mark": "○ 対抗",
+          "zScore": 60.4,
+          "winProb": 19.6,
+          "ev": 1.16,
+          "markJemi": "○",
           "markAna": "△",
-          "markSpeed": "-",
+          "markSpeed": "▲",
           "markPace": "○"
         },
         {
           "num": 10,
           "name": "トモジャザーン",
           "jockey": "古川吉",
-          "odds": 5.0,
+          "odds": 7.6,
           "runningStyle": "追込",
           "pos_score": 0.25,
           "speedScore": 80.5,
@@ -10089,8 +9999,8 @@
             }
           ],
           "mark": "-",
-          "zScore": 34.1,
-          "winProb": 0.4,
+          "zScore": 35.3,
+          "winProb": 0.3,
           "ev": 0.45,
           "markJemi": "-",
           "markAna": "-",
@@ -10099,11 +10009,11 @@
         }
       ],
       "honmeiNum": 3,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "A",
+      "confidenceScore": 91,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【平均ペース】で波乱含み。実力軸3番ダディーズトリップから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】3-8, 3-2, 3-5 (3点/各200円) / 【馬連/ワイドBOX】3, 8, 2 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 3-6, ワイド 5-1）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【平均ペース】。指数突出の3番ダディーズトリップ（偏差値:65.4 / EV:2.39）を不動の軸に指名。相手は☆穴馬まで広げた【馬連流し＋三連複1頭軸】で的中率と200%超の回収率を両立。",
+      "aiBuy": "【馬連流し】3 - 9, 8, 2 (3点/各200円) / 【三連複1頭軸】3 - 9, 8, 2, 1 (6点/各100円) [本線計9点] ★【確率UPプラス】あと2点（馬単 3→9, 馬連 3-5）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608050411",
@@ -10115,9 +10025,9 @@
       "isGraded": false,
       "isWin5": true,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "DUAL_CORE",
       "paceType": "HIGH",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）",
       "horses": [
         {
           "num": 1,
@@ -10985,11 +10895,11 @@
         }
       ],
       "honmeiNum": 11,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "B",
+      "confidenceScore": 89,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。実力軸11番ジュウリョクピエロから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】11-9, 11-13, 11-6 (3点/各200円) / 【馬連/ワイドBOX】11, 9, 13 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 11-10, ワイド 6-7）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。能力上位の◎11番ジュウリョクピエロと○9番の2強が強力。【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。",
+      "aiBuy": "【馬連本線】11 - 9 (1点/400円) / 【三連複2頭軸】11,9 - 13, 6, 7, 10, 18 (5点/各100円) / 【馬連押さえ】11 - 13 (1点/200円) [本線計7点] ★【確率UPプラス】あと2点（馬連タテ目 9-13, ワイド穴 11-6）を買い足せば的中確率が上がります（＋2点）"
     },
     {
       "raceId": "202608050412",
@@ -11001,9 +10911,9 @@
       "isGraded": false,
       "isWin5": false,
       "isWet": false,
-      "chaosLevel": "CHAOS",
+      "chaosLevel": "DUAL_CORE",
       "paceType": "HIGH",
-      "raceType": "波乱・道悪警戒（中穴ワイド流し＆馬連BOX）",
+      "raceType": "2強軸・3着穴狙い（馬連本線＋3連複2頭軸流し）",
       "horses": [
         {
           "num": 1,
@@ -11775,11 +11685,11 @@
         }
       ],
       "honmeiNum": 1,
-      "confidence": "C",
-      "confidenceScore": 84,
+      "confidence": "B",
+      "confidenceScore": 89,
       "isLowPayout": false,
-      "aiSummary": "展開予測は【差し有利ハイペース】で波乱含み。実力軸1番チルカーノから、穴党AI推奨馬・高EV馬を絡めた【ワイド流し＆上位BOX】で手堅く高配当を仕留める。",
-      "aiBuy": "【ワイド流し】1-11, 1-2, 1-14 (3点/各200円) / 【馬連/ワイドBOX】1, 11, 2 (3点/各150円) [本線計6点] ★【確率UPプラス】あと2点（ワイド 1-10, ワイド 14-6）を買い足せば的中確率が上がります（＋2点）"
+      "aiSummary": "展開予測は【差し有利ハイペース】。能力上位の◎1番チルカーノと○11番の2強が強力。【馬連本線】で確実に利益を確保しつつ、【三連複2頭軸流し】で3着の激走穴馬を根こそぎ拾う。",
+      "aiBuy": "【馬連本線】1 - 11 (1点/400円) / 【三連複2頭軸】1,11 - 2, 14, 6, 10, 15 (5点/各100円) / 【馬連押さえ】1 - 2 (1点/200円) [本線計7点] ★【確率UPプラス】あと2点（馬連タテ目 11-2, ワイド穴 1-14）を買い足せば的中確率が上がります（＋2点）"
     }
   ]
 }
