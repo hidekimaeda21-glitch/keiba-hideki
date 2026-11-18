@@ -2,50 +2,42 @@ name: Auto Keiba AI Predictor
 
 on:
   schedule:
-    # JRA開催のある「金曜夜・土曜・日曜・月曜朝」のみ毎時実行（平日の無駄な実行とエラーメールを防止）
-    # UTC 21:00〜11:00 (JST 6:00〜20:00) の金・土・日・月
-    - cron: '18 21-23,0-11 * * 5,6,0,1'
-  workflow_dispatch:
+    # 1. 金曜・土曜の夜 20:00 (日本時間) ＝ UTC 11:00 (金・土) に前日予想を自動更新
+    - cron: '0 11 * * 5,6'
+    # 2. 土曜・日曜の朝 08:30 (日本時間) ＝ UTC 23:30 (金・土) に当日朝の最新オッズで自動更新
+    - cron: '30 23 * * 5,6'
+    # 3. 土曜・日曜の昼 12:30 (日本時間) ＝ UTC 03:30 (土・日) に9R〜12R＆WIN5直前オッズで自動更新
+    - cron: '30 3 * * 6,0'
+  workflow_dispatch: # 手動実行ボタン (Run workflow) も引き続き使えます
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  update-predictions:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: リポジトリのコードを取得
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Set up Python
+      - name: Pythonのセットアップ
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: 必要なライブラリのインストール
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 google-genai
+          pip install requests beautifulsoup4
 
-      - name: Run race collection script
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          PROXY_URL: ${{ secrets.PROXY_URL }}
+      - name: AI予想データ (today.json) の生成・計算
         run: |
-          # 平日などでレースがなくてもエラー終了させない
-          python scripts/collect_races.py || echo "Race collection finished or skipped"
+          python scripts/collect_races.py
 
-      - name: Commit and push updated data
+      - name: 生成された today.json をGitHubへ自動保存・公開
         run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-          git add -f data/today.json data/stats.json data/horses_db.json || true
-          if git diff --staged --quiet; then
-            echo "変更差分がないため、プッシュをスキップします。"
-          else
-            git commit -m "Update race data $(date +'%Y-%m-%d %H:%M')"
-            git pull --rebase -X theirs origin main || true
-            git push origin HEAD:main --force
-          fi
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git pull --rebase origin main || true
+          git add data/today.json today.json || true
+          git diff --staged --quiet || (git commit -m "Auto update AI predictions (1,000 yen fixed & WIN5)" && git push)
