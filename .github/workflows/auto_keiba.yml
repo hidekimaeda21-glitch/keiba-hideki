@@ -8,7 +8,7 @@ on:
     - cron: '30 23 * * 5,6'
     # 3. 土曜・日曜の昼 12:30 (日本時間) ＝ UTC 03:30 (土・日) に9R〜12R＆WIN5直前オッズで自動更新
     - cron: '30 3 * * 6,0'
-  workflow_dispatch: # 手動実行ボタン (Run workflow) も引き続き使えます
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,8 +17,10 @@ jobs:
   update-predictions:
     runs-on: ubuntu-latest
     steps:
-      - name: リポジトリのコードを取得
+      - name: リポジトリのコードを取得（全履歴を含む）
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Pythonのセットアップ
         uses: actions/setup-python@v5
@@ -30,14 +32,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
 
-      - name: AI予想データ (today.json) の生成・計算
+      - name: AI予想データ (today.json / stats.json) の生成・計算
         run: |
           python scripts/collect_races.py
 
-      - name: 生成された today.json をGitHubへ自動保存・公開
+      - name: 生成された全データファイルをGitHubへ自動保存・公開
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git pull --rebase origin main || true
-          git add data/today.json today.json || true
-          git diff --staged --quiet || (git commit -m "Auto update AI predictions (1,000 yen fixed & WIN5)" && git push)
+          git add data/today.json today.json data/stats.json stats.json index.html || true
+          git diff --staged --quiet || (git commit -m "Update AI predictions, markStats & WIN5" && git push)
