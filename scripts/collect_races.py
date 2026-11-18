@@ -27,7 +27,6 @@ def fetch_html(url, default_enc="euc-jp", retries=3):
         try:
             res = requests.get(url, headers=HEADERS, timeout=15)
             raw = res.content
-            # HTML内のcharset指定を確認しつつ、euc_jp -> cp932 -> utf-8 の順で安全にデコード
             if b"utf-8" in raw[:1000].lower() or b"utf8" in raw[:1000].lower():
                 return raw.decode("utf-8", errors="replace")
             for enc in (default_enc, "euc_jp", "cp932", "utf-8"):
@@ -43,13 +42,22 @@ def fetch_html(url, default_enc="euc-jp", retries=3):
 
 
 def get_target_dates():
+    """
+    現在時刻(JST)に応じて最適な開催日リストを返す
+    ・金曜夜 / 土曜16時半まで ➔ 土曜を最優先
+    ・土曜17時以降（土曜夜） / 日曜 ➔ 日曜を最優先
+    """
     now = datetime.datetime.now(JST)
-    wd = now.weekday()
-    if wd == 5:
-        dates = [now, now + datetime.timedelta(days=1)]
-    elif wd == 6:
+    wd = now.weekday()  # 0:月 ... 4:金, 5:土, 6:日
+    if wd == 5:  # 土曜日
+        if now.hour >= 17:
+            # 土曜の17時以降（土曜夜の自動実行）は翌日の「日曜日」を第1候補にする
+            dates = [now + datetime.timedelta(days=1), now]
+        else:
+            dates = [now, now + datetime.timedelta(days=1)]
+    elif wd == 6:  # 日曜日
         dates = [now, now - datetime.timedelta(days=1)]
-    else:
+    else:  # 月〜金曜日（金曜夜の自動実行を含む）は直近の土曜日を第1候補にする
         days_to_sat = (5 - wd) % 7
         sat = now + datetime.timedelta(days=days_to_sat)
         sun = sat + datetime.timedelta(days=1)
@@ -110,7 +118,6 @@ def parse_shutuba_page(race_id):
 
     r_name_el = soup.select_one(".RaceName")
     race_name = r_name_el.get_text(strip=True) if r_name_el else f"{r_num}R"
-    # 不要な記号を除去
     race_name = re.sub(r"[\r\n\t]+", "", race_name).strip()
 
     r_data01 = soup.select_one(".RaceData01")
@@ -138,12 +145,10 @@ def parse_shutuba_page(race_id):
             continue
         seen_names.add(h_name)
 
-        # JRAの最大頭数(18頭)を超えないように制御
         if len(horses) >= 18:
             break
         seq_num = len(horses) + 1
 
-        # 馬番の取得（1〜18の範囲のみ有効、枠順未確定時は1〜18の連番）
         uma_td = tr.select_one("td[class*='Umaban']")
         uma_txt = uma_td.get_text(strip=True) if uma_td else ""
         if uma_txt.isdigit() and 1 <= int(uma_txt) <= 18:
@@ -224,7 +229,6 @@ def parse_shutuba_page(race_id):
 
 def evaluate_and_build_1000yen_strategy(race_data):
     horses = race_data["horses"]
-    # 万が一18番を超えるデータや重複があれば1〜18に正規化
     valid_horses = []
     used_nums = set()
     for idx, h in enumerate(horses, 1):
@@ -450,17 +454,12 @@ def evaluate_and_build_1000yen_strategy(race_data):
 
 
 def build_win5_prediction(races):
-    """
-    JRAのWIN5対象5レース（各会場の10R・11Rを発走時刻順に5レース）を抽出し、
-    少点数（1頭×2頭×1頭×2頭×2頭＝8点 / 800円）のWIN5推奨データを生成する
-    """
     cand_races = [r for r in races if r.get("rNum") in (10, 11)]
     cand_races.sort(key=lambda x: x.get("startTime", "15:00"))
     win5_races = cand_races[-5:] if len(cand_races) >= 5 else races[-5:]
 
     legs = []
     total_combos = 1
-    # 自信度が高いレースは1頭一本勝負、混戦は2頭選択（計8点＝800円）
     pick_counts = [1, 2, 1, 2, 2]
 
     for idx, r in enumerate(win5_races):
