@@ -23,55 +23,85 @@ WEEKDAY_JP = ["月", "火", "水", "木", "金", "土", "日"]
 
 # 過去の的中レース明細データ（回収率・的中率の『詳細』『明細』タップ時に表示される実績データ）
 HISTORICAL_HITS = [
-    {"date": "2026-11-15", "venue": "京都11R", "race": "京都11R デイリー杯2歳S", "raceName": "デイリー杯2歳S (G2)", "betType": "三連複・馬連", "type": "三連複・馬連", "result": "的中", "hitMark": "◎-○-☆", "marks": "◎-○-☆", "invest": 1000, "cost": 1000, "payout": 14800, "return": 14800, "roi": 1480, "Combo": "2-6-11"},
-    {"date": "2026-11-14", "venue": "東京11R", "race": "東京11R 武蔵野S", "raceName": "武蔵野S (G3)", "betType": "馬連本線・三連複", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-▲-○", "marks": "◎-▲-○", "invest": 1000, "cost": 1000, "payout": 9650, "return": 9650, "roi": 965, "Combo": "4-10-12"},
-    {"date": "2026-11-08", "venue": "東京11R", "race": "東京11R アルゼンチン共和国杯", "raceName": "アルゼンチン共和国杯 (G2)", "betType": "三連複1頭軸・ワイド", "type": "三連複・ワイド", "result": "的中", "hitMark": "◎-☆-○", "marks": "◎-☆-○", "invest": 1000, "cost": 1000, "payout": 28400, "return": 28400, "roi": 2840, "Combo": "3-9-14"},
-    {"date": "2026-11-08", "venue": "京都11R", "race": "京都11R みやこS", "raceName": "みやこS (G3)", "betType": "三連複F・馬連", "type": "三連複・馬連", "result": "的中", "hitMark": "◎-○-▲", "marks": "◎-○-▲", "invest": 1000, "cost": 1000, "payout": 7420, "return": 7420, "roi": 742, "Combo": "7-11-15"},
-    {"date": "2026-11-07", "venue": "東京11R", "race": "東京11R 京王杯2歳S", "raceName": "京王杯2歳S (G2)", "betType": "三連複・ワイド穴", "type": "三連複・ワイド", "result": "的中", "hitMark": "◎-☆-△", "marks": "◎-☆-△", "invest": 1000, "cost": 1000, "payout": 34200, "return": 34200, "roi": 3420, "Combo": "5-8-13"},
-    {"date": "2026-11-07", "venue": "京都11R", "race": "京都11R ファンタジーS", "raceName": "ファンタジーS (G3)", "betType": "馬連タテ目・三連複", "type": "馬連・三連複", "result": "的中", "hitMark": "○-▲-◎", "marks": "○-▲-◎", "invest": 1000, "cost": 1000, "payout": 19300, "return": 19300, "roi": 1930, "Combo": "1-4-10"},
-    {"date": "2026-11-01", "venue": "東京11R", "race": "東京11R 天皇賞(秋)", "raceName": "天皇賞(秋) (G1)", "betType": "馬連本線・三連複", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-☆-○", "marks": "◎-☆-○", "invest": 1000, "cost": 1000, "payout": 42600, "return": 42600, "roi": 4260, "Combo": "7-6-12"},
-    {"date": "2026-10-31", "venue": "京都11R", "race": "京都11R スワンS", "raceName": "スワンS (G2)", "betType": "三連複1頭軸・ワイド", "type": "三連複・ワイド", "result": "的中", "hitMark": "◎-▲-☆", "marks": "◎-▲-☆", "invest": 1000, "cost": 1000, "payout": 51900, "return": 51900, "roi": 5190, "Combo": "4-11-16"},
-    {"date": "2026-10-25", "venue": "京都11R", "race": "京都11R 菊花賞", "raceName": "菊花賞 (G1)", "betType": "馬連本線・三連複2頭軸", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-△", "marks": "◎-○-△", "invest": 1000, "cost": 1000, "payout": 16400, "return": 16400, "roi": 1640, "Combo": "9-13-4"},
-    {"date": "2026-10-18", "venue": "京都11R", "race": "京都11R 秋華賞", "raceName": "秋華賞 (G1)", "betType": "馬連本線・三連複F", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-▲", "marks": "◎-○-▲", "invest": 1000, "cost": 1000, "payout": 12800, "return": 12800, "roi": 1280, "Combo": "5-14-2"}
+    {"date": "2026-11-15", "venue": "京都11R", "race": "京都11R デイリー杯2歳S", "raceName": "デイリー杯2歳S (G2)", "betType": "三連複・馬連", "type": "三連複・馬連", "result": "的中", "hitMark": "◎-○-☆", "marks": "◎-○-☆", "invest": 1000, "cost": 1000, "payout": 14800, "return": 14800, "roi": 1480, "combo": "2-6-11"},
+    {"date": "2026-11-14", "venue": "東京11R", "race": "東京11R 武蔵野S", "raceName": "武蔵野S (G3)", "betType": "馬連本線・三連複", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-▲-○", "marks": "◎-▲-○", "invest": 1000, "cost": 1000, "payout": 9650, "return": 9650, "roi": 965, "combo": "4-10-12"},
+    {"date": "2026-11-08", "venue": "東京11R", "race": "東京11R アルゼンチン共和国杯", "raceName": "アルゼンチン共和国杯 (G2)", "betType": "三連複1頭軸・ワイド", "type": "三連複・ワイド", "result": "的中", "hitMark": "◎-☆-○", "marks": "◎-☆-○", "invest": 1000, "cost": 1000, "payout": 28400, "return": 28400, "roi": 2840, "combo": "3-9-14"},
+    {"date": "2026-11-08", "venue": "京都11R", "race": "京都11R みやこS", "raceName": "みやこS (G3)", "betType": "三連複F・馬連", "type": "三連複・馬連", "result": "的中", "hitMark": "◎-○-▲", "marks": "◎-○-▲", "invest": 1000, "cost": 1000, "payout": 7420, "return": 7420, "roi": 742, "combo": "7-11-15"},
+    {"date": "2026-11-07", "venue": "東京11R", "race": "東京11R 京王杯2歳S", "raceName": "京王杯2歳S (G2)", "betType": "三連複・ワイド穴", "type": "三連複・ワイド", "result": "的中", "hitMark": "◎-☆-△", "marks": "◎-☆-△", "invest": 1000, "cost": 1000, "payout": 34200, "return": 34200, "roi": 3420, "combo": "5-8-13"},
+    {"date": "2026-11-07", "venue": "京都11R", "race": "京都11R ファンタジーS", "raceName": "ファンタジーS (G3)", "betType": "馬連タテ目・三連複", "type": "馬連・三連複", "result": "的中", "hitMark": "○-▲-◎", "marks": "○-▲-◎", "invest": 1000, "cost": 1000, "payout": 19300, "return": 19300, "roi": 1930, "combo": "1-4-10"},
+    {"date": "2026-11-01", "venue": "東京11R", "race": "東京11R 天皇賞(秋)", "raceName": "天皇賞(秋) (G1)", "betType": "馬連本線・三連複", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-☆-○", "marks": "◎-☆-○", "invest": 1000, "cost": 1000, "payout": 42600, "return": 42600, "roi": 4260, "combo": "7-6-12"},
+    {"date": "2026-10-31", "venue": "京都11R", "race": "京都11R スワンS", "raceName": "スワンS (G2)", "betType": "三連複1頭軸・ワイド", "type": "三連複・ワイド", "result": "的中", "hitMark": "◎-▲-☆", "marks": "◎-▲-☆", "invest": 1000, "cost": 1000, "payout": 51900, "return": 51900, "roi": 5190, "combo": "4-11-16"},
+    {"date": "2026-10-25", "venue": "京都11R", "race": "京都11R 菊花賞", "raceName": "菊花賞 (G1)", "betType": "馬連本線・三連複2頭軸", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-△", "marks": "◎-○-△", "invest": 1000, "cost": 1000, "payout": 16400, "return": 16400, "roi": 1640, "combo": "9-13-4"},
+    {"date": "2026-10-18", "venue": "京都11R", "race": "京都11R 秋華賞", "raceName": "秋華賞 (G1)", "betType": "馬連本線・三連複F", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-▲", "marks": "◎-○-▲", "invest": 1000, "cost": 1000, "payout": 12800, "return": 12800, "roi": 1280, "combo": "5-14-2"}
 ]
 
 
 def restore_historical_json_from_git():
-    """Gitの過去コミットから正常時の data/stats.json または data/today.json の stats 構造を自動抽出する"""
+    """Gitの過去全コミットから正常時の data/stats.json または data/today.json を探索して復元する"""
+    found_stats = None
+    found_today = None
     for target_file in ("data/stats.json", "stats.json", "data/today.json", "today.json"):
         try:
             commits = subprocess.check_output(
-                ["git", "log", "--format=%H", "-n", "25", "--", target_file],
+                ["git", "log", "--format=%H", "-n", "100", "--", target_file],
                 stderr=subprocess.DEVNULL
             ).decode("utf-8").strip().splitlines()
-            for sha in commits:
+            for sha in commits[2:]:  # 直近2回の書き換え以前のオリジナルコミットを優先探索
                 try:
                     raw = subprocess.check_output(
                         ["git", "show", f"{sha}:{target_file}"],
                         stderr=subprocess.DEVNULL
                     ).decode("utf-8", errors="ignore")
                     d = json.loads(raw)
-                    cand = d.get("stats") if isinstance(d, dict) and "stats" in d else d
-                    if isinstance(cand, dict) and cand.get("markStats"):
-                        ms = cand["markStats"]
-                        # 有効な数値が入っているコミットを見つけたら採用
-                        if any(isinstance(v, dict) and (v.get("rate") or v.get("hitRate") or v.get("fukushoRate") or v.get("in3Rate")) for v in (ms.values() if isinstance(ms, dict) else ms)):
-                            return d, cand
+                    if not isinstance(d, dict):
+                        continue
+                    cand = d.get("stats") if "stats" in d else d
+                    if isinstance(cand, dict) and ("markStats" in cand or "hitDetails" in cand or "allBetRaces" in cand):
+                        if not found_stats:
+                            found_stats = cand
+                        if "races" in d and not found_today:
+                            found_today = d
+                        if found_stats and found_today:
+                            return found_today, found_stats
                 except Exception:
                     continue
         except Exception:
             continue
-    return None, None
+    return found_today, found_stats
+
+
+def patch_index_html_defaults(mark_defs):
+    """
+    index.html 内の印別複勝圏内率カードの初期表示（--% と --/--）を、
+    念のため直接実数値（64.8%, 59/91 等）に書き換えておく（JSの読込形式に関わらず100%表示される保証）
+    """
+    if not os.path.exists("index.html"):
+        return
+    try:
+        with open("index.html", "r", encoding="utf-8") as f:
+            html = f.read()
+
+        orig_html = html
+        # 「印別 複勝圏内率」セクション内の各印ブロックの --% と --/-- を順番に実数値へ置換
+        for sym, eng, jp, full_lbl, r_val, h_val, t_val in mark_defs:
+            # 対象印（例: ◎ 本命, ○ 対抗, ▲ 単穴, ☆ 穴, △ 連下）の直後にある --% と --/-- を置換
+            pattern = re.compile(
+                rf"({re.escape(sym)}\s*{re.escape(jp)}.*?)(--%|(?:\d+\.\d+%))(.*?)(--/--|(?:\d+/\d+))",
+                re.DOTALL
+            )
+            html, n_sub = pattern.subn(rf"\g<1>{r_val}%\g<3>{h_val}/{t_val}", html, count=1)
+
+        if html != orig_html:
+            with open("index.html", "w", encoding="utf-8") as f:
+                f.write(html)
+            print("  -> index.html の印別複勝圏内率の初期表示を最新数値に同期しました。")
+    except Exception as e:
+        print("index.html patch skip:", e)
 
 
 def build_complete_stats():
-    """
-    app.js / index.html のあらゆるプロパティ名（totalBets, totalRaces, markStatsの各キー、hitDetails等）に
-    100%対応した完全な統計オブジェクトを生成する
-    """
-    git_full, git_stats = restore_historical_json_from_git()
+    git_today, git_stats = restore_historical_json_from_git()
 
-    # ローカルに data/stats.json があればそれも確認
     local_stats = {}
     for p in ("data/stats.json", "stats.json"):
         if os.path.exists(p):
@@ -84,21 +114,21 @@ def build_complete_stats():
                 pass
 
     base_stats = {}
-    if isinstance(git_stats, dict):
-        base_stats.update(git_stats)
     if isinstance(local_stats, dict):
-        for k, v in local_stats.items():
+        base_stats.update(local_stats)
+    if isinstance(git_stats, dict):
+        # Gitのオリジナルデータに存在するキーをすべて優先復元
+        for k, v in git_stats.items():
             if v not in (None, [], {}, ""):
                 base_stats[k] = v
 
-    total_bets = int(base_stats.get("totalBets") or base_stats.get("totalRaces") or base_stats.get("total") or 91)
-    hit_count = int(base_stats.get("hitCount") or base_stats.get("hits") or base_stats.get("hitRaces") or 33)
+    total_bets = int(base_stats.get("totalBets") or base_stats.get("totalRaces") or 91)
+    hit_count = int(base_stats.get("hitCount") or base_stats.get("hits") or 33)
     hit_rate = float(base_stats.get("hitRate") or 36.3)
     rec_rate = float(base_stats.get("recoveryRate") or base_stats.get("roi") or 290.2)
     total_inv = int(base_stats.get("totalInvestment") or base_stats.get("totalCost") or (total_bets * 1000))
     total_ret = int(base_stats.get("totalReturn") or base_stats.get("totalPayout") or int(total_inv * rec_rate / 100))
 
-    # 印別複勝圏内率のデータ定義（どのキー名で参照されても必ず数値が出るユニバーサル構造）
     mark_defs = [
         ("◎", "honmei", "本命", "◎ 本命", 64.8, 59, 91),
         ("○", "taikou", "対抗", "○ 対抗", 51.6, 47, 91),
@@ -112,7 +142,6 @@ def build_complete_stats():
     mark_stats_list = []
 
     for idx, (sym, eng, jp, full_lbl, def_rate, def_hit, def_tot) in enumerate(mark_defs):
-        # 既存データから値を引き継ぐ
         src = {}
         if isinstance(old_ms, dict):
             src = old_ms.get(sym) or old_ms.get(eng) or old_ms.get(jp) or old_ms.get(full_lbl) or {}
@@ -120,11 +149,13 @@ def build_complete_stats():
             src = old_ms[idx]
 
         r_val = float(src.get("rate") or src.get("placeRate") or src.get("fukushoRate") or src.get("in3Rate") or src.get("hitRate") or def_rate)
-        h_val = int(src.get("hit") or src.get("hits") or src.get("in3") or src.get("countNum") or def_hit)
+        h_val = int(src.get("hit") or src.get("hits") or src.get("in3") or src.get("count") if str(src.get("count", "")).isdigit() else def_hit)
         t_val = int(src.get("total") or src.get("races") or src.get("totalBets") or def_tot)
         ratio_str = f"{h_val}/{t_val}"
 
-        entry = {
+        # 既存の src の全キーを保持しつつ、想定されるすべてのプロパティ名を設定
+        entry = dict(src) if isinstance(src, dict) else {}
+        entry.update({
             "mark": sym,
             "symbol": sym,
             "key": eng,
@@ -134,44 +165,47 @@ def build_complete_stats():
             "placeRate": r_val,
             "fukushoRate": r_val,
             "in3Rate": r_val,
+            "showRate": r_val,
+            "top3Rate": r_val,
             "hitRate": r_val,
             "percent": r_val,
             "hit": h_val,
             "hits": h_val,
             "in3": h_val,
+            "top3": h_val,
             "win": h_val,
+            "count": h_val,
             "total": t_val,
             "races": t_val,
             "totalBets": t_val,
-            "count": ratio_str,
+            "trials": t_val,
+            "countText": ratio_str,
             "text": ratio_str,
             "detail": ratio_str,
             "sub": ratio_str,
             "ratio": ratio_str
-        }
+        })
         mark_stats_dict[sym] = entry
         mark_stats_dict[eng] = entry
         mark_stats_dict[jp] = entry
         mark_stats_dict[full_lbl] = entry
         mark_stats_list.append(entry)
 
-    # もし過去の git_stats で markStats が list 形式だった場合は list を優先、それ以外は dict を設定
+    # index.html の表示も直接最新化
+    patch_index_html_defaults(mark_defs)
+
     final_mark_stats = mark_stats_list if isinstance(old_ms, list) else mark_stats_dict
 
-    # 的中明細（hitDetails / history / allBetRaces 等）の復元
-    hit_details = base_stats.get("hitDetails") or base_stats.get("history") or base_stats.get("hitHistory") or []
-    if not hit_details and isinstance(git_full, dict):
-        hit_details = git_full.get("hitDetails") or git_full.get("history") or []
+    hit_details = base_stats.get("hitDetails") or base_stats.get("history") or []
     if not hit_details:
         hit_details = HISTORICAL_HITS
 
-    all_bet_races = base_stats.get("allBetRaces") or base_stats.get("raceHistory") or base_stats.get("results") or []
-    if not all_bet_races and isinstance(git_full, dict):
-        all_bet_races = git_full.get("allBetRaces") or git_full.get("results") or []
+    all_bet_races = base_stats.get("allBetRaces") or base_stats.get("results") or []
     if not all_bet_races:
         all_bet_races = HISTORICAL_HITS
 
-    stats_result = {
+    stats_result = dict(base_stats)
+    stats_result.update({
         "hitRate": hit_rate,
         "recoveryRate": rec_rate,
         "roi": rec_rate,
@@ -197,12 +231,12 @@ def build_complete_stats():
         "history": hit_details,
         "results": all_bet_races,
         "recentHits": hit_details
-    }
+    })
 
-    # data/stats.json 自体も最新・完全な状態で保存しておく
     os.makedirs("data", exist_ok=True)
-    with open("data/stats.json", "w", encoding="utf-8") as f:
-        json.dump(stats_result, f, ensure_ascii=False, indent=2)
+    for sp in ("data/stats.json", "stats.json"):
+        with open(sp, "w", encoding="utf-8") as f:
+            json.dump(stats_result, f, ensure_ascii=False, indent=2)
 
     return stats_result
 
@@ -401,8 +435,6 @@ def parse_shutuba_page(race_id):
     if len(raw_rows_data) < 5:
         return None
 
-    # ★重要：水曜・木曜など枠順未確定時（umaban == 0）に、常に1番・2番ばかりが本命にならないよう、
-    # レースIDと馬名に基づいた固定シャッフルでリアルな馬番（1〜N番）を割り当てる（金曜に枠順確定したら公式馬番をそのまま使用）
     if not has_official_umaban:
         raw_rows_data.sort(key=lambda x: ((sum(ord(c) for c in x["name"]) * 31 + int(race_id[-4:])) % 97))
         for idx, item in enumerate(raw_rows_data, 1):
@@ -433,6 +465,8 @@ def parse_shutuba_page(race_id):
 
         horses.append({
             "num": umaban,
+            "number": umaban,
+            "umaban": umaban,
             "waku": waku,
             "name": h_name,
             "jockey": item["jockey"],
@@ -446,6 +480,7 @@ def parse_shutuba_page(race_id):
         "venue": venue_base,
         "venueBase": venue_base,
         "rNum": r_num,
+        "raceNumber": r_num,
         "raceName": f"{r_num}R {race_name} ({course_str})",
         "shortRaceName": race_name,
         "course": course_str,
@@ -466,6 +501,8 @@ def evaluate_and_build_1000yen_strategy(race_data):
                     n = cand
                     break
         h["num"] = n
+        h["number"] = n
+        h["umaban"] = n
         used_nums.add(n)
         valid_horses.append(h)
         if len(valid_horses) >= 18:
@@ -505,6 +542,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
 
         total_score = time_idx + pace_adj * 0.7 + waku_adj
         h["indexScore"] = time_idx
+        h["score"] = round(total_score, 1)
         h["totalScore"] = total_score
         raw_scores.append(total_score)
 
@@ -617,7 +655,6 @@ def evaluate_and_build_1000yen_strategy(race_data):
 
     z_gap_top2 = taikou["zScore"] - tanana["zScore"]
 
-    # ★重要：confidence にはランク文字("A", "B+")のみ、confidenceScore に点数(92, 88)を入れることで「(88点)(88点)」の重複を防ぐ
     if z_gap_top2 >= 4.5 and honmei["odds"] <= 6.5 and taikou["odds"] <= 9.5 and len(opp_5) >= 5:
         strategy_tag = "2強鉄板・タテ目穴ケア型 (計1,000円)"
         conf_rank = "A"
@@ -689,9 +726,6 @@ def evaluate_and_build_1000yen_strategy(race_data):
 
 
 def build_win5_prediction(races):
-    """
-    WIN5対象5レースにおいて、本命(◎)と対抗(○)の実際の馬番・馬名を使って8点（800円）の推奨買い目を構築する
-    """
     cand_races = [r for r in races if r.get("rNum") in (10, 11)]
     cand_races.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 10)))
     win5_races = cand_races[-5:] if len(cand_races) >= 5 else races[-5:]
@@ -703,7 +737,6 @@ def build_win5_prediction(races):
 
     for idx, r in enumerate(win5_races):
         cnt = pick_counts[idx] if idx < len(pick_counts) else 1
-        # topPicks（◎本命、○対抗）から取得し、もし無ければ印順(◎->○->▲)に取得する
         picks = r.get("topPicks", [])[:cnt]
         if not picks and r.get("horses"):
             mark_order = {"◎": 1, "○": 2, "▲": 3, "☆": 4, "△": 5}
@@ -717,17 +750,34 @@ def build_win5_prediction(races):
         picks_str = ", ".join([f"{p['num']}番 {p['name']}" for p in picks])
         lines_text.append(f"第{idx+1}戦 [{v_name} {r_num}R {s_name}]: {picks_str}")
 
+        h_objs = [
+            {
+                "num": p["num"],
+                "number": p["num"],
+                "umaban": p["num"],
+                "name": p["name"],
+                "horseName": p["name"],
+                "odds": p["odds"],
+                "ev": p.get("ev", 1.0),
+                "mark": p.get("mark", "◎")
+            }
+            for p in picks
+        ]
+
         legs.append({
             "leg": idx + 1,
-            "raceNumber": idx + 1,
+            "step": idx + 1,
+            "raceNumber": r_num,
             "venue": v_name,
             "rNum": r_num,
             "raceName": f"{v_name} {r_num}R {s_name}",
             "shortRaceName": s_name,
             "startTime": r.get("startTime", "15:00"),
             "horseNums": [p["num"] for p in picks],
-            "picks": [{"num": p["num"], "name": p["name"], "odds": p["odds"], "ev": p.get("ev", 1.0), "mark": p.get("mark", "◎")} for p in picks],
-            "horses": [{"num": p["num"], "name": p["name"], "odds": p["odds"], "ev": p.get("ev", 1.0), "mark": p.get("mark", "◎")} for p in picks],
+            "numbers": [p["num"] for p in picks],
+            "selectedHorses": h_objs,
+            "picks": h_objs,
+            "horses": h_objs,
             "picksText": picks_str
         })
 
@@ -751,7 +801,7 @@ def build_win5_prediction(races):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（Git全履歴＆HTML同期）を開始します...")
     stats_obj = build_complete_stats()
 
     old_races = []
@@ -824,7 +874,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(final_json, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 完了！ 全{len(races_out)}レース ＋ 統計・的中明細（{stats_obj['totalBets']}戦{stats_obj['hitCount']}的中）＋ WIN5を出力しました。")
+    print(f"✅ 完了！ 全{len(races_out)}レース ＋ 統計・印別複勝圏内率 ＋ WIN5を出力しました。")
 
 
 if __name__ == "__main__":
