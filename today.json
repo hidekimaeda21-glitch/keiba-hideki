@@ -1,0 +1,2266 @@
+{
+  "targetDate": "2026年11月21日",
+  "updatedAt": "2026-11-18 09:43",
+  "budgetPerRace": 1000,
+  "totalBudget": 6000,
+  "win5": {
+    "totalCombinations": 8,
+    "unitYen": 100,
+    "estimatedCost": 800,
+    "concept": "道悪・条件不利馬およびEV0.88未満の危険な人気馬を完全除外し、4AI合議＆Zスコア突出馬を軸に8点（800円）で高配当を射抜く。",
+    "legs": [
+      {
+        "leg": 1,
+        "venue": "福島（土）",
+        "rNum": 10,
+        "raceName": "福島放送賞",
+        "startTime": "14:45",
+        "horseNums": [
+          15
+        ],
+        "horses": [
+          {
+            "num": 15,
+            "name": "ペイシャヴァルツー",
+            "odds": 3.4,
+            "ev": 1.63
+          }
+        ]
+      },
+      {
+        "leg": 2,
+        "venue": "福島（土）",
+        "rNum": 11,
+        "raceName": "福島記念",
+        "startTime": "15:20",
+        "horseNums": [
+          17,
+          15
+        ],
+        "horses": [
+          {
+            "num": 17,
+            "name": "フォルテアンジェロ",
+            "odds": 4.4,
+            "ev": 1.14
+          },
+          {
+            "num": 15,
+            "name": "バレエマスター",
+            "odds": 8.9,
+            "ev": 1.62
+          }
+        ]
+      },
+      {
+        "leg": 3,
+        "venue": "京都（土）",
+        "rNum": 9,
+        "raceName": "秋明菊賞",
+        "startTime": "14:25",
+        "horseNums": [
+          6
+        ],
+        "horses": [
+          {
+            "num": 6,
+            "name": "サンタンジェロ",
+            "odds": 2.3,
+            "ev": 0.85
+          }
+        ]
+      },
+      {
+        "leg": 4,
+        "venue": "京都（土）",
+        "rNum": 10,
+        "raceName": "比叡S",
+        "startTime": "15:00",
+        "horseNums": [
+          7,
+          13
+        ],
+        "horses": [
+          {
+            "num": 7,
+            "name": "サトノクローク",
+            "odds": 3.7,
+            "ev": 1.16
+          },
+          {
+            "num": 13,
+            "name": "ルクスビッグスター",
+            "odds": 4.5,
+            "ev": 0.93
+          }
+        ]
+      },
+      {
+        "leg": 5,
+        "venue": "京都（土）",
+        "rNum": 11,
+        "raceName": "シトリンS",
+        "startTime": "15:40",
+        "horseNums": [
+          17,
+          9
+        ],
+        "horses": [
+          {
+            "num": 17,
+            "name": "メリークリスマス",
+            "odds": 5.4,
+            "ev": 1.65
+          },
+          {
+            "num": 9,
+            "name": "テーオーマルコーニ",
+            "odds": 8.8,
+            "ev": 1.24
+          }
+        ]
+      }
+    ]
+  },
+  "races": [
+    {
+      "raceId": "202603030509",
+      "venueBase": "福島",
+      "rNum": 9,
+      "raceName": "9R 高湯温泉特別 (芝1800m)",
+      "shortRaceName": "高湯温泉特別",
+      "course": "芝1800m",
+      "startTime": "14:10",
+      "horses": [
+        {
+          "num": 1,
+          "waku": 1,
+          "name": "アウローラシエル",
+          "jockey": "和田陽",
+          "odds": 416.8,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 18,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 40.5,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "▲",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 2,
+          "waku": 1,
+          "name": "アドミラルシップ",
+          "jockey": "レーン",
+          "odds": 64.2,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 6,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 40.5,
+          "ev": 0.69,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 3,
+          "waku": 2,
+          "name": "アルペングロー",
+          "jockey": "北村友",
+          "odds": 182.2,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 11,
+          "indexScore": 84.0,
+          "totalScore": 84.05000000000001,
+          "zScore": 44.0,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 4,
+          "waku": 2,
+          "name": "ヴァルカンテソーロ",
+          "jockey": "戸崎圭",
+          "odds": 20.4,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 2,
+          "indexScore": 84.9,
+          "totalScore": 86.84000000000002,
+          "zScore": 68.2,
+          "ev": 1.65,
+          "mark": "◎",
+          "marks": {
+            "jemi": "◎",
+            "ana": "◎",
+            "index": "○",
+            "pace": "◎"
+          }
+        },
+        {
+          "num": 5,
+          "waku": 3,
+          "name": "ウインポセイドン",
+          "jockey": "国分恭",
+          "odds": 33.4,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 3,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 60.4,
+          "ev": 1.65,
+          "mark": "○",
+          "marks": {
+            "jemi": "○",
+            "ana": "☆",
+            "index": "・",
+            "pace": "○"
+          }
+        },
+        {
+          "num": 6,
+          "waku": 3,
+          "name": "ウインマニフィーク",
+          "jockey": "丹内",
+          "odds": 285.5,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 15,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 60.4,
+          "ev": 1.65,
+          "mark": "▲",
+          "marks": {
+            "jemi": "▲",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 7,
+          "waku": 4,
+          "name": "エタンセル",
+          "jockey": "小林美",
+          "odds": 205.0,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 13,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 60.4,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 8,
+          "waku": 4,
+          "name": "エピックフライト",
+          "jockey": "ルメール",
+          "odds": 209.2,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 14,
+          "indexScore": 84.0,
+          "totalScore": 83.35000000000001,
+          "zScore": 37.9,
+          "ev": 1.45,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 9,
+          "waku": 5,
+          "name": "オーシンエス",
+          "jockey": "河原田",
+          "odds": 332.0,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 17,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 42.2,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 10,
+          "waku": 5,
+          "name": "カテドラルクォーツ",
+          "jockey": "岩田康",
+          "odds": 43.8,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 4,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 42.2,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 11,
+          "waku": 6,
+          "name": "カリーン",
+          "jockey": "長浜",
+          "odds": 136.1,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 10,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 42.2,
+          "ev": 1.54,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 12,
+          "waku": 6,
+          "name": "クイーンズワーフ",
+          "jockey": "小林美",
+          "odds": 134.1,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 9,
+          "indexScore": 84.0,
+          "totalScore": 85.74000000000001,
+          "zScore": 58.6,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 13,
+          "waku": 7,
+          "name": "ケイアイカラキア",
+          "jockey": "今井貴",
+          "odds": 80.8,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 7,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 56.9,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 14,
+          "waku": 7,
+          "name": "ケナゲ",
+          "jockey": "河原田",
+          "odds": 182.8,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 12,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 56.9,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 15,
+          "waku": 8,
+          "name": "コウギョク",
+          "jockey": "丸山",
+          "odds": 312.4,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 16,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 56.9,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 16,
+          "waku": 8,
+          "name": "コスモクラシック",
+          "jockey": "横山武",
+          "odds": 94.8,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 8,
+          "indexScore": 84.0,
+          "totalScore": 82.95,
+          "zScore": 34.4,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 17,
+          "waku": 8,
+          "name": "コスモフィレンツェ",
+          "jockey": "幸",
+          "odds": 15.8,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 1,
+          "indexScore": 85.9,
+          "totalScore": 85.55000000000001,
+          "zScore": 57.0,
+          "ev": 1.23,
+          "mark": "☆",
+          "marks": {
+            "jemi": "☆",
+            "ana": "▲",
+            "index": "◎",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 18,
+          "waku": 8,
+          "name": "コンバットペスカ",
+          "jockey": "川又",
+          "odds": 49.9,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 5,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 40.5,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        }
+      ],
+      "venue": "福島（土）",
+      "strategyTag": "波乱対応・高期待値穴狙い型 (計1,000円)",
+      "confidence": "B+ (88点)",
+      "aiComment": "展開予測は【差し有利ハイペース】。過剰人気馬を排し、期待値(EV:1.65)トップの◎4番ヴァルカンテソーロを軸に抜擢。【ワイド本線】200円で手堅く回収ラインを確保しながら、穴党AI推奨の☆17番を絡めた【馬連流し】と【三連複1頭軸】で高配当を射抜く。",
+      "aiBuy": "【ワイド本線】4 - 5 (1点/200円) / 【馬連流し】4 - 5, 17 (2点/各100円) / 【三連複1頭軸】4 - 5, 6, 17, 7 (6点/各100円) [計9点/1,000円固定]",
+      "budget": 1000
+    },
+    {
+      "raceId": "202603030510",
+      "venueBase": "福島",
+      "rNum": 10,
+      "raceName": "10R 福島放送賞 (ダ1150m)",
+      "shortRaceName": "福島放送賞",
+      "course": "ダ1150m",
+      "startTime": "14:45",
+      "horses": [
+        {
+          "num": 1,
+          "waku": 1,
+          "name": "インディゴアスール",
+          "jockey": "松山",
+          "odds": 63.9,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 13,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 40.3,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 2,
+          "waku": 1,
+          "name": "クインズポラリス",
+          "jockey": "田辺",
+          "odds": 10.3,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 4,
+          "indexScore": 87.6,
+          "totalScore": 87.25,
+          "zScore": 54.3,
+          "ev": 0.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 3,
+          "waku": 2,
+          "name": "コックピットサイト",
+          "jockey": "荻野極",
+          "odds": 30.1,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 9,
+          "indexScore": 84.0,
+          "totalScore": 84.05000000000001,
+          "zScore": 41.8,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 4,
+          "waku": 2,
+          "name": "ショウナンラリー",
+          "jockey": "池添",
+          "odds": 52.5,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 11,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 49.2,
+          "ev": 0.91,
+          "mark": "☆",
+          "marks": {
+            "jemi": "☆",
+            "ana": "・",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 5,
+          "waku": 3,
+          "name": "スミレファースト",
+          "jockey": "横山琉",
+          "odds": 105.5,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 16,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 49.2,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "◎",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 6,
+          "waku": 3,
+          "name": "ゼファーテソーロ",
+          "jockey": "菊沢",
+          "odds": 6.2,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 2,
+          "indexScore": 89.6,
+          "totalScore": 91.54,
+          "zScore": 71.0,
+          "ev": 1.25,
+          "mark": "○",
+          "marks": {
+            "jemi": "○",
+            "ana": "▲",
+            "index": "○",
+            "pace": "○"
+          }
+        },
+        {
+          "num": 7,
+          "waku": 4,
+          "name": "ソニックブレイカー",
+          "jockey": "横山武",
+          "odds": 102.2,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 15,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 49.2,
+          "ev": 1.63,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "☆",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 8,
+          "waku": 4,
+          "name": "ナムラモモ",
+          "jockey": "小沢",
+          "odds": 164.8,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 18,
+          "indexScore": 84.0,
+          "totalScore": 83.35000000000001,
+          "zScore": 39.1,
+          "ev": 0.9,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 9,
+          "waku": 5,
+          "name": "ニシノラヴァンダ",
+          "jockey": "長浜",
+          "odds": 17.5,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 6,
+          "indexScore": 85.5,
+          "totalScore": 85.35000000000001,
+          "zScore": 46.9,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 10,
+          "waku": 5,
+          "name": "ニホンピロカラット",
+          "jockey": "田口",
+          "odds": 10.9,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 5,
+          "indexScore": 87.4,
+          "totalScore": 87.25000000000001,
+          "zScore": 54.3,
+          "ev": 0.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 11,
+          "waku": 6,
+          "name": "パルプフィクション",
+          "jockey": "酒井",
+          "odds": 57.6,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 12,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 41.0,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 12,
+          "waku": 6,
+          "name": "ビーグラッド",
+          "jockey": "小沢",
+          "odds": 45.8,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 10,
+          "indexScore": 84.0,
+          "totalScore": 85.74000000000001,
+          "zScore": 48.4,
+          "ev": 0.76,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 13,
+          "waku": 7,
+          "name": "ビーマックス",
+          "jockey": "川田",
+          "odds": 95.9,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 14,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 47.6,
+          "ev": 1.31,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 14,
+          "waku": 7,
+          "name": "フェデルミエール",
+          "jockey": "黛",
+          "odds": 111.5,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 17,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 47.6,
+          "ev": 1.5,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 15,
+          "waku": 8,
+          "name": "ペイシャヴァルツー",
+          "jockey": "石川",
+          "odds": 3.4,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 1,
+          "indexScore": 92.0,
+          "totalScore": 93.54,
+          "zScore": 78.8,
+          "ev": 1.63,
+          "mark": "◎",
+          "marks": {
+            "jemi": "◎",
+            "ana": "▲",
+            "index": "◎",
+            "pace": "◎"
+          }
+        },
+        {
+          "num": 16,
+          "waku": 8,
+          "name": "ペルセポネ",
+          "jockey": "河原田",
+          "odds": 17.6,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 7,
+          "indexScore": 85.5,
+          "totalScore": 84.45,
+          "zScore": 43.4,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 17,
+          "waku": 8,
+          "name": "モズオウンゴール",
+          "jockey": "永島",
+          "odds": 10.1,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 3,
+          "indexScore": 87.7,
+          "totalScore": 87.35000000000001,
+          "zScore": 54.7,
+          "ev": 0.65,
+          "mark": "▲",
+          "marks": {
+            "jemi": "▲",
+            "ana": "・",
+            "index": "▲",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 18,
+          "waku": 8,
+          "name": "ラヴェンデル",
+          "jockey": "松本",
+          "odds": 20.9,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 8,
+          "indexScore": 84.8,
+          "totalScore": 84.45,
+          "zScore": 43.4,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        }
+      ],
+      "venue": "福島（土）",
+      "strategyTag": "2強鉄板・タテ目穴ケア型 (計1,000円)",
+      "confidence": "A (92点)",
+      "aiComment": "展開予測は【差し有利ハイペース】。能力・期待値ともに抜けた◎15番ペイシャヴァルツーと○6番の2強が強力。【馬連本線】300円で厚く利益を狙いつつ、【三連複2頭軸】と特注穴馬☆4番への【ワイド穴】・【馬連タテ目】まで1,000円内で完全網羅。",
+      "aiBuy": "【馬連本線】15 - 6 (1点/300円) / 【三連複2頭軸】15,6 - 17, 4, 10, 2, 5 (5点/各100円) / 【馬連タテ目】6 - 17 (1点/100円) / 【ワイド穴】15 - 4 (1点/100円) [計8点/1,000円固定]",
+      "budget": 1000
+    },
+    {
+      "raceId": "202603030511",
+      "venueBase": "福島",
+      "rNum": 11,
+      "raceName": "11R 福島記念 (芝2000m)",
+      "shortRaceName": "福島記念",
+      "course": "芝2000m",
+      "startTime": "15:20",
+      "horses": [
+        {
+          "num": 1,
+          "waku": 1,
+          "name": "アラタ",
+          "jockey": "大野",
+          "odds": 75.0,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 13,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 39.7,
+          "ev": 0.67,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 2,
+          "waku": 1,
+          "name": "ヴィスマール",
+          "jockey": "○○",
+          "odds": 71.2,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 12,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 39.7,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 3,
+          "waku": 2,
+          "name": "エキサイトバイオ",
+          "jockey": "○○",
+          "odds": 54.3,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 11,
+          "indexScore": 84.0,
+          "totalScore": 84.05000000000001,
+          "zScore": 41.4,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 4,
+          "waku": 2,
+          "name": "オニャンコポン",
+          "jockey": "菅原明",
+          "odds": 104.5,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 17,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 49.6,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 5,
+          "waku": 3,
+          "name": "カテリーナ",
+          "jockey": "浜中",
+          "odds": 138.4,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 18,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 49.6,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 6,
+          "waku": 3,
+          "name": "カラマティアノス",
+          "jockey": "○○",
+          "odds": 82.3,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 15,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 49.6,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 7,
+          "waku": 4,
+          "name": "キャントウェイト",
+          "jockey": "横山典",
+          "odds": 11.9,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 6,
+          "indexScore": 87.0,
+          "totalScore": 88.94000000000001,
+          "zScore": 62.6,
+          "ev": 1.49,
+          "mark": "☆",
+          "marks": {
+            "jemi": "☆",
+            "ana": "☆",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 8,
+          "waku": 4,
+          "name": "サヴォーナ",
+          "jockey": "横山武",
+          "odds": 86.5,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 16,
+          "indexScore": 84.0,
+          "totalScore": 83.35000000000001,
+          "zScore": 38.4,
+          "ev": 0.66,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 9,
+          "waku": 5,
+          "name": "ショウナンマグマ",
+          "jockey": "○○",
+          "odds": 30.5,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 7,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 40.6,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 10,
+          "waku": 5,
+          "name": "シリウスコルト",
+          "jockey": "田辺",
+          "odds": 10.0,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 5,
+          "indexScore": 87.7,
+          "totalScore": 87.55000000000001,
+          "zScore": 56.6,
+          "ev": 0.83,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 11,
+          "waku": 6,
+          "name": "ゼンダンハヤブサ",
+          "jockey": "○○",
+          "odds": 43.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 8,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 40.6,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 12,
+          "waku": 6,
+          "name": "センツブラッド",
+          "jockey": "原",
+          "odds": 49.9,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 10,
+          "indexScore": 84.0,
+          "totalScore": 85.74000000000001,
+          "zScore": 48.7,
+          "ev": 1.12,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 13,
+          "waku": 7,
+          "name": "ニシノレヴナント",
+          "jockey": "野中",
+          "odds": 75.1,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 14,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 47.9,
+          "ev": 1.48,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 14,
+          "waku": 7,
+          "name": "バルナバ",
+          "jockey": "○○",
+          "odds": 9.8,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 4,
+          "indexScore": 87.8,
+          "totalScore": 89.34,
+          "zScore": 64.3,
+          "ev": 1.49,
+          "mark": "▲",
+          "marks": {
+            "jemi": "▲",
+            "ana": "▲",
+            "index": "・",
+            "pace": "○"
+          }
+        },
+        {
+          "num": 15,
+          "waku": 8,
+          "name": "バレエマスター",
+          "jockey": "菊沢",
+          "odds": 8.9,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 3,
+          "indexScore": 88.2,
+          "totalScore": 89.74000000000001,
+          "zScore": 66.0,
+          "ev": 1.62,
+          "mark": "○",
+          "marks": {
+            "jemi": "○",
+            "ana": "◎",
+            "index": "▲",
+            "pace": "◎"
+          }
+        },
+        {
+          "num": 16,
+          "waku": 8,
+          "name": "フィーリウス",
+          "jockey": "嶋田",
+          "odds": 8.7,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 2,
+          "indexScore": 88.3,
+          "totalScore": 87.25,
+          "zScore": 55.3,
+          "ev": 0.71,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "・",
+            "index": "○",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 17,
+          "waku": 8,
+          "name": "フォルテアンジェロ",
+          "jockey": "マーカン",
+          "odds": 4.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 1,
+          "indexScore": 91.0,
+          "totalScore": 90.65,
+          "zScore": 70.0,
+          "ev": 1.14,
+          "mark": "◎",
+          "marks": {
+            "jemi": "◎",
+            "ana": "▲",
+            "index": "◎",
+            "pace": "△"
+          }
+        },
+        {
+          "num": 18,
+          "waku": 8,
+          "name": "ボーンディスウェイ",
+          "jockey": "木幡巧",
+          "odds": 46.7,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 9,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 39.7,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        }
+      ],
+      "venue": "福島（土）",
+      "strategyTag": "波乱対応・高期待値穴狙い型 (計1,000円)",
+      "confidence": "B+ (88点)",
+      "aiComment": "展開予測は【差し有利ハイペース】。過剰人気馬を排し、期待値(EV:1.14)トップの◎17番フォルテアンジェロを軸に抜擢。【ワイド本線】200円で手堅く回収ラインを確保しながら、穴党AI推奨の☆7番を絡めた【馬連流し】と【三連複1頭軸】で高配当を射抜く。",
+      "aiBuy": "【ワイド本線】17 - 15 (1点/200円) / 【馬連流し】17 - 15, 7 (2点/各100円) / 【三連複1頭軸】17 - 15, 14, 7, 10 (6点/各100円) [計9点/1,000円固定]",
+      "budget": 1000
+    },
+    {
+      "raceId": "202608050509",
+      "venueBase": "京都",
+      "rNum": 9,
+      "raceName": "9R 秋明菊賞 (芝1400m)",
+      "shortRaceName": "秋明菊賞",
+      "course": "芝1400m",
+      "startTime": "14:25",
+      "horses": [
+        {
+          "num": 1,
+          "waku": 1,
+          "name": "アプリコットスカイ",
+          "jockey": "柴田裕",
+          "odds": 536.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 10,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 41.7,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "◎",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 2,
+          "waku": 1,
+          "name": "アンジェリカ",
+          "jockey": "柴田裕",
+          "odds": 127.6,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 8,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 41.7,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "☆",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 3,
+          "waku": 2,
+          "name": "アンムート",
+          "jockey": "西村淳",
+          "odds": 29.1,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 7,
+          "indexScore": 84.0,
+          "totalScore": 84.05000000000001,
+          "zScore": 42.6,
+          "ev": 0.82,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 4,
+          "waku": 2,
+          "name": "ヴィラン",
+          "jockey": "佐々木",
+          "odds": 265.8,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 9,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 46.8,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 5,
+          "waku": 3,
+          "name": "カレンハウ",
+          "jockey": "松若",
+          "odds": 19.0,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 4,
+          "indexScore": 85.2,
+          "totalScore": 87.14000000000001,
+          "zScore": 49.5,
+          "ev": 1.02,
+          "mark": "☆",
+          "marks": {
+            "jemi": "☆",
+            "ana": "△",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 6,
+          "waku": 3,
+          "name": "サンタンジェロ",
+          "jockey": "西村淳",
+          "odds": 2.3,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 1,
+          "indexScore": 93.6,
+          "totalScore": 95.54,
+          "zScore": 68.2,
+          "ev": 0.85,
+          "mark": "◎",
+          "marks": {
+            "jemi": "◎",
+            "ana": "・",
+            "index": "◎",
+            "pace": "◎"
+          }
+        },
+        {
+          "num": 7,
+          "waku": 4,
+          "name": "ジャスパーレーブ",
+          "jockey": "松本",
+          "odds": 2.3,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 2,
+          "indexScore": 93.6,
+          "totalScore": 95.54,
+          "zScore": 68.2,
+          "ev": 0.85,
+          "mark": "○",
+          "marks": {
+            "jemi": "○",
+            "ana": "・",
+            "index": "○",
+            "pace": "○"
+          }
+        },
+        {
+          "num": 8,
+          "waku": 4,
+          "name": "ジーティーイレブン",
+          "jockey": "浜中",
+          "odds": 4.9,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 3,
+          "indexScore": 90.6,
+          "totalScore": 89.95,
+          "zScore": 55.7,
+          "ev": 0.65,
+          "mark": "▲",
+          "marks": {
+            "jemi": "▲",
+            "ana": "・",
+            "index": "▲",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 9,
+          "waku": 5,
+          "name": "タナコクシテンホウ",
+          "jockey": "幸",
+          "odds": 26.6,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 6,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 42.2,
+          "ev": 0.76,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 10,
+          "waku": 5,
+          "name": "ミハテヌユメ",
+          "jockey": "小林美",
+          "odds": 21.9,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 5,
+          "indexScore": 84.6,
+          "totalScore": 84.45,
+          "zScore": 43.5,
+          "ev": 0.74,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        }
+      ],
+      "venue": "京都（土）",
+      "strategyTag": "2強鉄板・タテ目穴ケア型 (計1,000円)",
+      "confidence": "A (92点)",
+      "aiComment": "展開予測は【差し有利ハイペース】。能力・期待値ともに抜けた◎6番サンタンジェロと○7番の2強が強力。【馬連本線】300円で厚く利益を狙いつつ、【三連複2頭軸】と特注穴馬☆5番への【ワイド穴】・【馬連タテ目】まで1,000円内で完全網羅。",
+      "aiBuy": "【馬連本線】6 - 7 (1点/300円) / 【三連複2頭軸】6,7 - 8, 5, 4, 1, 2 (5点/各100円) / 【馬連タテ目】7 - 8 (1点/100円) / 【ワイド穴】6 - 5 (1点/100円) [計8点/1,000円固定]",
+      "budget": 1000
+    },
+    {
+      "raceId": "202608050510",
+      "venueBase": "京都",
+      "rNum": 10,
+      "raceName": "10R 比叡S (芝2400m)",
+      "shortRaceName": "比叡S",
+      "course": "芝2400m",
+      "startTime": "15:00",
+      "horses": [
+        {
+          "num": 1,
+          "waku": 1,
+          "name": "アットアブラスト",
+          "jockey": "田口",
+          "odds": 107.0,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 12,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 37.6,
+          "ev": 0.82,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 2,
+          "waku": 1,
+          "name": "ウインデイジー",
+          "jockey": "丹内",
+          "odds": 64.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 10,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 37.6,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 3,
+          "waku": 2,
+          "name": "オメガナビゲーター",
+          "jockey": "岩田康",
+          "odds": 186.8,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 15,
+          "indexScore": 84.0,
+          "totalScore": 84.05000000000001,
+          "zScore": 38.9,
+          "ev": 1.5,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 4,
+          "waku": 2,
+          "name": "キントリヒ",
+          "jockey": "田口",
+          "odds": 51.5,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 9,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 45.2,
+          "ev": 0.91,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 5,
+          "waku": 3,
+          "name": "キーパフォーマー",
+          "jockey": "小崎",
+          "odds": 128.0,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 13,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 45.2,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "◎",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 6,
+          "waku": 3,
+          "name": "クルミナーレ",
+          "jockey": "松山",
+          "odds": 144.2,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 14,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 45.2,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "☆",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 7,
+          "waku": 4,
+          "name": "サトノクローク",
+          "jockey": "池添",
+          "odds": 3.7,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 1,
+          "indexScore": 91.7,
+          "totalScore": 93.64000000000001,
+          "zScore": 70.5,
+          "ev": 1.16,
+          "mark": "◎",
+          "marks": {
+            "jemi": "◎",
+            "ana": "▲",
+            "index": "◎",
+            "pace": "◎"
+          }
+        },
+        {
+          "num": 8,
+          "waku": 4,
+          "name": "サトノパトリオット",
+          "jockey": "川田",
+          "odds": 12.1,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 7,
+          "indexScore": 87.0,
+          "totalScore": 86.35000000000001,
+          "zScore": 46.5,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 9,
+          "waku": 5,
+          "name": "スピードリッチ",
+          "jockey": "ルメール",
+          "odds": 8.1,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 4,
+          "indexScore": 88.6,
+          "totalScore": 88.45,
+          "zScore": 53.4,
+          "ev": 0.66,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 10,
+          "waku": 5,
+          "name": "ナムラフッカー",
+          "jockey": "菱田",
+          "odds": 10.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 5,
+          "indexScore": 87.6,
+          "totalScore": 87.45,
+          "zScore": 50.1,
+          "ev": 0.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 11,
+          "waku": 6,
+          "name": "ベトルス",
+          "jockey": "岩田望",
+          "odds": 10.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 6,
+          "indexScore": 87.6,
+          "totalScore": 87.45,
+          "zScore": 50.1,
+          "ev": 0.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 12,
+          "waku": 6,
+          "name": "リーティアコナル",
+          "jockey": "小崎",
+          "odds": 12.1,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 8,
+          "indexScore": 87.0,
+          "totalScore": 88.74000000000001,
+          "zScore": 54.4,
+          "ev": 0.87,
+          "mark": "☆",
+          "marks": {
+            "jemi": "☆",
+            "ana": "・",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 13,
+          "waku": 7,
+          "name": "ルクスビッグスター",
+          "jockey": "吉村",
+          "odds": 4.5,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 2,
+          "indexScore": 90.9,
+          "totalScore": 92.44000000000001,
+          "zScore": 66.6,
+          "ev": 0.93,
+          "mark": "○",
+          "marks": {
+            "jemi": "○",
+            "ana": "・",
+            "index": "○",
+            "pace": "○"
+          }
+        },
+        {
+          "num": 14,
+          "waku": 7,
+          "name": "ロードガレリア",
+          "jockey": "横山武",
+          "odds": 68.0,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 11,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 43.8,
+          "ev": 1.02,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "△",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 15,
+          "waku": 8,
+          "name": "ロードフィレール",
+          "jockey": "横山和",
+          "odds": 5.1,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 3,
+          "indexScore": 90.4,
+          "totalScore": 91.94000000000001,
+          "zScore": 64.9,
+          "ev": 0.88,
+          "mark": "▲",
+          "marks": {
+            "jemi": "▲",
+            "ana": "・",
+            "index": "▲",
+            "pace": "▲"
+          }
+        }
+      ],
+      "venue": "京都（土）",
+      "strategyTag": "1頭軸フォーメーション・バランス型 (計1,000円)",
+      "confidence": "A (90点)",
+      "aiComment": "展開予測は【差し有利ハイペース】。安定感抜群の◎7番サトノクロークを1頭軸に据え、2列目に○13番・▲15番を配置した【三連複フォーメーション(7点)】が主砲。○が崩れても▲と穴馬☆12番の台頭で高配当を逃さず拾う1,000円布陣。",
+      "aiBuy": "【馬連本線】7 - 13 (1点/200円) / 【馬連押さえ】7 - 15 (1点/100円) / 【三連複F】7 ✕ 13,15 ✕ 13, 15, 12, 9, 10 (7点/各100円) [計9点/1,000円固定]",
+      "budget": 1000
+    },
+    {
+      "raceId": "202608050511",
+      "venueBase": "京都",
+      "rNum": 11,
+      "raceName": "11R シトリンS (ダ1900m)",
+      "shortRaceName": "シトリンS",
+      "course": "ダ1900m",
+      "startTime": "15:40",
+      "horses": [
+        {
+          "num": 1,
+          "waku": 1,
+          "name": "アスクデビューモア",
+          "jockey": "鷲頭",
+          "odds": 11.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 3,
+          "indexScore": 87.2,
+          "totalScore": 86.85000000000001,
+          "zScore": 56.6,
+          "ev": 0.88,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "▲",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 2,
+          "waku": 1,
+          "name": "カネフラ",
+          "jockey": "酒井",
+          "odds": 30.2,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 9,
+          "indexScore": 84.0,
+          "totalScore": 83.65,
+          "zScore": 38.8,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 3,
+          "waku": 2,
+          "name": "サイモンシュバリエ",
+          "jockey": "吉村",
+          "odds": 27.1,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 8,
+          "indexScore": 84.0,
+          "totalScore": 84.05000000000001,
+          "zScore": 41.0,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 4,
+          "waku": 2,
+          "name": "シゲルショウグン",
+          "jockey": "太宰",
+          "odds": 62.6,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 13,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 51.5,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "☆",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 5,
+          "waku": 3,
+          "name": "ゼットリアン",
+          "jockey": "松若",
+          "odds": 186.7,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 17,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 51.5,
+          "ev": 1.65,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 6,
+          "waku": 3,
+          "name": "センツブラッド",
+          "jockey": "西塚",
+          "odds": 121.2,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 16,
+          "indexScore": 84.0,
+          "totalScore": 85.94000000000001,
+          "zScore": 51.5,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 7,
+          "waku": 4,
+          "name": "ソーニーイシュー",
+          "jockey": "団野",
+          "odds": 23.0,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 7,
+          "indexScore": 84.4,
+          "totalScore": 86.34000000000002,
+          "zScore": 53.8,
+          "ev": 1.13,
+          "mark": "△",
+          "marks": {
+            "jemi": "△",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 8,
+          "waku": 4,
+          "name": "チェリヴェント",
+          "jockey": "吉村",
+          "odds": 60.4,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 12,
+          "indexScore": 84.0,
+          "totalScore": 83.35000000000001,
+          "zScore": 37.1,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 9,
+          "waku": 5,
+          "name": "テーオーマルコーニ",
+          "jockey": "岩田望",
+          "odds": 8.8,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 2,
+          "indexScore": 88.2,
+          "totalScore": 88.05000000000001,
+          "zScore": 63.3,
+          "ev": 1.24,
+          "mark": "○",
+          "marks": {
+            "jemi": "○",
+            "ana": "▲",
+            "index": "○",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 10,
+          "waku": 5,
+          "name": "ハグ",
+          "jockey": "内田博",
+          "odds": 63.3,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 14,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 39.9,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 11,
+          "waku": 6,
+          "name": "ハヤテノフクノスケ",
+          "jockey": "横山和",
+          "odds": 257.0,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 18,
+          "indexScore": 84.0,
+          "totalScore": 83.85000000000001,
+          "zScore": 39.9,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 12,
+          "waku": 6,
+          "name": "ヒルノハンブルク",
+          "jockey": "池添",
+          "odds": 75.8,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 15,
+          "indexScore": 84.0,
+          "totalScore": 85.74000000000001,
+          "zScore": 50.4,
+          "ev": 1.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "▲",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 13,
+          "waku": 7,
+          "name": "ペイシャモノノフ",
+          "jockey": "池添",
+          "odds": 18.8,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 6,
+          "indexScore": 85.2,
+          "totalScore": 86.74000000000001,
+          "zScore": 56.0,
+          "ev": 1.17,
+          "mark": "☆",
+          "marks": {
+            "jemi": "☆",
+            "ana": "▲",
+            "index": "・",
+            "pace": "○"
+          }
+        },
+        {
+          "num": 14,
+          "waku": 7,
+          "name": "ポッドロゴ",
+          "jockey": "長岡",
+          "odds": 13.4,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 4,
+          "indexScore": 86.5,
+          "totalScore": 88.04,
+          "zScore": 63.2,
+          "ev": 1.65,
+          "mark": "▲",
+          "marks": {
+            "jemi": "▲",
+            "ana": "◎",
+            "index": "・",
+            "pace": "◎"
+          }
+        },
+        {
+          "num": 15,
+          "waku": 8,
+          "name": "マキシ",
+          "jockey": "○○",
+          "odds": 40.7,
+          "style": "差し",
+          "pastRuns": [],
+          "popularity": 11,
+          "indexScore": 84.0,
+          "totalScore": 85.54,
+          "zScore": 49.3,
+          "ev": 0.98,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "△",
+            "index": "・",
+            "pace": "▲"
+          }
+        },
+        {
+          "num": 16,
+          "waku": 8,
+          "name": "メリオーレム",
+          "jockey": "石橋脩",
+          "odds": 39.6,
+          "style": "逃げ",
+          "pastRuns": [],
+          "popularity": 10,
+          "indexScore": 84.0,
+          "totalScore": 82.95,
+          "zScore": 34.9,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 17,
+          "waku": 8,
+          "name": "メリークリスマス",
+          "jockey": "三浦",
+          "odds": 5.4,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 1,
+          "indexScore": 90.2,
+          "totalScore": 89.85000000000001,
+          "zScore": 73.3,
+          "ev": 1.65,
+          "mark": "◎",
+          "marks": {
+            "jemi": "◎",
+            "ana": "▲",
+            "index": "◎",
+            "pace": "・"
+          }
+        },
+        {
+          "num": 18,
+          "waku": 8,
+          "name": "メルカントゥール",
+          "jockey": "坂井",
+          "odds": 16.9,
+          "style": "先行",
+          "pastRuns": [],
+          "popularity": 5,
+          "indexScore": 85.6,
+          "totalScore": 85.25,
+          "zScore": 47.7,
+          "ev": 0.65,
+          "mark": "・",
+          "marks": {
+            "jemi": "・",
+            "ana": "・",
+            "index": "・",
+            "pace": "・"
+          }
+        }
+      ],
+      "venue": "京都（土）",
+      "strategyTag": "波乱対応・高期待値穴狙い型 (計1,000円)",
+      "confidence": "B+ (88点)",
+      "aiComment": "展開予測は【差し有利ハイペース】。過剰人気馬を排し、期待値(EV:1.65)トップの◎17番メリークリスマスを軸に抜擢。【ワイド本線】200円で手堅く回収ラインを確保しながら、穴党AI推奨の☆13番を絡めた【馬連流し】と【三連複1頭軸】で高配当を射抜く。",
+      "aiBuy": "【ワイド本線】17 - 9 (1点/200円) / 【馬連流し】17 - 9, 13 (2点/各100円) / 【三連複1頭軸】17 - 9, 14, 13, 7 (6点/各100円) [計9点/1,000円固定]",
+      "budget": 1000
+    }
+  ]
+}
