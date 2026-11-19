@@ -47,7 +47,7 @@ def restore_historical_json_from_git():
                 ["git", "log", "--format=%H", "-n", "100", "--", target_file],
                 stderr=subprocess.DEVNULL
             ).decode("utf-8").strip().splitlines()
-            for sha in commits[2:]:  # 直近2回の書き換え以前のオリジナルコミットを優先探索
+            for sha in commits[2:]:
                 try:
                     raw = subprocess.check_output(
                         ["git", "show", f"{sha}:{target_file}"],
@@ -72,10 +72,7 @@ def restore_historical_json_from_git():
 
 
 def patch_index_html_defaults(mark_defs):
-    """
-    index.html 内の印別複勝圏内率カードの初期表示（--% と --/--）を、
-    念のため直接実数値（64.8%, 59/91 等）に書き換えておく（JSの読込形式に関わらず100%表示される保証）
-    """
+    """index.html 内の印別複勝圏内率カードの初期表示を最新数値に同期"""
     if not os.path.exists("index.html"):
         return
     try:
@@ -222,6 +219,7 @@ def build_complete_stats():
         "markStats": final_mark_stats,
         "markStatsList": mark_stats_list,
         "marks": mark_stats_dict,
+        "markRates": mark_stats_dict,
         "hitDetails": hit_details,
         "allBetRaces": all_bet_races,
         "history": hit_details,
@@ -468,6 +466,7 @@ def parse_shutuba_page(race_id):
             "jockey": item["jockey"],
             "odds": round(odds_val, 1),
             "style": style,
+            "runningStyle": style,
             "pastRuns": item["pastRuns"]
         })
 
@@ -660,6 +659,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
         sim_bonus = (s_info["placeProb"] - (3.0 / max(1, n_horses))) * 12.0
         total_score = time_idx + pace_adj * 0.5 + waku_adj + sim_bonus
         h["indexScore"] = time_idx
+        h["speedScore"] = time_idx
         h["score"] = round(total_score, 1)
         h["totalScore"] = total_score
         raw_scores.append(total_score)
@@ -680,13 +680,15 @@ def evaluate_and_build_1000yen_strategy(race_data):
         base_prob = h["_w"] / sum_w
         sim_win_prob = sim_stats.get(h["num"], {}).get("winProb", base_prob)
         est_prob = base_prob * 0.4 + sim_win_prob * 0.6
-        raw_ev = est_prob * h["odds"] * 0.82 + (0.35 if 7.0 <= h["odds"] <= 35.0 else 0.15)
+        # 超大穴(50倍超)の掛け算暴走を抑えて現実的な期待値に調整
+        eff_odds = min(h["odds"], 35.0 + math.sqrt(max(0.0, h["odds"] - 35.0)))
+        raw_ev = est_prob * eff_odds * 0.78 + (0.25 if 6.0 <= h["odds"] <= 35.0 else 0.10)
         h["ev"] = round(min(1.65, max(0.65, raw_ev)), 2)
 
-    ranked = sorted(horses, key=lambda x: (x["totalScore"] + (1.2 if x["ev"] >= 1.05 else 0.0)), reverse=True)
+    ranked = sorted(horses, key=lambda x: (x["totalScore"] + (0.8 if x["ev"] >= 1.05 else 0.0)), reverse=True)
     if len(ranked) >= 2 and ranked[0]["ev"] < 0.88:
         for cand_i in range(1, min(3, len(ranked))):
-            if ranked[cand_i]["ev"] >= 0.98:
+            if ranked[cand_i]["ev"] >= 0.98 and ranked[cand_i]["simPlaceRate"] >= 20.0:
                 ranked[0], ranked[cand_i] = ranked[cand_i], ranked[0]
                 break
 
@@ -723,7 +725,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
         elif any(n == x["num"] for x in himo_horses):
             m_jemi = "△"
         else:
-            m_jemi = "・"
+            m_jemi = "-"
 
         if n == by_ana[0]["num"]:
             m_ana = "◎"
@@ -734,7 +736,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
         elif h["ev"] >= 0.96:
             m_ana = "△"
         else:
-            m_ana = "・"
+            m_ana = "-"
 
         if n == by_index[0]["num"]:
             m_idx = "◎"
@@ -745,7 +747,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
         elif h["indexScore"] >= 91.5:
             m_idx = "△"
         else:
-            m_idx = "・"
+            m_idx = "-"
 
         if n == by_pace[0]["num"]:
             m_pc = "◎"
@@ -756,9 +758,13 @@ def evaluate_and_build_1000yen_strategy(race_data):
         elif h["indexScore"] >= 91.0:
             m_pc = "△"
         else:
-            m_pc = "・"
+            m_pc = "-"
 
         h["mark"] = m_jemi
+        h["markJemi"] = m_jemi
+        h["markAna"] = m_ana
+        h["markSpeed"] = m_idx
+        h["markPace"] = m_pc
         h["marks"] = {"jemi": m_jemi, "ana": m_ana, "index": m_idx, "pace": m_pc}
         if "_w" in h:
             del h["_w"]
@@ -787,7 +793,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【ワイド穴】{h1} - {hs} (1点/100円) [計8点/1,000円固定]"
         )
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。能力・期待値ともに抜けた◎{h1}番{honmei['name']}(3着内率{honmei['simPlaceRate']}%)と○{h2}番の2強が強力。"
+            f"展開予測は【{pace_label} / {sim_summary}】。能力・期待値ともに抜けた◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)と○{h2}番の2強が強力。"
             f"【馬連本線】300円で厚く利益を狙いつつ、【三連複2頭軸】と特注穴馬☆{hs}番への【ワイド穴】・【馬連タテ目】まで1,000円内で完全網羅。"
         )
     elif honmei["odds"] >= 6.0 or front_ratio >= 0.48:
@@ -807,7 +813,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【三連複1頭軸】{h1} - {opp4_str} (6点/各100円) [計9点/1,000円固定]"
         )
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。過剰人気馬を排し、期待値(EV:{honmei['ev']}・3着内率{honmei['simPlaceRate']}%)トップの◎{h1}番{honmei['name']}を軸に抜擢。"
+            f"展開予測は【{pace_label} / {sim_summary}】。過剰人気馬を排し、期待値(EV:{honmei['ev']}・試走3着内率{honmei['simPlaceRate']}%)トップの◎{h1}番{honmei['name']}を軸に抜擢。"
             f"【ワイド本線】200円で手堅く回収ラインを確保しながら、穴党AI推奨の☆{hs}番を絡めた【馬連流し】と【三連複1頭軸】で高配当を射抜く。"
         )
     else:
@@ -827,7 +833,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【三連複F】{h1} ✕ {h2},{h3} ✕ {col3_str} (7点/各100円) [計9点/1,000円固定]"
         )
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。安定感抜群の◎{h1}番{honmei['name']}(3着内率{honmei['simPlaceRate']}%)を1頭軸に据え、"
+            f"展開予測は【{pace_label} / {sim_summary}】。安定感抜群の◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)を1頭軸に据え、"
             f"2列目に○{h2}番・▲{h3}番を配置した【三連複フォーメーション(7点)】が主砲。○が崩れても▲と穴馬☆{hs}番の台頭で高配当を逃さず拾う1,000円布陣。"
         )
 
@@ -838,6 +844,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
     race_data["strategyTag"] = strategy_tag
     race_data["confidence"] = conf_rank
     race_data["confidenceScore"] = conf_score
+    race_data["aiSummary"] = comment
     race_data["aiComment"] = comment
     race_data["aiBuy"] = ai_buy
     race_data["budget"] = 1000
@@ -986,6 +993,7 @@ def main():
         "history": stats_obj["hitDetails"],
         "results": stats_obj["allBetRaces"],
         "win5": win5_data,
+        "win5Strategy": win5_data.get("text", ""),
         "races": races_out
     }
 
