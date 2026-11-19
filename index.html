@@ -247,8 +247,30 @@
     }
     .race-meta { font-size: 11px; color: var(--text-sub); margin-top: 3px; }
 
+    .sim-video-btn-wrap {
+      margin: 12px 14px 0;
+    }
+    .sim-video-btn {
+      width: 100%;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(59, 130, 246, 0.22));
+      color: #e0f2fe;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .sim-video-btn:active {
+      opacity: 0.8;
+    }
+
     .ai-box {
-      margin: 12px 14px;
+      margin: 10px 14px 12px;
       padding: 12px;
       background: rgba(59, 130, 246, 0.08);
       border: 1px solid rgba(59, 130, 246, 0.2);
@@ -366,7 +388,7 @@
     .horse-score { font-size: 9px; color: #60a5fa; text-align: right; }
     .ev-high { color: #fbbf24; font-weight: 800; font-size: 9px; text-align: right; }
     .ev-normal { color: #9ca3af; font-size: 9px; text-align: right; }
-    
+
     .mark-honmei { color: #f87171; font-weight: bold; }
     .mark-taikou { color: #60a5fa; font-weight: bold; }
     .mark-tanana { color: #fbbf24; font-weight: bold; }
@@ -486,6 +508,54 @@
     .rank-2 { background: rgba(96, 165, 250, 0.25); color: #93c5fd; }
     .rank-3 { background: rgba(52, 211, 153, 0.25); color: #6ee7b7; }
     .rank-other { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+
+    .sim-canvas-wrap {
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 10px;
+      background: #0b1116;
+    }
+    #simCanvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .sim-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.04);
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sim-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .sim-ctrl-btn {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #3b82f6;
+      background: rgba(59, 130, 246, 0.2);
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .sim-ctrl-btn.secondary {
+      border-color: #4b5563;
+      background: rgba(255,255,255,0.06);
+      color: #d1d5db;
+    }
   </style>
 </head>
 <body>
@@ -526,6 +596,25 @@
       <div class="modal-title" id="past3ModalTitle" style="color: #34d399;">📋 直近3レース成績・4AI比較</div>
       <div id="past3ModalSub" style="font-size: 11px; color: var(--text-sub); margin-bottom: 10px;">直近3走の着順・レース名・距離・馬場・騎手・通過順・上がり3Fの分析データ</div>
       <div id="past3ModalList" style="max-height: 70vh; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <div id="simModal" class="custom-modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeAllModals()">&times;</button>
+      <div class="modal-title" id="simModalTitle" style="color: #38bdf8;">🎬 展開シミュレーション</div>
+      <div id="simModalSub" style="font-size: 11px; color: var(--text-sub); margin-bottom: 10px; line-height: 1.4;"></div>
+      <div class="sim-canvas-wrap">
+        <canvas id="simCanvas" width="420" height="320"></canvas>
+      </div>
+      <div class="sim-status-bar">
+        <span id="simPhaseText" style="color:#6ee7b7; font-weight:bold;">発走</span>
+        <span id="simOrderText" style="color:#fbbf24; font-weight:bold;">1位: -</span>
+      </div>
+      <div class="sim-controls">
+        <button class="sim-ctrl-btn" id="simPlayBtn" onclick="toggleSimPlay()">⏸ 一時停止</button>
+        <button class="sim-ctrl-btn secondary" onclick="replaySim()">🔄 最初から再生</button>
+      </div>
     </div>
   </div>
 
@@ -599,11 +688,23 @@
     let statsObj = null;
     let cachedWin5Text = '';
 
+    // シミュレーション動画用ステート
+    let simAnimId = null;
+    let simPlaying = false;
+    let simProgress = 0;
+    let simState = null;
+
     function closeAllModals() {
       document.getElementById('hitModal').style.display = 'none';
       document.getElementById('payoutModal').style.display = 'none';
       document.getElementById('win5Modal').style.display = 'none';
       document.getElementById('past3Modal').style.display = 'none';
+      document.getElementById('simModal').style.display = 'none';
+      simPlaying = false;
+      if (simAnimId) {
+        cancelAnimationFrame(simAnimId);
+        simAnimId = null;
+      }
     }
 
     function parseDateVal(dateStr) {
@@ -646,7 +747,6 @@
       });
     }
 
-    // ★新設：2場開催でも必ず5レースを抽出してWIN5厳選買い目テキストを動的構築する関数
     function buildDynamicWin5TextFromRaces(racesList) {
       if (!racesList || racesList.length === 0) {
         return 'WIN5対象レースの出走表が確定次第、厳選買い目を配信します。';
@@ -799,6 +899,234 @@
           h.past3Races = generatedRuns;
         }
       });
+    }
+
+    // ★展開シミュレーション動画モーダル起動・描画ロジック
+    function openSimModal(rIdx) {
+      const race = globalRaces[rIdx];
+      if (!race || !race.horses || race.horses.length === 0) return;
+
+      closeAllModals();
+
+      const summaryTxt = String(race.aiSummary || race.aiComment || '');
+      let highP = 33, midP = 34, slowP = 33;
+      const mPace = summaryTxt.match(/ハイ(\d+)%\/平均(\d+)%\/スロー(\d+)%/);
+      if (mPace) {
+        highP = parseInt(mPace[1], 10);
+        midP = parseInt(mPace[2], 10);
+        slowP = parseInt(mPace[3], 10);
+      }
+
+      let domPace = 'middle';
+      let domLabel = `平均ミドルペース (${midP}%)`;
+      if (highP >= midP && highP >= slowP) {
+        domPace = 'high';
+        domLabel = `ハイペース (${highP}%)`;
+      } else if (slowP >= highP && slowP >= midP) {
+        domPace = 'slow';
+        domLabel = `スローペース (${slowP}%)`;
+      }
+
+      const markPriority = { '◎': 1, '○': 2, '▲': 3, '☆': 4, '△': 5, '-': 9 };
+      const sortedHorses = [...race.horses].sort((a, b) => {
+        const ma = markPriority[a.markJemi || a.mark || '-'] || 9;
+        const mb = markPriority[b.markJemi || b.mark || '-'] || 9;
+        if (ma !== mb) return ma - mb;
+        return (b.simPlaceRate || 0) - (a.simPlaceRate || 0);
+      });
+
+      const honmei = sortedHorses[0];
+      const displayHorses = sortedHorses.slice(0, 8).sort((a, b) => a.num - b.num);
+      const rankOrderMap = new Map();
+      sortedHorses.slice(0, 8).forEach((h, idx) => rankOrderMap.set(h.num, idx));
+
+      const simRunners = displayHorses.map((h, laneIdx) => {
+        const style = h.runningStyle || h.style || '先行';
+        const finIdx = rankOrderMap.get(h.num);
+        // 目標ゴール位置（1着が0.96, 2着が0.93...）
+        const finishX = 0.96 - finIdx * 0.035;
+
+        // 序盤〜中盤の位置を脚質と最多ペースに応じて決定
+        let earlySpeed = 0.85;
+        if (style === '逃げ') earlySpeed = domPace === 'high' ? 1.15 : 1.05;
+        else if (style === '先行') earlySpeed = domPace === 'high' ? 1.02 : 0.95;
+        else if (style === '差し') earlySpeed = 0.78;
+        else earlySpeed = 0.68;
+
+        const mMark = h.markJemi || h.mark || '-';
+        return {
+          num: h.num,
+          name: String(h.name || '').slice(0, 7),
+          style: style,
+          mark: mMark === '-' ? '' : mMark,
+          lane: laneIdx,
+          earlySpeed: earlySpeed,
+          finishX: finishX,
+          isHonmei: mMark === '◎'
+        };
+      });
+
+      const isDirt = String(race.course || race.raceName || '').includes('ダ');
+      document.getElementById('simModalTitle').textContent = `🎬 ${race.venue} ${race.raceName}`;
+      document.getElementById('simModalSub').textContent =
+        `試走1,000回で最多の【${domLabel}】パターンを再生中（本命 ◎${honmei.num}番 ${honmei.name}${honmei.simPlaceRate ? ' / 試走3着内率 ' + honmei.simPlaceRate + '%' : ''}）`;
+
+      simState = {
+        runners: simRunners,
+        isDirt: isDirt,
+        domPace: domPace
+      };
+      simProgress = 0;
+      simPlaying = true;
+      document.getElementById('simPlayBtn').textContent = '⏸ 一時停止';
+      document.getElementById('simModal').style.display = 'flex';
+      loopSim();
+    }
+
+    function toggleSimPlay() {
+      if (!simState) return;
+      if (simProgress >= 1 && !simPlaying) {
+        simProgress = 0;
+      }
+      simPlaying = !simPlaying;
+      document.getElementById('simPlayBtn').textContent = simPlaying ? '⏸ 一時停止' : '▶ 再生';
+      if (simPlaying && !simAnimId) {
+        loopSim();
+      }
+    }
+
+    function replaySim() {
+      if (!simState) return;
+      simProgress = 0;
+      simPlaying = true;
+      document.getElementById('simPlayBtn').textContent = '⏸ 一時停止';
+      if (!simAnimId) {
+        loopSim();
+      }
+    }
+
+    function drawSimFrame(t) {
+      const canvas = document.getElementById('simCanvas');
+      if (!canvas || !simState) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+      const runners = simState.runners;
+
+      // 背景（芝コース / ダートコース）
+      ctx.fillStyle = simState.isDirt ? '#3a2d21' : '#133322';
+      ctx.fillRect(0, 0, W, H);
+
+      const xStart = 38;
+      const xGoal = W - 26;
+      const trackW = xGoal - xStart;
+
+      // コース目盛り線
+      const markers = [
+        { u: 0.0, label: '発走' },
+        { u: 0.35, label: '向正面' },
+        { u: 0.70, label: '4角直線' },
+        { u: 1.0, label: 'ゴール' }
+      ];
+      ctx.font = '10px sans-serif';
+      ctx.textAlign = 'center';
+      markers.forEach(m => {
+        const mx = xStart + m.u * trackW;
+        ctx.strokeStyle = m.u === 1.0 ? '#ef4444' : 'rgba(255,255,255,0.16)';
+        ctx.lineWidth = m.u === 1.0 ? 2 : 1;
+        ctx.beginPath();
+        ctx.moveTo(mx, 22);
+        ctx.lineTo(mx, H - 10);
+        ctx.stroke();
+        ctx.fillStyle = m.u === 1.0 ? '#fca5a5' : 'rgba(255,255,255,0.65)';
+        ctx.fillText(m.label, mx, 14);
+      });
+
+      const laneH = (H - 36) / Math.max(1, runners.length);
+      const currentPositions = [];
+
+      runners.forEach((r, idx) => {
+        const cy = 28 + idx * laneH + laneH / 2;
+
+        // レーン線
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(xStart, cy);
+        ctx.lineTo(xGoal, cy);
+        ctx.stroke();
+
+        // 位置補間（序盤は脚質通り、終盤t>0.55からゴール順位へ収束）
+        const midPos = Math.min(0.72, 0.56 * r.earlySpeed);
+        let posU;
+        if (t <= 0.55) {
+          const u = t / 0.55;
+          posU = midPos * u;
+        } else {
+          const u = (t - 0.55) / 0.45;
+          const ease = u * u * (3 - 2 * u);
+          posU = midPos + (r.finishX - midPos) * ease;
+        }
+
+        const rx = xStart + posU * trackW;
+        currentPositions.push({ runner: r, pos: posU });
+
+        // 馬ドット
+        ctx.beginPath();
+        ctx.arc(rx, cy, r.isHonmei ? 11 : 9, 0, Math.PI * 2);
+        ctx.fillStyle = r.isHonmei ? '#ef4444' : (r.mark ? '#3b82f6' : '#4b5563');
+        ctx.fill();
+        if (r.isHonmei) {
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = '#ffd700';
+          ctx.stroke();
+        }
+
+        // 馬番
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(String(r.num), rx, cy);
+
+        // 左側の馬名ラベル（常に読めるよう左端近くに薄く、または追従表示）
+        ctx.textAlign = 'left';
+        ctx.font = r.isHonmei ? 'bold 11px sans-serif' : '10px sans-serif';
+        ctx.fillStyle = r.isHonmei ? '#fde047' : 'rgba(255,255,255,0.88)';
+        const labelStr = `${r.mark ? r.mark + ' ' : ''}${r.name}`;
+        const labelX = rx + 14 > W - 82 ? rx - 14 - ctx.measureText(labelStr).width : rx + 14;
+        ctx.fillText(labelStr, Math.max(4, labelX), cy);
+      });
+
+      // 区間と現在順位の更新
+      let phaseStr = '序盤・先行争い';
+      if (t >= 0.99) phaseStr = 'ゴール確定！';
+      else if (t >= 0.70) phaseStr = '最後の直線・末脚勝負';
+      else if (t >= 0.35) phaseStr = '向正面・ペース形成';
+      document.getElementById('simPhaseText').textContent = `区間: ${phaseStr}`;
+
+      currentPositions.sort((a, b) => b.pos - a.pos);
+      const top3 = currentPositions.slice(0, 3).map((x, i) => `${i + 1}着:${x.runner.mark}${x.runner.num}番`).join(' / ');
+      document.getElementById('simOrderText').textContent = top3;
+    }
+
+    function loopSim() {
+      if (!simState) return;
+      drawSimFrame(simProgress);
+      if (simPlaying) {
+        simProgress += 0.0045;
+        if (simProgress >= 1) {
+          simProgress = 1;
+          simPlaying = false;
+          drawSimFrame(1);
+          document.getElementById('simPlayBtn').textContent = '▶ もう一度';
+          simAnimId = null;
+          return;
+        }
+        simAnimId = requestAnimationFrame(loopSim);
+      } else {
+        simAnimId = null;
+      }
     }
 
     function openHitModal() {
@@ -1083,6 +1411,9 @@
             </div>
             <div style="text-align:right;">${badges.join(' ')}</div>
           </div>
+          <div class="sim-video-btn-wrap">
+            <button class="sim-video-btn" onclick="openSimModal(${rIdx})">🎬 展開シミュレーション動画を見る（最多パターン再生）</button>
+          </div>
           <div class="ai-box">
             <div class="ai-box-title">
               <span>🧠 ジェミ予想 AI見解</span>
@@ -1151,7 +1482,6 @@
 
         globalRaces = data.races || [];
 
-        // ★重要：もしJSON側のwin5Strategyが未確定文字列なら、画面のレースデータから即座にWIN5厳選8点買い目を計算して表示する
         const rawW5 = String(data.win5Strategy || '');
         if (!rawW5 || rawW5.includes('確定次第')) {
           cachedWin5Text = buildDynamicWin5TextFromRaces(globalRaces);
