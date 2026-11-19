@@ -330,11 +330,12 @@ def fetch_realtime_odds(race_id):
 
 
 def parse_shutuba_page(race_id):
-    url_basic = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
-    html = fetch_html(url_basic, default_enc="euc_jp")
+    # 過去走・通過順位を取得するため shutuba_past.html を優先して読み込む
+    url_past = f"https://race.netkeiba.com/race/shutuba_past.html?race_id={race_id}"
+    html = fetch_html(url_past, default_enc="euc_jp")
     if not html or "HorseList" not in html:
-        url_past = f"https://race.netkeiba.com/race/shutuba_past.html?race_id={race_id}"
-        html = fetch_html(url_past, default_enc="euc_jp")
+        url_basic = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+        html = fetch_html(url_basic, default_enc="euc_jp")
 
     if not html:
         return None
@@ -484,6 +485,18 @@ def parse_shutuba_page(race_id):
     }
 
 
+def calc_base_ability(h):
+    """オッズと過去3走実績から基礎能力値（62〜100点）を算出"""
+    odds = max(1.1, float(h.get("odds", 10.0)))
+    if h.get("pastRuns"):
+        ranks = [r["rank"] for r in h["pastRuns"]]
+        avg_rk = sum(ranks) / len(ranks)
+        past_bonus = max(-4.0, (7.5 - avg_rk) * 1.4)
+    else:
+        past_bonus = max(-3.0, 6.0 - math.log(odds) * 2.2)
+    return round(min(100.0, max(62.0, 92.0 - math.log(odds) * 4.5 + past_bonus * 0.7)), 1)
+
+
 def simulate_race_monte_carlo(race_data, n_trials=1000):
     """
     展開・頭数・コース特性・枠順を考慮して1レースあたりn_trials回の仮想レースを実行し、
@@ -505,41 +518,32 @@ def simulate_race_monte_carlo(race_data, n_trials=1000):
 
     # コースごとの差し・前残り傾向（+が大きいほど差し有利、-は前残り有利）
     venue_closer_bias = {
-        "東京": 1.6, "新潟": 1.3, "京都": 0.6, "阪神": 0.5, "中京": 0.4,
-        "札幌": -0.4, "函館": -0.8, "福島": -0.9, "中山": -1.1, "小倉": -1.0
+        "東京": 1.2, "新潟": 1.0, "京都": 0.5, "阪神": 0.4, "中京": 0.3,
+        "札幌": -0.3, "函館": -0.6, "福島": -0.7, "中山": -0.8, "小倉": -0.8
     }.get(venue, 0.0)
     if is_dirt:
-        venue_closer_bias -= 1.2
+        venue_closer_bias -= 0.9
     if dist <= 1200:
-        venue_closer_bias -= 0.8
+        venue_closer_bias -= 0.6
     elif dist >= 2000:
-        venue_closer_bias += 0.5
+        venue_closer_bias += 0.4
 
     nige_cnt = sum(1 for h in horses if h.get("style") == "逃げ")
     senko_cnt = sum(1 for h in horses if h.get("style") == "先行")
 
-    base_abilities = {}
-    for h in horses:
-        odds = max(1.1, float(h.get("odds", 10.0)))
-        if h.get("pastRuns"):
-            ranks = [r["rank"] for r in h["pastRuns"]]
-            avg_rk = sum(ranks) / len(ranks)
-            past_bonus = max(-4.0, (7.5 - avg_rk) * 1.4)
-        else:
-            past_bonus = max(-2.0, (12.0 - math.log(odds) * 4.2))
-        base_abilities[h["num"]] = min(96.5, max(84.0, 91.5 - math.log(odds) * 2.1 + past_bonus * 0.45))
+    base_abilities = {h["num"]: calc_base_ability(h) for h in horses}
 
     win_counts = {h["num"]: 0 for h in horses}
     place_counts = {h["num"]: 0 for h in horses}
     pace_counts = {"high": 0, "middle": 0, "slow": 0}
 
-    pace_mean = (nige_cnt - 1) * 0.9 + (senko_cnt / max(1, n_horses) - 0.28) * 3.0
+    pace_mean = max(-1.5, min(1.5, (nige_cnt - 1) * 0.65 + (senko_cnt / max(1, n_horses) - 0.28) * 2.2))
 
     for _ in range(n_trials):
-        pace_idx = pace_mean + rng.gauss(0.0, 1.15)
-        if pace_idx >= 1.0:
+        pace_idx = max(-2.5, min(2.5, pace_mean + rng.gauss(0.0, 1.0)))
+        if pace_idx >= 0.85:
             pace_counts["high"] += 1
-        elif pace_idx <= -0.8:
+        elif pace_idx <= -0.75:
             pace_counts["slow"] += 1
         else:
             pace_counts["middle"] += 1
@@ -552,28 +556,28 @@ def simulate_race_monte_carlo(race_data, n_trials=1000):
             ability = base_abilities[num]
 
             if style == "逃げ":
-                style_eff = -pace_idx * 2.1 - (0.9 if nige_cnt >= 3 and pace_idx > 0.5 else 0.0)
+                style_eff = -pace_idx * 1.15 - (0.6 if nige_cnt >= 3 and pace_idx > 0.5 else 0.0)
                 if pace_idx < -0.5:
-                    style_eff += 1.6
+                    style_eff += 1.0
                 if waku >= 7:
-                    style_eff -= 0.7
+                    style_eff -= 0.5
             elif style == "先行":
-                style_eff = -pace_idx * 0.8 + (0.7 if pace_idx < -0.3 else 0.0)
+                style_eff = -pace_idx * 0.45 + (0.5 if pace_idx < -0.3 else 0.0)
             elif style == "差し":
-                style_eff = pace_idx * 1.4 + venue_closer_bias * 0.6
-                if n_horses >= 14 and waku <= 3 and rng.random() < 0.20:
-                    style_eff -= 3.2
+                style_eff = pace_idx * 0.85 + venue_closer_bias * 0.5
+                if n_horses >= 14 and waku <= 3 and rng.random() < 0.18:
+                    style_eff -= 2.4
             else:
-                style_eff = pace_idx * 1.8 + venue_closer_bias * 0.8
-                if pace_idx <= -0.8:
-                    style_eff -= 2.2
-                if n_horses >= 14 and waku <= 3 and rng.random() < 0.24:
-                    style_eff -= 3.5
+                style_eff = pace_idx * 1.05 + venue_closer_bias * 0.6
+                if pace_idx <= -0.75:
+                    style_eff -= 1.5
+                if n_horses >= 14 and waku <= 3 and rng.random() < 0.22:
+                    style_eff -= 2.6
 
             if style in ("逃げ", "先行"):
-                style_eff -= venue_closer_bias * 0.5
+                style_eff -= venue_closer_bias * 0.4
 
-            noise = rng.gauss(0.0, 2.4)
+            noise = rng.gauss(0.0, 3.2)
             final_perf = ability + style_eff + noise
             trial_scores.append((final_perf, num))
 
@@ -623,13 +627,13 @@ def evaluate_and_build_1000yen_strategy(race_data):
     front_ratio = front_cnt / max(1, n_horses)
     if front_ratio >= 0.42:
         pace_label = "差し有利ハイペース"
-        pace_favor = {"逃げ": -1.5, "先行": -0.5, "差し": +2.2, "追込": +1.8}
+        pace_favor = {"逃げ": -1.2, "先行": -0.4, "差し": +1.6, "追込": +1.3}
     elif front_ratio <= 0.22:
         pace_label = "先行有利スローペース"
-        pace_favor = {"逃げ": +2.5, "先行": +2.0, "差し": -0.8, "追込": -1.5}
+        pace_favor = {"逃げ": +1.8, "先行": +1.4, "差し": -0.6, "追込": -1.2}
     else:
         pace_label = "平均ミドルペース"
-        pace_favor = {"逃げ": +0.5, "先行": +1.2, "差し": +1.2, "追込": 0.0}
+        pace_favor = {"逃げ": +0.4, "先行": +0.8, "差し": +0.8, "追込": 0.0}
 
     sorted_by_odds = sorted(horses, key=lambda x: x["odds"])
     for pop_idx, h in enumerate(sorted_by_odds, 1):
@@ -640,15 +644,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
 
     raw_scores = []
     for h in horses:
-        odds = max(1.1, float(h.get("odds", 10.0)))
-        if h.get("pastRuns"):
-            ranks = [r["rank"] for r in h["pastRuns"]]
-            avg_rk = sum(ranks) / len(ranks)
-            past_bonus = max(-4.0, (7.5 - avg_rk) * 1.4)
-        else:
-            past_bonus = max(-2.0, (12.0 - math.log(odds) * 4.2))
-
-        time_idx = round(min(96.5, max(84.0, 91.5 - math.log(odds) * 2.1 + past_bonus * 0.45)), 1)
+        time_idx = calc_base_ability(h)
         pace_adj = pace_favor.get(h.get("style", "先行"), 0.0)
         waku_adj = 0.4 if h.get("waku", 4) in (2, 3, 4) else (0.2 if h.get("waku", 4) in (5, 6) else 0.0)
 
@@ -656,7 +652,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
         h["simWinRate"] = round(s_info["winProb"] * 100, 1)
         h["simPlaceRate"] = round(s_info["placeProb"] * 100, 1)
 
-        sim_bonus = (s_info["placeProb"] - (3.0 / max(1, n_horses))) * 12.0
+        sim_bonus = (s_info["placeProb"] - (3.0 / max(1, n_horses))) * 8.0
         total_score = time_idx + pace_adj * 0.5 + waku_adj + sim_bonus
         h["indexScore"] = time_idx
         h["speedScore"] = time_idx
@@ -680,9 +676,8 @@ def evaluate_and_build_1000yen_strategy(race_data):
         base_prob = h["_w"] / sum_w
         sim_win_prob = sim_stats.get(h["num"], {}).get("winProb", base_prob)
         est_prob = base_prob * 0.4 + sim_win_prob * 0.6
-        # 超大穴(50倍超)の掛け算暴走を抑えて現実的な期待値に調整
         eff_odds = min(h["odds"], 35.0 + math.sqrt(max(0.0, h["odds"] - 35.0)))
-        raw_ev = est_prob * eff_odds * 0.78 + (0.25 if 6.0 <= h["odds"] <= 35.0 else 0.10)
+        raw_ev = est_prob * eff_odds * 0.78 + (0.20 if 6.0 <= h["odds"] <= 35.0 else 0.05)
         h["ev"] = round(min(1.65, max(0.65, raw_ev)), 2)
 
     ranked = sorted(horses, key=lambda x: (x["totalScore"] + (0.8 if x["ev"] >= 1.05 else 0.0)), reverse=True)
@@ -744,7 +739,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             m_idx = "○"
         elif len(by_index) > 2 and n == by_index[2]["num"]:
             m_idx = "▲"
-        elif h["indexScore"] >= 91.5:
+        elif h["indexScore"] >= 86.0:
             m_idx = "△"
         else:
             m_idx = "-"
@@ -755,7 +750,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             m_pc = "○"
         elif pace_favor.get(h.get("style", ""), 0) > 1.0:
             m_pc = "▲"
-        elif h["indexScore"] >= 91.0:
+        elif h["indexScore"] >= 85.0:
             m_pc = "△"
         else:
             m_pc = "-"
