@@ -3,6 +3,7 @@ import re
 import json
 import time
 import math
+import random
 import subprocess
 import datetime
 from bs4 import BeautifulSoup
@@ -82,9 +83,7 @@ def patch_index_html_defaults(mark_defs):
             html = f.read()
 
         orig_html = html
-        # 「印別 複勝圏内率」セクション内の各印ブロックの --% と --/-- を順番に実数値へ置換
         for sym, eng, jp, full_lbl, r_val, h_val, t_val in mark_defs:
-            # 対象印（例: ◎ 本命, ○ 対抗, ▲ 単穴, ☆ 穴, △ 連下）の直後にある --% と --/-- を置換
             pattern = re.compile(
                 rf"({re.escape(sym)}\s*{re.escape(jp)}.*?)(--%|(?:\d+\.\d+%))(.*?)(--/--|(?:\d+/\d+))",
                 re.DOTALL
@@ -117,7 +116,6 @@ def build_complete_stats():
     if isinstance(local_stats, dict):
         base_stats.update(local_stats)
     if isinstance(git_stats, dict):
-        # Gitのオリジナルデータに存在するキーをすべて優先復元
         for k, v in git_stats.items():
             if v not in (None, [], {}, ""):
                 base_stats[k] = v
@@ -153,7 +151,6 @@ def build_complete_stats():
         t_val = int(src.get("total") or src.get("races") or src.get("totalBets") or def_tot)
         ratio_str = f"{h_val}/{t_val}"
 
-        # 既存の src の全キーを保持しつつ、想定されるすべてのプロパティ名を設定
         entry = dict(src) if isinstance(src, dict) else {}
         entry.update({
             "mark": sym,
@@ -191,7 +188,6 @@ def build_complete_stats():
         mark_stats_dict[full_lbl] = entry
         mark_stats_list.append(entry)
 
-    # index.html の表示も直接最新化
     patch_index_html_defaults(mark_defs)
 
     final_mark_stats = mark_stats_list if isinstance(old_ms, list) else mark_stats_dict
@@ -489,6 +485,120 @@ def parse_shutuba_page(race_id):
     }
 
 
+def simulate_race_monte_carlo(race_data, n_trials=1000):
+    """
+    展開・頭数・コース特性・枠順を考慮して1レースあたりn_trials回の仮想レースを実行し、
+    各馬のシミュレーション勝率・複勝圏内率と想定ペース分布を返す。
+    """
+    horses = race_data.get("horses", [])
+    n_horses = len(horses)
+    if n_horses == 0:
+        return {}, {"high": 33, "middle": 34, "slow": 33}
+
+    rid_str = str(race_data.get("raceId", "0"))
+    rng = random.Random(int(rid_str[-6:]) if rid_str[-6:].isdigit() else 42)
+
+    venue = race_data.get("venueBase", race_data.get("venue", "京都"))
+    course = race_data.get("course", "芝1600m")
+    is_dirt = "ダ" in course
+    m_dist = re.search(r"(\d{3,4})", course)
+    dist = int(m_dist.group(1)) if m_dist else 1600
+
+    # コースごとの差し・前残り傾向（+が大きいほど差し有利、-は前残り有利）
+    venue_closer_bias = {
+        "東京": 1.6, "新潟": 1.3, "京都": 0.6, "阪神": 0.5, "中京": 0.4,
+        "札幌": -0.4, "函館": -0.8, "福島": -0.9, "中山": -1.1, "小倉": -1.0
+    }.get(venue, 0.0)
+    if is_dirt:
+        venue_closer_bias -= 1.2
+    if dist <= 1200:
+        venue_closer_bias -= 0.8
+    elif dist >= 2000:
+        venue_closer_bias += 0.5
+
+    nige_cnt = sum(1 for h in horses if h.get("style") == "逃げ")
+    senko_cnt = sum(1 for h in horses if h.get("style") == "先行")
+
+    base_abilities = {}
+    for h in horses:
+        odds = max(1.1, float(h.get("odds", 10.0)))
+        if h.get("pastRuns"):
+            ranks = [r["rank"] for r in h["pastRuns"]]
+            avg_rk = sum(ranks) / len(ranks)
+            past_bonus = max(-4.0, (7.5 - avg_rk) * 1.4)
+        else:
+            past_bonus = max(-2.0, (12.0 - math.log(odds) * 4.2))
+        base_abilities[h["num"]] = min(96.5, max(84.0, 91.5 - math.log(odds) * 2.1 + past_bonus * 0.45))
+
+    win_counts = {h["num"]: 0 for h in horses}
+    place_counts = {h["num"]: 0 for h in horses}
+    pace_counts = {"high": 0, "middle": 0, "slow": 0}
+
+    pace_mean = (nige_cnt - 1) * 0.9 + (senko_cnt / max(1, n_horses) - 0.28) * 3.0
+
+    for _ in range(n_trials):
+        pace_idx = pace_mean + rng.gauss(0.0, 1.15)
+        if pace_idx >= 1.0:
+            pace_counts["high"] += 1
+        elif pace_idx <= -0.8:
+            pace_counts["slow"] += 1
+        else:
+            pace_counts["middle"] += 1
+
+        trial_scores = []
+        for h in horses:
+            num = h["num"]
+            style = h.get("style", "先行")
+            waku = h.get("waku", 4)
+            ability = base_abilities[num]
+
+            if style == "逃げ":
+                style_eff = -pace_idx * 2.1 - (0.9 if nige_cnt >= 3 and pace_idx > 0.5 else 0.0)
+                if pace_idx < -0.5:
+                    style_eff += 1.6
+                if waku >= 7:
+                    style_eff -= 0.7
+            elif style == "先行":
+                style_eff = -pace_idx * 0.8 + (0.7 if pace_idx < -0.3 else 0.0)
+            elif style == "差し":
+                style_eff = pace_idx * 1.4 + venue_closer_bias * 0.6
+                if n_horses >= 14 and waku <= 3 and rng.random() < 0.20:
+                    style_eff -= 3.2
+            else:
+                style_eff = pace_idx * 1.8 + venue_closer_bias * 0.8
+                if pace_idx <= -0.8:
+                    style_eff -= 2.2
+                if n_horses >= 14 and waku <= 3 and rng.random() < 0.24:
+                    style_eff -= 3.5
+
+            if style in ("逃げ", "先行"):
+                style_eff -= venue_closer_bias * 0.5
+
+            noise = rng.gauss(0.0, 2.4)
+            final_perf = ability + style_eff + noise
+            trial_scores.append((final_perf, num))
+
+        trial_scores.sort(key=lambda x: x[0], reverse=True)
+        win_counts[trial_scores[0][1]] += 1
+        for _, p_num in trial_scores[:3]:
+            place_counts[p_num] += 1
+
+    sim_stats = {}
+    for h in horses:
+        num = h["num"]
+        sim_stats[num] = {
+            "winProb": win_counts[num] / n_trials,
+            "placeProb": place_counts[num] / n_trials
+        }
+
+    pace_pct = {
+        "high": round(pace_counts["high"] * 100 / n_trials),
+        "middle": round(pace_counts["middle"] * 100 / n_trials),
+        "slow": round(pace_counts["slow"] * 100 / n_trials),
+    }
+    return sim_stats, pace_pct
+
+
 def evaluate_and_build_1000yen_strategy(race_data):
     horses = race_data["horses"]
     valid_horses = []
@@ -526,6 +636,9 @@ def evaluate_and_build_1000yen_strategy(race_data):
     for pop_idx, h in enumerate(sorted_by_odds, 1):
         h["popularity"] = pop_idx
 
+    sim_stats, pace_pct = simulate_race_monte_carlo(race_data, n_trials=1000)
+    sim_summary = f"展開試走1,000回(ハイ{pace_pct['high']}%/平均{pace_pct['middle']}%/スロー{pace_pct['slow']}%)"
+
     raw_scores = []
     for h in horses:
         odds = max(1.1, float(h.get("odds", 10.0)))
@@ -540,7 +653,12 @@ def evaluate_and_build_1000yen_strategy(race_data):
         pace_adj = pace_favor.get(h.get("style", "先行"), 0.0)
         waku_adj = 0.4 if h.get("waku", 4) in (2, 3, 4) else (0.2 if h.get("waku", 4) in (5, 6) else 0.0)
 
-        total_score = time_idx + pace_adj * 0.7 + waku_adj
+        s_info = sim_stats.get(h["num"], {"winProb": 1.0 / max(1, n_horses), "placeProb": 3.0 / max(1, n_horses)})
+        h["simWinRate"] = round(s_info["winProb"] * 100, 1)
+        h["simPlaceRate"] = round(s_info["placeProb"] * 100, 1)
+
+        sim_bonus = (s_info["placeProb"] - (3.0 / max(1, n_horses))) * 12.0
+        total_score = time_idx + pace_adj * 0.5 + waku_adj + sim_bonus
         h["indexScore"] = time_idx
         h["score"] = round(total_score, 1)
         h["totalScore"] = total_score
@@ -559,7 +677,9 @@ def evaluate_and_build_1000yen_strategy(race_data):
 
     sum_w = sum(exp_weights) or 1.0
     for h in horses:
-        est_prob = h["_w"] / sum_w
+        base_prob = h["_w"] / sum_w
+        sim_win_prob = sim_stats.get(h["num"], {}).get("winProb", base_prob)
+        est_prob = base_prob * 0.4 + sim_win_prob * 0.6
         raw_ev = est_prob * h["odds"] * 0.82 + (0.35 if 7.0 <= h["odds"] <= 35.0 else 0.15)
         h["ev"] = round(min(1.65, max(0.65, raw_ev)), 2)
 
@@ -587,7 +707,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
     himo_horses = himo_pool[:3]
 
     by_index = sorted(horses, key=lambda x: x["indexScore"], reverse=True)
-    by_pace = sorted(horses, key=lambda x: (pace_favor.get(x.get("style", ""), 0) * 2.0 + x["indexScore"]), reverse=True)
+    by_pace = sorted(horses, key=lambda x: (x.get("simPlaceRate", 0) * 0.4 + pace_favor.get(x.get("style", ""), 0) * 2.0 + x["indexScore"]), reverse=True)
     by_ana = sorted(horses, key=lambda x: (x["ev"] + (0.3 if 8.0 <= x["odds"] <= 45.0 else 0.0)), reverse=True)
 
     for h in horses:
@@ -667,7 +787,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【ワイド穴】{h1} - {hs} (1点/100円) [計8点/1,000円固定]"
         )
         comment = (
-            f"展開予測は【{pace_label}】。能力・期待値ともに抜けた◎{h1}番{honmei['name']}と○{h2}番の2強が強力。"
+            f"展開予測は【{pace_label} / {sim_summary}】。能力・期待値ともに抜けた◎{h1}番{honmei['name']}(3着内率{honmei['simPlaceRate']}%)と○{h2}番の2強が強力。"
             f"【馬連本線】300円で厚く利益を狙いつつ、【三連複2頭軸】と特注穴馬☆{hs}番への【ワイド穴】・【馬連タテ目】まで1,000円内で完全網羅。"
         )
     elif honmei["odds"] >= 6.0 or front_ratio >= 0.48:
@@ -687,7 +807,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【三連複1頭軸】{h1} - {opp4_str} (6点/各100円) [計9点/1,000円固定]"
         )
         comment = (
-            f"展開予測は【{pace_label}】。過剰人気馬を排し、期待値(EV:{honmei['ev']})トップの◎{h1}番{honmei['name']}を軸に抜擢。"
+            f"展開予測は【{pace_label} / {sim_summary}】。過剰人気馬を排し、期待値(EV:{honmei['ev']}・3着内率{honmei['simPlaceRate']}%)トップの◎{h1}番{honmei['name']}を軸に抜擢。"
             f"【ワイド本線】200円で手堅く回収ラインを確保しながら、穴党AI推奨の☆{hs}番を絡めた【馬連流し】と【三連複1頭軸】で高配当を射抜く。"
         )
     else:
@@ -707,7 +827,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【三連複F】{h1} ✕ {h2},{h3} ✕ {col3_str} (7点/各100円) [計9点/1,000円固定]"
         )
         comment = (
-            f"展開予測は【{pace_label}】。安定感抜群の◎{h1}番{honmei['name']}を1頭軸に据え、"
+            f"展開予測は【{pace_label} / {sim_summary}】。安定感抜群の◎{h1}番{honmei['name']}(3着内率{honmei['simPlaceRate']}%)を1頭軸に据え、"
             f"2列目に○{h2}番・▲{h3}番を配置した【三連複フォーメーション(7点)】が主砲。○が崩れても▲と穴馬☆{hs}番の台頭で高配当を逃さず拾う1,000円布陣。"
         )
 
@@ -874,7 +994,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(final_json, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 完了！ 全{len(races_out)}レース ＋ 統計・印別複勝圏内率 ＋ WIN5を出力しました。")
+    print(f"✅ 完了！ 全{len(races_out)}レース ＋ 統計・印別複勝圏内率 ＋ WIN5 ＋ 展開シミュレーションを出力しました。")
 
 
 if __name__ == "__main__":
