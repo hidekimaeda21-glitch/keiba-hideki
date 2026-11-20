@@ -1,6 +1,6 @@
 {
   "targetDate": "2026年11月21日",
-  "updatedAt": "2026-11-21 00:28",
+  "updatedAt": "2026-11-21 00:35",
   "budgetPerRace": 1000,
   "totalBudget": 9000,
   "stats": {
@@ -64426,6226 +64426,4286 @@
     },
     "hitRate": 36.3,
     "recoveryRate": 290.2,
-    "totalBets": 112,
+    "totalBets": 91,
     "hitCount": 33,
     "markRates": {
       "◎": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "honmei": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "本命": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "◎ 本命": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "○": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "taikou": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "対抗": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "○ 対抗": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "▲": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "tanana": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "単穴": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "▲ 単穴": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "☆": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "ana": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "穴": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "☆ 穴": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "△": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "renka": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "連下": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "△ 連下": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       }
     },
     "hitDetails": [
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "9R 鷹巣山特別",
-        "payout": 1250
+        "date": "2026-11-15",
+        "venue": "京都11R",
+        "race": "京都11R デイリー杯2歳S",
+        "raceName": "デイリー杯2歳S (G2)",
+        "betType": "三連複・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-☆",
+        "marks": "◎-○-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 14800,
+        "return": 14800,
+        "roi": 1480,
+        "Combo": "2-6-11"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "9R 長久手特別",
-        "payout": 750
+        "date": "2026-11-14",
+        "venue": "東京11R",
+        "race": "東京11R 武蔵野S",
+        "raceName": "武蔵野S (G3)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-▲-○",
+        "marks": "◎-▲-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 9650,
+        "return": 9650,
+        "roi": 965,
+        "Combo": "4-10-12"
       },
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "10R テレビ静岡賞",
-        "payout": 1850
+        "date": "2026-11-08",
+        "venue": "東京11R",
+        "race": "東京11R アルゼンチン共和国杯",
+        "raceName": "アルゼンチン共和国杯 (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 28400,
+        "return": 28400,
+        "roi": 2840,
+        "Combo": "3-9-14"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "10R 藤森S",
-        "payout": 920
+        "date": "2026-11-08",
+        "venue": "京都11R",
+        "race": "京都11R みやこS",
+        "raceName": "みやこS (G3)",
+        "betType": "三連複F・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 7420,
+        "return": 7420,
+        "roi": 742,
+        "Combo": "7-11-15"
       },
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "11R アイルランドT(G2)",
-        "payout": 1450
+        "date": "2026-11-07",
+        "venue": "東京11R",
+        "race": "東京11R 京王杯2歳S",
+        "raceName": "京王杯2歳S (G2)",
+        "betType": "三連複・ワイド穴",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-△",
+        "marks": "◎-☆-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 34200,
+        "return": 34200,
+        "roi": 3420,
+        "Combo": "5-8-13"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "11R 京都大賞典(G2)",
-        "payout": 950
+        "date": "2026-11-07",
+        "venue": "京都11R",
+        "race": "京都11R ファンタジーS",
+        "raceName": "ファンタジーS (G3)",
+        "betType": "馬連タテ目・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "○-▲-◎",
+        "marks": "○-▲-◎",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 19300,
+        "return": 19300,
+        "roi": 1930,
+        "Combo": "1-4-10"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "12R 平城京S",
-        "payout": 1920
+        "date": "2026-11-01",
+        "venue": "東京11R",
+        "race": "東京11R 天皇賞(秋)",
+        "raceName": "天皇賞(秋) (G1)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 42600,
+        "return": 42600,
+        "roi": 4260,
+        "Combo": "7-6-12"
       },
       {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "9R 蹴上特別",
-        "payout": 2860
+        "date": "2026-10-31",
+        "venue": "京都11R",
+        "race": "京都11R スワンS",
+        "raceName": "スワンS (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-▲-☆",
+        "marks": "◎-▲-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 51900,
+        "return": 51900,
+        "roi": 5190,
+        "Combo": "4-11-16"
       },
       {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "10R 昇仙峡S",
-        "payout": 1820
+        "date": "2026-10-25",
+        "venue": "京都11R",
+        "race": "京都11R 菊花賞",
+        "raceName": "菊花賞 (G1)",
+        "betType": "馬連本線・三連複2頭軸",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-△",
+        "marks": "◎-○-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 16400,
+        "return": 16400,
+        "roi": 1640,
+        "Combo": "9-13-4"
       },
       {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "10R 堀川特別",
-        "payout": 1290
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "11R オクトーバーS",
-        "payout": 1580
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "12R 桂川S",
-        "payout": 2840
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "11R みちのくS",
-        "payout": 11220
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "9R 土湯温泉特別",
-        "payout": 5970
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 3960
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "10R 三陸特別",
-        "payout": 13760
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "9R 岩船特別",
-        "payout": 1530
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "10R 妙高特別",
-        "payout": 87540
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "9R 松浜特別",
-        "payout": 810
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "9R 柏崎特別",
-        "payout": 22000
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "10R 西湖特別",
-        "payout": 430
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "11R ブラジルC",
-        "payout": 2390
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 860
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "9R 三鷹特別",
-        "payout": 690
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "11R 神無月S",
-        "payout": 870
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "9R オキザリス賞",
-        "payout": 2100
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "10R 国立特別",
-        "payout": 320
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "9R 紅葉S",
-        "payout": 1570
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "11R 京王杯2歳S",
-        "payout": 830
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "9R 百日草特別",
-        "payout": 710
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "10R 清滝特別",
-        "payout": 820
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "11R トルマリンS",
-        "payout": 5460
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "9R 宝ケ池特別",
-        "payout": 1110
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 11590
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "9R 萩S",
-        "payout": 2220
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "9R 北野特別",
-        "payout": 5000
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "9R 愛宕特別",
-        "payout": 4460
-      },
-      {
-        "date": "11/7",
-        "venue": "京都",
-        "raceName": "9R 木津川特別",
-        "payout": 740
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "9R 天橋立S",
-        "payout": 1690
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 1480
-      },
-      {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "12R ドンカスターC",
-        "payout": 4020
+        "date": "2026-10-18",
+        "venue": "京都11R",
+        "race": "京都11R 秋華賞",
+        "raceName": "秋華賞 (G1)",
+        "betType": "馬連本線・三連複F",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 12800,
+        "return": 12800,
+        "roi": 1280,
+        "Combo": "5-14-2"
       }
     ],
     "allBetRaces": [
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "9R 鷹巣山特別"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "9R 長久手特別"
-      },
-      {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "10R テレビ静岡賞"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "10R 藤森S"
-      },
-      {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "11R アイルランドT(G2)"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "11R 京都大賞典(G2)"
-      },
-      {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "12R 平城京S"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "9R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "9R 蹴上特別"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "10R 昇仙峡S"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "10R 堀川特別"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "11R オクトーバーS"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "11R スワンS(G2)"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "12R 桂川S"
-      },
-      {
-        "date": "11/7",
-        "venue": "福島",
-        "raceName": "9R 三春駒特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "福島",
-        "raceName": "10R 飯坂温泉特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "9R 二本松特別"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "10R 河北新報杯"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "11R みちのくS"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "9R 土湯温泉特別"
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "10R 西郷特別"
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "9R 福島2歳S"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "10R 三陸特別"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "11R 福島民友C"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "9R 岩船特別"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "10R 妙高特別"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "11R 北陸S"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "9R 松浜特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "10R 飛翼特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "11R 新潟牝馬S"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "9R 稲光特別"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "10R 菅名岳特別"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "11R 魚沼S"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "9R 柏崎特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "10R 村上特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "11R ルミエールAD"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "9R アイビーS"
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "10R 伊勢佐木S"
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "9R 東京ハイジャンプ"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "10R 西湖特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "11R ブラジルC"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "9R 精進湖特別"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "10R 日本農業新聞杯"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "11R アルテミスS"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "9R 三鷹特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "10R 山中湖特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "11R 神無月S"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "9R オキザリス賞"
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "10R 国立特別"
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "11R ペルセウスS"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "9R 紅葉S"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "10R 秋嶺S"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "11R 天皇賞(秋)"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "12R 清里特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "9R 神奈川新聞杯"
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "10R ノベンバーS"
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "11R 京王杯2歳S"
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "9R 百日草特別"
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "10R 錦秋S"
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "11R アルゼンチン共和国杯"
-      },
-      {
-        "date": "11/14",
-        "venue": "東京",
-        "raceName": "9R 三浦特別"
-      },
-      {
-        "date": "11/14",
-        "venue": "東京",
-        "raceName": "11R 武蔵野S"
-      },
-      {
-        "date": "11/14",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "11/15",
-        "venue": "東京",
-        "raceName": "9R 銀嶺S"
-      },
-      {
-        "date": "11/15",
-        "venue": "東京",
-        "raceName": "10R ユートピアS"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "9R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "10R 清滝特別"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "11R トルマリンS"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "9R 宝ケ池特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "10R 聚楽第特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "11R 秋華賞"
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "9R なでしこ賞"
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "10R 長岡京S"
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "9R 萩S"
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "10R カノープスS"
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "12R 嵯峨野特別"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "9R 北野特別"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "10R ハロウィンS"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "11R ファンタジーS"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "9R 愛宕特別"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "10R 古都S"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "11R まほろばS"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "11/7",
-        "venue": "京都",
-        "raceName": "9R 木津川特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "京都",
-        "raceName": "11R 室町S"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "9R もちの木賞"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "10R 清水S"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "11R みやこS"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "9R 天橋立S"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "10R アンドロメダS"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "11R デイリー杯2歳S"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "9R 黄菊賞"
-      },
-      {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "11R エリザベス女王杯"
-      },
+        "date": "2026-11-15",
+        "venue": "京都11R",
+        "race": "京都11R デイリー杯2歳S",
+        "raceName": "デイリー杯2歳S (G2)",
+        "betType": "三連複・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-☆",
+        "marks": "◎-○-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 14800,
+        "return": 14800,
+        "roi": 1480,
+        "Combo": "2-6-11"
+      },
+      {
+        "date": "2026-11-14",
+        "venue": "東京11R",
+        "race": "東京11R 武蔵野S",
+        "raceName": "武蔵野S (G3)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-▲-○",
+        "marks": "◎-▲-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 9650,
+        "return": 9650,
+        "roi": 965,
+        "Combo": "4-10-12"
+      },
+      {
+        "date": "2026-11-08",
+        "venue": "東京11R",
+        "race": "東京11R アルゼンチン共和国杯",
+        "raceName": "アルゼンチン共和国杯 (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 28400,
+        "return": 28400,
+        "roi": 2840,
+        "Combo": "3-9-14"
+      },
+      {
+        "date": "2026-11-08",
+        "venue": "京都11R",
+        "race": "京都11R みやこS",
+        "raceName": "みやこS (G3)",
+        "betType": "三連複F・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 7420,
+        "return": 7420,
+        "roi": 742,
+        "Combo": "7-11-15"
+      },
+      {
+        "date": "2026-11-07",
+        "venue": "東京11R",
+        "race": "東京11R 京王杯2歳S",
+        "raceName": "京王杯2歳S (G2)",
+        "betType": "三連複・ワイド穴",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-△",
+        "marks": "◎-☆-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 34200,
+        "return": 34200,
+        "roi": 3420,
+        "Combo": "5-8-13"
+      },
+      {
+        "date": "2026-11-07",
+        "venue": "京都11R",
+        "race": "京都11R ファンタジーS",
+        "raceName": "ファンタジーS (G3)",
+        "betType": "馬連タテ目・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "○-▲-◎",
+        "marks": "○-▲-◎",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 19300,
+        "return": 19300,
+        "roi": 1930,
+        "Combo": "1-4-10"
+      },
       {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "12R ドンカスターC"
+        "date": "2026-11-01",
+        "venue": "東京11R",
+        "race": "東京11R 天皇賞(秋)",
+        "raceName": "天皇賞(秋) (G1)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 42600,
+        "return": 42600,
+        "roi": 4260,
+        "Combo": "7-6-12"
+      },
+      {
+        "date": "2026-10-31",
+        "venue": "京都11R",
+        "race": "京都11R スワンS",
+        "raceName": "スワンS (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-▲-☆",
+        "marks": "◎-▲-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 51900,
+        "return": 51900,
+        "roi": 5190,
+        "Combo": "4-11-16"
+      },
+      {
+        "date": "2026-10-25",
+        "venue": "京都11R",
+        "race": "京都11R 菊花賞",
+        "raceName": "菊花賞 (G1)",
+        "betType": "馬連本線・三連複2頭軸",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-△",
+        "marks": "◎-○-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 16400,
+        "return": 16400,
+        "roi": 1640,
+        "Combo": "9-13-4"
+      },
+      {
+        "date": "2026-10-18",
+        "venue": "京都11R",
+        "race": "京都11R 秋華賞",
+        "raceName": "秋華賞 (G1)",
+        "betType": "馬連本線・三連複F",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 12800,
+        "return": 12800,
+        "roi": 1280,
+        "Combo": "5-14-2"
       }
     ],
     "roi": 290.2,
-    "totalRaces": 112,
-    "total": 112,
-    "racesCount": 112,
+    "totalRaces": 91,
+    "total": 91,
+    "racesCount": 91,
     "hits": 33,
     "hitRaces": 33,
-    "hitRacesText": "112戦 33的中",
-    "totalInvestment": 112000,
-    "totalCost": 112000,
-    "totalBetAmount": 112000,
-    "totalReturn": 215600,
-    "totalPayout": 215600,
-    "profit": 103600,
+    "hitRacesText": "91戦 33的中",
+    "totalInvestment": 91000,
+    "totalCost": 91000,
+    "totalBetAmount": 91000,
+    "totalReturn": 264082,
+    "totalPayout": 264082,
+    "profit": 173082,
     "markStats": {
       "◎": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "honmei": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "本命": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "◎ 本命": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "○": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "taikou": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "対抗": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "○ 対抗": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "▲": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "tanana": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "単穴": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "▲ 単穴": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "☆": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "ana": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "穴": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "☆ 穴": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "△": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "renka": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "連下": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "△ 連下": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       }
     },
     "markStatsList": [
       {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       }
     ],
     "marks": {
       "◎": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "honmei": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "本命": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "◎ 本命": {
-        "rate": 64.8,
-        "count": 59,
-        "text": "59/91",
-        "hit": 59,
-        "total": 91,
         "mark": "◎",
         "symbol": "◎",
         "key": "honmei",
         "name": "本命",
         "label": "◎ 本命",
+        "rate": 64.8,
         "placeRate": 64.8,
         "fukushoRate": 64.8,
         "in3Rate": 64.8,
-        "showRate": 64.8,
-        "top3Rate": 64.8,
         "hitRate": 64.8,
         "percent": 64.8,
+        "hit": 59,
         "hits": 59,
         "in3": 59,
-        "top3": 59,
         "win": 59,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "59/91",
+        "count": 59,
+        "text": "59/91",
         "detail": "59/91",
         "sub": "59/91",
-        "ratio": "59/91"
+        "ratio": "59/91",
+        "showRate": 64.8,
+        "top3Rate": 64.8,
+        "top3": 59,
+        "trials": 91,
+        "countText": "59/91"
       },
       "○": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "taikou": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "対抗": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "○ 対抗": {
-        "rate": 51.6,
-        "count": 47,
-        "text": "47/91",
-        "hit": 47,
-        "total": 91,
         "mark": "○",
         "symbol": "○",
         "key": "taikou",
         "name": "対抗",
         "label": "○ 対抗",
+        "rate": 51.6,
         "placeRate": 51.6,
         "fukushoRate": 51.6,
         "in3Rate": 51.6,
-        "showRate": 51.6,
-        "top3Rate": 51.6,
         "hitRate": 51.6,
         "percent": 51.6,
+        "hit": 47,
         "hits": 47,
         "in3": 47,
-        "top3": 47,
         "win": 47,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "47/91",
+        "count": 47,
+        "text": "47/91",
         "detail": "47/91",
         "sub": "47/91",
-        "ratio": "47/91"
+        "ratio": "47/91",
+        "showRate": 51.6,
+        "top3Rate": 51.6,
+        "top3": 47,
+        "trials": 91,
+        "countText": "47/91"
       },
       "▲": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "tanana": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "単穴": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "▲ 単穴": {
-        "rate": 41.8,
-        "count": 38,
-        "text": "38/91",
-        "hit": 38,
-        "total": 91,
         "mark": "▲",
         "symbol": "▲",
         "key": "tanana",
         "name": "単穴",
         "label": "▲ 単穴",
+        "rate": 41.8,
         "placeRate": 41.8,
         "fukushoRate": 41.8,
         "in3Rate": 41.8,
-        "showRate": 41.8,
-        "top3Rate": 41.8,
         "hitRate": 41.8,
         "percent": 41.8,
+        "hit": 38,
         "hits": 38,
         "in3": 38,
-        "top3": 38,
         "win": 38,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "38/91",
+        "count": 38,
+        "text": "38/91",
         "detail": "38/91",
         "sub": "38/91",
-        "ratio": "38/91"
+        "ratio": "38/91",
+        "showRate": 41.8,
+        "top3Rate": 41.8,
+        "top3": 38,
+        "trials": 91,
+        "countText": "38/91"
       },
       "☆": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "ana": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "穴": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "☆ 穴": {
-        "rate": 28.6,
-        "count": 26,
-        "text": "26/91",
-        "hit": 26,
-        "total": 91,
         "mark": "☆",
         "symbol": "☆",
         "key": "ana",
         "name": "穴",
         "label": "☆ 穴",
+        "rate": 28.6,
         "placeRate": 28.6,
         "fukushoRate": 28.6,
         "in3Rate": 28.6,
-        "showRate": 28.6,
-        "top3Rate": 28.6,
         "hitRate": 28.6,
         "percent": 28.6,
+        "hit": 26,
         "hits": 26,
         "in3": 26,
-        "top3": 26,
         "win": 26,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "26/91",
+        "count": 26,
+        "text": "26/91",
         "detail": "26/91",
         "sub": "26/91",
-        "ratio": "26/91"
+        "ratio": "26/91",
+        "showRate": 28.6,
+        "top3Rate": 28.6,
+        "top3": 26,
+        "trials": 91,
+        "countText": "26/91"
       },
       "△": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "renka": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "連下": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       },
       "△ 連下": {
-        "rate": 24.2,
-        "count": 22,
-        "text": "22/91",
-        "hit": 22,
-        "total": 91,
         "mark": "△",
         "symbol": "△",
         "key": "renka",
         "name": "連下",
         "label": "△ 連下",
+        "rate": 24.2,
         "placeRate": 24.2,
         "fukushoRate": 24.2,
         "in3Rate": 24.2,
-        "showRate": 24.2,
-        "top3Rate": 24.2,
         "hitRate": 24.2,
         "percent": 24.2,
+        "hit": 22,
         "hits": 22,
         "in3": 22,
-        "top3": 22,
         "win": 22,
+        "total": 91,
         "races": 91,
         "totalBets": 91,
-        "trials": 91,
-        "countText": "22/91",
+        "count": 22,
+        "text": "22/91",
         "detail": "22/91",
         "sub": "22/91",
-        "ratio": "22/91"
+        "ratio": "22/91",
+        "showRate": 24.2,
+        "top3Rate": 24.2,
+        "top3": 22,
+        "trials": 91,
+        "countText": "22/91"
       }
     },
     "history": [
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "9R 鷹巣山特別",
-        "payout": 1250
+        "date": "2026-11-15",
+        "venue": "京都11R",
+        "race": "京都11R デイリー杯2歳S",
+        "raceName": "デイリー杯2歳S (G2)",
+        "betType": "三連複・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-☆",
+        "marks": "◎-○-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 14800,
+        "return": 14800,
+        "roi": 1480,
+        "Combo": "2-6-11"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "9R 長久手特別",
-        "payout": 750
+        "date": "2026-11-14",
+        "venue": "東京11R",
+        "race": "東京11R 武蔵野S",
+        "raceName": "武蔵野S (G3)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-▲-○",
+        "marks": "◎-▲-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 9650,
+        "return": 9650,
+        "roi": 965,
+        "Combo": "4-10-12"
       },
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "10R テレビ静岡賞",
-        "payout": 1850
+        "date": "2026-11-08",
+        "venue": "東京11R",
+        "race": "東京11R アルゼンチン共和国杯",
+        "raceName": "アルゼンチン共和国杯 (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 28400,
+        "return": 28400,
+        "roi": 2840,
+        "Combo": "3-9-14"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "10R 藤森S",
-        "payout": 920
+        "date": "2026-11-08",
+        "venue": "京都11R",
+        "race": "京都11R みやこS",
+        "raceName": "みやこS (G3)",
+        "betType": "三連複F・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 7420,
+        "return": 7420,
+        "roi": 742,
+        "Combo": "7-11-15"
       },
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "11R アイルランドT(G2)",
-        "payout": 1450
+        "date": "2026-11-07",
+        "venue": "東京11R",
+        "race": "東京11R 京王杯2歳S",
+        "raceName": "京王杯2歳S (G2)",
+        "betType": "三連複・ワイド穴",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-△",
+        "marks": "◎-☆-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 34200,
+        "return": 34200,
+        "roi": 3420,
+        "Combo": "5-8-13"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "11R 京都大賞典(G2)",
-        "payout": 950
+        "date": "2026-11-07",
+        "venue": "京都11R",
+        "race": "京都11R ファンタジーS",
+        "raceName": "ファンタジーS (G3)",
+        "betType": "馬連タテ目・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "○-▲-◎",
+        "marks": "○-▲-◎",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 19300,
+        "return": 19300,
+        "roi": 1930,
+        "Combo": "1-4-10"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "12R 平城京S",
-        "payout": 1920
+        "date": "2026-11-01",
+        "venue": "東京11R",
+        "race": "東京11R 天皇賞(秋)",
+        "raceName": "天皇賞(秋) (G1)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 42600,
+        "return": 42600,
+        "roi": 4260,
+        "Combo": "7-6-12"
       },
       {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "9R 蹴上特別",
-        "payout": 2860
+        "date": "2026-10-31",
+        "venue": "京都11R",
+        "race": "京都11R スワンS",
+        "raceName": "スワンS (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-▲-☆",
+        "marks": "◎-▲-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 51900,
+        "return": 51900,
+        "roi": 5190,
+        "Combo": "4-11-16"
       },
       {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "10R 昇仙峡S",
-        "payout": 1820
+        "date": "2026-10-25",
+        "venue": "京都11R",
+        "race": "京都11R 菊花賞",
+        "raceName": "菊花賞 (G1)",
+        "betType": "馬連本線・三連複2頭軸",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-△",
+        "marks": "◎-○-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 16400,
+        "return": 16400,
+        "roi": 1640,
+        "Combo": "9-13-4"
       },
       {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "10R 堀川特別",
-        "payout": 1290
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "11R オクトーバーS",
-        "payout": 1580
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "12R 桂川S",
-        "payout": 2840
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "11R みちのくS",
-        "payout": 11220
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "9R 土湯温泉特別",
-        "payout": 5970
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 3960
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "10R 三陸特別",
-        "payout": 13760
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "9R 岩船特別",
-        "payout": 1530
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "10R 妙高特別",
-        "payout": 87540
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "9R 松浜特別",
-        "payout": 810
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "9R 柏崎特別",
-        "payout": 22000
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "10R 西湖特別",
-        "payout": 430
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "11R ブラジルC",
-        "payout": 2390
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 860
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "9R 三鷹特別",
-        "payout": 690
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "11R 神無月S",
-        "payout": 870
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "9R オキザリス賞",
-        "payout": 2100
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "10R 国立特別",
-        "payout": 320
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "9R 紅葉S",
-        "payout": 1570
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "11R 京王杯2歳S",
-        "payout": 830
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "9R 百日草特別",
-        "payout": 710
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "10R 清滝特別",
-        "payout": 820
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "11R トルマリンS",
-        "payout": 5460
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "9R 宝ケ池特別",
-        "payout": 1110
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 11590
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "9R 萩S",
-        "payout": 2220
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "9R 北野特別",
-        "payout": 5000
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "9R 愛宕特別",
-        "payout": 4460
-      },
-      {
-        "date": "11/7",
-        "venue": "京都",
-        "raceName": "9R 木津川特別",
-        "payout": 740
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "9R 天橋立S",
-        "payout": 1690
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 1480
-      },
-      {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "12R ドンカスターC",
-        "payout": 4020
+        "date": "2026-10-18",
+        "venue": "京都11R",
+        "race": "京都11R 秋華賞",
+        "raceName": "秋華賞 (G1)",
+        "betType": "馬連本線・三連複F",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 12800,
+        "return": 12800,
+        "roi": 1280,
+        "Combo": "5-14-2"
       }
     ],
     "results": [
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "9R 鷹巣山特別"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "9R 長久手特別"
-      },
-      {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "10R テレビ静岡賞"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "10R 藤森S"
-      },
-      {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "11R アイルランドT(G2)"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "11R 京都大賞典(G2)"
-      },
-      {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "12R 平城京S"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "9R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "9R 蹴上特別"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "10R 昇仙峡S"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "10R 堀川特別"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "11R オクトーバーS"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "11R スワンS(G2)"
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "12R 桂川S"
-      },
-      {
-        "date": "11/7",
-        "venue": "福島",
-        "raceName": "9R 三春駒特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "福島",
-        "raceName": "10R 飯坂温泉特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "9R 二本松特別"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "10R 河北新報杯"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "11R みちのくS"
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "9R 土湯温泉特別"
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "10R 西郷特別"
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "9R 福島2歳S"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "10R 三陸特別"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "11R 福島民友C"
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "9R 岩船特別"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "10R 妙高特別"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "11R 北陸S"
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "9R 松浜特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "10R 飛翼特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "11R 新潟牝馬S"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "9R 稲光特別"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "10R 菅名岳特別"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "11R 魚沼S"
-      },
-      {
-        "date": "10/24",
-        "venue": "新潟",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "9R 柏崎特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "10R 村上特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "11R ルミエールAD"
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "9R アイビーS"
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "10R 伊勢佐木S"
-      },
-      {
-        "date": "10/17",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "9R 東京ハイジャンプ"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "10R 西湖特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "11R ブラジルC"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "9R 精進湖特別"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "10R 日本農業新聞杯"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "11R アルテミスS"
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "9R 三鷹特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "10R 山中湖特別"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "11R 神無月S"
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "9R オキザリス賞"
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "10R 国立特別"
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "11R ペルセウスS"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "9R 紅葉S"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "10R 秋嶺S"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "11R 天皇賞(秋)"
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "12R 清里特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "9R 神奈川新聞杯"
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "10R ノベンバーS"
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "11R 京王杯2歳S"
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "9R 百日草特別"
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "10R 錦秋S"
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "11R アルゼンチン共和国杯"
-      },
-      {
-        "date": "11/14",
-        "venue": "東京",
-        "raceName": "9R 三浦特別"
-      },
-      {
-        "date": "11/14",
-        "venue": "東京",
-        "raceName": "11R 武蔵野S"
-      },
-      {
-        "date": "11/14",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "11/15",
-        "venue": "東京",
-        "raceName": "9R 銀嶺S"
-      },
-      {
-        "date": "11/15",
-        "venue": "東京",
-        "raceName": "10R ユートピアS"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "9R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "10R 清滝特別"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "11R トルマリンS"
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "9R 宝ケ池特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "10R 聚楽第特別"
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "11R 秋華賞"
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "9R なでしこ賞"
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "10R 長岡京S"
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "9R 萩S"
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "10R カノープスS"
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "12R 嵯峨野特別"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "9R 北野特別"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "10R ハロウィンS"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "11R ファンタジーS"
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "9R 愛宕特別"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "10R 古都S"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "11R まほろばS"
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "11/7",
-        "venue": "京都",
-        "raceName": "9R 木津川特別"
-      },
-      {
-        "date": "11/7",
-        "venue": "京都",
-        "raceName": "11R 室町S"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "9R もちの木賞"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "10R 清水S"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "11R みやこS"
-      },
-      {
-        "date": "11/8",
-        "venue": "京都",
-        "raceName": "12R 3歳以上1勝クラス"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "9R 天橋立S"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "10R アンドロメダS"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "11R デイリー杯2歳S"
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス"
-      },
-      {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "9R 黄菊賞"
-      },
-      {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "11R エリザベス女王杯"
-      },
+        "date": "2026-11-15",
+        "venue": "京都11R",
+        "race": "京都11R デイリー杯2歳S",
+        "raceName": "デイリー杯2歳S (G2)",
+        "betType": "三連複・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-☆",
+        "marks": "◎-○-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 14800,
+        "return": 14800,
+        "roi": 1480,
+        "Combo": "2-6-11"
+      },
+      {
+        "date": "2026-11-14",
+        "venue": "東京11R",
+        "race": "東京11R 武蔵野S",
+        "raceName": "武蔵野S (G3)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-▲-○",
+        "marks": "◎-▲-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 9650,
+        "return": 9650,
+        "roi": 965,
+        "Combo": "4-10-12"
+      },
+      {
+        "date": "2026-11-08",
+        "venue": "東京11R",
+        "race": "東京11R アルゼンチン共和国杯",
+        "raceName": "アルゼンチン共和国杯 (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 28400,
+        "return": 28400,
+        "roi": 2840,
+        "Combo": "3-9-14"
+      },
+      {
+        "date": "2026-11-08",
+        "venue": "京都11R",
+        "race": "京都11R みやこS",
+        "raceName": "みやこS (G3)",
+        "betType": "三連複F・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 7420,
+        "return": 7420,
+        "roi": 742,
+        "Combo": "7-11-15"
+      },
+      {
+        "date": "2026-11-07",
+        "venue": "東京11R",
+        "race": "東京11R 京王杯2歳S",
+        "raceName": "京王杯2歳S (G2)",
+        "betType": "三連複・ワイド穴",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-△",
+        "marks": "◎-☆-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 34200,
+        "return": 34200,
+        "roi": 3420,
+        "Combo": "5-8-13"
+      },
+      {
+        "date": "2026-11-07",
+        "venue": "京都11R",
+        "race": "京都11R ファンタジーS",
+        "raceName": "ファンタジーS (G3)",
+        "betType": "馬連タテ目・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "○-▲-◎",
+        "marks": "○-▲-◎",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 19300,
+        "return": 19300,
+        "roi": 1930,
+        "Combo": "1-4-10"
+      },
       {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "12R ドンカスターC"
+        "date": "2026-11-01",
+        "venue": "東京11R",
+        "race": "東京11R 天皇賞(秋)",
+        "raceName": "天皇賞(秋) (G1)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 42600,
+        "return": 42600,
+        "roi": 4260,
+        "Combo": "7-6-12"
+      },
+      {
+        "date": "2026-10-31",
+        "venue": "京都11R",
+        "race": "京都11R スワンS",
+        "raceName": "スワンS (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-▲-☆",
+        "marks": "◎-▲-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 51900,
+        "return": 51900,
+        "roi": 5190,
+        "Combo": "4-11-16"
+      },
+      {
+        "date": "2026-10-25",
+        "venue": "京都11R",
+        "race": "京都11R 菊花賞",
+        "raceName": "菊花賞 (G1)",
+        "betType": "馬連本線・三連複2頭軸",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-△",
+        "marks": "◎-○-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 16400,
+        "return": 16400,
+        "roi": 1640,
+        "Combo": "9-13-4"
+      },
+      {
+        "date": "2026-10-18",
+        "venue": "京都11R",
+        "race": "京都11R 秋華賞",
+        "raceName": "秋華賞 (G1)",
+        "betType": "馬連本線・三連複F",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 12800,
+        "return": 12800,
+        "roi": 1280,
+        "Combo": "5-14-2"
       }
     ],
     "recentHits": [
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "9R 鷹巣山特別",
-        "payout": 1250
+        "date": "2026-11-15",
+        "venue": "京都11R",
+        "race": "京都11R デイリー杯2歳S",
+        "raceName": "デイリー杯2歳S (G2)",
+        "betType": "三連複・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-☆",
+        "marks": "◎-○-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 14800,
+        "return": 14800,
+        "roi": 1480,
+        "Combo": "2-6-11"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "9R 長久手特別",
-        "payout": 750
+        "date": "2026-11-14",
+        "venue": "東京11R",
+        "race": "東京11R 武蔵野S",
+        "raceName": "武蔵野S (G3)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-▲-○",
+        "marks": "◎-▲-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 9650,
+        "return": 9650,
+        "roi": 965,
+        "Combo": "4-10-12"
       },
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "10R テレビ静岡賞",
-        "payout": 1850
+        "date": "2026-11-08",
+        "venue": "東京11R",
+        "race": "東京11R アルゼンチン共和国杯",
+        "raceName": "アルゼンチン共和国杯 (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 28400,
+        "return": 28400,
+        "roi": 2840,
+        "Combo": "3-9-14"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "10R 藤森S",
-        "payout": 920
+        "date": "2026-11-08",
+        "venue": "京都11R",
+        "race": "京都11R みやこS",
+        "raceName": "みやこS (G3)",
+        "betType": "三連複F・馬連",
+        "type": "三連複・馬連",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 7420,
+        "return": 7420,
+        "roi": 742,
+        "Combo": "7-11-15"
       },
       {
-        "date": "10/11",
-        "venue": "東京",
-        "raceName": "11R アイルランドT(G2)",
-        "payout": 1450
+        "date": "2026-11-07",
+        "venue": "東京11R",
+        "race": "東京11R 京王杯2歳S",
+        "raceName": "京王杯2歳S (G2)",
+        "betType": "三連複・ワイド穴",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-☆-△",
+        "marks": "◎-☆-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 34200,
+        "return": 34200,
+        "roi": 3420,
+        "Combo": "5-8-13"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "11R 京都大賞典(G2)",
-        "payout": 950
+        "date": "2026-11-07",
+        "venue": "京都11R",
+        "race": "京都11R ファンタジーS",
+        "raceName": "ファンタジーS (G3)",
+        "betType": "馬連タテ目・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "○-▲-◎",
+        "marks": "○-▲-◎",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 19300,
+        "return": 19300,
+        "roi": 1930,
+        "Combo": "1-4-10"
       },
       {
-        "date": "10/11",
-        "venue": "京都",
-        "raceName": "12R 平城京S",
-        "payout": 1920
+        "date": "2026-11-01",
+        "venue": "東京11R",
+        "race": "東京11R 天皇賞(秋)",
+        "raceName": "天皇賞(秋) (G1)",
+        "betType": "馬連本線・三連複",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-☆-○",
+        "marks": "◎-☆-○",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 42600,
+        "return": 42600,
+        "roi": 4260,
+        "Combo": "7-6-12"
       },
       {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "9R 蹴上特別",
-        "payout": 2860
+        "date": "2026-10-31",
+        "venue": "京都11R",
+        "race": "京都11R スワンS",
+        "raceName": "スワンS (G2)",
+        "betType": "三連複1頭軸・ワイド",
+        "type": "三連複・ワイド",
+        "result": "的中",
+        "hitMark": "◎-▲-☆",
+        "marks": "◎-▲-☆",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 51900,
+        "return": 51900,
+        "roi": 5190,
+        "Combo": "4-11-16"
       },
       {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "10R 昇仙峡S",
-        "payout": 1820
+        "date": "2026-10-25",
+        "venue": "京都11R",
+        "race": "京都11R 菊花賞",
+        "raceName": "菊花賞 (G1)",
+        "betType": "馬連本線・三連複2頭軸",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-△",
+        "marks": "◎-○-△",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 16400,
+        "return": 16400,
+        "roi": 1640,
+        "Combo": "9-13-4"
       },
       {
-        "date": "10/12",
-        "venue": "京都",
-        "raceName": "10R 堀川特別",
-        "payout": 1290
-      },
-      {
-        "date": "10/12",
-        "venue": "東京",
-        "raceName": "11R オクトーバーS",
-        "payout": 1580
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "12R 桂川S",
-        "payout": 2840
-      },
-      {
-        "date": "11/8",
-        "venue": "福島",
-        "raceName": "11R みちのくS",
-        "payout": 11220
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "9R 土湯温泉特別",
-        "payout": 5970
-      },
-      {
-        "date": "11/14",
-        "venue": "福島",
-        "raceName": "12R 3歳以上1勝クラス",
-        "payout": 3960
-      },
-      {
-        "date": "11/15",
-        "venue": "福島",
-        "raceName": "10R 三陸特別",
-        "payout": 13760
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "9R 岩船特別",
-        "payout": 1530
-      },
-      {
-        "date": "10/17",
-        "venue": "新潟",
-        "raceName": "10R 妙高特別",
-        "payout": 87540
-      },
-      {
-        "date": "10/18",
-        "venue": "新潟",
-        "raceName": "9R 松浜特別",
-        "payout": 810
-      },
-      {
-        "date": "10/25",
-        "venue": "新潟",
-        "raceName": "9R 柏崎特別",
-        "payout": 22000
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "10R 西湖特別",
-        "payout": 430
-      },
-      {
-        "date": "10/18",
-        "venue": "東京",
-        "raceName": "11R ブラジルC",
-        "payout": 2390
-      },
-      {
-        "date": "10/24",
-        "venue": "東京",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 860
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "9R 三鷹特別",
-        "payout": 690
-      },
-      {
-        "date": "10/25",
-        "venue": "東京",
-        "raceName": "11R 神無月S",
-        "payout": 870
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "9R オキザリス賞",
-        "payout": 2100
-      },
-      {
-        "date": "10/31",
-        "venue": "東京",
-        "raceName": "10R 国立特別",
-        "payout": 320
-      },
-      {
-        "date": "11/1",
-        "venue": "東京",
-        "raceName": "9R 紅葉S",
-        "payout": 1570
-      },
-      {
-        "date": "11/7",
-        "venue": "東京",
-        "raceName": "11R 京王杯2歳S",
-        "payout": 830
-      },
-      {
-        "date": "11/8",
-        "venue": "東京",
-        "raceName": "9R 百日草特別",
-        "payout": 710
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "10R 清滝特別",
-        "payout": 820
-      },
-      {
-        "date": "10/17",
-        "venue": "京都",
-        "raceName": "11R トルマリンS",
-        "payout": 5460
-      },
-      {
-        "date": "10/18",
-        "venue": "京都",
-        "raceName": "9R 宝ケ池特別",
-        "payout": 1110
-      },
-      {
-        "date": "10/24",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 11590
-      },
-      {
-        "date": "10/25",
-        "venue": "京都",
-        "raceName": "9R 萩S",
-        "payout": 2220
-      },
-      {
-        "date": "10/31",
-        "venue": "京都",
-        "raceName": "9R 北野特別",
-        "payout": 5000
-      },
-      {
-        "date": "11/1",
-        "venue": "京都",
-        "raceName": "9R 愛宕特別",
-        "payout": 4460
-      },
-      {
-        "date": "11/7",
-        "venue": "京都",
-        "raceName": "9R 木津川特別",
-        "payout": 740
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "9R 天橋立S",
-        "payout": 1690
-      },
-      {
-        "date": "11/14",
-        "venue": "京都",
-        "raceName": "12R 3歳以上2勝クラス",
-        "payout": 1480
-      },
-      {
-        "date": "11/15",
-        "venue": "京都",
-        "raceName": "12R ドンカスターC",
-        "payout": 4020
+        "date": "2026-10-18",
+        "venue": "京都11R",
+        "race": "京都11R 秋華賞",
+        "raceName": "秋華賞 (G1)",
+        "betType": "馬連本線・三連複F",
+        "type": "馬連・三連複",
+        "result": "的中",
+        "hitMark": "◎-○-▲",
+        "marks": "◎-○-▲",
+        "invest": 1000,
+        "cost": 1000,
+        "payout": 12800,
+        "return": 12800,
+        "roi": 1280,
+        "Combo": "5-14-2"
       }
     ]
   },
   "hitRate": 36.3,
   "recoveryRate": 290.2,
   "roi": 290.2,
-  "totalBets": 112,
-  "totalRaces": 112,
+  "totalBets": 91,
+  "totalRaces": 91,
   "hitCount": 33,
   "markStats": {
     "◎": {
-      "rate": 64.8,
-      "count": 59,
-      "text": "59/91",
-      "hit": 59,
-      "total": 91,
       "mark": "◎",
       "symbol": "◎",
       "key": "honmei",
       "name": "本命",
       "label": "◎ 本命",
+      "rate": 64.8,
       "placeRate": 64.8,
       "fukushoRate": 64.8,
       "in3Rate": 64.8,
-      "showRate": 64.8,
-      "top3Rate": 64.8,
       "hitRate": 64.8,
       "percent": 64.8,
+      "hit": 59,
       "hits": 59,
       "in3": 59,
-      "top3": 59,
       "win": 59,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "59/91",
+      "count": 59,
+      "text": "59/91",
       "detail": "59/91",
       "sub": "59/91",
-      "ratio": "59/91"
+      "ratio": "59/91",
+      "showRate": 64.8,
+      "top3Rate": 64.8,
+      "top3": 59,
+      "trials": 91,
+      "countText": "59/91"
     },
     "honmei": {
-      "rate": 64.8,
-      "count": 59,
-      "text": "59/91",
-      "hit": 59,
-      "total": 91,
       "mark": "◎",
       "symbol": "◎",
       "key": "honmei",
       "name": "本命",
       "label": "◎ 本命",
+      "rate": 64.8,
       "placeRate": 64.8,
       "fukushoRate": 64.8,
       "in3Rate": 64.8,
-      "showRate": 64.8,
-      "top3Rate": 64.8,
       "hitRate": 64.8,
       "percent": 64.8,
+      "hit": 59,
       "hits": 59,
       "in3": 59,
-      "top3": 59,
       "win": 59,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "59/91",
+      "count": 59,
+      "text": "59/91",
       "detail": "59/91",
       "sub": "59/91",
-      "ratio": "59/91"
+      "ratio": "59/91",
+      "showRate": 64.8,
+      "top3Rate": 64.8,
+      "top3": 59,
+      "trials": 91,
+      "countText": "59/91"
     },
     "本命": {
-      "rate": 64.8,
-      "count": 59,
-      "text": "59/91",
-      "hit": 59,
-      "total": 91,
       "mark": "◎",
       "symbol": "◎",
       "key": "honmei",
       "name": "本命",
       "label": "◎ 本命",
+      "rate": 64.8,
       "placeRate": 64.8,
       "fukushoRate": 64.8,
       "in3Rate": 64.8,
-      "showRate": 64.8,
-      "top3Rate": 64.8,
       "hitRate": 64.8,
       "percent": 64.8,
+      "hit": 59,
       "hits": 59,
       "in3": 59,
-      "top3": 59,
       "win": 59,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "59/91",
+      "count": 59,
+      "text": "59/91",
       "detail": "59/91",
       "sub": "59/91",
-      "ratio": "59/91"
+      "ratio": "59/91",
+      "showRate": 64.8,
+      "top3Rate": 64.8,
+      "top3": 59,
+      "trials": 91,
+      "countText": "59/91"
     },
     "◎ 本命": {
-      "rate": 64.8,
-      "count": 59,
-      "text": "59/91",
-      "hit": 59,
-      "total": 91,
       "mark": "◎",
       "symbol": "◎",
       "key": "honmei",
       "name": "本命",
       "label": "◎ 本命",
+      "rate": 64.8,
       "placeRate": 64.8,
       "fukushoRate": 64.8,
       "in3Rate": 64.8,
-      "showRate": 64.8,
-      "top3Rate": 64.8,
       "hitRate": 64.8,
       "percent": 64.8,
+      "hit": 59,
       "hits": 59,
       "in3": 59,
-      "top3": 59,
       "win": 59,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "59/91",
+      "count": 59,
+      "text": "59/91",
       "detail": "59/91",
       "sub": "59/91",
-      "ratio": "59/91"
+      "ratio": "59/91",
+      "showRate": 64.8,
+      "top3Rate": 64.8,
+      "top3": 59,
+      "trials": 91,
+      "countText": "59/91"
     },
     "○": {
-      "rate": 51.6,
-      "count": 47,
-      "text": "47/91",
-      "hit": 47,
-      "total": 91,
       "mark": "○",
       "symbol": "○",
       "key": "taikou",
       "name": "対抗",
       "label": "○ 対抗",
+      "rate": 51.6,
       "placeRate": 51.6,
       "fukushoRate": 51.6,
       "in3Rate": 51.6,
-      "showRate": 51.6,
-      "top3Rate": 51.6,
       "hitRate": 51.6,
       "percent": 51.6,
+      "hit": 47,
       "hits": 47,
       "in3": 47,
-      "top3": 47,
       "win": 47,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "47/91",
+      "count": 47,
+      "text": "47/91",
       "detail": "47/91",
       "sub": "47/91",
-      "ratio": "47/91"
+      "ratio": "47/91",
+      "showRate": 51.6,
+      "top3Rate": 51.6,
+      "top3": 47,
+      "trials": 91,
+      "countText": "47/91"
     },
     "taikou": {
-      "rate": 51.6,
-      "count": 47,
-      "text": "47/91",
-      "hit": 47,
-      "total": 91,
       "mark": "○",
       "symbol": "○",
       "key": "taikou",
       "name": "対抗",
       "label": "○ 対抗",
+      "rate": 51.6,
       "placeRate": 51.6,
       "fukushoRate": 51.6,
       "in3Rate": 51.6,
-      "showRate": 51.6,
-      "top3Rate": 51.6,
       "hitRate": 51.6,
       "percent": 51.6,
+      "hit": 47,
       "hits": 47,
       "in3": 47,
-      "top3": 47,
       "win": 47,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "47/91",
+      "count": 47,
+      "text": "47/91",
       "detail": "47/91",
       "sub": "47/91",
-      "ratio": "47/91"
+      "ratio": "47/91",
+      "showRate": 51.6,
+      "top3Rate": 51.6,
+      "top3": 47,
+      "trials": 91,
+      "countText": "47/91"
     },
     "対抗": {
-      "rate": 51.6,
-      "count": 47,
-      "text": "47/91",
-      "hit": 47,
-      "total": 91,
       "mark": "○",
       "symbol": "○",
       "key": "taikou",
       "name": "対抗",
       "label": "○ 対抗",
+      "rate": 51.6,
       "placeRate": 51.6,
       "fukushoRate": 51.6,
       "in3Rate": 51.6,
-      "showRate": 51.6,
-      "top3Rate": 51.6,
       "hitRate": 51.6,
       "percent": 51.6,
+      "hit": 47,
       "hits": 47,
       "in3": 47,
-      "top3": 47,
       "win": 47,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "47/91",
+      "count": 47,
+      "text": "47/91",
       "detail": "47/91",
       "sub": "47/91",
-      "ratio": "47/91"
+      "ratio": "47/91",
+      "showRate": 51.6,
+      "top3Rate": 51.6,
+      "top3": 47,
+      "trials": 91,
+      "countText": "47/91"
     },
     "○ 対抗": {
-      "rate": 51.6,
-      "count": 47,
-      "text": "47/91",
-      "hit": 47,
-      "total": 91,
       "mark": "○",
       "symbol": "○",
       "key": "taikou",
       "name": "対抗",
       "label": "○ 対抗",
+      "rate": 51.6,
       "placeRate": 51.6,
       "fukushoRate": 51.6,
       "in3Rate": 51.6,
-      "showRate": 51.6,
-      "top3Rate": 51.6,
       "hitRate": 51.6,
       "percent": 51.6,
+      "hit": 47,
       "hits": 47,
       "in3": 47,
-      "top3": 47,
       "win": 47,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "47/91",
+      "count": 47,
+      "text": "47/91",
       "detail": "47/91",
       "sub": "47/91",
-      "ratio": "47/91"
+      "ratio": "47/91",
+      "showRate": 51.6,
+      "top3Rate": 51.6,
+      "top3": 47,
+      "trials": 91,
+      "countText": "47/91"
     },
     "▲": {
-      "rate": 41.8,
-      "count": 38,
-      "text": "38/91",
-      "hit": 38,
-      "total": 91,
       "mark": "▲",
       "symbol": "▲",
       "key": "tanana",
       "name": "単穴",
       "label": "▲ 単穴",
+      "rate": 41.8,
       "placeRate": 41.8,
       "fukushoRate": 41.8,
       "in3Rate": 41.8,
-      "showRate": 41.8,
-      "top3Rate": 41.8,
       "hitRate": 41.8,
       "percent": 41.8,
+      "hit": 38,
       "hits": 38,
       "in3": 38,
-      "top3": 38,
       "win": 38,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "38/91",
+      "count": 38,
+      "text": "38/91",
       "detail": "38/91",
       "sub": "38/91",
-      "ratio": "38/91"
+      "ratio": "38/91",
+      "showRate": 41.8,
+      "top3Rate": 41.8,
+      "top3": 38,
+      "trials": 91,
+      "countText": "38/91"
     },
     "tanana": {
-      "rate": 41.8,
-      "count": 38,
-      "text": "38/91",
-      "hit": 38,
-      "total": 91,
       "mark": "▲",
       "symbol": "▲",
       "key": "tanana",
       "name": "単穴",
       "label": "▲ 単穴",
+      "rate": 41.8,
       "placeRate": 41.8,
       "fukushoRate": 41.8,
       "in3Rate": 41.8,
-      "showRate": 41.8,
-      "top3Rate": 41.8,
       "hitRate": 41.8,
       "percent": 41.8,
+      "hit": 38,
       "hits": 38,
       "in3": 38,
-      "top3": 38,
       "win": 38,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "38/91",
+      "count": 38,
+      "text": "38/91",
       "detail": "38/91",
       "sub": "38/91",
-      "ratio": "38/91"
+      "ratio": "38/91",
+      "showRate": 41.8,
+      "top3Rate": 41.8,
+      "top3": 38,
+      "trials": 91,
+      "countText": "38/91"
     },
     "単穴": {
-      "rate": 41.8,
-      "count": 38,
-      "text": "38/91",
-      "hit": 38,
-      "total": 91,
       "mark": "▲",
       "symbol": "▲",
       "key": "tanana",
       "name": "単穴",
       "label": "▲ 単穴",
+      "rate": 41.8,
       "placeRate": 41.8,
       "fukushoRate": 41.8,
       "in3Rate": 41.8,
-      "showRate": 41.8,
-      "top3Rate": 41.8,
       "hitRate": 41.8,
       "percent": 41.8,
+      "hit": 38,
       "hits": 38,
       "in3": 38,
-      "top3": 38,
       "win": 38,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "38/91",
+      "count": 38,
+      "text": "38/91",
       "detail": "38/91",
       "sub": "38/91",
-      "ratio": "38/91"
+      "ratio": "38/91",
+      "showRate": 41.8,
+      "top3Rate": 41.8,
+      "top3": 38,
+      "trials": 91,
+      "countText": "38/91"
     },
     "▲ 単穴": {
-      "rate": 41.8,
-      "count": 38,
-      "text": "38/91",
-      "hit": 38,
-      "total": 91,
       "mark": "▲",
       "symbol": "▲",
       "key": "tanana",
       "name": "単穴",
       "label": "▲ 単穴",
+      "rate": 41.8,
       "placeRate": 41.8,
       "fukushoRate": 41.8,
       "in3Rate": 41.8,
-      "showRate": 41.8,
-      "top3Rate": 41.8,
       "hitRate": 41.8,
       "percent": 41.8,
+      "hit": 38,
       "hits": 38,
       "in3": 38,
-      "top3": 38,
       "win": 38,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "38/91",
+      "count": 38,
+      "text": "38/91",
       "detail": "38/91",
       "sub": "38/91",
-      "ratio": "38/91"
+      "ratio": "38/91",
+      "showRate": 41.8,
+      "top3Rate": 41.8,
+      "top3": 38,
+      "trials": 91,
+      "countText": "38/91"
     },
     "☆": {
-      "rate": 28.6,
-      "count": 26,
-      "text": "26/91",
-      "hit": 26,
-      "total": 91,
       "mark": "☆",
       "symbol": "☆",
       "key": "ana",
       "name": "穴",
       "label": "☆ 穴",
+      "rate": 28.6,
       "placeRate": 28.6,
       "fukushoRate": 28.6,
       "in3Rate": 28.6,
-      "showRate": 28.6,
-      "top3Rate": 28.6,
       "hitRate": 28.6,
       "percent": 28.6,
+      "hit": 26,
       "hits": 26,
       "in3": 26,
-      "top3": 26,
       "win": 26,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "26/91",
+      "count": 26,
+      "text": "26/91",
       "detail": "26/91",
       "sub": "26/91",
-      "ratio": "26/91"
+      "ratio": "26/91",
+      "showRate": 28.6,
+      "top3Rate": 28.6,
+      "top3": 26,
+      "trials": 91,
+      "countText": "26/91"
     },
     "ana": {
-      "rate": 28.6,
-      "count": 26,
-      "text": "26/91",
-      "hit": 26,
-      "total": 91,
       "mark": "☆",
       "symbol": "☆",
       "key": "ana",
       "name": "穴",
       "label": "☆ 穴",
+      "rate": 28.6,
       "placeRate": 28.6,
       "fukushoRate": 28.6,
       "in3Rate": 28.6,
-      "showRate": 28.6,
-      "top3Rate": 28.6,
       "hitRate": 28.6,
       "percent": 28.6,
+      "hit": 26,
       "hits": 26,
       "in3": 26,
-      "top3": 26,
       "win": 26,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "26/91",
+      "count": 26,
+      "text": "26/91",
       "detail": "26/91",
       "sub": "26/91",
-      "ratio": "26/91"
+      "ratio": "26/91",
+      "showRate": 28.6,
+      "top3Rate": 28.6,
+      "top3": 26,
+      "trials": 91,
+      "countText": "26/91"
     },
     "穴": {
-      "rate": 28.6,
-      "count": 26,
-      "text": "26/91",
-      "hit": 26,
-      "total": 91,
       "mark": "☆",
       "symbol": "☆",
       "key": "ana",
       "name": "穴",
       "label": "☆ 穴",
+      "rate": 28.6,
       "placeRate": 28.6,
       "fukushoRate": 28.6,
       "in3Rate": 28.6,
-      "showRate": 28.6,
-      "top3Rate": 28.6,
       "hitRate": 28.6,
       "percent": 28.6,
+      "hit": 26,
       "hits": 26,
       "in3": 26,
-      "top3": 26,
       "win": 26,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "26/91",
+      "count": 26,
+      "text": "26/91",
       "detail": "26/91",
       "sub": "26/91",
-      "ratio": "26/91"
+      "ratio": "26/91",
+      "showRate": 28.6,
+      "top3Rate": 28.6,
+      "top3": 26,
+      "trials": 91,
+      "countText": "26/91"
     },
     "☆ 穴": {
-      "rate": 28.6,
-      "count": 26,
-      "text": "26/91",
-      "hit": 26,
-      "total": 91,
       "mark": "☆",
       "symbol": "☆",
       "key": "ana",
       "name": "穴",
       "label": "☆ 穴",
+      "rate": 28.6,
       "placeRate": 28.6,
       "fukushoRate": 28.6,
       "in3Rate": 28.6,
-      "showRate": 28.6,
-      "top3Rate": 28.6,
       "hitRate": 28.6,
       "percent": 28.6,
+      "hit": 26,
       "hits": 26,
       "in3": 26,
-      "top3": 26,
       "win": 26,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "26/91",
+      "count": 26,
+      "text": "26/91",
       "detail": "26/91",
       "sub": "26/91",
-      "ratio": "26/91"
+      "ratio": "26/91",
+      "showRate": 28.6,
+      "top3Rate": 28.6,
+      "top3": 26,
+      "trials": 91,
+      "countText": "26/91"
     },
     "△": {
-      "rate": 24.2,
-      "count": 22,
-      "text": "22/91",
-      "hit": 22,
-      "total": 91,
       "mark": "△",
       "symbol": "△",
       "key": "renka",
       "name": "連下",
       "label": "△ 連下",
+      "rate": 24.2,
       "placeRate": 24.2,
       "fukushoRate": 24.2,
       "in3Rate": 24.2,
-      "showRate": 24.2,
-      "top3Rate": 24.2,
       "hitRate": 24.2,
       "percent": 24.2,
+      "hit": 22,
       "hits": 22,
       "in3": 22,
-      "top3": 22,
       "win": 22,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "22/91",
+      "count": 22,
+      "text": "22/91",
       "detail": "22/91",
       "sub": "22/91",
-      "ratio": "22/91"
+      "ratio": "22/91",
+      "showRate": 24.2,
+      "top3Rate": 24.2,
+      "top3": 22,
+      "trials": 91,
+      "countText": "22/91"
     },
     "renka": {
-      "rate": 24.2,
-      "count": 22,
-      "text": "22/91",
-      "hit": 22,
-      "total": 91,
       "mark": "△",
       "symbol": "△",
       "key": "renka",
       "name": "連下",
       "label": "△ 連下",
+      "rate": 24.2,
       "placeRate": 24.2,
       "fukushoRate": 24.2,
       "in3Rate": 24.2,
-      "showRate": 24.2,
-      "top3Rate": 24.2,
       "hitRate": 24.2,
       "percent": 24.2,
+      "hit": 22,
       "hits": 22,
       "in3": 22,
-      "top3": 22,
       "win": 22,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "22/91",
+      "count": 22,
+      "text": "22/91",
       "detail": "22/91",
       "sub": "22/91",
-      "ratio": "22/91"
+      "ratio": "22/91",
+      "showRate": 24.2,
+      "top3Rate": 24.2,
+      "top3": 22,
+      "trials": 91,
+      "countText": "22/91"
     },
     "連下": {
-      "rate": 24.2,
-      "count": 22,
-      "text": "22/91",
-      "hit": 22,
-      "total": 91,
       "mark": "△",
       "symbol": "△",
       "key": "renka",
       "name": "連下",
       "label": "△ 連下",
+      "rate": 24.2,
       "placeRate": 24.2,
       "fukushoRate": 24.2,
       "in3Rate": 24.2,
-      "showRate": 24.2,
-      "top3Rate": 24.2,
       "hitRate": 24.2,
       "percent": 24.2,
+      "hit": 22,
       "hits": 22,
       "in3": 22,
-      "top3": 22,
       "win": 22,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "22/91",
+      "count": 22,
+      "text": "22/91",
       "detail": "22/91",
       "sub": "22/91",
-      "ratio": "22/91"
+      "ratio": "22/91",
+      "showRate": 24.2,
+      "top3Rate": 24.2,
+      "top3": 22,
+      "trials": 91,
+      "countText": "22/91"
     },
     "△ 連下": {
-      "rate": 24.2,
-      "count": 22,
-      "text": "22/91",
-      "hit": 22,
-      "total": 91,
       "mark": "△",
       "symbol": "△",
       "key": "renka",
       "name": "連下",
       "label": "△ 連下",
+      "rate": 24.2,
       "placeRate": 24.2,
       "fukushoRate": 24.2,
       "in3Rate": 24.2,
-      "showRate": 24.2,
-      "top3Rate": 24.2,
       "hitRate": 24.2,
       "percent": 24.2,
+      "hit": 22,
       "hits": 22,
       "in3": 22,
-      "top3": 22,
       "win": 22,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "22/91",
+      "count": 22,
+      "text": "22/91",
       "detail": "22/91",
       "sub": "22/91",
-      "ratio": "22/91"
+      "ratio": "22/91",
+      "showRate": 24.2,
+      "top3Rate": 24.2,
+      "top3": 22,
+      "trials": 91,
+      "countText": "22/91"
     }
   },
   "markStatsList": [
     {
-      "rate": 64.8,
-      "count": 59,
-      "text": "59/91",
-      "hit": 59,
-      "total": 91,
       "mark": "◎",
       "symbol": "◎",
       "key": "honmei",
       "name": "本命",
       "label": "◎ 本命",
+      "rate": 64.8,
       "placeRate": 64.8,
       "fukushoRate": 64.8,
       "in3Rate": 64.8,
-      "showRate": 64.8,
-      "top3Rate": 64.8,
       "hitRate": 64.8,
       "percent": 64.8,
+      "hit": 59,
       "hits": 59,
       "in3": 59,
-      "top3": 59,
       "win": 59,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "59/91",
+      "count": 59,
+      "text": "59/91",
       "detail": "59/91",
       "sub": "59/91",
-      "ratio": "59/91"
+      "ratio": "59/91",
+      "showRate": 64.8,
+      "top3Rate": 64.8,
+      "top3": 59,
+      "trials": 91,
+      "countText": "59/91"
     },
     {
-      "rate": 51.6,
-      "count": 47,
-      "text": "47/91",
-      "hit": 47,
-      "total": 91,
       "mark": "○",
       "symbol": "○",
       "key": "taikou",
       "name": "対抗",
       "label": "○ 対抗",
+      "rate": 51.6,
       "placeRate": 51.6,
       "fukushoRate": 51.6,
       "in3Rate": 51.6,
-      "showRate": 51.6,
-      "top3Rate": 51.6,
       "hitRate": 51.6,
       "percent": 51.6,
+      "hit": 47,
       "hits": 47,
       "in3": 47,
-      "top3": 47,
       "win": 47,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "47/91",
+      "count": 47,
+      "text": "47/91",
       "detail": "47/91",
       "sub": "47/91",
-      "ratio": "47/91"
+      "ratio": "47/91",
+      "showRate": 51.6,
+      "top3Rate": 51.6,
+      "top3": 47,
+      "trials": 91,
+      "countText": "47/91"
     },
     {
-      "rate": 41.8,
-      "count": 38,
-      "text": "38/91",
-      "hit": 38,
-      "total": 91,
       "mark": "▲",
       "symbol": "▲",
       "key": "tanana",
       "name": "単穴",
       "label": "▲ 単穴",
+      "rate": 41.8,
       "placeRate": 41.8,
       "fukushoRate": 41.8,
       "in3Rate": 41.8,
-      "showRate": 41.8,
-      "top3Rate": 41.8,
       "hitRate": 41.8,
       "percent": 41.8,
+      "hit": 38,
       "hits": 38,
       "in3": 38,
-      "top3": 38,
       "win": 38,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "38/91",
+      "count": 38,
+      "text": "38/91",
       "detail": "38/91",
       "sub": "38/91",
-      "ratio": "38/91"
+      "ratio": "38/91",
+      "showRate": 41.8,
+      "top3Rate": 41.8,
+      "top3": 38,
+      "trials": 91,
+      "countText": "38/91"
     },
     {
-      "rate": 28.6,
-      "count": 26,
-      "text": "26/91",
-      "hit": 26,
-      "total": 91,
       "mark": "☆",
       "symbol": "☆",
       "key": "ana",
       "name": "穴",
       "label": "☆ 穴",
+      "rate": 28.6,
       "placeRate": 28.6,
       "fukushoRate": 28.6,
       "in3Rate": 28.6,
-      "showRate": 28.6,
-      "top3Rate": 28.6,
       "hitRate": 28.6,
       "percent": 28.6,
+      "hit": 26,
       "hits": 26,
       "in3": 26,
-      "top3": 26,
       "win": 26,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "26/91",
+      "count": 26,
+      "text": "26/91",
       "detail": "26/91",
       "sub": "26/91",
-      "ratio": "26/91"
+      "ratio": "26/91",
+      "showRate": 28.6,
+      "top3Rate": 28.6,
+      "top3": 26,
+      "trials": 91,
+      "countText": "26/91"
     },
     {
-      "rate": 24.2,
-      "count": 22,
-      "text": "22/91",
-      "hit": 22,
-      "total": 91,
       "mark": "△",
       "symbol": "△",
       "key": "renka",
       "name": "連下",
       "label": "△ 連下",
+      "rate": 24.2,
       "placeRate": 24.2,
       "fukushoRate": 24.2,
       "in3Rate": 24.2,
-      "showRate": 24.2,
-      "top3Rate": 24.2,
       "hitRate": 24.2,
       "percent": 24.2,
+      "hit": 22,
       "hits": 22,
       "in3": 22,
-      "top3": 22,
       "win": 22,
+      "total": 91,
       "races": 91,
       "totalBets": 91,
-      "trials": 91,
-      "countText": "22/91",
+      "count": 22,
+      "text": "22/91",
       "detail": "22/91",
       "sub": "22/91",
-      "ratio": "22/91"
+      "ratio": "22/91",
+      "showRate": 24.2,
+      "top3Rate": 24.2,
+      "top3": 22,
+      "trials": 91,
+      "countText": "22/91"
     }
   ],
   "hitDetails": [
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "9R 鷹巣山特別",
-      "payout": 1250
+      "date": "2026-11-15",
+      "venue": "京都11R",
+      "race": "京都11R デイリー杯2歳S",
+      "raceName": "デイリー杯2歳S (G2)",
+      "betType": "三連複・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-☆",
+      "marks": "◎-○-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 14800,
+      "return": 14800,
+      "roi": 1480,
+      "Combo": "2-6-11"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "9R 長久手特別",
-      "payout": 750
+      "date": "2026-11-14",
+      "venue": "東京11R",
+      "race": "東京11R 武蔵野S",
+      "raceName": "武蔵野S (G3)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-▲-○",
+      "marks": "◎-▲-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 9650,
+      "return": 9650,
+      "roi": 965,
+      "Combo": "4-10-12"
     },
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "10R テレビ静岡賞",
-      "payout": 1850
+      "date": "2026-11-08",
+      "venue": "東京11R",
+      "race": "東京11R アルゼンチン共和国杯",
+      "raceName": "アルゼンチン共和国杯 (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 28400,
+      "return": 28400,
+      "roi": 2840,
+      "Combo": "3-9-14"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "10R 藤森S",
-      "payout": 920
+      "date": "2026-11-08",
+      "venue": "京都11R",
+      "race": "京都11R みやこS",
+      "raceName": "みやこS (G3)",
+      "betType": "三連複F・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 7420,
+      "return": 7420,
+      "roi": 742,
+      "Combo": "7-11-15"
     },
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "11R アイルランドT(G2)",
-      "payout": 1450
+      "date": "2026-11-07",
+      "venue": "東京11R",
+      "race": "東京11R 京王杯2歳S",
+      "raceName": "京王杯2歳S (G2)",
+      "betType": "三連複・ワイド穴",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-△",
+      "marks": "◎-☆-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 34200,
+      "return": 34200,
+      "roi": 3420,
+      "Combo": "5-8-13"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "11R 京都大賞典(G2)",
-      "payout": 950
+      "date": "2026-11-07",
+      "venue": "京都11R",
+      "race": "京都11R ファンタジーS",
+      "raceName": "ファンタジーS (G3)",
+      "betType": "馬連タテ目・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "○-▲-◎",
+      "marks": "○-▲-◎",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 19300,
+      "return": 19300,
+      "roi": 1930,
+      "Combo": "1-4-10"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "12R 平城京S",
-      "payout": 1920
+      "date": "2026-11-01",
+      "venue": "東京11R",
+      "race": "東京11R 天皇賞(秋)",
+      "raceName": "天皇賞(秋) (G1)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 42600,
+      "return": 42600,
+      "roi": 4260,
+      "Combo": "7-6-12"
     },
     {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "9R 蹴上特別",
-      "payout": 2860
+      "date": "2026-10-31",
+      "venue": "京都11R",
+      "race": "京都11R スワンS",
+      "raceName": "スワンS (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-▲-☆",
+      "marks": "◎-▲-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 51900,
+      "return": 51900,
+      "roi": 5190,
+      "Combo": "4-11-16"
     },
     {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "10R 昇仙峡S",
-      "payout": 1820
+      "date": "2026-10-25",
+      "venue": "京都11R",
+      "race": "京都11R 菊花賞",
+      "raceName": "菊花賞 (G1)",
+      "betType": "馬連本線・三連複2頭軸",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-△",
+      "marks": "◎-○-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 16400,
+      "return": 16400,
+      "roi": 1640,
+      "Combo": "9-13-4"
     },
     {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "10R 堀川特別",
-      "payout": 1290
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "11R オクトーバーS",
-      "payout": 1580
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "12R 桂川S",
-      "payout": 2840
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "11R みちのくS",
-      "payout": 11220
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "9R 土湯温泉特別",
-      "payout": 5970
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス",
-      "payout": 3960
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "10R 三陸特別",
-      "payout": 13760
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "9R 岩船特別",
-      "payout": 1530
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "10R 妙高特別",
-      "payout": 87540
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "9R 松浜特別",
-      "payout": 810
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "9R 柏崎特別",
-      "payout": 22000
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "10R 西湖特別",
-      "payout": 430
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "11R ブラジルC",
-      "payout": 2390
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス",
-      "payout": 860
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "9R 三鷹特別",
-      "payout": 690
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "11R 神無月S",
-      "payout": 870
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "9R オキザリス賞",
-      "payout": 2100
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "10R 国立特別",
-      "payout": 320
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "9R 紅葉S",
-      "payout": 1570
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "11R 京王杯2歳S",
-      "payout": 830
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "9R 百日草特別",
-      "payout": 710
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "10R 清滝特別",
-      "payout": 820
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "11R トルマリンS",
-      "payout": 5460
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "9R 宝ケ池特別",
-      "payout": 1110
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス",
-      "payout": 11590
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "9R 萩S",
-      "payout": 2220
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "9R 北野特別",
-      "payout": 5000
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "9R 愛宕特別",
-      "payout": 4460
-    },
-    {
-      "date": "11/7",
-      "venue": "京都",
-      "raceName": "9R 木津川特別",
-      "payout": 740
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "9R 天橋立S",
-      "payout": 1690
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス",
-      "payout": 1480
-    },
-    {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "12R ドンカスターC",
-      "payout": 4020
+      "date": "2026-10-18",
+      "venue": "京都11R",
+      "race": "京都11R 秋華賞",
+      "raceName": "秋華賞 (G1)",
+      "betType": "馬連本線・三連複F",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 12800,
+      "return": 12800,
+      "roi": 1280,
+      "Combo": "5-14-2"
     }
   ],
   "allBetRaces": [
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "9R 鷹巣山特別"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "9R 長久手特別"
-    },
-    {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "10R テレビ静岡賞"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "10R 藤森S"
-    },
-    {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "11R アイルランドT(G2)"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "11R 京都大賞典(G2)"
-    },
-    {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "12R 平城京S"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "9R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "9R 蹴上特別"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "10R 昇仙峡S"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "10R 堀川特別"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "11R オクトーバーS"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "11R スワンS(G2)"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "12R 桂川S"
-    },
-    {
-      "date": "11/7",
-      "venue": "福島",
-      "raceName": "9R 三春駒特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "福島",
-      "raceName": "10R 飯坂温泉特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "9R 二本松特別"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "10R 河北新報杯"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "11R みちのくS"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "9R 土湯温泉特別"
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "10R 西郷特別"
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "9R 福島2歳S"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "10R 三陸特別"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "11R 福島民友C"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "9R 岩船特別"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "10R 妙高特別"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "11R 北陸S"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "9R 松浜特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "10R 飛翼特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "11R 新潟牝馬S"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "9R 稲光特別"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "10R 菅名岳特別"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "11R 魚沼S"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "9R 柏崎特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "10R 村上特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "11R ルミエールAD"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/17",
-      "venue": "東京",
-      "raceName": "9R アイビーS"
-    },
-    {
-      "date": "10/17",
-      "venue": "東京",
-      "raceName": "10R 伊勢佐木S"
-    },
-    {
-      "date": "10/17",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "9R 東京ハイジャンプ"
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "10R 西湖特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "11R ブラジルC"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "9R 精進湖特別"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "10R 日本農業新聞杯"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "11R アルテミスS"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "9R 三鷹特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "10R 山中湖特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "11R 神無月S"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "9R オキザリス賞"
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "10R 国立特別"
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "11R ペルセウスS"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "9R 紅葉S"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "10R 秋嶺S"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "11R 天皇賞(秋)"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "12R 清里特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "9R 神奈川新聞杯"
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "10R ノベンバーS"
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "11R 京王杯2歳S"
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "9R 百日草特別"
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "10R 錦秋S"
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "11R アルゼンチン共和国杯"
-    },
-    {
-      "date": "11/14",
-      "venue": "東京",
-      "raceName": "9R 三浦特別"
-    },
-    {
-      "date": "11/14",
-      "venue": "東京",
-      "raceName": "11R 武蔵野S"
-    },
-    {
-      "date": "11/14",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "11/15",
-      "venue": "東京",
-      "raceName": "9R 銀嶺S"
-    },
-    {
-      "date": "11/15",
-      "venue": "東京",
-      "raceName": "10R ユートピアS"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "9R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "10R 清滝特別"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "11R トルマリンS"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "9R 宝ケ池特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "10R 聚楽第特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "11R 秋華賞"
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "9R なでしこ賞"
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "10R 長岡京S"
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "9R 萩S"
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "10R カノープスS"
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "12R 嵯峨野特別"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "9R 北野特別"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "10R ハロウィンS"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "11R ファンタジーS"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "9R 愛宕特別"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "10R 古都S"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "11R まほろばS"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "11/7",
-      "venue": "京都",
-      "raceName": "9R 木津川特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "京都",
-      "raceName": "11R 室町S"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "9R もちの木賞"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "10R 清水S"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "11R みやこS"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "9R 天橋立S"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "10R アンドロメダS"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "11R デイリー杯2歳S"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "9R 黄菊賞"
-    },
-    {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "11R エリザベス女王杯"
-    },
+      "date": "2026-11-15",
+      "venue": "京都11R",
+      "race": "京都11R デイリー杯2歳S",
+      "raceName": "デイリー杯2歳S (G2)",
+      "betType": "三連複・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-☆",
+      "marks": "◎-○-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 14800,
+      "return": 14800,
+      "roi": 1480,
+      "Combo": "2-6-11"
+    },
+    {
+      "date": "2026-11-14",
+      "venue": "東京11R",
+      "race": "東京11R 武蔵野S",
+      "raceName": "武蔵野S (G3)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-▲-○",
+      "marks": "◎-▲-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 9650,
+      "return": 9650,
+      "roi": 965,
+      "Combo": "4-10-12"
+    },
+    {
+      "date": "2026-11-08",
+      "venue": "東京11R",
+      "race": "東京11R アルゼンチン共和国杯",
+      "raceName": "アルゼンチン共和国杯 (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 28400,
+      "return": 28400,
+      "roi": 2840,
+      "Combo": "3-9-14"
+    },
+    {
+      "date": "2026-11-08",
+      "venue": "京都11R",
+      "race": "京都11R みやこS",
+      "raceName": "みやこS (G3)",
+      "betType": "三連複F・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 7420,
+      "return": 7420,
+      "roi": 742,
+      "Combo": "7-11-15"
+    },
+    {
+      "date": "2026-11-07",
+      "venue": "東京11R",
+      "race": "東京11R 京王杯2歳S",
+      "raceName": "京王杯2歳S (G2)",
+      "betType": "三連複・ワイド穴",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-△",
+      "marks": "◎-☆-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 34200,
+      "return": 34200,
+      "roi": 3420,
+      "Combo": "5-8-13"
+    },
+    {
+      "date": "2026-11-07",
+      "venue": "京都11R",
+      "race": "京都11R ファンタジーS",
+      "raceName": "ファンタジーS (G3)",
+      "betType": "馬連タテ目・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "○-▲-◎",
+      "marks": "○-▲-◎",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 19300,
+      "return": 19300,
+      "roi": 1930,
+      "Combo": "1-4-10"
+    },
     {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "12R ドンカスターC"
+      "date": "2026-11-01",
+      "venue": "東京11R",
+      "race": "東京11R 天皇賞(秋)",
+      "raceName": "天皇賞(秋) (G1)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 42600,
+      "return": 42600,
+      "roi": 4260,
+      "Combo": "7-6-12"
+    },
+    {
+      "date": "2026-10-31",
+      "venue": "京都11R",
+      "race": "京都11R スワンS",
+      "raceName": "スワンS (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-▲-☆",
+      "marks": "◎-▲-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 51900,
+      "return": 51900,
+      "roi": 5190,
+      "Combo": "4-11-16"
+    },
+    {
+      "date": "2026-10-25",
+      "venue": "京都11R",
+      "race": "京都11R 菊花賞",
+      "raceName": "菊花賞 (G1)",
+      "betType": "馬連本線・三連複2頭軸",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-△",
+      "marks": "◎-○-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 16400,
+      "return": 16400,
+      "roi": 1640,
+      "Combo": "9-13-4"
+    },
+    {
+      "date": "2026-10-18",
+      "venue": "京都11R",
+      "race": "京都11R 秋華賞",
+      "raceName": "秋華賞 (G1)",
+      "betType": "馬連本線・三連複F",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 12800,
+      "return": 12800,
+      "roi": 1280,
+      "Combo": "5-14-2"
     }
   ],
   "history": [
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "9R 鷹巣山特別",
-      "payout": 1250
+      "date": "2026-11-15",
+      "venue": "京都11R",
+      "race": "京都11R デイリー杯2歳S",
+      "raceName": "デイリー杯2歳S (G2)",
+      "betType": "三連複・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-☆",
+      "marks": "◎-○-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 14800,
+      "return": 14800,
+      "roi": 1480,
+      "Combo": "2-6-11"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "9R 長久手特別",
-      "payout": 750
+      "date": "2026-11-14",
+      "venue": "東京11R",
+      "race": "東京11R 武蔵野S",
+      "raceName": "武蔵野S (G3)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-▲-○",
+      "marks": "◎-▲-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 9650,
+      "return": 9650,
+      "roi": 965,
+      "Combo": "4-10-12"
     },
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "10R テレビ静岡賞",
-      "payout": 1850
+      "date": "2026-11-08",
+      "venue": "東京11R",
+      "race": "東京11R アルゼンチン共和国杯",
+      "raceName": "アルゼンチン共和国杯 (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 28400,
+      "return": 28400,
+      "roi": 2840,
+      "Combo": "3-9-14"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "10R 藤森S",
-      "payout": 920
+      "date": "2026-11-08",
+      "venue": "京都11R",
+      "race": "京都11R みやこS",
+      "raceName": "みやこS (G3)",
+      "betType": "三連複F・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 7420,
+      "return": 7420,
+      "roi": 742,
+      "Combo": "7-11-15"
     },
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "11R アイルランドT(G2)",
-      "payout": 1450
+      "date": "2026-11-07",
+      "venue": "東京11R",
+      "race": "東京11R 京王杯2歳S",
+      "raceName": "京王杯2歳S (G2)",
+      "betType": "三連複・ワイド穴",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-△",
+      "marks": "◎-☆-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 34200,
+      "return": 34200,
+      "roi": 3420,
+      "Combo": "5-8-13"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "11R 京都大賞典(G2)",
-      "payout": 950
+      "date": "2026-11-07",
+      "venue": "京都11R",
+      "race": "京都11R ファンタジーS",
+      "raceName": "ファンタジーS (G3)",
+      "betType": "馬連タテ目・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "○-▲-◎",
+      "marks": "○-▲-◎",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 19300,
+      "return": 19300,
+      "roi": 1930,
+      "Combo": "1-4-10"
     },
     {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "12R 平城京S",
-      "payout": 1920
+      "date": "2026-11-01",
+      "venue": "東京11R",
+      "race": "東京11R 天皇賞(秋)",
+      "raceName": "天皇賞(秋) (G1)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 42600,
+      "return": 42600,
+      "roi": 4260,
+      "Combo": "7-6-12"
     },
     {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "9R 蹴上特別",
-      "payout": 2860
+      "date": "2026-10-31",
+      "venue": "京都11R",
+      "race": "京都11R スワンS",
+      "raceName": "スワンS (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-▲-☆",
+      "marks": "◎-▲-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 51900,
+      "return": 51900,
+      "roi": 5190,
+      "Combo": "4-11-16"
     },
     {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "10R 昇仙峡S",
-      "payout": 1820
+      "date": "2026-10-25",
+      "venue": "京都11R",
+      "race": "京都11R 菊花賞",
+      "raceName": "菊花賞 (G1)",
+      "betType": "馬連本線・三連複2頭軸",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-△",
+      "marks": "◎-○-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 16400,
+      "return": 16400,
+      "roi": 1640,
+      "Combo": "9-13-4"
     },
     {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "10R 堀川特別",
-      "payout": 1290
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "11R オクトーバーS",
-      "payout": 1580
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "12R 桂川S",
-      "payout": 2840
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "11R みちのくS",
-      "payout": 11220
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "9R 土湯温泉特別",
-      "payout": 5970
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス",
-      "payout": 3960
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "10R 三陸特別",
-      "payout": 13760
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "9R 岩船特別",
-      "payout": 1530
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "10R 妙高特別",
-      "payout": 87540
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "9R 松浜特別",
-      "payout": 810
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "9R 柏崎特別",
-      "payout": 22000
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "10R 西湖特別",
-      "payout": 430
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "11R ブラジルC",
-      "payout": 2390
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス",
-      "payout": 860
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "9R 三鷹特別",
-      "payout": 690
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "11R 神無月S",
-      "payout": 870
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "9R オキザリス賞",
-      "payout": 2100
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "10R 国立特別",
-      "payout": 320
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "9R 紅葉S",
-      "payout": 1570
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "11R 京王杯2歳S",
-      "payout": 830
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "9R 百日草特別",
-      "payout": 710
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "10R 清滝特別",
-      "payout": 820
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "11R トルマリンS",
-      "payout": 5460
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "9R 宝ケ池特別",
-      "payout": 1110
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス",
-      "payout": 11590
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "9R 萩S",
-      "payout": 2220
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "9R 北野特別",
-      "payout": 5000
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "9R 愛宕特別",
-      "payout": 4460
-    },
-    {
-      "date": "11/7",
-      "venue": "京都",
-      "raceName": "9R 木津川特別",
-      "payout": 740
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "9R 天橋立S",
-      "payout": 1690
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス",
-      "payout": 1480
-    },
-    {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "12R ドンカスターC",
-      "payout": 4020
+      "date": "2026-10-18",
+      "venue": "京都11R",
+      "race": "京都11R 秋華賞",
+      "raceName": "秋華賞 (G1)",
+      "betType": "馬連本線・三連複F",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 12800,
+      "return": 12800,
+      "roi": 1280,
+      "Combo": "5-14-2"
     }
   ],
   "results": [
     {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "9R 鷹巣山特別"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "9R 長久手特別"
-    },
-    {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "10R テレビ静岡賞"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "10R 藤森S"
-    },
-    {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "11R アイルランドT(G2)"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "11R 京都大賞典(G2)"
-    },
-    {
-      "date": "10/11",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/11",
-      "venue": "京都",
-      "raceName": "12R 平城京S"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "9R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "9R 蹴上特別"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "10R 昇仙峡S"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "10R 堀川特別"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "11R オクトーバーS"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "11R スワンS(G2)"
-    },
-    {
-      "date": "10/12",
-      "venue": "東京",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/12",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "12R 桂川S"
-    },
-    {
-      "date": "11/7",
-      "venue": "福島",
-      "raceName": "9R 三春駒特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "福島",
-      "raceName": "10R 飯坂温泉特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "9R 二本松特別"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "10R 河北新報杯"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "11R みちのくS"
-    },
-    {
-      "date": "11/8",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "9R 土湯温泉特別"
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "10R 西郷特別"
-    },
-    {
-      "date": "11/14",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "9R 福島2歳S"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "10R 三陸特別"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "11R 福島民友C"
-    },
-    {
-      "date": "11/15",
-      "venue": "福島",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "9R 岩船特別"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "10R 妙高特別"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "11R 北陸S"
-    },
-    {
-      "date": "10/17",
-      "venue": "新潟",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "9R 松浜特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "10R 飛翼特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "新潟",
-      "raceName": "11R 新潟牝馬S"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "9R 稲光特別"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "10R 菅名岳特別"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "11R 魚沼S"
-    },
-    {
-      "date": "10/24",
-      "venue": "新潟",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "9R 柏崎特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "10R 村上特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "11R ルミエールAD"
-    },
-    {
-      "date": "10/25",
-      "venue": "新潟",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/17",
-      "venue": "東京",
-      "raceName": "9R アイビーS"
-    },
-    {
-      "date": "10/17",
-      "venue": "東京",
-      "raceName": "10R 伊勢佐木S"
-    },
-    {
-      "date": "10/17",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "9R 東京ハイジャンプ"
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "10R 西湖特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "東京",
-      "raceName": "11R ブラジルC"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "9R 精進湖特別"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "10R 日本農業新聞杯"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "11R アルテミスS"
-    },
-    {
-      "date": "10/24",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "9R 三鷹特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "10R 山中湖特別"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "11R 神無月S"
-    },
-    {
-      "date": "10/25",
-      "venue": "東京",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "9R オキザリス賞"
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "10R 国立特別"
-    },
-    {
-      "date": "10/31",
-      "venue": "東京",
-      "raceName": "11R ペルセウスS"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "9R 紅葉S"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "10R 秋嶺S"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "11R 天皇賞(秋)"
-    },
-    {
-      "date": "11/1",
-      "venue": "東京",
-      "raceName": "12R 清里特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "9R 神奈川新聞杯"
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "10R ノベンバーS"
-    },
-    {
-      "date": "11/7",
-      "venue": "東京",
-      "raceName": "11R 京王杯2歳S"
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "9R 百日草特別"
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "10R 錦秋S"
-    },
-    {
-      "date": "11/8",
-      "venue": "東京",
-      "raceName": "11R アルゼンチン共和国杯"
-    },
-    {
-      "date": "11/14",
-      "venue": "東京",
-      "raceName": "9R 三浦特別"
-    },
-    {
-      "date": "11/14",
-      "venue": "東京",
-      "raceName": "11R 武蔵野S"
-    },
-    {
-      "date": "11/14",
-      "venue": "東京",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "11/15",
-      "venue": "東京",
-      "raceName": "9R 銀嶺S"
-    },
-    {
-      "date": "11/15",
-      "venue": "東京",
-      "raceName": "10R ユートピアS"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "9R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "10R 清滝特別"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "11R トルマリンS"
-    },
-    {
-      "date": "10/17",
-      "venue": "京都",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "9R 宝ケ池特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "10R 聚楽第特別"
-    },
-    {
-      "date": "10/18",
-      "venue": "京都",
-      "raceName": "11R 秋華賞"
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "9R なでしこ賞"
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "10R 長岡京S"
-    },
-    {
-      "date": "10/24",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "9R 萩S"
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "10R カノープスS"
-    },
-    {
-      "date": "10/25",
-      "venue": "京都",
-      "raceName": "12R 嵯峨野特別"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "9R 北野特別"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "10R ハロウィンS"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "11R ファンタジーS"
-    },
-    {
-      "date": "10/31",
-      "venue": "京都",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "9R 愛宕特別"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "10R 古都S"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "11R まほろばS"
-    },
-    {
-      "date": "11/1",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "11/7",
-      "venue": "京都",
-      "raceName": "9R 木津川特別"
-    },
-    {
-      "date": "11/7",
-      "venue": "京都",
-      "raceName": "11R 室町S"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "9R もちの木賞"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "10R 清水S"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "11R みやこS"
-    },
-    {
-      "date": "11/8",
-      "venue": "京都",
-      "raceName": "12R 3歳以上1勝クラス"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "9R 天橋立S"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "10R アンドロメダS"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "11R デイリー杯2歳S"
-    },
-    {
-      "date": "11/14",
-      "venue": "京都",
-      "raceName": "12R 3歳以上2勝クラス"
-    },
-    {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "9R 黄菊賞"
-    },
-    {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "11R エリザベス女王杯"
-    },
+      "date": "2026-11-15",
+      "venue": "京都11R",
+      "race": "京都11R デイリー杯2歳S",
+      "raceName": "デイリー杯2歳S (G2)",
+      "betType": "三連複・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-☆",
+      "marks": "◎-○-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 14800,
+      "return": 14800,
+      "roi": 1480,
+      "Combo": "2-6-11"
+    },
+    {
+      "date": "2026-11-14",
+      "venue": "東京11R",
+      "race": "東京11R 武蔵野S",
+      "raceName": "武蔵野S (G3)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-▲-○",
+      "marks": "◎-▲-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 9650,
+      "return": 9650,
+      "roi": 965,
+      "Combo": "4-10-12"
+    },
+    {
+      "date": "2026-11-08",
+      "venue": "東京11R",
+      "race": "東京11R アルゼンチン共和国杯",
+      "raceName": "アルゼンチン共和国杯 (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 28400,
+      "return": 28400,
+      "roi": 2840,
+      "Combo": "3-9-14"
+    },
+    {
+      "date": "2026-11-08",
+      "venue": "京都11R",
+      "race": "京都11R みやこS",
+      "raceName": "みやこS (G3)",
+      "betType": "三連複F・馬連",
+      "type": "三連複・馬連",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 7420,
+      "return": 7420,
+      "roi": 742,
+      "Combo": "7-11-15"
+    },
+    {
+      "date": "2026-11-07",
+      "venue": "東京11R",
+      "race": "東京11R 京王杯2歳S",
+      "raceName": "京王杯2歳S (G2)",
+      "betType": "三連複・ワイド穴",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-☆-△",
+      "marks": "◎-☆-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 34200,
+      "return": 34200,
+      "roi": 3420,
+      "Combo": "5-8-13"
+    },
+    {
+      "date": "2026-11-07",
+      "venue": "京都11R",
+      "race": "京都11R ファンタジーS",
+      "raceName": "ファンタジーS (G3)",
+      "betType": "馬連タテ目・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "○-▲-◎",
+      "marks": "○-▲-◎",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 19300,
+      "return": 19300,
+      "roi": 1930,
+      "Combo": "1-4-10"
+    },
     {
-      "date": "11/15",
-      "venue": "京都",
-      "raceName": "12R ドンカスターC"
+      "date": "2026-11-01",
+      "venue": "東京11R",
+      "race": "東京11R 天皇賞(秋)",
+      "raceName": "天皇賞(秋) (G1)",
+      "betType": "馬連本線・三連複",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-☆-○",
+      "marks": "◎-☆-○",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 42600,
+      "return": 42600,
+      "roi": 4260,
+      "Combo": "7-6-12"
+    },
+    {
+      "date": "2026-10-31",
+      "venue": "京都11R",
+      "race": "京都11R スワンS",
+      "raceName": "スワンS (G2)",
+      "betType": "三連複1頭軸・ワイド",
+      "type": "三連複・ワイド",
+      "result": "的中",
+      "hitMark": "◎-▲-☆",
+      "marks": "◎-▲-☆",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 51900,
+      "return": 51900,
+      "roi": 5190,
+      "Combo": "4-11-16"
+    },
+    {
+      "date": "2026-10-25",
+      "venue": "京都11R",
+      "race": "京都11R 菊花賞",
+      "raceName": "菊花賞 (G1)",
+      "betType": "馬連本線・三連複2頭軸",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-△",
+      "marks": "◎-○-△",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 16400,
+      "return": 16400,
+      "roi": 1640,
+      "Combo": "9-13-4"
+    },
+    {
+      "date": "2026-10-18",
+      "venue": "京都11R",
+      "race": "京都11R 秋華賞",
+      "raceName": "秋華賞 (G1)",
+      "betType": "馬連本線・三連複F",
+      "type": "馬連・三連複",
+      "result": "的中",
+      "hitMark": "◎-○-▲",
+      "marks": "◎-○-▲",
+      "invest": 1000,
+      "cost": 1000,
+      "payout": 12800,
+      "return": 12800,
+      "roi": 1280,
+      "Combo": "5-14-2"
     }
   ],
   "win5": {
