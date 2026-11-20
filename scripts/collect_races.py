@@ -60,7 +60,7 @@ def restore_historical_json_from_git():
                     if isinstance(cand, dict) and ("markStats" in cand or "hitDetails" in cand or "allBetRaces" in cand):
                         if not found_stats:
                             found_stats = cand
-                        if "races" in d and not found_today:
+                        if "races" in d and len(d.get("races", [])) > 0 and not found_today:
                             found_today = d
                         if found_stats and found_today:
                             return found_today, found_stats
@@ -69,6 +69,30 @@ def restore_historical_json_from_git():
         except Exception:
             continue
     return found_today, found_stats
+
+
+def restore_last_valid_today_from_git():
+    """万が一今回レース取得が0件だった場合に、直近の有効な today.json をGit履歴から復元する"""
+    for target_file in ("data/today.json", "today.json"):
+        try:
+            commits = subprocess.check_output(
+                ["git", "log", "--format=%H", "-n", "20", "--", target_file],
+                stderr=subprocess.DEVNULL
+            ).decode("utf-8").strip().splitlines()
+            for sha in commits:
+                try:
+                    raw = subprocess.check_output(
+                        ["git", "show", f"{sha}:{target_file}"],
+                        stderr=subprocess.DEVNULL
+                    ).decode("utf-8", errors="ignore")
+                    d = json.loads(raw)
+                    if isinstance(d, dict) and len(d.get("races", [])) > 0:
+                        return d
+                except Exception:
+                    continue
+        except Exception:
+            continue
+    return None
 
 
 def patch_index_html_defaults(mark_defs):
@@ -281,7 +305,6 @@ def get_target_dates():
 
 
 def discover_all_target_days():
-    """直近の開催日ごとにレースIDを分けて取得する（最大3日分）"""
     cand_dates = get_target_dates()
     day_groups = []
     seen_dates = set()
@@ -294,10 +317,12 @@ def discover_all_target_days():
         list_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={d_str}"
         html = fetch_html(list_url, default_enc="utf-8")
         if not html:
+            print(f"  -> race_list_sub empty for {d_str}")
             continue
         r_ids = re.findall(r"race_id=(\d{12})", html)
         unique_ids = sorted(list(set(r_ids)))
         main_ids = [rid for rid in unique_ids if int(rid[-2:]) in (9, 10, 11, 12)]
+        print(f"  -> {d_str}: {len(main_ids)} main races found")
         if main_ids:
             day_groups.append((d_str, main_ids))
 
@@ -952,9 +977,17 @@ def main():
         races_out = primary_day["races"]
         win5_data = primary_day["win5"]
     else:
-        target_date_display = datetime.datetime.now(JST).strftime("%Y年%m月%d日")
-        races_out = []
-        win5_data = {}
+        print("⚠️ 今回レース取得が0件でした（netkeibaメンテナンス等の可能性）。直前の有効データを復元します。")
+        prev_valid = restore_last_valid_today_from_git()
+        if prev_valid:
+            target_date_display = prev_valid.get("targetDate", datetime.datetime.now(JST).strftime("%Y年%m月%d日"))
+            races_out = prev_valid.get("races", [])
+            win5_data = prev_valid.get("win5", {})
+            schedule_days = prev_valid.get("scheduleDays", [])
+        else:
+            target_date_display = datetime.datetime.now(JST).strftime("%Y年%m月%d日")
+            races_out = []
+            win5_data = {}
 
     now_str = datetime.datetime.now(JST).strftime("%Y-%m-%d %H:%M")
     final_json = {
@@ -986,7 +1019,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(final_json, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 完了！ {len(schedule_days)}日分のデータを出力しました。")
+    print(f"✅ 完了！ {len(schedule_days)}日分 / {len(races_out)}レースを出力しました。")
 
 
 if __name__ == "__main__":
