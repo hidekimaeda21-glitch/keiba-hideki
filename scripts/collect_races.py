@@ -280,7 +280,6 @@ def discover_race_ids():
     cand_dates = get_target_dates()
     primary_date = cand_dates[0]
     collected_ids = []
-    venues_found = set()
 
     for d_str in cand_dates:
         list_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={d_str}"
@@ -293,19 +292,10 @@ def discover_race_ids():
         if not main_ids:
             continue
 
-        if not collected_ids:
-            primary_date = d_str
-            for rid in main_ids:
-                collected_ids.append(rid)
-                venues_found.add(rid[4:6])
-        else:
-            for rid in main_ids:
-                v_code = rid[4:6]
-                if v_code not in venues_found:
-                    collected_ids.append(rid)
-
-        if len(set(r[4:6] for r in collected_ids)) >= 3 and len(collected_ids) >= 9:
-            break
+        # 該当日のレースが見つかったら、その日の会場だけを取得して終了（別日の会場を混ぜない）
+        primary_date = d_str
+        collected_ids = main_ids
+        break
 
     return primary_date, sorted(list(set(collected_ids)))
 
@@ -516,7 +506,6 @@ def simulate_race_monte_carlo(race_data, n_trials=1000):
     m_dist = re.search(r"(\d{3,4})", course)
     dist = int(m_dist.group(1)) if m_dist else 1600
 
-    # コースごとの差し・前残り傾向（+が大きいほど差し有利、-は前残り有利）
     venue_closer_bias = {
         "東京": 1.2, "新潟": 1.0, "京都": 0.5, "阪神": 0.4, "中京": 0.3,
         "札幌": -0.3, "函館": -0.6, "福島": -0.7, "中山": -0.8, "小倉": -0.8
@@ -952,16 +941,14 @@ def main():
         races_out.append(r_info)
         time.sleep(0.4)
 
-    current_venues = set(r.get("venue") for r in races_out)
-    if len(current_venues) < 3 and old_races:
+    if not races_out and old_races:
         for old_r in old_races:
             clean_old_v = re.sub(r"[（\(].*?[）\)]", "", old_r.get("venue", "")).strip()
-            if clean_old_v and clean_old_v not in current_venues:
-                old_r["venue"] = clean_old_v
-                old_r["venueBase"] = clean_old_v
-                old_r.setdefault("shortRaceName", old_r.get("raceName", ""))
-                old_r = evaluate_and_build_1000yen_strategy(old_r)
-                races_out.append(old_r)
+            old_r["venue"] = clean_old_v or old_r.get("venueBase", "京都")
+            old_r["venueBase"] = old_r["venue"]
+            old_r.setdefault("shortRaceName", old_r.get("raceName", ""))
+            old_r = evaluate_and_build_1000yen_strategy(old_r)
+            races_out.append(old_r)
 
     win5_data = build_win5_prediction(races_out) if races_out else {}
     for r in races_out:
