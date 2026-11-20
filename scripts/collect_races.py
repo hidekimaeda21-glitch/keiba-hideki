@@ -329,6 +329,20 @@ def discover_all_target_days():
     return day_groups
 
 
+def fetch_official_win5_race_ids():
+    """netkeibaの公式WIN5ページから、対象5レースのrace_idを順番通りに取得する"""
+    url = "https://race.netkeiba.com/top/win5.html"
+    html = fetch_html(url, default_enc="euc_jp")
+    if not html:
+        return []
+    found = re.findall(r"race_id=(\d{12})", html)
+    unique_ordered = []
+    for rid in found:
+        if rid not in unique_ordered:
+            unique_ordered.append(rid)
+    return unique_ordered[:5] if len(unique_ordered) >= 5 else []
+
+
 def fetch_realtime_odds(race_id):
     odds_map = {}
     api_url = f"https://race.netkeiba.com/api/api_get_jra_odds.html?race_id={race_id}&type=1&action=init"
@@ -349,11 +363,9 @@ def fetch_realtime_odds(race_id):
 
 
 def parse_shutuba_page(race_id):
-    # 出走馬・頭数・確定馬番は公式出馬表(shutuba.html)を正として取得
     url_basic = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
     html = fetch_html(url_basic, default_enc="euc_jp")
 
-    # 過去走と通過順位は shutuba_past.html から馬名で紐づけて補完する
     url_past = f"https://race.netkeiba.com/race/shutuba_past.html?race_id={race_id}"
     html_past = fetch_html(url_past, default_enc="euc_jp")
 
@@ -802,9 +814,25 @@ def evaluate_and_build_1000yen_strategy(race_data):
         if len(opp_5) == 5:
             break
 
+    z_gap_1_2 = honmei["zScore"] - taikou["zScore"]
     z_gap_top2 = taikou["zScore"] - tanana["zScore"]
 
-    if z_gap_top2 >= 4.5 and honmei["odds"] <= 6.5 and taikou["odds"] <= 9.5 and len(opp_5) >= 5:
+    # 5パターンの買い目をレースごとのシミュレーション傾向で自動切り替え
+    if honmei["simWinRate"] >= 28.0 and z_gap_1_2 >= 4.0 and len(opp_5) >= 4:
+        strategy_tag = "1強突き抜け・単勝＆馬単＆三連複型 (計1,000円)"
+        conf_rank = "S"
+        conf_score = 95
+        opp4_str = ", ".join(str(x) for x in [h2, h3, hs] + [n for n in opp_5 if n not in (h2, h3, hs)][:1])
+        ai_buy = (
+            f"【単勝本線】{h1} (1点/200円) / "
+            f"【馬単1着固定】{h1} → {h2}, {h3} (2点/各100円) / "
+            f"【三連複1頭軸】{h1} - {opp4_str} (6点/各100円) [計9点/1,000円固定]"
+        )
+        comment = (
+            f"展開予測は【{pace_label} / {sim_summary}】。試走勝率{honmei['simWinRate']}%・3着内率{honmei['simPlaceRate']}%と能力が抜けた◎{h1}番{honmei['name']}の1強戦。"
+            f"【単勝】【馬単1着固定】で頭から狙いつつ、【三連複1頭軸】で3着穴の☆{hs}番まで押さえる強気布陣。"
+        )
+    elif z_gap_top2 >= 3.2 and honmei["odds"] <= 7.5 and taikou["odds"] <= 11.0 and len(opp_5) >= 5:
         strategy_tag = "2強鉄板・タテ目穴ケア型 (計1,000円)"
         conf_rank = "A"
         conf_score = 92
@@ -819,8 +847,28 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"展開予測は【{pace_label} / {sim_summary}】。能力・期待値ともに抜けた◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)と○{h2}番の2強が強力。"
             f"【馬連本線】300円で厚く利益を狙いつつ、【三連複2頭軸】と特注穴馬☆{hs}番への【ワイド穴】・【馬連タテ目】まで1,000円内で完全網羅。"
         )
-    elif honmei["odds"] >= 6.0 or front_ratio >= 0.48:
-        strategy_tag = "波乱対応・高期待値穴狙い型 (計1,000円)"
+    elif pace_pct["slow"] >= 35 or pace_label == "先行有利スローペース":
+        strategy_tag = "スロー前残り・先行BOX重視型 (計1,000円)"
+        conf_rank = "A-"
+        conf_score = 89
+        box4 = []
+        for x in [h1, h2, h3, hs] + opp_5:
+            if x not in box4:
+                box4.append(x)
+            if len(box4) == 4:
+                break
+        box4_str = ", ".join(str(x) for x in box4)
+        ai_buy = (
+            f"【ワイド本線】{h1} - {h2} (1点/300円) / "
+            f"【馬連BOX】{h1}, {h2}, {h3} (3点/各100円) / "
+            f"【三連複BOX】{box4_str} (4点/各100円) [計8点/1,000円固定]"
+        )
+        comment = (
+            f"展開予測は【{pace_label} / {sim_summary}】。スローペースで前が残る公算が大きく、好位から運べる◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)を中心に"
+            f"【馬連BOX】と【三連複BOX】で先行勢の粘り込みを厚くカバーする構成。"
+        )
+    elif pace_pct["high"] >= 55 and honmei["odds"] >= 5.0:
+        strategy_tag = "ハイペース差し・高期待値穴狙い型 (計1,000円)"
         conf_rank = "B+"
         conf_score = 88
         opp_4 = []
@@ -836,8 +884,8 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【三連複1頭軸】{h1} - {opp4_str} (6点/各100円) [計9点/1,000円固定]"
         )
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。過剰人気馬を排し、期待値(EV:{honmei['ev']}・試走3着内率{honmei['simPlaceRate']}%)トップの◎{h1}番{honmei['name']}を軸に抜擢。"
-            f"【ワイド本線】200円で手堅く回収ラインを確保しながら、穴党AI推奨の☆{hs}番を絡めた【馬連流し】と【三連複1頭軸】で高配当を射抜く。"
+            f"展開予測は【{pace_label} / {sim_summary}】。先行争いが激しくなりやすく、期待値(EV:{honmei['ev']}・試走3着内率{honmei['simPlaceRate']}%)トップの◎{h1}番{honmei['name']}を軸に抜擢。"
+            f"【ワイド本線】200円で回収ラインを確保しながら、穴党AI推奨の☆{hs}番を絡めた【馬連流し】と【三連複1頭軸】で高配当を狙う。"
         )
     else:
         strategy_tag = "1頭軸フォーメーション・バランス型 (計1,000円)"
@@ -857,7 +905,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
         )
         comment = (
             f"展開予測は【{pace_label} / {sim_summary}】。安定感抜群の◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)を1頭軸に据え、"
-            f"2列目に○{h2}番・▲{h3}番を配置した【三連複フォーメーション(7点)】が主砲。○が崩れても▲と穴馬☆{hs}番の台頭で高配当を逃さず拾う1,000円布陣。"
+            f"2列目に○{h2}番・▲{h3}番を配置した【三連複フォーメーション(7点)】が主砲。○が崩れても▲と穴馬☆{hs}番の台頭で高配当を拾う1,000円布陣。"
         )
 
     clean_v = re.sub(r"[（\(].*?[）\)]", "", race_data.get("venue", "")).strip()
@@ -875,10 +923,32 @@ def evaluate_and_build_1000yen_strategy(race_data):
     return race_data
 
 
-def build_win5_prediction(races):
-    cand_races = [r for r in races if r.get("rNum") in (10, 11)]
-    cand_races.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 10)))
-    win5_races = cand_races[-5:] if len(cand_races) >= 5 else races[-5:]
+def build_win5_prediction(races, official_win5_rids=None):
+    """公式WIN5対象レース(race_id)と一致する場合のみWIN5予想を構築する"""
+    race_map = {r.get("raceId"): r for r in races}
+    win5_races = []
+
+    if official_win5_rids and len(official_win5_rids) == 5:
+        matched = [race_map[rid] for rid in official_win5_rids if rid in race_map]
+        if len(matched) == 5:
+            win5_races = matched
+
+    if not win5_races:
+        msg = "本日はJRAのWIN5発売はありません（日曜・対象開催日の日付タブを選択するとWIN5予想が表示されます）。"
+        return {
+            "title": "【WIN5対象外日】",
+            "summary": "WIN5対象外日",
+            "text": msg,
+            "lines": [msg],
+            "totalCombinations": 0,
+            "points": 0,
+            "unitYen": 100,
+            "estimatedCost": 0,
+            "budget": 0,
+            "concept": "",
+            "races": [],
+            "legs": []
+        }
 
     legs = []
     lines_text = []
@@ -954,6 +1024,9 @@ def main():
     print("🚀 ジェミ予想 AI Predictor 完全版データ生成（複数日対応＋展開シミュレーション）を開始します...")
     stats_obj = build_complete_stats()
 
+    official_win5_rids = fetch_official_win5_race_ids()
+    print(f"  -> 公式WIN5対象ID: {official_win5_rids}")
+
     day_groups = discover_all_target_days()
     schedule_days = []
 
@@ -973,7 +1046,7 @@ def main():
             time.sleep(0.35)
 
         if day_races:
-            day_win5 = build_win5_prediction(day_races)
+            day_win5 = build_win5_prediction(day_races, official_win5_rids)
             for r in day_races:
                 if "topPicks" in r:
                     del r["topPicks"]
