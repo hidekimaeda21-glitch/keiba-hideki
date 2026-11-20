@@ -171,6 +171,32 @@
       border-top: 1px dashed rgba(139, 92, 246, 0.3);
     }
 
+    .date-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .date-btn {
+      flex: 1;
+      padding: 9px 10px;
+      background: #141926;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 8px;
+      color: #a7f3d0;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .date-btn.active {
+      background: #10b981;
+      color: #06281e;
+      border-color: #10b981;
+    }
+
     .venue-tabs {
       display: flex;
       gap: 8px;
@@ -676,6 +702,8 @@
     <div class="win5-body" id="win5Body" onclick="toggleWin5()" style="display: block; cursor: pointer;"></div>
   </div>
 
+  <div class="date-tabs" id="dateTabs" style="display: none;"></div>
+
   <div class="venue-tabs" id="venueTabs">
     <div class="tab-btn active" onclick="filterVenue('ALL')">全会場</div>
   </div>
@@ -687,8 +715,10 @@
     let currentFilter = 'ALL';
     let statsObj = null;
     let cachedWin5Text = '';
+    let scheduleDays = [];
+    let currentDayIdx = 0;
+    let lastUpdatedAt = '未更新';
 
-    // シミュレーション動画用ステート
     let simAnimId = null;
     let simPlaying = false;
     let simProgress = 0;
@@ -901,7 +931,6 @@
       });
     }
 
-    // ★展開シミュレーション動画モーダル起動・描画ロジック
     function openSimModal(rIdx) {
       const race = globalRaces[rIdx];
       if (!race || !race.horses || race.horses.length === 0) return;
@@ -943,10 +972,8 @@
       const simRunners = displayHorses.map((h, laneIdx) => {
         const style = h.runningStyle || h.style || '先行';
         const finIdx = rankOrderMap.get(h.num);
-        // 目標ゴール位置（1着が0.96, 2着が0.93...）
         const finishX = 0.96 - finIdx * 0.035;
 
-        // 序盤〜中盤の位置を脚質と最多ペースに応じて決定
         let earlySpeed = 0.85;
         if (style === '逃げ') earlySpeed = domPace === 'high' ? 1.15 : 1.05;
         else if (style === '先行') earlySpeed = domPace === 'high' ? 1.02 : 0.95;
@@ -1013,7 +1040,6 @@
       const H = canvas.height;
       const runners = simState.runners;
 
-      // 背景（芝コース / ダートコース）
       ctx.fillStyle = simState.isDirt ? '#3a2d21' : '#133322';
       ctx.fillRect(0, 0, W, H);
 
@@ -1021,7 +1047,6 @@
       const xGoal = W - 26;
       const trackW = xGoal - xStart;
 
-      // コース目盛り線
       const markers = [
         { u: 0.0, label: '発走' },
         { u: 0.35, label: '向正面' },
@@ -1048,7 +1073,6 @@
       runners.forEach((r, idx) => {
         const cy = 28 + idx * laneH + laneH / 2;
 
-        // レーン線
         ctx.strokeStyle = 'rgba(255,255,255,0.06)';
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -1056,7 +1080,6 @@
         ctx.lineTo(xGoal, cy);
         ctx.stroke();
 
-        // 位置補間（序盤は脚質通り、終盤t>0.55からゴール順位へ収束）
         const midPos = Math.min(0.72, 0.56 * r.earlySpeed);
         let posU;
         if (t <= 0.55) {
@@ -1071,7 +1094,6 @@
         const rx = xStart + posU * trackW;
         currentPositions.push({ runner: r, pos: posU });
 
-        // 馬ドット
         ctx.beginPath();
         ctx.arc(rx, cy, r.isHonmei ? 11 : 9, 0, Math.PI * 2);
         ctx.fillStyle = r.isHonmei ? '#ef4444' : (r.mark ? '#3b82f6' : '#4b5563');
@@ -1082,14 +1104,12 @@
           ctx.stroke();
         }
 
-        // 馬番
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 10px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(String(r.num), rx, cy);
 
-        // 左側の馬名ラベル（常に読めるよう左端近くに薄く、または追従表示）
         ctx.textAlign = 'left';
         ctx.font = r.isHonmei ? 'bold 11px sans-serif' : '10px sans-serif';
         ctx.fillStyle = r.isHonmei ? '#fde047' : 'rgba(255,255,255,0.88)';
@@ -1098,7 +1118,6 @@
         ctx.fillText(labelStr, Math.max(4, labelX), cy);
       });
 
-      // 区間と現在順位の更新
       let phaseStr = '序盤・先行争い';
       if (t >= 0.99) phaseStr = 'ゴール確定！';
       else if (t >= 0.70) phaseStr = '最後の直線・末脚勝負';
@@ -1327,6 +1346,43 @@
       renderRaces();
     }
 
+    function selectScheduleDay(dayIdx) {
+      currentDayIdx = dayIdx;
+      const dayObj = scheduleDays[dayIdx];
+      if (!dayObj) return;
+
+      document.querySelectorAll('.date-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === dayIdx);
+      });
+
+      globalRaces = dayObj.races || [];
+      document.getElementById('updateTime').textContent = `${dayObj.targetDate || ''} | 更新: ${lastUpdatedAt}`;
+
+      const rawW5 = String(dayObj.win5Strategy || '');
+      if (!rawW5 || rawW5.includes('確定次第')) {
+        cachedWin5Text = buildDynamicWin5TextFromRaces(globalRaces);
+      } else {
+        cachedWin5Text = rawW5;
+      }
+      document.getElementById('win5Body').textContent = cachedWin5Text;
+      document.getElementById('win5Card').style.display = 'block';
+
+      currentFilter = 'ALL';
+      const venues = [...new Set(globalRaces.map(r => r.venue))];
+      const tabsContainer = document.getElementById('venueTabs');
+      tabsContainer.innerHTML = '<div class="tab-btn active" onclick="filterVenue(\'ALL\')">全会場</div>';
+      venues.forEach(v => {
+        const btn = document.createElement('div');
+        btn.className = 'tab-btn';
+        btn.dataset.venue = v;
+        btn.textContent = v;
+        btn.onclick = () => filterVenue(v);
+        tabsContainer.appendChild(btn);
+      });
+
+      renderRaces();
+    }
+
     function renderRaces() {
       const container = document.getElementById('raceContainer');
       container.innerHTML = '';
@@ -1449,7 +1505,8 @@
         if (!res.ok) throw new Error('データが見つかりません');
         const data = await res.json();
 
-        document.getElementById('updateTime').textContent = `${data.targetDate || ''} | 更新: ${data.updatedAt || '未更新'}`;
+        lastUpdatedAt = data.updatedAt || '未更新';
+        document.getElementById('updateTime').textContent = `${data.targetDate || ''} | 更新: ${lastUpdatedAt}`;
 
         if (data.stats) {
           statsObj = data.stats;
@@ -1480,6 +1537,23 @@
           }
         }
 
+        if (Array.isArray(data.scheduleDays) && data.scheduleDays.length > 0) {
+          scheduleDays = data.scheduleDays;
+          const dateTabsEl = document.getElementById('dateTabs');
+          dateTabsEl.innerHTML = '';
+          scheduleDays.forEach((d, idx) => {
+            const btn = document.createElement('div');
+            btn.className = 'date-btn' + (idx === 0 ? ' active' : '');
+            btn.textContent = `📅 ${d.label}`;
+            btn.onclick = () => selectScheduleDay(idx);
+            dateTabsEl.appendChild(btn);
+          });
+          dateTabsEl.style.display = 'flex';
+          selectScheduleDay(0);
+          return;
+        }
+
+        document.getElementById('dateTabs').style.display = 'none';
         globalRaces = data.races || [];
 
         const rawW5 = String(data.win5Strategy || '');
