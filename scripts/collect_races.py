@@ -257,16 +257,20 @@ def fetch_html(url, default_enc="euc-jp", retries=3):
 def get_target_dates():
     now = datetime.datetime.now(JST)
     wd = now.weekday()
-    if wd == 5:
+    if wd == 5:  # 土曜
         if now.hour >= 17:
-            dates = [now + datetime.timedelta(days=1), now + datetime.timedelta(days=2), now]
+            dates = [now + datetime.timedelta(days=1), now + datetime.timedelta(days=2)]
         else:
             dates = [now, now + datetime.timedelta(days=1), now + datetime.timedelta(days=2)]
-    elif wd == 6:
+    elif wd == 6:  # 日曜
         if now.hour >= 17:
-            dates = [now + datetime.timedelta(days=1), now, now - datetime.timedelta(days=1)]
+            dates = [now + datetime.timedelta(days=1), now + datetime.timedelta(days=6), now + datetime.timedelta(days=7)]
         else:
-            dates = [now, now + datetime.timedelta(days=1), now - datetime.timedelta(days=1)]
+            dates = [now, now + datetime.timedelta(days=1)]
+    elif wd == 0 and now.hour < 17:  # 祝日月曜開催など
+        days_to_sat = (5 - wd) % 7
+        sat = now + datetime.timedelta(days=days_to_sat)
+        dates = [now, sat, sat + datetime.timedelta(days=1)]
     else:
         days_to_sat = (5 - wd) % 7
         sat = now + datetime.timedelta(days=days_to_sat)
@@ -276,12 +280,17 @@ def get_target_dates():
     return [d.strftime("%Y%m%d") for d in dates]
 
 
-def discover_race_ids():
+def discover_all_target_days():
+    """直近の開催日ごとにレースIDを分けて取得する（最大3日分）"""
     cand_dates = get_target_dates()
-    primary_date = cand_dates[0]
-    collected_ids = []
+    day_groups = []
+    seen_dates = set()
 
     for d_str in cand_dates:
+        if d_str in seen_dates:
+            continue
+        seen_dates.add(d_str)
+
         list_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={d_str}"
         html = fetch_html(list_url, default_enc="utf-8")
         if not html:
@@ -289,15 +298,10 @@ def discover_race_ids():
         r_ids = re.findall(r"race_id=(\d{12})", html)
         unique_ids = sorted(list(set(r_ids)))
         main_ids = [rid for rid in unique_ids if int(rid[-2:]) in (9, 10, 11, 12)]
-        if not main_ids:
-            continue
+        if main_ids:
+            day_groups.append((d_str, main_ids))
 
-        # 該当日のレースが見つかったら、その日の会場だけを取得して終了（別日の会場を混ぜない）
-        primary_date = d_str
-        collected_ids = main_ids
-        break
-
-    return primary_date, sorted(list(set(collected_ids)))
+    return day_groups
 
 
 def fetch_realtime_odds(race_id):
@@ -320,7 +324,6 @@ def fetch_realtime_odds(race_id):
 
 
 def parse_shutuba_page(race_id):
-    # 過去走・通過順位を取得するため shutuba_past.html を優先して読み込む
     url_past = f"https://race.netkeiba.com/race/shutuba_past.html?race_id={race_id}"
     html = fetch_html(url_past, default_enc="euc_jp")
     if not html or "HorseList" not in html:
@@ -488,10 +491,6 @@ def calc_base_ability(h):
 
 
 def simulate_race_monte_carlo(race_data, n_trials=1000):
-    """
-    展開・頭数・コース特性・枠順を考慮して1レースあたりn_trials回の仮想レースを実行し、
-    各馬のシミュレーション勝率・複勝圏内率と想定ペース分布を返す。
-    """
     horses = race_data.get("horses", [])
     n_horses = len(horses)
     if n_horses == 0:
@@ -912,48 +911,50 @@ def build_win5_prediction(races):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（Git全履歴＆HTML同期）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（複数日対応＋展開シミュレーション）を開始します...")
     stats_obj = build_complete_stats()
 
-    old_races = []
-    out_paths = ["data/today.json", "today.json"]
-    for p in out_paths:
-        if os.path.exists(p):
-            try:
-                with open(p, "r", encoding="utf-8") as f:
-                    old_d = json.load(f)
-                old_races = old_d.get("races", [])
-                break
-            except Exception:
-                pass
+    day_groups = discover_all_target_days()
+    schedule_days = []
 
-    d_str, race_ids = discover_race_ids()
-    dt_obj = datetime.datetime.strptime(d_str, "%Y%m%d")
-    target_date_display = f"{dt_obj.year}年{dt_obj.month}月{dt_obj.day}日"
+    for d_str, rids in day_groups:
+        dt_obj = datetime.datetime.strptime(d_str, "%Y%m%d")
+        t_date_disp = f"{dt_obj.year}年{dt_obj.month}月{dt_obj.day}日"
+        day_label = f"{dt_obj.month}/{dt_obj.day}({WEEKDAY_JP[dt_obj.weekday()]})"
+        day_races = []
 
-    races_out = []
-    for rid in race_ids:
-        print(f"  -> 解析中: race_id={rid}")
-        r_info = parse_shutuba_page(rid)
-        if not r_info:
-            continue
-        r_info = evaluate_and_build_1000yen_strategy(r_info)
-        races_out.append(r_info)
-        time.sleep(0.4)
+        print(f"=== {t_date_disp} ({len(rids)}レース) の解析 ===")
+        for rid in rids:
+            r_info = parse_shutuba_page(rid)
+            if not r_info:
+                continue
+            r_info = evaluate_and_build_1000yen_strategy(r_info)
+            day_races.append(r_info)
+            time.sleep(0.35)
 
-    if not races_out and old_races:
-        for old_r in old_races:
-            clean_old_v = re.sub(r"[（\(].*?[）\)]", "", old_r.get("venue", "")).strip()
-            old_r["venue"] = clean_old_v or old_r.get("venueBase", "京都")
-            old_r["venueBase"] = old_r["venue"]
-            old_r.setdefault("shortRaceName", old_r.get("raceName", ""))
-            old_r = evaluate_and_build_1000yen_strategy(old_r)
-            races_out.append(old_r)
+        if day_races:
+            day_win5 = build_win5_prediction(day_races)
+            for r in day_races:
+                if "topPicks" in r:
+                    del r["topPicks"]
+            schedule_days.append({
+                "date": d_str,
+                "label": day_label,
+                "targetDate": t_date_disp,
+                "races": day_races,
+                "win5": day_win5,
+                "win5Strategy": day_win5.get("text", "")
+            })
 
-    win5_data = build_win5_prediction(races_out) if races_out else {}
-    for r in races_out:
-        if "topPicks" in r:
-            del r["topPicks"]
+    if schedule_days:
+        primary_day = schedule_days[0]
+        target_date_display = primary_day["targetDate"]
+        races_out = primary_day["races"]
+        win5_data = primary_day["win5"]
+    else:
+        target_date_display = datetime.datetime.now(JST).strftime("%Y年%m月%d日")
+        races_out = []
+        win5_data = {}
 
     now_str = datetime.datetime.now(JST).strftime("%Y-%m-%d %H:%M")
     final_json = {
@@ -976,15 +977,16 @@ def main():
         "results": stats_obj["allBetRaces"],
         "win5": win5_data,
         "win5Strategy": win5_data.get("text", ""),
-        "races": races_out
+        "races": races_out,
+        "scheduleDays": schedule_days
     }
 
     os.makedirs("data", exist_ok=True)
-    for path in out_paths:
+    for path in ("data/today.json", "today.json"):
         with open(path, "w", encoding="utf-8") as f:
             json.dump(final_json, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 完了！ 全{len(races_out)}レース ＋ 統計・印別複勝圏内率 ＋ WIN5 ＋ 展開シミュレーションを出力しました。")
+    print(f"✅ 完了！ {len(schedule_days)}日分のデータを出力しました。")
 
 
 if __name__ == "__main__":
