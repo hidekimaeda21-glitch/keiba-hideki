@@ -349,14 +349,41 @@ def fetch_realtime_odds(race_id):
 
 
 def parse_shutuba_page(race_id):
+    # 出走馬・頭数・確定馬番は公式出馬表(shutuba.html)を正として取得
+    url_basic = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
+    html = fetch_html(url_basic, default_enc="euc_jp")
+
+    # 過去走と通過順位は shutuba_past.html から馬名で紐づけて補完する
     url_past = f"https://race.netkeiba.com/race/shutuba_past.html?race_id={race_id}"
-    html = fetch_html(url_past, default_enc="euc_jp")
+    html_past = fetch_html(url_past, default_enc="euc_jp")
+
     if not html or "HorseList" not in html:
-        url_basic = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
-        html = fetch_html(url_basic, default_enc="euc_jp")
+        html = html_past
 
     if not html:
         return None
+
+    past_map = {}
+    if html_past and "HorseList" in html_past:
+        soup_past = BeautifulSoup(html_past, "html.parser")
+        for ptr in soup_past.select("tr.HorseList"):
+            p_name_el = ptr.select_one(".HorseName a, .Horse_Name a, .HorseName")
+            p_name = p_name_el.get_text(strip=True) if p_name_el else ""
+            if not p_name:
+                continue
+            p_runs = []
+            c_pos = []
+            for p_td in ptr.select("td.Past")[:3]:
+                p_txt = p_td.get_text(" ", strip=True)
+                if not p_txt:
+                    continue
+                rank_el = p_td.select_one(".Num")
+                rank_num = int(rank_el.get_text(strip=True)) if (rank_el and rank_el.get_text(strip=True).isdigit()) else 6
+                p_runs.append({"rank": rank_num, "summary": p_txt[:45]})
+                m_pass = re.search(r"(\d{1,2})-(\d{1,2})", p_txt)
+                if m_pass:
+                    c_pos.append(int(m_pass.group(1)))
+            past_map[p_name] = {"pastRuns": p_runs, "corner_positions": c_pos}
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -421,19 +448,7 @@ def parse_shutuba_page(race_id):
             except Exception:
                 parsed_odds = 0.0
 
-        past_tds = tr.select("td.Past")
-        past_runs = []
-        corner_positions = []
-        for p_td in past_tds[:3]:
-            p_txt = p_td.get_text(" ", strip=True)
-            if not p_txt:
-                continue
-            rank_el = p_td.select_one(".Num")
-            rank_num = int(rank_el.get_text(strip=True)) if (rank_el and rank_el.get_text(strip=True).isdigit()) else 6
-            past_runs.append({"rank": rank_num, "summary": p_txt[:45]})
-            m_pass = re.search(r"(\d{1,2})-(\d{1,2})", p_txt)
-            if m_pass:
-                corner_positions.append(int(m_pass.group(1)))
+        p_info = past_map.get(h_name, {"pastRuns": [], "corner_positions": []})
 
         raw_rows_data.append({
             "umaban": umaban,
@@ -441,8 +456,8 @@ def parse_shutuba_page(race_id):
             "name": h_name,
             "jockey": jockey,
             "parsed_odds": parsed_odds,
-            "pastRuns": past_runs,
-            "corner_positions": corner_positions
+            "pastRuns": p_info["pastRuns"],
+            "corner_positions": p_info["corner_positions"]
         })
 
     if len(raw_rows_data) < 5:
