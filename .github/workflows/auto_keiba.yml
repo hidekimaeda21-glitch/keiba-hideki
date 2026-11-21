@@ -2,12 +2,12 @@ name: Auto Keiba AI Predictor
 
 on:
   schedule:
-    # 金・土・日の夜 20:17 (日本時間) ＝ UTC 11:17
-    - cron: '17 11 * * 5,6,0'
-    # 土・日・月の朝 08:13 (日本時間) ＝ UTC 23:13 (金・土・日)
-    - cron: '13 23 * * 5,6,0'
-    # 土・日・月の午前 09:13 / 10:13 / 11:13 (日本時間) ＝ UTC 00:13 / 01:13 / 02:13
-    - cron: '13 0,1,2 * * 6,0,1'
+    # 金・土・日の夜 20:00〜20:55 (JST) ＝ UTC 11時台を5分おきに試行
+    - cron: '*/5 11 * * 5,6,0'
+    # 土・日・月の朝 08:00〜08:55 (JST) ＝ UTC 23時台を5分おきに試行
+    - cron: '*/5 23 * * 5,6,0'
+    # 土・日・月の午前 09:00〜11:55 (JST) ＝ UTC 0,1,2時台を5分おきに試行
+    - cron: '*/5 0,1,2 * * 6,0,1'
   workflow_dispatch:
 
 permissions:
@@ -22,21 +22,34 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 直近45分以内に更新済みかチェック（自動実行時のみ）
+        id: check_recent
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python3 -c 'import json,datetime,os; JST=datetime.timezone(datetime.timedelta(hours=9)); d=json.load(open("data/today.json",encoding="utf-8")) if os.path.exists("data/today.json") else {}; u=d.get("updatedAt",""); diff=(datetime.datetime.now(JST)-datetime.datetime.strptime(u,"%Y-%m-%d %H:%M").replace(tzinfo=JST)).total_seconds() if u else 9999; skip="true" if 0<=diff<2700 else "false"; print(f"updatedAt={u}, diff={int(diff)}s, skip={skip}"); open(os.environ["GITHUB_OUTPUT"],"a").write(f"skip={skip}\n")'
+
       - name: Pythonのセットアップ
+        if: steps.check_recent.outputs.skip != 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: 必要なライブラリのインストール
+        if: steps.check_recent.outputs.skip != 'true'
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
 
       - name: AI予想データ (today.json / stats.json) の生成・計算
+        if: steps.check_recent.outputs.skip != 'true'
         run: |
           python scripts/collect_races.py
 
       - name: 生成された全データファイルをGitHubへ自動保存・公開
+        if: steps.check_recent.outputs.skip != 'true'
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
