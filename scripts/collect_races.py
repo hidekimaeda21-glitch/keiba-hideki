@@ -329,18 +329,29 @@ def discover_all_target_days():
     return day_groups
 
 
-def fetch_official_win5_race_ids():
-    """netkeibaの公式WIN5ページから、対象5レースのrace_idを順番通りに取得する"""
-    url = "https://race.netkeiba.com/top/win5.html"
-    html = fetch_html(url, default_enc="euc_jp")
-    if not html:
-        return []
-    found = re.findall(r"race_id=(\d{12})", html)
-    unique_ordered = []
-    for rid in found:
-        if rid not in unique_ordered:
-            unique_ordered.append(rid)
-    return unique_ordered[:5] if len(unique_ordered) >= 5 else []
+def fetch_all_official_win5_sets():
+    """netkeibaの公式WIN5ページ（通常＋idx=0,1,2）から各開催日の対象5レースIDセットを取得する"""
+    win5_sets = []
+    urls = [
+        "https://race.netkeiba.com/top/win5.html",
+        "https://race.netkeiba.com/top/win5.html?idx=0",
+        "https://race.netkeiba.com/top/win5.html?idx=1",
+        "https://race.netkeiba.com/top/win5.html?idx=2",
+    ]
+    for url in urls:
+        html = fetch_html(url, default_enc="euc_jp")
+        if not html:
+            continue
+        found = re.findall(r"race_id=(\d{12})", html)
+        unique_ordered = []
+        for rid in found:
+            if rid not in unique_ordered:
+                unique_ordered.append(rid)
+        if len(unique_ordered) >= 5:
+            cand_set = unique_ordered[:5]
+            if cand_set not in win5_sets:
+                win5_sets.append(cand_set)
+    return win5_sets
 
 
 def fetch_realtime_odds(race_id):
@@ -817,7 +828,6 @@ def evaluate_and_build_1000yen_strategy(race_data):
     z_gap_1_2 = honmei["zScore"] - taikou["zScore"]
     z_gap_top2 = taikou["zScore"] - tanana["zScore"]
 
-    # 5パターンの買い目をレースごとのシミュレーション傾向で自動切り替え
     if honmei["simWinRate"] >= 28.0 and z_gap_1_2 >= 4.0 and len(opp_5) >= 4:
         strategy_tag = "1強突き抜け・単勝＆馬単＆三連複型 (計1,000円)"
         conf_rank = "S"
@@ -923,32 +933,28 @@ def evaluate_and_build_1000yen_strategy(race_data):
     return race_data
 
 
-def build_win5_prediction(races, official_win5_rids=None):
-    """公式WIN5対象レース(race_id)と一致する場合のみWIN5予想を構築する"""
+def build_win5_prediction(races, all_win5_sets=None):
     race_map = {r.get("raceId"): r for r in races}
     win5_races = []
 
-    if official_win5_rids and len(official_win5_rids) == 5:
-        matched = [race_map[rid] for rid in official_win5_rids if rid in race_map]
-        if len(matched) == 5:
-            win5_races = matched
+    # 1. 公式WIN5ページ(通常＋idx=0,1,2)のいずれかの5レースIDセットと一致すればそれを採用
+    if all_win5_sets:
+        for w5_rids in all_win5_sets:
+            matched = [race_map[rid] for rid in w5_rids if rid in race_map]
+            if len(matched) == 5:
+                win5_races = matched
+                break
 
+    # 2. 公式ページ未反映の未来日でも、12Rを除外し 9R〜11R から発走時刻順に5レースを抽出
     if not win5_races:
-        msg = "本日はJRAのWIN5発売はありません（日曜・対象開催日の日付タブを選択するとWIN5予想が表示されます）。"
-        return {
-            "title": "【WIN5対象外日】",
-            "summary": "WIN5対象外日",
-            "text": msg,
-            "lines": [msg],
-            "totalCombinations": 0,
-            "points": 0,
-            "unitYen": 100,
-            "estimatedCost": 0,
-            "budget": 0,
-            "concept": "",
-            "races": [],
-            "legs": []
-        }
+        r10_11 = [r for r in races if r.get("rNum") in (10, 11)]
+        if len(r10_11) >= 5:
+            r10_11.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 10)))
+            win5_races = r10_11[-5:]
+        else:
+            r9_11 = [r for r in races if r.get("rNum") in (9, 10, 11)]
+            r9_11.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 9)))
+            win5_races = r9_11[-5:] if len(r9_11) >= 5 else sorted(races, key=lambda x: x.get("startTime", "15:00"))[-5:]
 
     legs = []
     lines_text = []
@@ -1021,11 +1027,11 @@ def build_win5_prediction(races, official_win5_rids=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（複数日対応＋展開シミュレーション）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（複数日WIN5公式対応＋展開シミュレーション）を開始します...")
     stats_obj = build_complete_stats()
 
-    official_win5_rids = fetch_official_win5_race_ids()
-    print(f"  -> 公式WIN5対象ID: {official_win5_rids}")
+    all_win5_sets = fetch_all_official_win5_sets()
+    print(f"  -> 公式WIN5セット取得数: {len(all_win5_sets)}日分")
 
     day_groups = discover_all_target_days()
     schedule_days = []
@@ -1046,7 +1052,7 @@ def main():
             time.sleep(0.35)
 
         if day_races:
-            day_win5 = build_win5_prediction(day_races, official_win5_rids)
+            day_win5 = build_win5_prediction(day_races, all_win5_sets)
             for r in day_races:
                 if "topPicks" in r:
                     del r["topPicks"]
