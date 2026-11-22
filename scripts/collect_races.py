@@ -109,7 +109,7 @@ def patch_index_html_defaults(mark_defs):
                 rf"({re.escape(sym)}\s*{re.escape(jp)}.*?)(--%|(?:\d+\.\d+%))(.*?)(--/--|(?:\d+/\d+))",
                 re.DOTALL
             )
-            html, n_sub = pattern.subn(rf"\g<1>{r_val}%\g<3>{h_val}/{t_val}", html, count=1)
+            html, _ = pattern.subn(rf"\g<1>{r_val}%\g<3>{h_val}/{t_val}", html, count=1)
 
         if html != orig_html:
             with open("index.html", "w", encoding="utf-8") as f:
@@ -396,16 +396,44 @@ def parse_shutuba_page(race_id):
                 continue
             p_runs = []
             c_pos = []
-            for p_td in ptr.select("td.Past")[:3]:
+            for p_td in ptr.select("td.Past")[:5]:
                 p_txt = p_td.get_text(" ", strip=True)
                 if not p_txt:
                     continue
                 rank_el = p_td.select_one(".Num")
                 rank_num = int(rank_el.get_text(strip=True)) if (rank_el and rank_el.get_text(strip=True).isdigit()) else 6
-                p_runs.append({"rank": rank_num, "summary": p_txt[:45]})
+
+                # 距離 (例: 芝1600, ダ1400)
+                m_dist = re.search(r"(?:芝|ダ|障)\s*(\d{3,4})", p_txt)
+                dist_val = int(m_dist.group(1)) if m_dist else 0
+
+                # 走破タイム秒 (例: 1:34.5 -> 94.5)
+                m_time = re.search(r"(\d):(\d{2}\.\d)", p_txt)
+                time_sec = round(int(m_time.group(1)) * 60 + float(m_time.group(2)), 1) if m_time else 0.0
+
+                # 上がり3F (例: (34.2) — 2桁.1桁)
+                m_agari = re.search(r"\((\d{2}\.\d)\)", p_txt)
+                agari_val = float(m_agari.group(1)) if m_agari else 0.0
+
+                # 着差 (例: (0.2), (-0.1) — 1桁.1桁)
+                m_margin = re.search(r"\((-?\d\.\d)\)", p_txt)
+                margin_val = float(m_margin.group(1)) if m_margin else 0.3
+
+                # 1角通過順
                 m_pass = re.search(r"(\d{1,2})-(\d{1,2})", p_txt)
-                if m_pass:
-                    c_pos.append(int(m_pass.group(1)))
+                pass1_val = int(m_pass.group(1)) if m_pass else 0
+                if pass1_val > 0:
+                    c_pos.append(pass1_val)
+
+                p_runs.append({
+                    "rank": rank_num,
+                    "dist": dist_val,
+                    "timeSec": time_sec,
+                    "agari": agari_val,
+                    "margin": margin_val,
+                    "pass1": pass1_val,
+                    "summary": p_txt[:45]
+                })
             past_map[p_name] = {"pastRuns": p_runs, "corner_positions": c_pos}
 
     soup = BeautifulSoup(html, "html.parser")
@@ -541,16 +569,81 @@ def parse_shutuba_page(race_id):
     }
 
 
+def calc_pci(time_sec, agari, dist):
+    """
+    ペースチェンジ指数（PCI）を算出する。
+    PCI = ((走破タイム - 上がり3F) / 上がり3F) * (600 / (距離 - 600)) * 100
+    """
+    if time_sec <= 0 or agari <= 0 or dist <= 600 or time_sec <= agari:
+        return 50.0
+    pci = ((time_sec - agari) / agari) * (600.0 / (dist - 600.0)) * 100.0
+    return round(pci, 1)
+
+
 def calc_base_ability(h):
-    """オッズと過去3走実績から基礎能力値（62〜100点）を算出"""
-    odds = max(1.1, float(h.get("odds", 10.0)))
-    if h.get("pastRuns"):
-        ranks = [r["rank"] for r in h["pastRuns"]]
-        avg_rk = sum(ranks) / len(ranks)
-        past_bonus = max(-4.0, (7.5 - avg_rk) * 1.4)
-    else:
-        past_bonus = max(-3.0, 6.0 - math.log(odds) * 2.2)
-    return round(min(100.0, max(62.0, 92.0 - math.log(odds) * 4.5 + past_bonus * 0.7)), 1)
+    """
+    【①オッズ完全隔離 & ②PCI救出ボーナス】
+    オッズを完全に排除し、直近5走の加重着順・着差・上がり3F・PCI巻き返し期待から
+    純粋な基礎能力値（65.0〜95.0点）を算出する。
+    """
+    past_runs = h.get("pastRuns", [])
+    if not past_runs:
+        return 75.0
+
+    weights = [1.4, 1.1, 0.9, 0.7, 0.6]
+    w_sum = 0.0
+    rank_w_sum = 0.0
+    margin_w_sum = 0.0
+    agari_vals = []
+
+    for i, run in enumerate(past_runs[:5]):
+        w = weights[i] if i < len(weights) else 0.5
+        rk = min(18, max(1, int(run.get("rank", 6))))
+        mg = float(run.get("margin", 0.5))
+        ag = float(run.get("agari", 0.0))
+
+        w_sum += w
+        rank_w_sum += rk * w
+        margin_w_sum += mg * w
+        if 28.0 <= ag <= 46.0:
+            agari_vals.append(ag)
+
+    avg_rk = rank_w_sum / max(0.1, w_sum)
+    avg_mg = margin_w_sum / max(0.1, w_sum)
+
+    # 1. 加重平均着順ベースの能力（5.5着前後で80点、1着で90点前後）
+    rank_score = 80.0 + (5.5 - avg_rk) * 2.1
+
+    # 2. 着差補正（-0.2〜+2.5点程度）
+    margin_adj = max(-3.0, min(3.0, (0.5 - avg_mg) * 2.5))
+
+    # 3. 上がり3F補正（平均35.5秒を基準に±3.0点）
+    agari_adj = 0.0
+    if agari_vals:
+        avg_agari = sum(agari_vals) / len(agari_vals)
+        agari_adj = max(-3.0, min(3.0, (35.5 - avg_agari) * 1.5))
+
+    # 4. 前走PCIによる「展開負け実力馬」救出ボーナス
+    pci_bonus = 0.0
+    last_run = past_runs[0]
+    last_pci = calc_pci(
+        float(last_run.get("timeSec", 0.0)),
+        float(last_run.get("agari", 0.0)),
+        int(last_run.get("dist", 0))
+    )
+    last_rank = int(last_run.get("rank", 6))
+    last_pass1 = int(last_run.get("pass1", 0))
+    style = h.get("style", "")
+
+    if last_pci < 47.0 and ((1 <= last_pass1 <= 4) or style in ("逃げ", "先行")) and last_rank >= 5:
+        # 超ハイペース先行潰れの巻き返し期待
+        pci_bonus = min(3.0, 2.0 + (47.0 - last_pci) * 0.25)
+    elif last_pci > 53.0 and (last_pass1 >= 7 or style in ("差し", "追込")) and last_rank >= 4:
+        # ドスロー後方届かずの巻き返し期待
+        pci_bonus = min(2.8, 1.5 + (last_pci - 53.0) * 0.20)
+
+    raw_ability = rank_score + margin_adj + agari_adj + pci_bonus
+    return round(min(95.0, max(65.0, raw_ability)), 1)
 
 
 def simulate_race_monte_carlo(race_data, n_trials=1000):
@@ -653,6 +746,86 @@ def simulate_race_monte_carlo(race_data, n_trials=1000):
     return sim_stats, pace_pct
 
 
+def allocate_dutching_kelly(bet_groups, total_budget=1000):
+    """
+    【④ダッチング＋1/8ケリー傾斜配分】
+    オッズの逆数比率（ダッチング）と1/8ケリー基準（期待値に応じた傾斜）を組み合わせ、
+    100円単位で合計金額がぴったり total_budget（1,000円）になるよう最適配分する。
+    """
+    if not bet_groups:
+        return []
+
+    budget_units = max(1, int(total_budget // 100))
+    allocated = [dict(g) for g in bet_groups]
+
+    # 各グループの理論ウェイト（ダッチング逆数比率 × 1/8ケリー傾斜）を算出
+    weights = []
+    for g in allocated:
+        pts = max(1, int(g.get("pts", 1)))
+        o = max(1.05, float(g.get("est_odds", 2.0)))
+        p = min(0.95, max(0.005, float(g.get("est_prob", 0.1))))
+        ev = p * o
+
+        dutch_w = 1.0 / o
+        kelly_f = max(0.0, ((o - 1.0) * p - (1.0 - p)) / (o - 1.0)) / 8.0
+        tilt_mult = 1.0 + kelly_f * 12.0 + max(0.0, ev - 1.0) * 1.5
+
+        g["_pts"] = pts
+        g["_ev"] = ev
+        g["_weight"] = dutch_w * tilt_mult
+        g["unit_yen"] = 0
+        weights.append(g["_weight"])
+
+    sum_w = sum(weights) or 1.0
+
+    # 1. まず全グループに最低100円/点 を確保できるか確認（予算超過時はEV順で絞る）
+    remaining_units = budget_units
+    for g in sorted(allocated, key=lambda x: x["_ev"], reverse=True):
+        if remaining_units >= g["_pts"]:
+            g["unit_yen"] = 100
+            remaining_units -= g["_pts"]
+
+    # 2. 残余予算（100円単位）を理想配分との乖離が大きいグループへ傾斜配分
+    while remaining_units > 0:
+        best_g = None
+        best_score = -1e9
+        for g in allocated:
+            if g["_pts"] <= remaining_units and g["unit_yen"] > 0:
+                target_units = budget_units * (g["_weight"] / sum_w)
+                current_units = (g["unit_yen"] // 100) * g["_pts"]
+                gap_per_pt = (target_units - current_units) / g["_pts"]
+                if gap_per_pt > best_score:
+                    best_score = gap_per_pt
+                    best_g = g
+        if best_g is not None:
+            best_g["unit_yen"] += 100
+            remaining_units -= best_g["_pts"]
+        else:
+            # 点数の都合で割り切れない端数は最小点数(1点)かつ最高EVグループへ吸収
+            fit_cands = [g for g in allocated if g["_pts"] <= remaining_units]
+            if fit_cands:
+                top_g = max(fit_cands, key=lambda x: (x["_ev"], -x["_pts"]))
+                top_g["unit_yen"] += 100
+                remaining_units -= top_g["_pts"]
+            else:
+                break
+
+    # 3. 100円未満端数で予算が余った場合の最終微調整（1点買いがあれば加算）
+    if remaining_units > 0:
+        single_pts = [g for g in allocated if g["_pts"] == 1]
+        if single_pts:
+            top_single = max(single_pts, key=lambda x: x["_ev"])
+            top_single["unit_yen"] += remaining_units * 100
+            remaining_units = 0
+
+    for g in allocated:
+        g.pop("_pts", None)
+        g.pop("_ev", None)
+        g.pop("_weight", None)
+
+    return allocated
+
+
 def evaluate_and_build_1000yen_strategy(race_data):
     horses = race_data["horses"]
     valid_horses = []
@@ -693,6 +866,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
     sim_stats, pace_pct = simulate_race_monte_carlo(race_data, n_trials=1000)
     sim_summary = f"展開試走1,000回(ハイ{pace_pct['high']}%/平均{pace_pct['middle']}%/スロー{pace_pct['slow']}%)"
 
+    # オッズ非依存の基礎能力値＋シミュレーション結果からZスコアを算出
     raw_scores = []
     for h in horses:
         time_idx = calc_base_ability(h)
@@ -722,11 +896,13 @@ def evaluate_and_build_1000yen_strategy(race_data):
         h["_w"] = w
         exp_weights.append(w)
 
+    # シミュレーション後のこの段階でのみオッズと掛け合わせて期待値(EV)を算出
     sum_w = sum(exp_weights) or 1.0
     for h in horses:
         base_prob = h["_w"] / sum_w
         sim_win_prob = sim_stats.get(h["num"], {}).get("winProb", base_prob)
         est_prob = base_prob * 0.4 + sim_win_prob * 0.6
+        h["_estProb"] = min(0.80, max(0.005, est_prob))
         eff_odds = min(h["odds"], 35.0 + math.sqrt(max(0.0, h["odds"] - 35.0)))
         raw_ev = est_prob * eff_odds * 0.78 + (0.20 if 6.0 <= h["odds"] <= 35.0 else 0.05)
         h["ev"] = round(min(1.65, max(0.65, raw_ev)), 2)
@@ -812,123 +988,197 @@ def evaluate_and_build_1000yen_strategy(race_data):
         h["markSpeed"] = m_idx
         h["markPace"] = m_pc
         h["marks"] = {"jemi": m_jemi, "ana": m_ana, "index": m_idx, "pace": m_pc}
-        if "_w" in h:
-            del h["_w"]
 
+    # --- 買い目グループ生成と合成オッズ・合成確率算出 ---
     h1, h2, h3, hs = honmei["num"], taikou["num"], tanana["num"], star_horse["num"]
-    h_others = [x["num"] for x in himo_horses]
+    h4 = himo_horses[0]["num"] if himo_horses else hs
 
-    opp_5 = []
-    for cand_n in [h3, hs] + h_others + [x["num"] for x in ranked]:
-        if cand_n not in (h1, h2) and cand_n not in opp_5:
-            opp_5.append(cand_n)
-        if len(opp_5) == 5:
-            break
+    horse_by_num = {h["num"]: h for h in horses}
 
+    def _op(num):
+        hh = horse_by_num.get(num, honmei)
+        return float(hh["odds"]), float(hh.get("_estProb", 0.05))
+
+    def _combo_quinella(na, nb):
+        oa, pa = _op(na)
+        ob, pb = _op(nb)
+        return max(1.5, oa * ob * 0.35), min(0.65, max(0.005, (pa * pb) * 2.2))
+
+    def _combo_exacta(na, nb):
+        oa, pa = _op(na)
+        ob, pb = _op(nb)
+        return max(2.0, oa * ob * 0.65), min(0.55, max(0.004, (pa * pb) * 1.3))
+
+    def _combo_wide(na, nb):
+        oa, pa = _op(na)
+        ob, pb = _op(nb)
+        return max(1.2, oa * ob * 0.14), min(0.75, max(0.015, (pa * pb) * 4.5))
+
+    def _combo_trio(na, nb, nc):
+        oa, pa = _op(na)
+        ob, pb = _op(nb)
+        oc, pc = _op(nc)
+        return max(3.0, oa * ob * oc * 0.12), min(0.45, max(0.003, (pa * pb * pc) * 12.0))
+
+    def _make_group(name, combos):
+        pts = max(1, len(combos))
+        inv_sum = sum(1.0 / max(c[0], 1.01) for c in combos)
+        syn_odds = round(1.0 / inv_sum, 2) if inv_sum > 0 else 2.0
+        syn_prob = round(min(0.85, sum(c[1] for c in combos)), 4)
+        return {
+            "name": name,
+            "pts": pts,
+            "est_odds": syn_odds,
+            "est_prob": syn_prob,
+        }
+
+    def _uniq(seq):
+        out = []
+        for x in seq:
+            if x not in out:
+                out.append(x)
+        return out
+
+    ability_gap = honmei["indexScore"] - taikou["indexScore"]
     z_gap_1_2 = honmei["zScore"] - taikou["zScore"]
-    z_gap_top2 = taikou["zScore"] - tanana["zScore"]
+    o1, p1 = _op(h1)
 
-    if honmei["simWinRate"] >= 28.0 and z_gap_1_2 >= 4.0 and len(opp_5) >= 4:
-        strategy_tag = "1強突き抜け・単勝＆馬単＆三連複型 (計1,000円)"
-        conf_rank = "S"
-        conf_score = 95
-        opp4_str = ", ".join(str(x) for x in [h2, h3, hs] + [n for n in opp_5 if n not in (h2, h3, hs)][:1])
-        ai_buy = (
-            f"【単勝本線】{h1} (1点/200円) / "
-            f"【馬単1着固定】{h1} → {h2}, {h3} (2点/各100円) / "
-            f"【三連複1頭軸】{h1} - {opp4_str} (6点/各100円) [計9点/1,000円固定]"
-        )
+    bet_groups = []
+    if n_horses <= 9:
+        strategy_name = "少頭数・堅実絞込型"
+        conf_rank, conf_score = "A", 91
+        trio_opps = _uniq([x for x in [h3, h4, hs] if x not in (h1, h2)])[:2] or [h3]
+        bet_groups = [
+            _make_group(f"【馬単本線】{h1} → {h2}", [_combo_exacta(h1, h2)]),
+            _make_group(f"【馬連抑え】{h1} - {h3}", [_combo_quinella(h1, h3)]),
+            _make_group(
+                f"【三連複F】{h1} - {h2} - {','.join(str(x) for x in trio_opps)}",
+                [_combo_trio(h1, h2, x) for x in trio_opps],
+            ),
+        ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。試走勝率{honmei['simWinRate']}%・3着内率{honmei['simPlaceRate']}%と能力が抜けた◎{h1}番{honmei['name']}の1強戦。"
-            f"【単勝】【馬単1着固定】で頭から狙いつつ、【三連複1頭軸】で3着穴の☆{hs}番まで押さえる強気布陣。"
+            f"展開予測は【{pace_label} / {sim_summary}】。少頭数戦のため点数を絞り、"
+            f"◎{h1}番{honmei['name']}と○{h2}番を軸に【馬単本線】と【馬連・三連複】へ期待値傾斜配分。"
         )
-    elif z_gap_top2 >= 3.2 and honmei["odds"] <= 7.5 and taikou["odds"] <= 11.0 and len(opp_5) >= 5:
-        strategy_tag = "2強鉄板・タテ目穴ケア型 (計1,000円)"
-        conf_rank = "A"
-        conf_score = 92
-        opp_str = ", ".join(str(x) for x in opp_5[:5])
-        ai_buy = (
-            f"【馬連本線】{h1} - {h2} (1点/300円) / "
-            f"【三連複2頭軸】{h1},{h2} - {opp_str} (5点/各100円) / "
-            f"【馬連タテ目】{h2} - {h3} (1点/100円) / "
-            f"【ワイド穴】{h1} - {hs} (1点/100円) [計8点/1,000円固定]"
-        )
+    elif (ability_gap >= 4.0 or z_gap_1_2 >= 4.0) and o1 <= 3.5:
+        strategy_name = "1強・鉄板勝負型"
+        conf_rank, conf_score = "S", 95
+        exacta_opps = _uniq([x for x in [h2, h3] if x != h1])[:2]
+        trio_pool = _uniq([x for x in [h2, h3, hs, h4] if x != h1])[:3]
+        trio_combos = []
+        for i in range(len(trio_pool)):
+            for j in range(i + 1, len(trio_pool)):
+                trio_combos.append(_combo_trio(h1, trio_pool[i], trio_pool[j]))
+        bet_groups = [
+            _make_group(f"【単勝本線】{h1}", [(max(1.1, o1), p1)]),
+            _make_group(
+                f"【馬単1着固定】{h1} → {','.join(str(x) for x in exacta_opps)}",
+                [_combo_exacta(h1, x) for x in exacta_opps],
+            ),
+            _make_group(
+                f"【三連複1頭軸】{h1} - {','.join(str(x) for x in trio_pool)}",
+                trio_combos or [_combo_trio(h1, h2, h3)],
+            ),
+        ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。能力・期待値ともに抜けた◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)と○{h2}番の2強が強力。"
-            f"【馬連本線】300円で厚く利益を狙いつつ、【三連複2頭軸】と特注穴馬☆{hs}番への【ワイド穴】・【馬連タテ目】まで1,000円内で完全網羅。"
+            f"展開予測は【{pace_label} / {sim_summary}】。能力指数{honmei['indexScore']}・試走勝率{honmei['simWinRate']}%の"
+            f"◎{h1}番{honmei['name']}の1強戦。【単勝】【馬単】に厚く資金を配分しつつ【三連複1頭軸】で高配当も抑える強気布陣。"
         )
-    elif pace_pct["slow"] >= 35 or pace_label == "先行有利スローペース":
-        strategy_tag = "スロー前残り・先行BOX重視型 (計1,000円)"
-        conf_rank = "A-"
-        conf_score = 89
-        box4 = []
-        for x in [h1, h2, h3, hs] + opp_5:
-            if x not in box4:
-                box4.append(x)
-            if len(box4) == 4:
-                break
-        box4_str = ", ".join(str(x) for x in box4)
-        ai_buy = (
-            f"【ワイド本線】{h1} - {h2} (1点/300円) / "
-            f"【馬連BOX】{h1}, {h2}, {h3} (3点/各100円) / "
-            f"【三連複BOX】{box4_str} (4点/各100円) [計8点/1,000円固定]"
-        )
+    elif z_gap_1_2 < 4.0 and o1 <= 6.5 and taikou["odds"] <= 11.0:
+        strategy_name = "2強対決・本線信頼型"
+        conf_rank, conf_score = "A", 92
+        umaren_opps = _uniq([x for x in [h3, hs] if x != h1])[:2]
+        trio_opps = _uniq([x for x in [h3, hs, h4] if x not in (h1, h2)])[:3]
+        bet_groups = [
+            _make_group(f"【馬連本線】{h1} - {h2}", [_combo_quinella(h1, h2)]),
+            _make_group(
+                f"【馬連抑え】{h1} - {','.join(str(x) for x in umaren_opps)}",
+                [_combo_quinella(h1, x) for x in umaren_opps],
+            ),
+            _make_group(
+                f"【三連複2頭軸】{h1},{h2} - {','.join(str(x) for x in trio_opps)}",
+                [_combo_trio(h1, h2, x) for x in trio_opps],
+            ),
+        ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。スローペースで前が残る公算が大きく、好位から運べる◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)を中心に"
-            f"【馬連BOX】と【三連複BOX】で先行勢の粘り込みを厚くカバーする構成。"
+            f"展開予測は【{pace_label} / {sim_summary}】。◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)と"
+            f"○{h2}番の2強が強力。【馬連本線】にダッチング＆ケリー基準で厚く張り、【三連複2頭軸】で穴馬☆{hs}番の絡みも網羅。"
         )
-    elif pace_pct["high"] >= 55 and honmei["odds"] >= 5.0:
-        strategy_tag = "ハイペース差し・高期待値穴狙い型 (計1,000円)"
-        conf_rank = "B+"
-        conf_score = 88
-        opp_4 = []
-        for cand_n in [h2, h3, hs] + opp_5:
-            if cand_n != h1 and cand_n not in opp_4:
-                opp_4.append(cand_n)
-            if len(opp_4) == 4:
-                break
-        opp4_str = ", ".join(str(x) for x in opp_4)
-        ai_buy = (
-            f"【ワイド本線】{h1} - {h2} (1点/200円) / "
-            f"【馬連流し】{h1} - {h2}, {hs} (2点/各100円) / "
-            f"【三連複1頭軸】{h1} - {opp4_str} (6点/各100円) [計9点/1,000円固定]"
-        )
+    elif o1 >= 7.0 or star_horse["ev"] >= 1.20 or pace_pct["high"] >= 55:
+        strategy_name = "波乱・高配当穴狙い型"
+        conf_rank, conf_score = "B+", 88
+        wide_opps = _uniq([x for x in [h2, h3, hs] if x != h1])[:3]
+        ana_opps = _uniq([x for x in [hs, h4] if x != h1])[:2]
+        bet_groups = [
+            _make_group(f"【単勝穴】{h1}", [(max(1.5, o1), p1)]),
+            _make_group(
+                f"【ワイド本線】{h1} - {','.join(str(x) for x in wide_opps)}",
+                [_combo_wide(h1, x) for x in wide_opps],
+            ),
+            _make_group(
+                f"【馬連穴】{h1} - {','.join(str(x) for x in ana_opps)}",
+                [_combo_quinella(h1, x) for x in ana_opps],
+            ),
+        ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。先行争いが激しくなりやすく、期待値(EV:{honmei['ev']}・試走3着内率{honmei['simPlaceRate']}%)トップの◎{h1}番{honmei['name']}を軸に抜擢。"
-            f"【ワイド本線】200円で回収ラインを確保しながら、穴党AI推奨の☆{hs}番を絡めた【馬連流し】と【三連複1頭軸】で高配当を狙う。"
+            f"展開予測は【{pace_label} / {sim_summary}】。波乱含みの一戦で、期待値EV:{honmei['ev']}の◎{h1}番{honmei['name']}から勝負。"
+            f"【ワイド本線】で回収ラインを確保しつつ、【単勝穴】【馬連穴】に傾斜配分して一撃高配当を狙う。"
         )
     else:
-        strategy_tag = "1頭軸フォーメーション・バランス型 (計1,000円)"
-        conf_rank = "A"
-        conf_score = 90
-        col3_list = []
-        for cand_n in [h2, h3, hs] + opp_5:
-            if cand_n != h1 and cand_n not in col3_list:
-                col3_list.append(cand_n)
-            if len(col3_list) == 5:
-                break
-        col3_str = ", ".join(str(x) for x in col3_list)
-        ai_buy = (
-            f"【馬連本線】{h1} - {h2} (1点/200円) / "
-            f"【馬連押さえ】{h1} - {h3} (1点/100円) / "
-            f"【三連複F】{h1} ✕ {h2},{h3} ✕ {col3_str} (7点/各100円) [計9点/1,000円固定]"
-        )
+        strategy_name = "中穴・期待値バランス型"
+        conf_rank, conf_score = "A-", 90
+        umaren_opps = _uniq([x for x in [h2, h3] if x != h1])[:2]
+        trio_opps = _uniq([x for x in [h3, hs, h4] if x not in (h1, h2)])[:3]
+        bet_groups = [
+            _make_group(
+                f"【馬連本線】{h1} - {','.join(str(x) for x in umaren_opps)}",
+                [_combo_quinella(h1, x) for x in umaren_opps],
+            ),
+            _make_group(f"【ワイド穴】{h1} - {hs}", [_combo_wide(h1, hs)]),
+            _make_group(
+                f"【三連複2頭軸】{h1},{h2} - {','.join(str(x) for x in trio_opps)}",
+                [_combo_trio(h1, h2, x) for x in trio_opps],
+            ),
+        ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。安定感抜群の◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)を1頭軸に据え、"
-            f"2列目に○{h2}番・▲{h3}番を配置した【三連複フォーメーション(7点)】が主砲。○が崩れても▲と穴馬☆{hs}番の台頭で高配当を拾う1,000円布陣。"
+            f"展開予測は【{pace_label} / {sim_summary}】。安定感の高い◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)を軸に、"
+            f"【馬連本線】と特注☆{hs}番への【ワイド穴】・【三連複2頭軸】へ期待値に応じて資金を傾斜配分。"
         )
+
+    # 1,000円傾斜配分を実行
+    allocated_groups = allocate_dutching_kelly(bet_groups, total_budget=1000)
+
+    buy_parts = []
+    total_pts = 0
+    total_yen = 0
+    for g in allocated_groups:
+        u_yen = int(g.get("unit_yen", 0))
+        pts = int(g.get("pts", 1))
+        if u_yen <= 0 or pts <= 0:
+            continue
+        buy_parts.append(f"{g['name']} ({pts}点/{u_yen}円)")
+        total_pts += pts
+        total_yen += pts * u_yen
+
+    ai_buy = " / ".join(buy_parts) + f" [計{total_pts}点/{total_yen:,}円]" if buy_parts else f"【単勝本線】{h1} (1点/1000円)"
+    strategy_tag = f"{strategy_name} (計{total_yen:,}円)"
+
+    for h in horses:
+        h.pop("_w", None)
+        h.pop("_estProb", None)
 
     clean_v = re.sub(r"[（\(].*?[）\)]", "", race_data.get("venue", "")).strip()
     race_data["venue"] = clean_v or race_data.get("venueBase", "京都")
 
     race_data["horses"] = sorted(horses, key=lambda x: x["num"])
+    race_data["strategyName"] = strategy_name
     race_data["strategyTag"] = strategy_tag
     race_data["confidence"] = conf_rank
     race_data["confidenceScore"] = conf_score
     race_data["aiSummary"] = comment
     race_data["aiComment"] = comment
     race_data["aiBuy"] = ai_buy
-    race_data["budget"] = 1000
+    race_data["budget"] = total_yen or 1000
     race_data["topPicks"] = [honmei, taikou, tanana]
     return race_data
 
