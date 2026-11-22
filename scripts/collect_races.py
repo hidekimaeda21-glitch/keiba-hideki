@@ -387,12 +387,14 @@ def parse_shutuba_page(race_id):
         return None
 
     past_map = {}
-    if html_past and "HorseList" in html_past:
+    if html_past and ("Shutuba_Past5_Table" in html_past or "HorseList" in html_past or "Past" in html_past):
         soup_past = BeautifulSoup(html_past, "html.parser")
-        for ptr in soup_past.select("tr.HorseList"):
-            p_name_el = ptr.select_one(".HorseName a, .Horse_Name a, .HorseName")
+        past_rows = soup_past.select("table.Shutuba_Past5_Table tbody tr, table.Shutuba_Past5_Table tr, tr.HorseList")
+        for ptr in past_rows:
+            p_name_el = ptr.select_one(".Horse02 a, .HorseName a, .Horse_Name a, .HorseName, .Horse_Info a")
             p_name = p_name_el.get_text(strip=True) if p_name_el else ""
-            if not p_name:
+            p_name_key = re.sub(r"\s+", "", p_name)
+            if not p_name_key:
                 continue
             p_runs = []
             c_pos = []
@@ -400,8 +402,16 @@ def parse_shutuba_page(race_id):
                 p_txt = p_td.get_text(" ", strip=True)
                 if not p_txt:
                     continue
+
+                # 着順取得（.Num または .Data01 span[1]）
+                rank_num = 6
                 rank_el = p_td.select_one(".Num")
-                rank_num = int(rank_el.get_text(strip=True)) if (rank_el and rank_el.get_text(strip=True).isdigit()) else 6
+                if rank_el and rank_el.get_text(strip=True).isdigit():
+                    rank_num = int(rank_el.get_text(strip=True))
+                else:
+                    d1_spans = p_td.select(".Data01 span")
+                    if len(d1_spans) >= 2 and d1_spans[1].get_text(strip=True).isdigit():
+                        rank_num = int(d1_spans[1].get_text(strip=True))
 
                 # 距離 (例: 芝1600, ダ1400)
                 m_dist = re.search(r"(?:芝|ダ|障)\s*(\d{3,4})", p_txt)
@@ -434,7 +444,10 @@ def parse_shutuba_page(race_id):
                     "pass1": pass1_val,
                     "summary": p_txt[:45]
                 })
-            past_map[p_name] = {"pastRuns": p_runs, "corner_positions": c_pos}
+            if p_runs:
+                past_map[p_name_key] = {"pastRuns": p_runs, "corner_positions": c_pos}
+
+    print(f"  -> {race_id}: pastRuns取得 {len(past_map)}頭")
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -499,7 +512,8 @@ def parse_shutuba_page(race_id):
             except Exception:
                 parsed_odds = 0.0
 
-        p_info = past_map.get(h_name, {"pastRuns": [], "corner_positions": []})
+        h_name_key = re.sub(r"\s+", "", h_name)
+        p_info = past_map.get(h_name_key, {"pastRuns": [], "corner_positions": []})
 
         raw_rows_data.append({
             "umaban": umaban,
@@ -614,7 +628,7 @@ def calc_base_ability(h):
     # 1. 加重平均着順ベースの能力（5.5着前後で80点、1着で90点前後）
     rank_score = 80.0 + (5.5 - avg_rk) * 2.1
 
-    # 2. 着差補正（-0.2〜+2.5点程度）
+    # 2. 着差補正（-3.0〜+3.0点）
     margin_adj = max(-3.0, min(3.0, (0.5 - avg_mg) * 2.5))
 
     # 3. 上がり3F補正（平均35.5秒を基準に±3.0点）
@@ -758,7 +772,6 @@ def allocate_dutching_kelly(bet_groups, total_budget=1000):
     budget_units = max(1, int(total_budget // 100))
     allocated = [dict(g) for g in bet_groups]
 
-    # 各グループの理論ウェイト（ダッチング逆数比率 × 1/8ケリー傾斜）を算出
     weights = []
     for g in allocated:
         pts = max(1, int(g.get("pts", 1)))
@@ -778,14 +791,12 @@ def allocate_dutching_kelly(bet_groups, total_budget=1000):
 
     sum_w = sum(weights) or 1.0
 
-    # 1. まず全グループに最低100円/点 を確保できるか確認（予算超過時はEV順で絞る）
     remaining_units = budget_units
     for g in sorted(allocated, key=lambda x: x["_ev"], reverse=True):
         if remaining_units >= g["_pts"]:
             g["unit_yen"] = 100
             remaining_units -= g["_pts"]
 
-    # 2. 残余予算（100円単位）を理想配分との乖離が大きいグループへ傾斜配分
     while remaining_units > 0:
         best_g = None
         best_score = -1e9
@@ -801,7 +812,6 @@ def allocate_dutching_kelly(bet_groups, total_budget=1000):
             best_g["unit_yen"] += 100
             remaining_units -= best_g["_pts"]
         else:
-            # 点数の都合で割り切れない端数は最小点数(1点)かつ最高EVグループへ吸収
             fit_cands = [g for g in allocated if g["_pts"] <= remaining_units]
             if fit_cands:
                 top_g = max(fit_cands, key=lambda x: (x["_ev"], -x["_pts"]))
@@ -810,7 +820,6 @@ def allocate_dutching_kelly(bet_groups, total_budget=1000):
             else:
                 break
 
-    # 3. 100円未満端数で予算が余った場合の最終微調整（1点買いがあれば加算）
     if remaining_units > 0:
         single_pts = [g for g in allocated if g["_pts"] == 1]
         if single_pts:
@@ -886,7 +895,8 @@ def evaluate_and_build_1000yen_strategy(race_data):
         raw_scores.append(total_score)
 
     mean_sc = sum(raw_scores) / len(raw_scores)
-    std_sc = math.sqrt(sum((x - mean_sc) ** 2 for x in raw_scores) / max(1, len(raw_scores))) or 1.0
+    raw_std = math.sqrt(sum((x - mean_sc) ** 2 for x in raw_scores) / max(1, len(raw_scores)))
+    std_sc = max(raw_std, 2.5)  # 能力差が小さい新馬戦等でEVが異常値化するのを防止
 
     exp_weights = []
     for h in horses:
