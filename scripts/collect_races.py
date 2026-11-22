@@ -896,53 +896,58 @@ def evaluate_and_build_1000yen_strategy(race_data):
 
     mean_sc = sum(raw_scores) / len(raw_scores)
     raw_std = math.sqrt(sum((x - mean_sc) ** 2 for x in raw_scores) / max(1, len(raw_scores)))
-    std_sc = max(raw_std, 2.5)  # 能力差が小さい新馬戦等でEVが異常値化するのを防止
+    std_sc = max(raw_std, 2.5)
 
     exp_weights = []
     for h in horses:
         z = (h["totalScore"] - mean_sc) / std_sc
         h["zScore"] = round(50.0 + z * 10.0, 1)
-        w = math.exp(z * 1.15)
+        w = math.exp(z * 1.55)
         h["_w"] = w
         exp_weights.append(w)
 
-    # シミュレーション後のこの段階でのみオッズと掛け合わせて期待値(EV)を算出
+    # シミュレーション後のこの段階でのみオッズと掛け合わせて期待値(EV)を算出（穴馬バイアスを撤廃）
     sum_w = sum(exp_weights) or 1.0
     for h in horses:
         base_prob = h["_w"] / sum_w
         sim_win_prob = sim_stats.get(h["num"], {}).get("winProb", base_prob)
-        est_prob = base_prob * 0.4 + sim_win_prob * 0.6
+        est_prob = base_prob * 0.45 + sim_win_prob * 0.55
         h["_estProb"] = min(0.80, max(0.005, est_prob))
         eff_odds = min(h["odds"], 35.0 + math.sqrt(max(0.0, h["odds"] - 35.0)))
-        raw_ev = est_prob * eff_odds * 0.78 + (0.20 if 6.0 <= h["odds"] <= 35.0 else 0.05)
-        h["ev"] = round(min(1.65, max(0.65, raw_ev)), 2)
+        raw_ev = est_prob * eff_odds * 0.80
+        h["ev"] = round(min(1.65, max(0.60, raw_ev)), 2)
 
-    ranked = sorted(horses, key=lambda x: (x["totalScore"] + (0.8 if x["ev"] >= 1.05 else 0.0)), reverse=True)
-    if len(ranked) >= 2 and ranked[0]["ev"] < 0.88:
-        for cand_i in range(1, min(3, len(ranked))):
-            if ranked[cand_i]["ev"] >= 0.98 and ranked[cand_i]["simPlaceRate"] >= 20.0:
-                ranked[0], ranked[cand_i] = ranked[cand_i], ranked[0]
-                break
+    # ◎○▲は純粋な能力＋展開（totalScore）の順で選出
+    ranked = sorted(horses, key=lambda x: x["totalScore"], reverse=True)
+    if len(ranked) >= 2 and ranked[0]["ev"] < 0.70 and (ranked[0]["totalScore"] - ranked[1]["totalScore"]) <= 1.5:
+        if ranked[1]["ev"] >= 0.90 and ranked[1]["simPlaceRate"] >= 20.0:
+            ranked[0], ranked[1] = ranked[1], ranked[0]
 
     honmei = ranked[0]
     taikou = ranked[1] if len(ranked) > 1 else ranked[0]
     tanana = ranked[2] if len(ranked) > 2 else taikou
 
+    # ☆（穴）は4番手以降から高期待値・展開向きを選出
     remaining = ranked[3:] if len(ranked) > 3 else []
     ana_candidates = [
         h for h in remaining
-        if 5.5 <= h["odds"] <= 65.0 and (h["ev"] >= 1.02 or pace_favor.get(h.get("style", ""), 0) > 1.0)
+        if 5.0 <= h["odds"] <= 65.0 and (h["ev"] >= 1.00 or pace_favor.get(h.get("style", ""), 0) > 1.0)
     ]
     if not ana_candidates:
         ana_candidates = sorted(remaining, key=lambda x: x["ev"], reverse=True)
 
     star_horse = ana_candidates[0] if ana_candidates else (ranked[3] if len(ranked) > 3 else tanana)
     himo_pool = [h for h in ranked[3:] if h["num"] != star_horse["num"]]
-    himo_horses = himo_pool[:3]
+
+    # 上位人気馬（単勝4.5倍以下かつ能力上位6頭以内）が漏れそうなら△で確実に押さえる
+    top6_nums = {h["num"] for h in ranked[:6]}
+    strong_favs = [h for h in himo_pool if h["odds"] <= 4.5 and h["num"] in top6_nums]
+    other_himos = [h for h in himo_pool if h not in strong_favs]
+    himo_horses = (strong_favs + other_himos)[:3]
 
     by_index = sorted(horses, key=lambda x: x["indexScore"], reverse=True)
     by_pace = sorted(horses, key=lambda x: (x.get("simPlaceRate", 0) * 0.4 + pace_favor.get(x.get("style", ""), 0) * 2.0 + x["indexScore"]), reverse=True)
-    by_ana = sorted(horses, key=lambda x: (x["ev"] + (0.3 if 8.0 <= x["odds"] <= 45.0 else 0.0)), reverse=True)
+    by_ana = sorted(horses, key=lambda x: x["ev"], reverse=True)
 
     for h in horses:
         n = h["num"]
