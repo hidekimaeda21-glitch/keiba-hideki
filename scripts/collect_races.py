@@ -22,6 +22,8 @@ VENUE_MAP = {
 
 WEEKDAY_JP = ["月", "火", "水", "木", "金", "土", "日"]
 
+HORSE_FEATURES_PATH = "data/horse_features.json"
+
 # 過去の的中レース明細データ（回収率・的中率の『詳細』『明細』タップ時に表示される実績データ）
 HISTORICAL_HITS = [
     {"date": "2026-11-15", "venue": "京都11R", "race": "京都11R デイリー杯2歳S", "raceName": "デイリー杯2歳S (G2)", "betType": "三連複・馬連", "type": "三連複・馬連", "result": "的中", "hitMark": "◎-○-☆", "marks": "◎-○-☆", "invest": 1000, "cost": 1000, "payout": 14800, "return": 14800, "roi": 1480, "combo": "2-6-11"},
@@ -35,6 +37,135 @@ HISTORICAL_HITS = [
     {"date": "2026-10-25", "venue": "京都11R", "race": "京都11R 菊花賞", "raceName": "菊花賞 (G1)", "betType": "馬連本線・三連複2頭軸", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-△", "marks": "◎-○-△", "invest": 1000, "cost": 1000, "payout": 16400, "return": 16400, "roi": 1640, "combo": "9-13-4"},
     {"date": "2026-10-18", "venue": "京都11R", "race": "京都11R 秋華賞", "raceName": "秋華賞 (G1)", "betType": "馬連本線・三連複F", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-▲", "marks": "◎-○-▲", "invest": 1000, "cost": 1000, "payout": 12800, "return": 12800, "roi": 1280, "combo": "5-14-2"}
 ]
+
+
+def _norm_horse_name(name):
+    return re.sub(r"\s+", "", str(name or "")).strip()
+
+
+def load_horse_features(path=HORSE_FEATURES_PATH):
+    """
+    馬別定性データベース（data/horse_features.json）を安全に読み込む。
+    ファイル未作成時は空辞書 {} で初期化し、エラーで落ちない設計。
+    """
+    if not os.path.exists(path):
+        try:
+            os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump({}, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"horse_features init skip: {e}")
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            raw = json.load(f)
+        if not isinstance(raw, dict):
+            return {}
+        normalized = {}
+        for k, v in raw.items():
+            if isinstance(v, dict):
+                normalized[_norm_horse_name(k)] = v
+        print(f"  -> 馬別定性DB読み込み完了: {len(normalized)}頭 ({path})")
+        return normalized
+    except Exception as e:
+        print(f"horse_features load warning ({path}): {e}")
+        return {}
+
+
+def upsert_horse_feature(
+    horse_name,
+    traffic_disadvantage=0,
+    corner_radius=1.0,
+    finish_effort=0.0,
+    video_bonus=None,
+    memo="",
+    path=HORSE_FEATURES_PATH,
+):
+    """レース動画・パトロール・短評から抽出した定性データを軽量JSONへ登録・更新するヘルパー"""
+    db = {}
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                loaded = json.load(f)
+                if isinstance(loaded, dict):
+                    db = loaded
+        except Exception:
+            db = {}
+
+    key = _norm_horse_name(horse_name)
+    entry = {
+        "traffic_disadvantage": int(traffic_disadvantage),
+        "corner_radius": float(corner_radius),
+        "finish_effort": float(finish_effort),
+        "memo": str(memo or "").strip(),
+        "updated_at": datetime.datetime.now(JST).strftime("%Y-%m-%d"),
+    }
+    if video_bonus is not None:
+        entry["video_bonus"] = round(min(4.0, max(-1.5, float(video_bonus))), 2)
+    else:
+        entry["video_bonus"] = calc_video_qualitative_bonus(entry)[0]
+
+    db[key] = entry
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(db, f, ensure_ascii=False, indent=2)
+    return entry
+
+
+def calc_video_qualitative_bonus(feat):
+    """
+    馬別定性レコードから【動画・定性ボーナス（-1.5〜+4.0点）】と解説メモを返す。
+      - traffic_disadvantage: 0(スムーズ), 1(進路変更), 2(前壁ドン詰まり), 3(接触挟まれ)
+      - corner_radius: 1.0(最内), 1.2(中), 1.5(大外ブン回し)
+      - finish_effort: 1.0(持ったまま余力), 0(一杯), -1(バテ失速)
+    """
+    if not isinstance(feat, dict) or not feat:
+        return 0.0, ""
+
+    if feat.get("video_bonus") is not None:
+        try:
+            bonus = float(feat["video_bonus"])
+        except (TypeError, ValueError):
+            bonus = 0.0
+    else:
+        traffic = int(feat.get("traffic_disadvantage", 0) or 0)
+        radius = float(feat.get("corner_radius", 1.0) or 1.0)
+        effort = float(feat.get("finish_effort", 0.0) or 0.0)
+
+        traffic_map = {0: 0.0, 1: 0.8, 2: 2.2, 3: 2.5}
+        bonus = traffic_map.get(traffic, 2.5 if traffic >= 3 else 0.0)
+        if radius >= 1.5:
+            bonus += 1.2
+        elif radius >= 1.3:
+            bonus += 0.6
+        if effort >= 1.0:
+            bonus += 1.0
+        elif effort <= -1.0:
+            bonus -= 0.8
+
+    # 180日以上前の古いメモは影響を半減
+    upd = str(feat.get("updated_at", "")).strip()
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", upd):
+        try:
+            dt_upd = datetime.datetime.strptime(upd, "%Y-%m-%d").replace(tzinfo=JST)
+            age_days = (datetime.datetime.now(JST) - dt_upd).days
+            if age_days > 180:
+                bonus *= 0.5
+        except Exception:
+            pass
+
+    bonus = round(min(4.0, max(-1.5, bonus)), 1)
+    memo = str(feat.get("memo", "")).strip()
+    if not memo and bonus >= 1.5:
+        tags = []
+        if int(feat.get("traffic_disadvantage", 0) or 0) >= 2:
+            tags.append("前走直線不利・ドン詰まり")
+        if float(feat.get("corner_radius", 1.0) or 1.0) >= 1.5:
+            tags.append("大外距離ロス")
+        if float(feat.get("finish_effort", 0.0) or 0.0) >= 1.0:
+            tags.append("余力残し")
+        memo = "・".join(tags)
+    return bonus, memo
 
 
 def restore_historical_json_from_git():
@@ -393,7 +524,7 @@ def parse_shutuba_page(race_id):
         for ptr in past_rows:
             p_name_el = ptr.select_one(".Horse02 a, .HorseName a, .Horse_Name a, .HorseName, .Horse_Info a")
             p_name = p_name_el.get_text(strip=True) if p_name_el else ""
-            p_name_key = re.sub(r"\s+", "", p_name)
+            p_name_key = _norm_horse_name(p_name)
             if not p_name_key:
                 continue
             p_runs = []
@@ -506,7 +637,7 @@ def parse_shutuba_page(race_id):
             except Exception:
                 parsed_odds = 0.0
 
-        h_name_key = re.sub(r"\s+", "", h_name)
+        h_name_key = _norm_horse_name(h_name)
         p_info = past_map.get(h_name_key, {"pastRuns": [], "corner_positions": []})
 
         raw_rows_data.append({
@@ -616,18 +747,23 @@ def calc_positioning_score(h):
     return 2.0
 
 
-def calc_base_ability(h):
+def calc_base_ability(h, horse_features=None):
     """
-    【①オッズ完全隔離 & ②PCI救出ボーナス & 先行力・位置取り力反映】
+    【①オッズ完全隔離 & ②PCI救出ボーナス & 先行力・位置取り力 & 動画・定性ボーナス】
     オッズを完全に排除し、直近5走の加重着順・着差・上がり3F・PCI巻き返し期待・
-    ポジショニング指数から純粋な基礎能力値（65.0〜95.0点）を算出する。
+    ポジショニング指数・horse_features.jsonの動画定性ボーナスから純粋な基礎能力値（65.0〜95.0点）を算出する。
     """
     past_runs = h.get("pastRuns", [])
     pos_score = calc_positioning_score(h)
     pos_adj = (pos_score - 5.0) * 0.45
 
+    feat = (horse_features or {}).get(_norm_horse_name(h.get("name", "")), {})
+    video_bonus, video_memo = calc_video_qualitative_bonus(feat)
+    h["videoBonus"] = video_bonus
+    h["videoMemo"] = video_memo
+
     if not past_runs:
-        return round(min(95.0, max(65.0, 75.0 + pos_adj)), 1)
+        return round(min(95.0, max(65.0, 75.0 + pos_adj + video_bonus)), 1)
 
     weights = [1.4, 1.1, 0.9, 0.7, 0.6]
     w_sum = 0.0
@@ -674,11 +810,11 @@ def calc_base_ability(h):
     elif last_pci > 53.0 and (last_pass1 >= 7 or style in ("差し", "追込")) and last_rank >= 4:
         pci_bonus = min(2.8, 1.5 + (last_pci - 53.0) * 0.20)
 
-    raw_ability = rank_score + margin_adj + agari_adj + pci_bonus + pos_adj
+    raw_ability = rank_score + margin_adj + agari_adj + pci_bonus + pos_adj + video_bonus
     return round(min(95.0, max(65.0, raw_ability)), 1)
 
 
-def simulate_race_monte_carlo(race_data, n_trials=1000):
+def simulate_race_monte_carlo(race_data, n_trials=1000, horse_features=None):
     horses = race_data.get("horses", [])
     n_horses = len(horses)
     if n_horses == 0:
@@ -707,7 +843,7 @@ def simulate_race_monte_carlo(race_data, n_trials=1000):
     nige_cnt = sum(1 for h in horses if h.get("style") == "逃げ")
     senko_cnt = sum(1 for h in horses if h.get("style") == "先行")
 
-    base_abilities = {h["num"]: calc_base_ability(h) for h in horses}
+    base_abilities = {h["num"]: calc_base_ability(h, horse_features=horse_features) for h in horses}
 
     win_counts = {h["num"]: 0 for h in horses}
     place_counts = {h["num"]: 0 for h in horses}
@@ -861,7 +997,7 @@ def allocate_dutching_kelly(bet_groups, total_budget=1000):
     return allocated
 
 
-def evaluate_and_build_1000yen_strategy(race_data):
+def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
     horses = race_data["horses"]
     valid_horses = []
     used_nums = set()
@@ -898,10 +1034,10 @@ def evaluate_and_build_1000yen_strategy(race_data):
     for pop_idx, h in enumerate(sorted_by_odds, 1):
         h["popularity"] = pop_idx
 
-    sim_stats, pace_pct = simulate_race_monte_carlo(race_data, n_trials=1000)
+    sim_stats, pace_pct = simulate_race_monte_carlo(race_data, n_trials=1000, horse_features=horse_features)
     sim_summary = f"展開試走1,000回(ハイ{pace_pct['high']}%/平均{pace_pct['middle']}%/スロー{pace_pct['slow']}%)"
 
-    # オッズ非依存の基礎能力値＋ポジショニング指数＋枠順×脚質の構造的補正＋シミュレーション結果からスコア算出
+    # オッズ非依存の基礎能力値＋動画定性ボーナス＋ポジショニング指数＋枠順×脚質補正からスコア算出
     raw_scores = []
     for h in horses:
         style = h.get("style", "先行")
@@ -909,7 +1045,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
         pos_score = calc_positioning_score(h)
         h["positioningScore"] = pos_score
 
-        time_idx = calc_base_ability(h)
+        time_idx = calc_base_ability(h, horse_features=horse_features)
         pace_adj = pace_favor.get(style, 0.0)
         pos_flow_adj = (pos_score - 5.0) * 0.35
 
@@ -1001,13 +1137,16 @@ def evaluate_and_build_1000yen_strategy(race_data):
     taikou = ranked[1] if len(ranked) > 1 else ranked[0]
     tanana = ranked[2] if len(ranked) > 2 else taikou
 
-    # ☆（穴）は4番手以降から高期待値・展開向きを選出
+    # ☆（穴）は4番手以降から「動画定性ボーナス高評価馬」や「高期待値・展開向き」を優先選出
     remaining = ranked[3:] if len(ranked) > 3 else []
     ana_candidates = [
         h for h in remaining
-        if 5.0 <= h["odds"] <= 65.0 and (h["ev"] >= 1.00 or pace_favor.get(h.get("style", ""), 0) > 1.0)
+        if (float(h.get("videoBonus", 0.0)) >= 1.5 and h["odds"] >= 4.5)
+        or (5.0 <= h["odds"] <= 65.0 and (h["ev"] >= 1.00 or pace_favor.get(h.get("style", ""), 0) > 1.0))
     ]
-    if not ana_candidates:
+    if ana_candidates:
+        ana_candidates.sort(key=lambda x: (float(x.get("videoBonus", 0.0)) * 0.4 + x["ev"]), reverse=True)
+    else:
         ana_candidates = sorted(remaining, key=lambda x: x["ev"], reverse=True)
 
     star_horse = ana_candidates[0] if ana_candidates else (ranked[3] if len(ranked) > 3 else tanana)
@@ -1032,28 +1171,21 @@ def evaluate_and_build_1000yen_strategy(race_data):
         pos_score = float(h.get("positioningScore", 5.0))
         last_margin = float(h["pastRuns"][0].get("margin", 0.0)) if h.get("pastRuns") else 0.0
 
-        # 1. 展開不利（スロー〜ミドル想定で後方脚質リスク）
         if (not is_high_pace_collapse) and (pos_score <= 4.0 or style == "追込"):
             reasons.append("スロー〜ミドル想定で後方脚質のため展開不利")
-
-        # 2. 枠順の罠（内枠追込 / 外枠逃げ）
         if waku in (1, 2) and style == "追込":
             reasons.append("内枠の追込馬で直線ドン詰まりリスク")
         elif waku in (7, 8) and style == "逃げ":
             reasons.append("外枠の逃げ馬でスタミナロス懸念")
-
-        # 3. 前走着差・基礎能力スコア不足（上位5頭外）
         if h["num"] not in top5_ability_nums:
             if last_margin >= 0.6:
                 reasons.append(f"前走着差{last_margin:.1f}秒かつ基礎能力上位5頭外(指数{h['indexScore']})")
             else:
                 reasons.append(f"基礎能力スコア不足(指数{h['indexScore']})")
-
-        # 4. 期待値（EV）の大幅マイナス
         if h["ev"] < 0.70:
             reasons.append(f"過剰人気で期待値大幅マイナス(EV:{h['ev']})")
 
-        if reasons:
+        if reasons and float(h.get("videoBonus", 0.0)) < 1.5:
             danger_nums.add(h["num"])
             reason_txt = "・".join(reasons[:2])
             danger_pop_lines.append(
@@ -1211,7 +1343,6 @@ def evaluate_and_build_1000yen_strategy(race_data):
             "est_prob": syn_prob,
         }
 
-    # 危険な人気馬（danger_nums）を完全に除外した相手候補プールを構築
     safe_fallback_nums = [x["num"] for x in ranked if x["num"] != h1 and x["num"] not in danger_nums]
     all_fallback_nums = [x["num"] for x in ranked if x["num"] != h1]
     opps_ordered = _uniq([x for x in ([h2, h3] + himo_nums + [hs] + safe_fallback_nums) if x != h1 and x not in danger_nums])
@@ -1225,7 +1356,6 @@ def evaluate_and_build_1000yen_strategy(race_data):
     z_gap_1_2 = honmei["zScore"] - taikou["zScore"]
     o1, p1 = _op(h1)
 
-    # --- 【3大黄金ポートフォリオ（三連複2頭軸廃止＆低配当ワイド4.0倍未満禁止）】 ---
     is_dominant_1strong = (
         (ability_gap >= 3.5 or z_gap_1_2 >= 3.5 or (o1 <= 3.5 and honmei["simWinRate"] >= 22.0))
         and o1 <= 4.8
@@ -1307,11 +1437,20 @@ def evaluate_and_build_1000yen_strategy(race_data):
             f"【馬連本線・対抗】へダッチング＆ケリー傾斜配分しつつ、実力上位馬と穴☆を押さえた【三連複F({len(trio_combos)}点)】で確実な回収を狙う。"
         )
 
-    # 危険な人気馬（消し判定）があれば解説文の末尾に明確に表示する
+    # 動画・定性特注馬（◎○▲☆でボーナス+1.5以上またはメモあり）があれば見解へ明記
+    video_notes = []
+    for fh in [honmei, taikou, tanana, star_horse]:
+        vb = float(fh.get("videoBonus", 0.0))
+        vm = str(fh.get("videoMemo", "")).strip()
+        if vb >= 1.5 or vm:
+            tag_memo = vm or "前走不利・距離ロスによる巻き返し期待"
+            video_notes.append(f"【動画・定性特注】{fh['num']}番{fh['name']}({fh['markJemi']} / 能力+{vb:.1f}点): {tag_memo}")
+
+    if video_notes:
+        comment = comment + "\n" + "\n".join(video_notes)
     if danger_pop_lines:
         comment = comment + "\n" + "\n".join(danger_pop_lines)
 
-    # 1,000円傾斜配分を実行
     allocated_groups = allocate_dutching_kelly(bet_groups, total_budget=1000)
 
     buy_parts = []
@@ -1343,6 +1482,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
     race_data["strategyTag"] = strategy_tag
     race_data["confidence"] = conf_rank
     race_data["confidenceScore"] = conf_score
+    race_data["videoNotes"] = video_notes
     race_data["dangerPop"] = danger_pop_lines
     race_data["dangerPopText"] = " / ".join(danger_pop_lines)
     race_data["aiSummary"] = comment
@@ -1445,8 +1585,9 @@ def build_win5_prediction(races, all_win5_sets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（黄金ポートフォリオ＋危険な人気馬カット判定）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（定性DB連携＋黄金ポートフォリオ＋危険人気馬カット）を開始します...")
     stats_obj = build_complete_stats()
+    horse_features = load_horse_features()
 
     all_win5_sets = fetch_all_official_win5_sets()
     print(f"  -> 公式WIN5セット取得数: {len(all_win5_sets)}日分")
@@ -1465,7 +1606,7 @@ def main():
             r_info = parse_shutuba_page(rid)
             if not r_info:
                 continue
-            r_info = evaluate_and_build_1000yen_strategy(r_info)
+            r_info = evaluate_and_build_1000yen_strategy(r_info, horse_features=horse_features)
             day_races.append(r_info)
             time.sleep(0.35)
 
