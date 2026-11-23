@@ -9,7 +9,7 @@ on:
       days:
         description: '遡る日数（通常=7 / 過去1年分の一括生成=365）'
         required: false
-        default: '7'
+        default: '365'
 
 permissions:
   contents: write
