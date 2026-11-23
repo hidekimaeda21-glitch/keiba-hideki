@@ -1,0 +1,41 @@
+name: Update Horse Qualitative DB
+
+on:
+  schedule:
+    # 毎週月曜 21:00 JST (12:00 UTC) に直近7日分を自動収集
+    - cron: '0 12 * * 1'
+  workflow_dispatch:
+    inputs:
+      days:
+        description: '遡る日数（通常=7 / 過去1年分の一括生成=365）'
+        required: false
+        default: '7'
+
+permissions:
+  contents: write
+
+jobs:
+  update_db:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Collect qualitative features from race results
+        run: python scripts/update_horse_features.py --days "${{ inputs.days || '7' }}"
+
+      - name: Commit and push horse_features.json
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/horse_features.json
+          git diff --staged --quiet || git commit -m "Update horse_features.json (${{ inputs.days || '7' }} days)"
+          git push
