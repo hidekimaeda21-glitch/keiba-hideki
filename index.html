@@ -223,7 +223,6 @@
       border-color: var(--accent-color);
     }
 
-    /* 画面上部：一括まとめ購入（IPAT連携）ボタン */
     .bulk-ipat-wrap {
       margin-bottom: 14px;
     }
@@ -342,7 +341,6 @@
       color: #d1d5db;
       margin-bottom: 8px;
     }
-    /* 危険な人気馬（消し理由）の赤系警告ハイライト */
     .danger-pop-box {
       background: rgba(239, 68, 68, 0.14);
       border: 1px solid rgba(248, 113, 113, 0.45);
@@ -369,7 +367,6 @@
       color: var(--gold-color);
       line-height: 1.5;
     }
-    /* 各レースカード内：個別IPAT連携ボタン */
     .race-ipat-btn {
       width: 100%;
       margin-top: 9px;
@@ -392,7 +389,53 @@
       opacity: 0.88;
     }
 
-    /* トースト通知 */
+    /* スマホ購入ロック（暗証番号モーダル） */
+    .pin-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 8px;
+      text-align: center;
+      background: #0b0d14;
+      color: #ffffff;
+      border: 1.5px solid #3b82f6;
+      border-radius: 10px;
+      margin: 10px 0 8px;
+      outline: none;
+    }
+    .pin-error {
+      color: #f87171;
+      font-size: 11.5px;
+      font-weight: bold;
+      min-height: 18px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .pin-submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #ffffff;
+      border: 1px solid #34d399;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    .pin-cancel-btn {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255,255,255,0.06);
+      color: #9ca3af;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
     .toast-popup {
       position: fixed;
       left: 50%;
@@ -680,6 +723,30 @@
 
   <div id="ipatToast" class="toast-popup"></div>
 
+  <!-- スマホ購入ロック（暗証番号確認モーダル） -->
+  <div id="pinModal" class="custom-modal">
+    <div class="modal-content" style="max-width: 340px;">
+      <button class="close-btn" onclick="closeAllModals()">&times;</button>
+      <div class="modal-title" style="color: #34d399;">🔒 オーナー確認（購入ロック）</div>
+      <div id="pinModalDesc" style="font-size: 12px; color: var(--text-sub); line-height: 1.5; margin-bottom: 6px;">
+        誤操作防止のため、購入用パスコード（4桁）を入力してください。
+      </div>
+      <input
+        id="pinInputField"
+        class="pin-input"
+        type="password"
+        inputmode="numeric"
+        maxlength="6"
+        placeholder="••••"
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter'){submitPinAndProceed();}"
+      >
+      <div id="pinErrorMsg" class="pin-error"></div>
+      <button class="pin-submit-btn" onclick="submitPinAndProceed()">🔓 確認してIPATを開く</button>
+      <button class="pin-cancel-btn" onclick="closeAllModals()">キャンセル</button>
+    </div>
+  </div>
+
   <div id="hitModal" class="custom-modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
@@ -803,7 +870,7 @@
   </div>
 
   <div class="bulk-ipat-wrap" id="bulkIpatWrap" style="display: none;">
-    <button class="bulk-ipat-btn" id="bulkIpatBtn" onclick="copyAllAndOpenIpat()">
+    <button class="bulk-ipat-btn" id="bulkIpatBtn" onclick="requestIpatAction('ALL', null)">
       🟢 表示中レースの買い目を一括コピーしてJRA IPATへ
     </button>
   </div>
@@ -811,7 +878,12 @@
   <main id="raceContainer"></main>
 
   <script>
+    // ★スマホ購入ロック用の暗証番号（即PATの暗証番号とは別の4桁に変更してください）
+    const OWNER_PIN = '2026';
+    // ★スマホ（iPhone/Android）での購入時のみ暗証番号を要求する設定（PCもロックしたい場合は false）
+    const REQUIRE_PIN_ON_MOBILE_ONLY = true;
     const IPAT_SP_URL = 'https://www.ipat.jra.go.jp/sp/';
+
     let globalRaces = [];
     let currentFilter = 'ALL';
     let statsObj = null;
@@ -820,11 +892,16 @@
     let currentDayIdx = 0;
     let lastUpdatedAt = '未更新';
     let toastTimer = null;
+    let pendingIpatAction = null;
 
     let simAnimId = null;
     let simPlaying = false;
     let simProgress = 0;
     let simState = null;
+
+    function isMobileDevice() {
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    }
 
     function showToast(msg) {
       const el = document.getElementById('ipatToast');
@@ -870,25 +947,68 @@
       return lines.join('\n');
     }
 
-    function copyRaceAndOpenIpat(rIdx) {
-      const r = globalRaces[rIdx];
-      if (!r) return;
-      const text = buildRaceIpatText(r);
-      copyTextToClipboard(text);
-      const budget = (r.budget || 1000).toLocaleString();
-      showToast(`✅ ${budget}円分の買い目をセットしました。IPAT画面を開きます`);
-      window.open(IPAT_SP_URL, '_blank', 'noopener');
+    function executeIpatAction(mode, rIdx) {
+      if (mode === 'SINGLE') {
+        const r = globalRaces[rIdx];
+        if (!r) return;
+        const text = buildRaceIpatText(r);
+        copyTextToClipboard(text);
+        const budget = (r.budget || 1000).toLocaleString();
+        showToast(`✅ ${budget}円分の買い目をセットしました。IPAT画面を開きます`);
+        window.open(IPAT_SP_URL, '_blank', 'noopener');
+      } else {
+        const visibleRaces = globalRaces.filter(r => currentFilter === 'ALL' || r.venue === currentFilter);
+        if (visibleRaces.length === 0) return;
+        const totalYen = visibleRaces.reduce((sum, r) => sum + (r.budget || 1000), 0);
+        const blocks = visibleRaces.map(r => buildRaceIpatText(r));
+        const fullText = `【ジェミ予想 一括買い目リスト (${visibleRaces.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
+        copyTextToClipboard(fullText);
+        showToast(`✅ ${visibleRaces.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPAT画面を開きます`);
+        window.open(IPAT_SP_URL, '_blank', 'noopener');
+      }
     }
 
-    function copyAllAndOpenIpat() {
-      const visibleRaces = globalRaces.filter(r => currentFilter === 'ALL' || r.venue === currentFilter);
-      if (visibleRaces.length === 0) return;
-      const totalYen = visibleRaces.reduce((sum, r) => sum + (r.budget || 1000), 0);
-      const blocks = visibleRaces.map(r => buildRaceIpatText(r));
-      const fullText = `【ジェミ予想 一括買い目リスト (${visibleRaces.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
-      copyTextToClipboard(fullText);
-      showToast(`✅ ${visibleRaces.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPAT画面を開きます`);
-      window.open(IPAT_SP_URL, '_blank', 'noopener');
+    function requestIpatAction(mode, rIdx) {
+      const needPin = REQUIRE_PIN_ON_MOBILE_ONLY ? isMobileDevice() : true;
+      if (!needPin) {
+        executeIpatAction(mode, rIdx);
+        return;
+      }
+
+      pendingIpatAction = { mode, rIdx };
+      const descEl = document.getElementById('pinModalDesc');
+      if (mode === 'SINGLE' && globalRaces[rIdx]) {
+        const r = globalRaces[rIdx];
+        descEl.textContent = `【${r.venue} ${r.raceName}】の買い目転送を実行します。オーナー用パスコードを入力してください。`;
+      } else {
+        descEl.textContent = `表示中レースの買い目を一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
+      }
+
+      const inp = document.getElementById('pinInputField');
+      document.getElementById('pinErrorMsg').textContent = '';
+      inp.value = '';
+      document.getElementById('pinModal').style.display = 'flex';
+      setTimeout(() => inp.focus(), 100);
+    }
+
+    function submitPinAndProceed() {
+      const inp = document.getElementById('pinInputField');
+      const errEl = document.getElementById('pinErrorMsg');
+      const val = String(inp.value || '').trim();
+
+      if (val !== OWNER_PIN) {
+        errEl.textContent = '⚠️ パスコードが違います';
+        inp.value = '';
+        inp.focus();
+        return;
+      }
+
+      const act = pendingIpatAction;
+      pendingIpatAction = null;
+      document.getElementById('pinModal').style.display = 'none';
+      if (act) {
+        executeIpatAction(act.mode, act.rIdx);
+      }
     }
 
     function updateBulkIpatButton() {
@@ -902,7 +1022,8 @@
       }
       const totalYen = visibleRaces.reduce((sum, r) => sum + (r.budget || 1000), 0);
       const scopeLabel = currentFilter === 'ALL' ? `全${visibleRaces.length}R` : `${currentFilter} ${visibleRaces.length}R`;
-      btn.textContent = `🟢 ${scopeLabel}の買い目を一括コピーしてJRA IPATへ（計${totalYen.toLocaleString()}円）`;
+      const lockIcon = isMobileDevice() ? '🔒 ' : '';
+      btn.textContent = `🟢 ${lockIcon}${scopeLabel}の買い目を一括コピーしてJRA IPATへ（計${totalYen.toLocaleString()}円）`;
       wrap.style.display = 'block';
     }
 
@@ -914,11 +1035,13 @@
     }
 
     function closeAllModals() {
+      document.getElementById('pinModal').style.display = 'none';
       document.getElementById('hitModal').style.display = 'none';
       document.getElementById('payoutModal').style.display = 'none';
       document.getElementById('win5Modal').style.display = 'none';
       document.getElementById('past3Modal').style.display = 'none';
       document.getElementById('simModal').style.display = 'none';
+      pendingIpatAction = null;
       simPlaying = false;
       if (simAnimId) {
         cancelAnimationFrame(simAnimId);
@@ -1708,6 +1831,8 @@
         return;
       }
 
+      const lockIcon = isMobileDevice() ? '🔒 ' : '';
+
       globalRaces.forEach((r, rIdx) => {
         ensureEnrichedRaceData(r);
         if (currentFilter !== 'ALL' && r.venue !== currentFilter) return;
@@ -1799,8 +1924,8 @@
             <div class="ai-summary">${escapeHtml(normalText)}</div>
             ${dangerHtml}
             <div class="ai-buy">推奨買い目: ${escapeHtml(r.aiBuy || 'データ準備中')}</div>
-            <button class="race-ipat-btn" onclick="copyRaceAndOpenIpat(${rIdx})">
-              🟢 JRA IPATへ買い目をコピーして購入（${(r.budget || 1000).toLocaleString()}円）
+            <button class="race-ipat-btn" onclick="requestIpatAction('SINGLE', ${rIdx})">
+              🟢 ${lockIcon}JRA IPATへ買い目をコピーして購入（${(r.budget || 1000).toLocaleString()}円）
             </button>
           </div>
           <div class="ai-legend-bar">
