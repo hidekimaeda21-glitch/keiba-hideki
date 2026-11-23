@@ -389,7 +389,6 @@
       opacity: 0.88;
     }
 
-    /* スマホ購入ロック（暗証番号モーダル） */
     .pin-input {
       width: 100%;
       padding: 12px;
@@ -723,7 +722,6 @@
 
   <div id="ipatToast" class="toast-popup"></div>
 
-  <!-- スマホ購入ロック（暗証番号確認モーダル） -->
   <div id="pinModal" class="custom-modal">
     <div class="modal-content" style="max-width: 340px;">
       <button class="close-btn" onclick="closeAllModals()">&times;</button>
@@ -880,7 +878,6 @@
   <script>
     // ★スマホ購入ロック用の暗証番号（即PATの暗証番号とは別の4桁に変更してください）
     const OWNER_PIN = '2026';
-    // ★スマホ（iPhone/Android）での購入時のみ暗証番号を要求する設定（PCもロックしたい場合は false）
     const REQUIRE_PIN_ON_MOBILE_ONLY = true;
     const IPAT_SP_URL = 'https://www.ipat.jra.go.jp/sp/';
 
@@ -1051,9 +1048,13 @@
 
     function parseDateVal(dateStr) {
       if (!dateStr) return 0;
-      const parts = String(dateStr).split('/');
+      const s = String(dateStr).trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+        return parseInt(s.replace(/-/g, ''), 10);
+      }
+      const parts = s.split('/');
       if (parts.length === 2) {
-        return parseInt(parts[0], 10) * 100 + parseInt(parts[1], 10);
+        return 20260000 + parseInt(parts[0], 10) * 100 + parseInt(parts[1], 10);
       }
       return 0;
     }
@@ -1065,15 +1066,16 @@
     }
 
     function getVenueOrder(venue) {
+      const clean = String(venue || '').replace(/\d+R.*/, '');
       const order = { "東京": 1, "中山": 2, "京都": 3, "阪神": 4, "新潟": 5, "中京": 6, "福島": 7, "小倉": 8, "札幌": 9, "函館": 10 };
-      return order[venue] || 99;
+      return order[clean] || 99;
     }
 
     function sortRaceRecords(list) {
       const uniqueMap = new Map();
       (list || []).forEach(item => {
-        const rNum = parseRaceNum(item.raceName);
-        const key = `${item.date}_${item.venue}_${rNum}`;
+        const rNum = parseRaceNum(item.venue || item.raceName);
+        const key = item.raceId ? String(item.raceId) : `${item.date}_${item.venue}_${rNum}_${item.raceName || ''}`;
         uniqueMap.set(key, item);
       });
       const uniqueList = Array.from(uniqueMap.values());
@@ -1085,7 +1087,7 @@
         const vA = getVenueOrder(a.venue);
         const vB = getVenueOrder(b.venue);
         if (vA !== vB) return vA - vB;
-        return parseRaceNum(a.raceName) - parseRaceNum(b.raceName);
+        return parseRaceNum(a.venue || a.raceName) - parseRaceNum(b.venue || b.raceName);
       });
     }
 
@@ -1561,7 +1563,7 @@
 
     function openHitModal() {
       if (!statsObj) return;
-      document.getElementById('hitModalSummary').textContent = `2026年10月11日以降: 全${statsObj.totalBets || 16}レース中 ${statsObj.hitCount || 0}的中 (的中率: ${statsObj.hitRate}%)`;
+      document.getElementById('hitModalSummary').textContent = `全${statsObj.totalBets || 0}レース中 ${statsObj.hitCount || 0}的中 (的中率: ${statsObj.hitRate}%)`;
       const hitList = document.getElementById('hitModalList');
       hitList.innerHTML = '';
       const sortedHits = sortRaceRecords(statsObj.hitDetails || []);
@@ -1569,7 +1571,7 @@
       sortedHits.forEach(h => {
         if (h.date !== lastDate) {
           lastDate = h.date;
-          hitList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${h.date} 開催</span></div>`;
+          hitList.innerHTML += `<div class="date-group-header"><span>📅 ${h.date} 開催</span></div>`;
         }
         hitList.innerHTML += `
           <div class="modal-list-item">
@@ -1585,11 +1587,14 @@
       sortedAll.forEach(r => {
         if (r.date !== lastAllDate) {
           lastAllDate = r.date;
-          allList.innerHTML += `<div class="date-group-header"><span>📅 2026年 ${r.date} 開催</span></div>`;
+          allList.innerHTML += `<div class="date-group-header"><span>📅 ${r.date} 開催</span></div>`;
         }
+        const resColor = r.result === '不的中' ? '#9ca3af' : '#4ade80';
+        const resLabel = r.result || '的中';
         allList.innerHTML += `
           <div class="modal-list-item">
             <div><span class="date-tag">${r.date}</span><strong style="color:#94a3b8;">[${r.venue}]</strong> ${r.raceName}</div>
+            <span style="color:${resColor}; font-weight:bold; font-size:11px;">${resLabel}</span>
           </div>`;
       });
       document.getElementById('hitModal').style.display = 'flex';
@@ -1597,7 +1602,10 @@
 
     function openPayoutModal() {
       if (!statsObj) return;
-      document.getElementById('payoutModalSummary').textContent = `通算回収率: ${statsObj.recoveryRate}% (全${statsObj.totalBets || 16}戦・日付別レース順明細)`;
+      const inv = statsObj.totalInvestment ? statsObj.totalInvestment.toLocaleString() : '-';
+      const ret = statsObj.totalReturn ? statsObj.totalReturn.toLocaleString() : '-';
+      document.getElementById('payoutModalSummary').textContent =
+        `通算回収率: ${statsObj.recoveryRate}% (投資 ${inv}円 → 払戻 ${ret}円 / 全${statsObj.totalBets || 0}戦)`;
       const pList = document.getElementById('payoutModalList');
       pList.innerHTML = '';
       const sortedHits = sortRaceRecords(statsObj.hitDetails || []);
@@ -1608,7 +1616,7 @@
           const dayTotal = sortedHits.filter(x => x.date === h.date).reduce((sum, x) => sum + (x.payout || 0), 0);
           pList.innerHTML += `
             <div class="date-group-header">
-              <span>📅 2026年 ${h.date} 開催</span>
+              <span>📅 ${h.date} 開催</span>
               <span style="color:#fbbf24;">日計: ${dayTotal.toLocaleString()}円</span>
             </div>`;
         }
@@ -1964,26 +1972,26 @@
           document.getElementById('hitCountDisplay').textContent = `${data.stats.totalBets}戦 ${data.stats.hitCount}的中`;
           document.getElementById('recoveryRateDisplay').textContent = `${data.stats.recoveryRate}%`;
 
-          const mr = data.stats.markRates || {};
+          const mr = data.stats.markRates || data.stats.markStats || {};
           if (mr['◎']) {
             document.getElementById('markPctHonmei').textContent = `${mr['◎'].rate}%`;
-            document.getElementById('markCountHonmei').textContent = mr['◎'].count;
+            document.getElementById('markCountHonmei').textContent = mr['◎'].countText || mr['◎'].count;
           }
           if (mr['○']) {
             document.getElementById('markPctTaikou').textContent = `${mr['○'].rate}%`;
-            document.getElementById('markCountTaikou').textContent = mr['○'].count;
+            document.getElementById('markCountTaikou').textContent = mr['○'].countText || mr['○'].count;
           }
           if (mr['▲']) {
             document.getElementById('markPctTanana').textContent = `${mr['▲'].rate}%`;
-            document.getElementById('markCountTanana').textContent = mr['▲'].count;
+            document.getElementById('markCountTanana').textContent = mr['▲'].countText || mr['▲'].count;
           }
           if (mr['☆']) {
             document.getElementById('markPctAna').textContent = `${mr['☆'].rate}%`;
-            document.getElementById('markCountAna').textContent = mr['☆'].count;
+            document.getElementById('markCountAna').textContent = mr['☆'].countText || mr['☆'].count;
           }
           if (mr['△']) {
             document.getElementById('markPctRenge').textContent = `${mr['△'].rate}%`;
-            document.getElementById('markCountRenge').textContent = mr['△'].count;
+            document.getElementById('markCountRenge').textContent = mr['△'].countText || mr['△'].count;
           }
         }
 
