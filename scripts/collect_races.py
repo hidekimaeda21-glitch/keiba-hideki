@@ -594,15 +594,48 @@ def calc_pci(time_sec, agari, dist):
     return round(pci, 1)
 
 
+def calc_positioning_score(h):
+    """
+    【先行力・ポジショニング指数（0〜10点）】
+    登録脚質（style）と過去走の1角通過順（pass1）から道中で好位につけられる力を評価する。
+      - 逃げ: 10点
+      - 先行: 8点
+      - 好位・差し（pass1が5番手以内）: 6点
+      - 中団差し（pass1が6〜9番手、または通過順データなし）: 4点
+      - 後方・追込: 2点
+    """
+    style = h.get("style", "先行")
+    past_runs = h.get("pastRuns", [])
+    pass1_list = [int(r.get("pass1", 0)) for r in past_runs[:5] if int(r.get("pass1", 0)) > 0]
+    avg_pass1 = (sum(pass1_list) / len(pass1_list)) if pass1_list else 0.0
+    last_pass1 = pass1_list[0] if pass1_list else 0
+
+    if style == "逃げ":
+        return 10.0
+    if style == "先行":
+        return 8.0
+    if style == "差し":
+        if (0 < avg_pass1 <= 5.5) or (0 < last_pass1 <= 5):
+            return 6.0
+        if avg_pass1 >= 10.0:
+            return 2.0
+        return 4.0
+    # 追込
+    return 2.0
+
+
 def calc_base_ability(h):
     """
-    【①オッズ完全隔離 & ②PCI救出ボーナス】
-    オッズを完全に排除し、直近5走の加重着順・着差・上がり3F・PCI巻き返し期待から
-    純粋な基礎能力値（65.0〜95.0点）を算出する。
+    【①オッズ完全隔離 & ②PCI救出ボーナス & 先行力・位置取り力反映】
+    オッズを完全に排除し、直近5走の加重着順・着差・上がり3F・PCI巻き返し期待・
+    ポジショニング指数から純粋な基礎能力値（65.0〜95.0点）を算出する。
     """
     past_runs = h.get("pastRuns", [])
+    pos_score = calc_positioning_score(h)
+    pos_adj = (pos_score - 5.0) * 0.45  # 逃げ:+2.25 / 先行:+1.35 / 好位差し:+0.45 / 追込:-1.35
+
     if not past_runs:
-        return 75.0
+        return round(min(95.0, max(65.0, 75.0 + pos_adj)), 1)
 
     weights = [1.4, 1.1, 0.9, 0.7, 0.6]
     w_sum = 0.0
@@ -656,7 +689,7 @@ def calc_base_ability(h):
         # ドスロー後方届かずの巻き返し期待
         pci_bonus = min(2.8, 1.5 + (last_pci - 53.0) * 0.20)
 
-    raw_ability = rank_score + margin_adj + agari_adj + pci_bonus
+    raw_ability = rank_score + margin_adj + agari_adj + pci_bonus + pos_adj
     return round(min(95.0, max(65.0, raw_ability)), 1)
 
 
@@ -717,20 +750,31 @@ def simulate_race_monte_carlo(race_data, n_trials=1000):
                 style_eff = -pace_idx * 1.15 - (0.6 if nige_cnt >= 3 and pace_idx > 0.5 else 0.0)
                 if pace_idx < -0.5:
                     style_eff += 1.0
-                if waku >= 7:
-                    style_eff -= 0.5
+                # 枠順×脚質の構造的補正（7〜8枠の逃げは外回りロス、1〜4枠は最短ルート加点）
+                if waku in (7, 8):
+                    style_eff -= 1.6
+                elif waku in (1, 2, 3, 4):
+                    style_eff += 0.8
             elif style == "先行":
                 style_eff = -pace_idx * 0.45 + (0.5 if pace_idx < -0.3 else 0.0)
+                if waku in (1, 2, 3, 4):
+                    style_eff += 0.8
             elif style == "差し":
                 style_eff = pace_idx * 0.85 + venue_closer_bias * 0.5
                 if n_horses >= 14 and waku <= 3 and rng.random() < 0.18:
                     style_eff -= 2.4
             else:
+                # 追込
                 style_eff = pace_idx * 1.05 + venue_closer_bias * 0.6
                 if pace_idx <= -0.75:
                     style_eff -= 1.5
-                if n_horses >= 14 and waku <= 3 and rng.random() < 0.22:
-                    style_eff -= 2.6
+                # 1〜2枠の追込馬は直線ドン詰まりリスクとして強めに割引
+                if waku in (1, 2):
+                    style_eff -= 1.4
+                    if rng.random() < 0.28:
+                        style_eff -= 2.6
+                elif n_horses >= 14 and waku == 3 and rng.random() < 0.22:
+                    style_eff -= 2.4
 
             if style in ("逃げ", "先行"):
                 style_eff -= venue_closer_bias * 0.4
@@ -875,19 +919,43 @@ def evaluate_and_build_1000yen_strategy(race_data):
     sim_stats, pace_pct = simulate_race_monte_carlo(race_data, n_trials=1000)
     sim_summary = f"展開試走1,000回(ハイ{pace_pct['high']}%/平均{pace_pct['middle']}%/スロー{pace_pct['slow']}%)"
 
-    # オッズ非依存の基礎能力値＋シミュレーション結果からZスコアを算出
+    # オッズ非依存の基礎能力値＋ポジショニング指数＋枠順×脚質の構造的補正＋シミュレーション結果からスコア算出
     raw_scores = []
     for h in horses:
+        style = h.get("style", "先行")
+        waku = int(h.get("waku", 4))
+        pos_score = calc_positioning_score(h)
+        h["positioningScore"] = pos_score
+
         time_idx = calc_base_ability(h)
-        pace_adj = pace_favor.get(h.get("style", "先行"), 0.0)
-        waku_adj = 0.4 if h.get("waku", 4) in (2, 3, 4) else (0.2 if h.get("waku", 4) in (5, 6) else 0.0)
+        pace_adj = pace_favor.get(style, 0.0)
+        pos_flow_adj = (pos_score - 5.0) * 0.35
+
+        # 枠順×脚質の構造的ペナルティ／ボーナス
+        struct_score_adj = 0.0
+        struct_win_mult = 1.0
+        if waku in (1, 2) and style == "追込":
+            # 内枠の追込馬：直線ドン詰まりリスク（勝率-10%）
+            struct_win_mult = 0.90
+            struct_score_adj = -1.8
+        elif waku in (7, 8) and style == "逃げ":
+            # 外枠の逃げ馬：外回りスタミナロス（勝率-12%）
+            struct_win_mult = 0.88
+            struct_score_adj = -2.0
+        elif waku in (1, 2, 3, 4) and style in ("逃げ", "先行"):
+            # 内〜中枠の逃げ・先行馬：最短ルート加点
+            struct_win_mult = 1.06
+            struct_score_adj = +1.2
+
+        h["_structWinMult"] = struct_win_mult
 
         s_info = sim_stats.get(h["num"], {"winProb": 1.0 / max(1, n_horses), "placeProb": 3.0 / max(1, n_horses)})
-        h["simWinRate"] = round(s_info["winProb"] * 100, 1)
+        adj_win_prob = min(0.85, max(0.005, s_info["winProb"] * struct_win_mult))
+        h["simWinRate"] = round(adj_win_prob * 100, 1)
         h["simPlaceRate"] = round(s_info["placeProb"] * 100, 1)
 
         sim_bonus = (s_info["placeProb"] - (3.0 / max(1, n_horses))) * 8.0
-        total_score = time_idx + pace_adj * 0.5 + waku_adj + sim_bonus
+        total_score = time_idx + pace_adj * 0.5 + pos_flow_adj + struct_score_adj + sim_bonus
         h["indexScore"] = time_idx
         h["speedScore"] = time_idx
         h["score"] = round(total_score, 1)
@@ -902,26 +970,58 @@ def evaluate_and_build_1000yen_strategy(race_data):
     for h in horses:
         z = (h["totalScore"] - mean_sc) / std_sc
         h["zScore"] = round(50.0 + z * 10.0, 1)
-        w = math.exp(z * 1.55)
+        w = math.exp(z * 1.55) * h.get("_structWinMult", 1.0)
         h["_w"] = w
         exp_weights.append(w)
 
-    # シミュレーション後のこの段階でのみオッズと掛け合わせて期待値(EV)を算出（穴馬バイアスを撤廃）
+    # シミュレーション後のこの段階でのみオッズと掛け合わせて期待値(EV)を算出（オッズ完全隔離）
     sum_w = sum(exp_weights) or 1.0
+    raw_est_probs = []
     for h in horses:
         base_prob = h["_w"] / sum_w
-        sim_win_prob = sim_stats.get(h["num"], {}).get("winProb", base_prob)
-        est_prob = base_prob * 0.45 + sim_win_prob * 0.55
-        h["_estProb"] = min(0.80, max(0.005, est_prob))
+        sim_win_prob = sim_stats.get(h["num"], {}).get("winProb", base_prob) * h.get("_structWinMult", 1.0)
+        est_p = base_prob * 0.45 + sim_win_prob * 0.55
+        h["_rawEstProb"] = est_p
+        raw_est_probs.append(est_p)
+
+    sum_est = sum(raw_est_probs) or 1.0
+    for h in horses:
+        est_prob = min(0.80, max(0.005, h["_rawEstProb"] / sum_est))
+        h["_estProb"] = est_prob
         eff_odds = min(h["odds"], 35.0 + math.sqrt(max(0.0, h["odds"] - 35.0)))
         raw_ev = est_prob * eff_odds * 0.80
         h["ev"] = round(min(1.65, max(0.60, raw_ev)), 2)
 
-    # ◎○▲は純粋な能力＋展開（totalScore）の順で選出
+    # --- 【本命（◎）脚質フィルター】 ---
+    # 逃げ・先行馬が4頭以上揃いハイペース前崩れが濃厚なレースのみ追込・後方馬の◎を許可
+    is_high_pace_collapse = (front_cnt >= 4) and (pace_pct["high"] >= 35 or pace_label == "差し有利ハイペース")
+
+    def _is_forward_capable(h):
+        return h.get("style") in ("逃げ", "先行") or float(h.get("positioningScore", 0.0)) >= 6.0
+
     ranked = sorted(horses, key=lambda x: x["totalScore"], reverse=True)
+
+    if not is_high_pace_collapse:
+        # 1. 本命(◎)は原則「逃げ・先行・好位差し」から選出
+        forward_cands = [h for h in ranked if _is_forward_capable(h)]
+        if forward_cands and not _is_forward_capable(ranked[0]):
+            best_fwd = forward_cands[0]
+            ranked.remove(best_fwd)
+            ranked.insert(0, best_fwd)
+
+        # 2. ミドル〜スローでは追込馬は最大でも▲・☆（3番手以降）までに留める
+        if len(ranked) >= 3 and ranked[1].get("style") == "追込":
+            non_oikomi = [h for h in ranked[2:] if h.get("style") != "追込"]
+            if non_oikomi:
+                promo = non_oikomi[0]
+                ranked.remove(promo)
+                ranked.insert(1, promo)
+
+    # EV極低時の微調整（脚質フィルター条件を満たす範囲内でのみ入替）
     if len(ranked) >= 2 and ranked[0]["ev"] < 0.70 and (ranked[0]["totalScore"] - ranked[1]["totalScore"]) <= 1.5:
         if ranked[1]["ev"] >= 0.90 and ranked[1]["simPlaceRate"] >= 20.0:
-            ranked[0], ranked[1] = ranked[1], ranked[0]
+            if is_high_pace_collapse or _is_forward_capable(ranked[1]):
+                ranked[0], ranked[1] = ranked[1], ranked[0]
 
     honmei = ranked[0]
     taikou = ranked[1] if len(ranked) > 1 else ranked[0]
@@ -946,7 +1046,16 @@ def evaluate_and_build_1000yen_strategy(race_data):
     himo_horses = (strong_favs + other_himos)[:3]
 
     by_index = sorted(horses, key=lambda x: x["indexScore"], reverse=True)
-    by_pace = sorted(horses, key=lambda x: (x.get("simPlaceRate", 0) * 0.4 + pace_favor.get(x.get("style", ""), 0) * 2.0 + x["indexScore"]), reverse=True)
+    by_pace = sorted(
+        horses,
+        key=lambda x: (
+            x.get("simPlaceRate", 0) * 0.4
+            + pace_favor.get(x.get("style", ""), 0) * 2.0
+            + x.get("positioningScore", 5.0) * 0.6
+            + x["indexScore"]
+        ),
+        reverse=True,
+    )
     by_ana = sorted(horses, key=lambda x: x["ev"], reverse=True)
 
     for h in horses:
@@ -1072,8 +1181,8 @@ def evaluate_and_build_1000yen_strategy(race_data):
             ),
         ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。少頭数戦のため点数を絞り、"
-            f"◎{h1}番{honmei['name']}と○{h2}番を軸に【馬単本線】と【馬連・三連複】へ期待値傾斜配分。"
+            f"展開予測は【{pace_label} / {sim_summary}】。少頭数戦で前付けできる◎{h1}番{honmei['name']}({honmei['style']}・位置力{int(honmei['positioningScore'])})と"
+            f"○{h2}番を軸に【馬単本線】と【馬連・三連複】へ期待値傾斜配分。"
         )
     elif (ability_gap >= 4.0 or z_gap_1_2 >= 4.0) and o1 <= 3.5:
         strategy_name = "1強・鉄板勝負型"
@@ -1096,8 +1205,8 @@ def evaluate_and_build_1000yen_strategy(race_data):
             ),
         ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。能力指数{honmei['indexScore']}・試走勝率{honmei['simWinRate']}%の"
-            f"◎{h1}番{honmei['name']}の1強戦。【単勝】【馬単】に厚く資金を配分しつつ【三連複1頭軸】で高配当も抑える強気布陣。"
+            f"展開予測は【{pace_label} / {sim_summary}】。能力指数{honmei['indexScore']}・好位抜け出し力に優れる"
+            f"◎{h1}番{honmei['name']}({honmei['style']})の1強戦。【単勝】【馬単】に厚く資金を配分しつつ【三連複1頭軸】で高配当も抑える強気布陣。"
         )
     elif z_gap_1_2 < 4.0 and o1 <= 6.5 and taikou["odds"] <= 11.0:
         strategy_name = "2強対決・本線信頼型"
@@ -1116,7 +1225,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             ),
         ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)と"
+            f"展開予測は【{pace_label} / {sim_summary}】。直線で好位から運べる◎{h1}番{honmei['name']}({honmei['style']}・試走3着内率{honmei['simPlaceRate']}%)と"
             f"○{h2}番の2強が強力。【馬連本線】にダッチング＆ケリー基準で厚く張り、【三連複2頭軸】で穴馬☆{hs}番の絡みも網羅。"
         )
     elif o1 >= 7.0 or star_horse["ev"] >= 1.20 or pace_pct["high"] >= 55:
@@ -1136,7 +1245,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             ),
         ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。波乱含みの一戦で、期待値EV:{honmei['ev']}の◎{h1}番{honmei['name']}から勝負。"
+            f"展開予測は【{pace_label} / {sim_summary}】。波乱含みの一戦で、位置取り力と期待値(EV:{honmei['ev']})を兼ね備えた◎{h1}番{honmei['name']}({honmei['style']})から勝負。"
             f"【ワイド本線】で回収ラインを確保しつつ、【単勝穴】【馬連穴】に傾斜配分して一撃高配当を狙う。"
         )
     else:
@@ -1156,7 +1265,7 @@ def evaluate_and_build_1000yen_strategy(race_data):
             ),
         ]
         comment = (
-            f"展開予測は【{pace_label} / {sim_summary}】。安定感の高い◎{h1}番{honmei['name']}(試走3着内率{honmei['simPlaceRate']}%)を軸に、"
+            f"展開予測は【{pace_label} / {sim_summary}】。道中で好位を確保できる◎{h1}番{honmei['name']}({honmei['style']}・試走3着内率{honmei['simPlaceRate']}%)を軸に、"
             f"【馬連本線】と特注☆{hs}番への【ワイド穴】・【三連複2頭軸】へ期待値に応じて資金を傾斜配分。"
         )
 
@@ -1181,6 +1290,8 @@ def evaluate_and_build_1000yen_strategy(race_data):
     for h in horses:
         h.pop("_w", None)
         h.pop("_estProb", None)
+        h.pop("_rawEstProb", None)
+        h.pop("_structWinMult", None)
 
     clean_v = re.sub(r"[（\(].*?[）\)]", "", race_data.get("venue", "")).strip()
     race_data["venue"] = clean_v or race_data.get("venueBase", "京都")
@@ -1292,7 +1403,7 @@ def build_win5_prediction(races, all_win5_sets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（複数日WIN5公式対応＋展開シミュレーション）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（先行力重視＋枠順構造補正＋傾斜配分）を開始します...")
     stats_obj = build_complete_stats()
 
     all_win5_sets = fetch_all_official_win5_sets()
