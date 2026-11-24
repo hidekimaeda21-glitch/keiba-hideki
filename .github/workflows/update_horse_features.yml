@@ -2,7 +2,7 @@ name: Update Horse Qualitative DB
 
 on:
   schedule:
-    # 毎週月曜 21:00 JST (12:00 UTC) に直近7日分を自動収集
+    # 毎週月曜 21:00 JST (12:00 UTC) に直近7日分の定性DB＋成績答え合わせを実行
     - cron: '0 12 * * 1'
   workflow_dispatch:
     inputs:
@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -32,10 +34,13 @@ jobs:
       - name: Collect qualitative features from race results
         run: python scripts/update_horse_features.py --days "${{ inputs.days || '7' }}"
 
-      - name: Commit and push horse_features.json
+      - name: Auto evaluate predictions and update stats
+        run: python scripts/update_stats.py
+
+      - name: Commit and push updated JSONs
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/horse_features.json
-          git diff --staged --quiet || git commit -m "Update horse_features.json (${{ inputs.days || '7' }} days)"
+          git add data/horse_features.json data/stats.json stats.json data/today.json today.json
+          git diff --staged --quiet || git commit -m "Update horse_features & stats (${{ inputs.days || '7' }} days)"
           git push
