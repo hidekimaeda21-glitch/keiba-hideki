@@ -171,7 +171,6 @@
       border-top: 1px dashed rgba(139, 92, 246, 0.3);
       cursor: pointer;
     }
-    /* WIN5専用 IPAT購入ボタン */
     .win5-ipat-wrap {
       padding: 0 12px 12px;
     }
@@ -286,6 +285,13 @@
       color: var(--gold-color);
       border: 1px solid var(--gold-color);
     }
+    .badge-extra-buy {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #111827;
+      border: 1px solid #fde68a;
+      font-weight: 800;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
+    }
 
     .race-card {
       background: var(--card-bg);
@@ -293,6 +299,10 @@
       border-radius: 12px;
       margin-bottom: 16px;
       overflow: hidden;
+    }
+    .race-card.extra-buy-card {
+      border: 1.5px solid #f59e0b;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.2);
     }
     .race-header {
       padding: 12px 14px;
@@ -359,6 +369,18 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 6px;
+    }
+    .extra-buy-box {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(234, 179, 8, 0.12));
+      border: 1px solid rgba(251, 191, 36, 0.55);
+      border-left: 3px solid #f59e0b;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      font-size: 11.5px;
+      font-weight: bold;
+      line-height: 1.5;
+      color: #fde68a;
     }
     .ai-summary {
       font-size: 12px;
@@ -1903,9 +1925,13 @@
         ensureEnrichedRaceData(r);
         if (currentFilter !== 'ALL' && r.venue !== currentFilter) return;
 
+        const confScoreNum = Number(r.confidenceScore || 0);
+        const isExtraBuy = Boolean(r.extraBuyRecommended) || (r.confidence === 'S' && confScoreNum >= 90);
+
         const card = document.createElement('div');
-        card.className = 'race-card';
+        card.className = isExtraBuy ? 'race-card extra-buy-card' : 'race-card';
         const badges = [];
+        if (isExtraBuy) badges.push('<span class="badge badge-extra-buy">🔥 追加購入推奨</span>');
         if (r.isGraded) badges.push('<span class="badge badge-grade">重賞</span>');
         if (r.isWin5) badges.push('<span class="badge badge-win5">WIN5対象</span>');
         if (r.raceType) badges.push(`<span class="badge badge-type">${r.raceType}</span>`);
@@ -1914,6 +1940,13 @@
         const dangerHtml = dangerLines.length > 0
           ? `<div class="danger-pop-box">${dangerLines.map(dl => `<div class="danger-pop-line">⚠️ ${escapeHtml(dl)}</div>`).join('')}</div>`
           : '';
+
+        const extraBuyMsg = r.extraBuyReason || `🔥【追加購入推奨・ジェミ特選】信頼度S(${confScoreNum}点)の絶対的自信レース！通常予算に加えての追加購入をおすすめします。`;
+        const extraBuyHtml = isExtraBuy
+          ? `<div class="extra-buy-box">${escapeHtml(extraBuyMsg)}</div>`
+          : '';
+
+        const confColorStyle = isExtraBuy ? 'style="color:#fbbf24;"' : '';
 
         const horses = r.horses || [];
         let horseRows = '';
@@ -1985,8 +2018,9 @@
           <div class="ai-box">
             <div class="ai-box-title">
               <span>🧠 ジェミ予想 AI見解</span>
-              <span>信頼度: ${r.confidence || 'C'} (${r.confidenceScore || 50}点)</span>
+              <span ${confColorStyle}>信頼度: ${r.confidence || 'C'} (${r.confidenceScore || 50}点)</span>
             </div>
+            ${extraBuyHtml}
             <div class="ai-summary">${escapeHtml(normalText)}</div>
             ${dangerHtml}
             <div class="ai-buy">推奨買い目: ${escapeHtml(r.aiBuy || 'データ準備中')}</div>
