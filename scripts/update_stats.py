@@ -2,6 +2,7 @@ import os
 import re
 import json
 import time
+import subprocess
 import datetime
 from itertools import combinations
 from bs4 import BeautifulSoup
@@ -143,13 +144,12 @@ def fetch_race_result_and_payout(race_id):
     if len(top3) < 3:
         return None
 
-    payouts = {}  # {btype: {combo_tuple: yen_per_100}}
+    payouts = {}
     for tr in soup.select("table.Payout_Detail_Table tr, table.Pay_Table_01 tr"):
         th = tr.select_one("th")
         if not th:
             continue
-        btype = re.sub(r"\s+", "", th.get_text(strip=True))
-        btype = btype.replace("３", "3")
+        btype = re.sub(r"\s+", "", th.get_text(strip=True)).replace("３", "3")
         tds = tr.select("td")
         if len(tds) < 2:
             continue
@@ -187,8 +187,27 @@ def load_json(paths, default=None):
     return default if default is not None else {}
 
 
+def _extract_races_from_today_obj(today_obj, candidates):
+    if not isinstance(today_obj, dict):
+        return
+    for day in today_obj.get("scheduleDays", []):
+        d_str = str(day.get("date", ""))
+        d_iso = f"{d_str[:4]}-{d_str[4:6]}-{d_str[6:8]}" if len(d_str) == 8 else ""
+        for r in day.get("races", []):
+            rid = str(r.get("raceId", ""))
+            if rid and rid not in candidates:
+                rc = dict(r)
+                if d_iso and not rc.get("raceDate"):
+                    rc["raceDate"] = d_iso
+                candidates[rid] = rc
+    for r in today_obj.get("races", []):
+        rid = str(r.get("raceId", ""))
+        if rid and rid not in candidates:
+            candidates[rid] = dict(r)
+
+
 def collect_candidate_races():
-    """アーカイブとtoday.jsonから未集計の候補レースを集める"""
+    """アーカイブ・現在のtoday.json・Git過去コミットのtoday.jsonから未集計の候補レースを集める"""
     candidates = {}
 
     archive = load_json([ARCHIVE_PATH], default=[])
@@ -198,19 +217,25 @@ def collect_candidate_races():
                 candidates[str(r["raceId"])] = r
 
     today = load_json(TODAY_PATHS, default={})
-    if isinstance(today, dict):
-        for day in today.get("scheduleDays", []):
-            d_str = str(day.get("date", ""))
-            d_iso = f"{d_str[:4]}-{d_str[4:6]}-{d_str[6:8]}" if len(d_str) == 8 else ""
-            for r in day.get("races", []):
-                if r.get("raceId"):
-                    rc = dict(r)
-                    if d_iso and not rc.get("raceDate"):
-                        rc["raceDate"] = d_iso
-                    candidates[str(r["raceId"])] = rc
-        for r in today.get("races", []):
-            if r.get("raceId") and str(r["raceId"]) not in candidates:
-                candidates[str(r["raceId"])] = dict(r)
+    _extract_races_from_today_obj(today, candidates)
+
+    # Git履歴のdata/today.jsonからも過去週（11/21〜11/23等）の予想を発掘する
+    try:
+        commits = subprocess.check_output(
+            ["git", "log", "--format=%H", "-n", "40", "--", "data/today.json"],
+            stderr=subprocess.DEVNULL
+        ).decode("utf-8").strip().splitlines()
+        for sha in commits:
+            try:
+                raw = subprocess.check_output(
+                    ["git", "show", f"{sha}:data/today.json"],
+                    stderr=subprocess.DEVNULL
+                ).decode("utf-8", errors="ignore")
+                _extract_races_from_today_obj(json.loads(raw), candidates)
+            except Exception:
+                continue
+    except Exception:
+        pass
 
     return candidates
 
@@ -222,6 +247,8 @@ def main():
 
     evaluated_ids = set(str(x) for x in stats.get("evaluatedRaceIds", []))
     candidates = collect_candidate_races()
+    print(f"🔎 候補レース数: {len(candidates)}件（うち集計済み: {len(evaluated_ids)}件）")
+
     now_str = datetime.datetime.now(JST).strftime("%Y-%m-%d")
 
     total_bets = int(stats.get("totalBets") or 91)
@@ -284,7 +311,6 @@ def main():
         if race_payout > 0:
             hit_count += 1
 
-        # 印別の複勝圏内集計
         for h in race.get("horses", []):
             mk = str(h.get("markJemi") or h.get("mark") or "-")
             if mk in mark_counts:
@@ -364,7 +390,6 @@ def main():
         with open(sp, "w", encoding="utf-8") as f:
             json.dump(stats, f, ensure_ascii=False, indent=2)
 
-    # today.json 側の stats も同期更新
     for tp in TODAY_PATHS:
         if os.path.exists(tp):
             try:
