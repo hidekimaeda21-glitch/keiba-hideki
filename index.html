@@ -142,13 +142,13 @@
       border-radius: 12px;
       margin-bottom: 14px;
       overflow: hidden;
-      cursor: pointer;
     }
     .win5-header {
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      cursor: pointer;
     }
     .win5-title {
       font-size: 13px;
@@ -163,12 +163,37 @@
       border-radius: 4px;
     }
     .win5-body {
-      padding: 10px 14px 14px;
+      padding: 10px 14px 12px;
       font-size: 12px;
       line-height: 1.6;
       color: #e2e8f0;
       white-space: pre-wrap;
       border-top: 1px dashed rgba(139, 92, 246, 0.3);
+      cursor: pointer;
+    }
+    /* WIN5専用 IPAT購入ボタン */
+    .win5-ipat-wrap {
+      padding: 0 12px 12px;
+    }
+    .win5-ipat-btn {
+      width: 100%;
+      padding: 11px 12px;
+      background: linear-gradient(135deg, #7c3aed, #6366f1);
+      color: #ffffff;
+      border: 1px solid #a78bfa;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 3px 10px rgba(124, 58, 237, 0.28);
+    }
+    .win5-ipat-btn:active {
+      transform: scale(0.98);
+      opacity: 0.9;
     }
 
     .date-tabs {
@@ -858,7 +883,12 @@
       <div class="win5-title">🎯 WIN5 AI厳選戦略（タップで詳細買い目・実績）</div>
       <div class="win5-toggle-icon" id="win5ToggleIcon">明細 ↗</div>
     </div>
-    <div class="win5-body" id="win5Body" onclick="toggleWin5()" style="display: block; cursor: pointer;"></div>
+    <div class="win5-body" id="win5Body" onclick="toggleWin5()" style="display: block;"></div>
+    <div class="win5-ipat-wrap" id="win5IpatWrap" style="display: none;">
+      <button class="win5-ipat-btn" id="win5IpatBtn" onclick="event.stopPropagation(); requestIpatAction('WIN5', null)">
+        🏆 WIN5買い目をコピーしてJRA IPATへ
+      </button>
+    </div>
   </div>
 
   <div class="date-tabs" id="dateTabs" style="display: none;"></div>
@@ -885,6 +915,7 @@
     let currentFilter = 'ALL';
     let statsObj = null;
     let cachedWin5Text = '';
+    let currentWin5Obj = null;
     let scheduleDays = [];
     let currentDayIdx = 0;
     let lastUpdatedAt = '未更新';
@@ -944,6 +975,21 @@
       return lines.join('\n');
     }
 
+    function updateWin5IpatButton() {
+      const wrap = document.getElementById('win5IpatWrap');
+      const btn = document.getElementById('win5IpatBtn');
+      if (!wrap || !btn) return;
+      if (!cachedWin5Text || cachedWin5Text.includes('確定次第')) {
+        wrap.style.display = 'none';
+        return;
+      }
+      const pts = (currentWin5Obj && (currentWin5Obj.totalCombinations || currentWin5Obj.points)) || 8;
+      const cost = (currentWin5Obj && (currentWin5Obj.estimatedCost || currentWin5Obj.budget)) || (pts * 100);
+      const lockIcon = isMobileDevice() ? '🔒 ' : '';
+      btn.textContent = `🏆 ${lockIcon}WIN5買い目をコピーしてJRA IPATへ（${pts}点 / ${Number(cost).toLocaleString()}円）`;
+      wrap.style.display = 'block';
+    }
+
     function executeIpatAction(mode, rIdx) {
       if (mode === 'SINGLE') {
         const r = globalRaces[rIdx];
@@ -952,6 +998,14 @@
         copyTextToClipboard(text);
         const budget = (r.budget || 1000).toLocaleString();
         showToast(`✅ ${budget}円分の買い目をセットしました。IPAT画面を開きます`);
+        window.open(IPAT_SP_URL, '_blank', 'noopener');
+      } else if (mode === 'WIN5') {
+        const text = (currentWin5Obj && currentWin5Obj.text) ? currentWin5Obj.text : cachedWin5Text;
+        if (!text) return;
+        const pts = (currentWin5Obj && (currentWin5Obj.totalCombinations || currentWin5Obj.points)) || 8;
+        const cost = (currentWin5Obj && (currentWin5Obj.estimatedCost || currentWin5Obj.budget)) || (pts * 100);
+        copyTextToClipboard(text);
+        showToast(`🏆 WIN5（${pts}点 / ${Number(cost).toLocaleString()}円）をコピーしました。IPAT画面を開きます`);
         window.open(IPAT_SP_URL, '_blank', 'noopener');
       } else {
         const visibleRaces = globalRaces.filter(r => currentFilter === 'ALL' || r.venue === currentFilter);
@@ -977,6 +1031,8 @@
       if (mode === 'SINGLE' && globalRaces[rIdx]) {
         const r = globalRaces[rIdx];
         descEl.textContent = `【${r.venue} ${r.raceName}】の買い目転送を実行します。オーナー用パスコードを入力してください。`;
+      } else if (mode === 'WIN5') {
+        descEl.textContent = `【WIN5（5重勝単勝式）】の買い目転送を実行します。オーナー用パスコードを入力してください。`;
       } else {
         descEl.textContent = `表示中レースの買い目を一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
       }
@@ -1777,7 +1833,8 @@
       globalRaces = dayObj.races || [];
       document.getElementById('updateTime').textContent = `${dayObj.targetDate || ''} | 更新: ${lastUpdatedAt}`;
 
-      const rawW5 = String(dayObj.win5Strategy || '');
+      currentWin5Obj = dayObj.win5 || null;
+      const rawW5 = String(dayObj.win5Strategy || (currentWin5Obj && currentWin5Obj.text) || '');
       if (!rawW5 || rawW5.includes('確定次第')) {
         cachedWin5Text = buildDynamicWin5TextFromRaces(globalRaces);
       } else {
@@ -1785,6 +1842,7 @@
       }
       document.getElementById('win5Body').textContent = cachedWin5Text;
       document.getElementById('win5Card').style.display = 'block';
+      updateWin5IpatButton();
 
       currentFilter = 'ALL';
       const venues = [...new Set(globalRaces.map(r => r.venue))];
@@ -1927,7 +1985,7 @@
           <div class="ai-box">
             <div class="ai-box-title">
               <span>🧠 ジェミ予想 AI見解</span>
-              <span>信頼度: ${r.confidence || 'B'} (${r.confidenceScore || 88}点)</span>
+              <span>信頼度: ${r.confidence || 'C'} (${r.confidenceScore || 50}点)</span>
             </div>
             <div class="ai-summary">${escapeHtml(normalText)}</div>
             ${dangerHtml}
@@ -2013,8 +2071,9 @@
 
         document.getElementById('dateTabs').style.display = 'none';
         globalRaces = data.races || [];
+        currentWin5Obj = data.win5 || null;
 
-        const rawW5 = String(data.win5Strategy || '');
+        const rawW5 = String(data.win5Strategy || (currentWin5Obj && currentWin5Obj.text) || '');
         if (!rawW5 || rawW5.includes('確定次第')) {
           cachedWin5Text = buildDynamicWin5TextFromRaces(globalRaces);
         } else {
@@ -2022,6 +2081,7 @@
         }
         document.getElementById('win5Body').textContent = cachedWin5Text;
         document.getElementById('win5Card').style.display = 'block';
+        updateWin5IpatButton();
 
         const venues = [...new Set(globalRaces.map(r => r.venue))];
         const tabsContainer = document.getElementById('venueTabs');
