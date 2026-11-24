@@ -437,10 +437,12 @@ def fetch_html(url, default_enc="euc-jp", retries=3):
     for i in range(retries):
         try:
             res = requests.get(url, headers=HEADERS, timeout=15)
+            if res.status_code >= 400:
+                return ""
             raw = res.content
-            if b"utf-8" in raw[:1000].lower() or b"utf8" in raw[:1000].lower():
+            if b"utf-8" in raw[:1200].lower() or b"utf8" in raw[:1200].lower():
                 return raw.decode("utf-8", errors="replace")
-            for enc in (default_enc, "euc_jp", "cp932", "utf-8"):
+            for enc in (default_enc, "cp932", "euc_jp", "utf-8"):
                 try:
                     return raw.decode(enc)
                 except UnicodeDecodeError:
@@ -450,6 +452,77 @@ def fetch_html(url, default_enc="euc-jp", retries=3):
             print(f"Fetch retry ({i+1}/{retries}) for {url}: {e}")
             time.sleep(1.5)
     return ""
+
+
+def fetch_jra_official_win5_schedule():
+    """
+    JRA公式のWIN5対象レース一覧（https://www.jra.go.jp/kouza/win5/info/racelist.html）から
+    各開催日 (month, day) ごとの正確なWIN5対象5レース [(venue, r_num), ...] を取得する。
+    """
+    url = "https://www.jra.go.jp/kouza/win5/info/racelist.html"
+    html = fetch_html(url, default_enc="cp932")
+    if not html:
+        print("  -> JRA公式WIN5一覧取得失敗（フォールバックへ）")
+        return {}
+
+    soup = BeautifulSoup(html, "html.parser")
+    win5_by_md = {}
+    for tr in soup.select("table tr"):
+        cells = [td.get_text(" ", strip=True) for td in tr.select("th, td")]
+        if len(cells) < 7:
+            continue
+        m_date = re.search(r"(\d{1,2})月\s*(\d{1,2})日", cells[0])
+        if not m_date:
+            continue
+        month, day = int(m_date.group(1)), int(m_date.group(2))
+        targets = []
+        for cell in cells[2:7]:
+            m_r = re.search(r"(札幌|函館|福島|新潟|東京|中山|中京|京都|阪神|小倉)\s*(\d{1,2})R", cell)
+            if m_r:
+                targets.append((m_r.group(1), int(m_r.group(2))))
+        if len(targets) == 5:
+            win5_by_md[(month, day)] = targets
+
+    print(f"  -> JRA公式WIN5日程取得完了: {len(win5_by_md)}日分")
+    return win5_by_md
+
+
+def fetch_official_kaisai_dates(cand_dates, jra_win5_by_md=None):
+    """
+    非開催日を絶対に混ぜないため、netkeiba公式開催カレンダーとJRA公式日程から
+    実際にJRA中央競馬が開催される YYYYMMDD の集合を取得する。
+    """
+    official_dates = set()
+    ym_pairs = sorted({(int(d[:4]), int(d[4:6])) for d in cand_dates if len(d) == 8})
+
+    for y, m in ym_pairs:
+        cal_url = f"https://race.netkeiba.com/top/calendar.html?year={y}&month={m}"
+        html = fetch_html(cal_url, default_enc="euc_jp")
+        if html:
+            found = re.findall(r"kaisai_date=(\d{8})", html)
+            for fd in found:
+                official_dates.add(fd)
+
+    if jra_win5_by_md:
+        for d in cand_dates:
+            if len(d) == 8:
+                md = (int(d[4:6]), int(d[6:8]))
+                if md in jra_win5_by_md:
+                    official_dates.add(d)
+
+    # カレンダーが取れなかった場合のみ、JRA公式の各日番組表URLで存在確認
+    if not official_dates:
+        for d in cand_dates:
+            if len(d) != 8:
+                continue
+            y, mm, dd = d[:4], d[4:6], d[6:8]
+            jra_day_url = f"https://www.jra.go.jp/keiba/calendar{y}/{y}/{mm}/{mm}{dd}.html"
+            html = fetch_html(jra_day_url, default_enc="cp932", retries=1)
+            if html and ("競馬番組" in html or "レース" in html):
+                official_dates.add(d)
+
+    print(f"  -> 公式開催日チェック完了: 候補{len(cand_dates)}日中 {len([d for d in cand_dates if d in official_dates])}日が開催日")
+    return official_dates
 
 
 def get_target_dates():
@@ -465,7 +538,7 @@ def get_target_dates():
             dates = [now + datetime.timedelta(days=1), now + datetime.timedelta(days=6), now + datetime.timedelta(days=7)]
         else:
             dates = [now, now + datetime.timedelta(days=1)]
-    elif wd == 0 and now.hour < 17:  # 祝日月曜開催など
+    elif wd == 0 and now.hour < 17:  # 祝日月曜・再編競馬など
         days_to_sat = (5 - wd) % 7
         sat = now + datetime.timedelta(days=days_to_sat)
         dates = [now, sat, sat + datetime.timedelta(days=1)]
@@ -478,25 +551,54 @@ def get_target_dates():
     return [d.strftime("%Y%m%d") for d in dates]
 
 
-def discover_all_target_days():
+def discover_all_target_days(jra_win5_by_md=None):
     cand_dates = get_target_dates()
+    official_dates = fetch_official_kaisai_dates(cand_dates, jra_win5_by_md=jra_win5_by_md)
+
     day_groups = []
     seen_dates = set()
+    seen_race_ids = set()
 
     for d_str in cand_dates:
         if d_str in seen_dates:
             continue
         seen_dates.add(d_str)
 
+        # 非開催日ガード：公式開催日一覧が取得できている場合、リスト外の日付は完全スキップ
+        if official_dates and d_str not in official_dates:
+            print(f"  -> {d_str}: 非開催日のためスキップ")
+            continue
+
         list_url = f"https://race.netkeiba.com/top/race_list_sub.html?kaisai_date={d_str}"
         html = fetch_html(list_url, default_enc="utf-8")
         if not html:
             print(f"  -> race_list_sub empty for {d_str}")
             continue
+
         r_ids = re.findall(r"race_id=(\d{12})", html)
         unique_ids = sorted(list(set(r_ids)))
-        main_ids = [rid for rid in unique_ids if int(rid[-2:]) in (9, 10, 11, 12)]
-        print(f"  -> {d_str}: {len(main_ids)} main races found")
+
+        # 別開催日のフォールバック返却を物理的に排除
+        fresh_ids = [rid for rid in unique_ids if rid not in seen_race_ids]
+        if not fresh_ids:
+            print(f"  -> {d_str}: 別日レース重複のみのため非開催日扱いでスキップ")
+            continue
+
+        md_key = (int(d_str[4:6]), int(d_str[6:8]))
+        win5_target_set = set((jra_win5_by_md or {}).get(md_key, []))
+
+        main_ids = []
+        for rid in fresh_ids:
+            r_num = int(rid[-2:])
+            venue = VENUE_MAP.get(rid[4:6], "")
+            # 通常対象(9-12R)に加えて、7R・8R等がJRA公式WIN5対象なら必ず取得する
+            if r_num in (9, 10, 11, 12) or (venue, r_num) in win5_target_set:
+                main_ids.append(rid)
+
+        for rid in fresh_ids:
+            seen_race_ids.add(rid)
+
+        print(f"  -> {d_str}: {len(main_ids)} main/WIN5 races found")
         if main_ids:
             day_groups.append((d_str, main_ids))
 
@@ -504,7 +606,7 @@ def discover_all_target_days():
 
 
 def fetch_all_official_win5_sets():
-    """netkeibaの公式WIN5ページ（通常＋idx=0,1,2）から各開催日の対象5レースIDセットを取得する"""
+    """netkeibaの公式WIN5ページ（通常＋idx=0,1,2）から各開催日の対象5レースIDセットを取得する（補助ソース）"""
     win5_sets = []
     urls = [
         "https://race.netkeiba.com/top/win5.html",
@@ -971,12 +1073,10 @@ def calc_honest_confidence(horses, ranked, pace_pct, is_upset_race):
     fourth = ranked[3] if len(ranked) > 3 else taikou
     n_horses = len(horses)
 
-    # 1. 本命の試走3着内率・勝率からのベース点
     place_r = float(honmei.get("simPlaceRate", 30.0))
     win_r = float(honmei.get("simWinRate", 10.0))
     score = 32.0 + (place_r - 30.0) * 0.65 + (win_r - 10.0) * 0.45
 
-    # 2. 能力差・混戦度（「団栗の背比べ」判定）
     idx_gap_1_2 = float(honmei.get("indexScore", 75.0)) - float(taikou.get("indexScore", 75.0))
     tot_gap_1_4 = float(honmei.get("totalScore", 75.0)) - float(fourth.get("totalScore", 75.0))
     z_gap_1_2 = float(honmei.get("zScore", 50.0)) - float(taikou.get("zScore", 50.0))
@@ -985,12 +1085,10 @@ def calc_honest_confidence(horses, ranked, pace_pct, is_upset_race):
     score += max(-2.0, min(8.0, z_gap_1_2 * 0.8))
 
     if tot_gap_1_4 <= 2.0:
-        # 上位4頭が横並びの団栗の背比べ
         score -= 22.0
     elif tot_gap_1_4 <= 4.0:
         score -= 10.0
 
-    # 3. 展開の読みやすさ・本命の位置取り安定性
     dom_pace_pct = max(pace_pct.get("high", 33), pace_pct.get("middle", 34), pace_pct.get("slow", 33))
     if dom_pace_pct >= 60:
         score += 5.0
@@ -1003,20 +1101,17 @@ def calc_honest_confidence(horses, ranked, pace_pct, is_upset_race):
     elif pos_score <= 4.0:
         score -= 6.0
 
-    # 4. データ充足度（過去走が少ない新馬・未勝利戦等は大幅減点）
     avg_past = sum(len(h.get("pastRuns", [])) for h in horses) / max(1, n_horses)
     if avg_past < 1.5:
         score -= 18.0
     elif avg_past < 3.0:
         score -= 8.0
 
-    # 5. 多頭数・波乱軸のブレ補正
     if n_horses >= 16:
         score -= 5.0
     if is_upset_race or float(honmei.get("odds", 5.0)) >= 7.0:
         score -= 8.0
 
-    # 6. 90点以上の厳格なハードル（絶対的自信のときのみ90点以上を許可）
     can_be_90plus = (
         place_r >= 66.0
         and win_r >= 26.0
@@ -1482,10 +1577,8 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
         or (is_high_pace_collapse and o1 >= 4.5)
     )
 
-    # 正直な信頼度を算出（10〜95点）
     conf_rank, conf_score = calc_honest_confidence(horses, ranked, pace_pct, is_upset_race)
 
-    # 信頼度90点以上（Sランク）のときだけ追加購入推奨フラグを付与
     is_extra_buy = (conf_rank == "S" and conf_score >= 90)
     extra_buy_reason = ""
     if is_extra_buy:
@@ -1623,26 +1716,36 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
     return race_data
 
 
-def build_win5_prediction(races, all_win5_sets=None):
+def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
+    for r in races:
+        r["isWin5"] = False
+
     race_map = {r.get("raceId"): r for r in races}
+    vr_map = {(r.get("venue"), r.get("rNum")): r for r in races}
     win5_races = []
 
-    if all_win5_sets:
+    # 1. 最優先：JRA公式WIN5対象レース一覧（会場＋レース番号）の正確な順番で抽出
+    if jra_win5_targets and len(jra_win5_targets) == 5:
+        matched = [vr_map[t] for t in jra_win5_targets if t in vr_map]
+        if len(matched) == 5:
+            win5_races = matched
+
+    # 2. 次点：netkeibaの公式WIN5セット（race_id一致）
+    if not win5_races and all_win5_sets:
         for w5_rids in all_win5_sets:
             matched = [race_map[rid] for rid in w5_rids if rid in race_map]
             if len(matched) == 5:
                 win5_races = matched
                 break
 
+    # 3. 最終フォールバック（7R〜12Rの発走時刻順末尾5レース）
     if not win5_races:
-        r10_11 = [r for r in races if r.get("rNum") in (10, 11)]
-        if len(r10_11) >= 5:
-            r10_11.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 10)))
-            win5_races = r10_11[-5:]
-        else:
-            r9_11 = [r for r in races if r.get("rNum") in (9, 10, 11)]
-            r9_11.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 9)))
-            win5_races = r9_11[-5:] if len(r9_11) >= 5 else sorted(races, key=lambda x: x.get("startTime", "15:00"))[-5:]
+        cands = [r for r in races if r.get("rNum") in (7, 8, 9, 10, 11, 12)]
+        cands.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 10)))
+        win5_races = cands[-5:] if len(cands) >= 5 else sorted(races, key=lambda x: x.get("startTime", "15:00"))[-5:]
+
+    for wr in win5_races:
+        wr["isWin5"] = True
 
     legs = []
     lines_text = []
@@ -1715,14 +1818,15 @@ def build_win5_prediction(races, all_win5_sets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（正直な信頼度＋定性DB＋黄金ポートフォリオ）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（公式開催日チェック＋JRA公式WIN5同期）を開始します...")
     stats_obj = build_complete_stats()
     horse_features = load_horse_features()
 
+    jra_win5_by_md = fetch_jra_official_win5_schedule()
     all_win5_sets = fetch_all_official_win5_sets()
-    print(f"  -> 公式WIN5セット取得数: {len(all_win5_sets)}日分")
+    print(f"  -> netkeiba WIN5補助セット取得数: {len(all_win5_sets)}日分")
 
-    day_groups = discover_all_target_days()
+    day_groups = discover_all_target_days(jra_win5_by_md=jra_win5_by_md)
     schedule_days = []
 
     for d_str, rids in day_groups:
@@ -1741,7 +1845,9 @@ def main():
             time.sleep(0.35)
 
         if day_races:
-            day_win5 = build_win5_prediction(day_races, all_win5_sets)
+            md_key = (dt_obj.month, dt_obj.day)
+            jra_targets = jra_win5_by_md.get(md_key)
+            day_win5 = build_win5_prediction(day_races, all_win5_sets, jra_win5_targets=jra_targets)
             for r in day_races:
                 if "topPicks" in r:
                     del r["topPicks"]
