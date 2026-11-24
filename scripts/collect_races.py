@@ -47,7 +47,6 @@ def _norm_horse_name(name):
 def load_horse_features(path=HORSE_FEATURES_PATH):
     """
     馬別定性データベース（data/horse_features.json）を安全に読み込む。
-    ファイル未作成時は空辞書 {} で初期化し、エラーで落ちない設計。
     """
     if not os.path.exists(path):
         try:
@@ -206,7 +205,6 @@ def save_predictions_archive(schedule_days, path=PREDICTIONS_ARCHIVE_PATH):
                 ],
             }
 
-    # 直近150レース分を保持して軽量維持
     sorted_items = sorted(arc_map.values(), key=lambda x: str(x.get("raceId", "")), reverse=True)[:150]
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
@@ -311,7 +309,6 @@ def build_complete_stats():
     if isinstance(local_stats, dict) and local_stats:
         base_stats.update(local_stats)
     else:
-        # ローカルに data/stats.json が無い場合のみGit履歴から復元する（最新値の上書き防止）
         _, git_stats = restore_historical_json_from_git()
         if isinstance(git_stats, dict):
             for k, v in git_stats.items():
@@ -757,7 +754,6 @@ def parse_shutuba_page(race_id):
 def calc_pci(time_sec, agari, dist):
     """
     ペースチェンジ指数（PCI）を算出する。
-    PCI = ((走破タイム - 上がり3F) / 上がり3F) * (600 / (距離 - 600)) * 100
     """
     if time_sec <= 0 or agari <= 0 or dist <= 600 or time_sec <= agari:
         return 50.0
@@ -959,6 +955,95 @@ def simulate_race_monte_carlo(race_data, n_trials=1000, horse_features=None):
         "slow": round(pace_counts["slow"] * 100 / n_trials),
     }
     return sim_stats, pace_pct
+
+
+def calc_honest_confidence(horses, ranked, pace_pct, is_upset_race):
+    """
+    【正直な信頼度（10〜95点）】
+    「団栗の背比べ（混戦）」や「データ不足」なら10〜25点台まで正直に下げ、
+    90点以上は抜け出した1強＆高確率＆データ充実の絶対的自信があるときだけ付与する。
+    """
+    if not ranked:
+        return "E", 10
+
+    honmei = ranked[0]
+    taikou = ranked[1] if len(ranked) > 1 else honmei
+    fourth = ranked[3] if len(ranked) > 3 else taikou
+    n_horses = len(horses)
+
+    # 1. 本命の試走3着内率・勝率からのベース点
+    place_r = float(honmei.get("simPlaceRate", 30.0))
+    win_r = float(honmei.get("simWinRate", 10.0))
+    score = 32.0 + (place_r - 30.0) * 0.65 + (win_r - 10.0) * 0.45
+
+    # 2. 能力差・混戦度（「団栗の背比べ」判定）
+    idx_gap_1_2 = float(honmei.get("indexScore", 75.0)) - float(taikou.get("indexScore", 75.0))
+    tot_gap_1_4 = float(honmei.get("totalScore", 75.0)) - float(fourth.get("totalScore", 75.0))
+    z_gap_1_2 = float(honmei.get("zScore", 50.0)) - float(taikou.get("zScore", 50.0))
+
+    score += max(-4.0, min(14.0, idx_gap_1_2 * 2.4))
+    score += max(-2.0, min(8.0, z_gap_1_2 * 0.8))
+
+    if tot_gap_1_4 <= 2.0:
+        # 上位4頭が横並びの団栗の背比べ
+        score -= 22.0
+    elif tot_gap_1_4 <= 4.0:
+        score -= 10.0
+
+    # 3. 展開の読みやすさ・本命の位置取り安定性
+    dom_pace_pct = max(pace_pct.get("high", 33), pace_pct.get("middle", 34), pace_pct.get("slow", 33))
+    if dom_pace_pct >= 60:
+        score += 5.0
+    elif dom_pace_pct <= 40:
+        score -= 6.0
+
+    pos_score = float(honmei.get("positioningScore", 5.0))
+    if pos_score >= 8.0:
+        score += 4.0
+    elif pos_score <= 4.0:
+        score -= 6.0
+
+    # 4. データ充足度（過去走が少ない新馬・未勝利戦等は大幅減点）
+    avg_past = sum(len(h.get("pastRuns", [])) for h in horses) / max(1, n_horses)
+    if avg_past < 1.5:
+        score -= 18.0
+    elif avg_past < 3.0:
+        score -= 8.0
+
+    # 5. 多頭数・波乱軸のブレ補正
+    if n_horses >= 16:
+        score -= 5.0
+    if is_upset_race or float(honmei.get("odds", 5.0)) >= 7.0:
+        score -= 8.0
+
+    # 6. 90点以上の厳格なハードル（絶対的自信のときのみ90点以上を許可）
+    can_be_90plus = (
+        place_r >= 66.0
+        and win_r >= 26.0
+        and idx_gap_1_2 >= 3.0
+        and avg_past >= 3.0
+        and pos_score >= 6.0
+        and not is_upset_race
+    )
+    if not can_be_90plus:
+        score = min(score, 87.0)
+
+    final_score = int(round(min(95.0, max(10.0, score))))
+
+    if final_score >= 90:
+        rank = "S"
+    elif final_score >= 75:
+        rank = "A"
+    elif final_score >= 55:
+        rank = "B"
+    elif final_score >= 35:
+        rank = "C"
+    elif final_score >= 20:
+        rank = "D"
+    else:
+        rank = "E"
+
+    return rank, final_score
 
 
 def allocate_dutching_kelly(bet_groups, total_budget=1000):
@@ -1397,10 +1482,12 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
         or (is_high_pace_collapse and o1 >= 4.5)
     )
 
+    # 正直な信頼度を算出（10〜95点）
+    conf_rank, conf_score = calc_honest_confidence(horses, ranked, pace_pct, is_upset_race)
+
     bet_groups = []
     if is_dominant_1strong:
         strategy_name = "1強・頭固定型"
-        conf_rank, conf_score = "S", 95
         exacta_opps = _uniq([x for x in [h2, h3] if x != h1])[:2]
         axis_opps = _uniq([x for x in [h2, h3, h4, hs] + opps_ordered if x != h1])[:4]
         trio_combos = _trio_1axis_combos(h1, axis_opps)
@@ -1421,7 +1508,6 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
         )
     elif is_upset_race:
         strategy_name = "波乱・穴狙い型"
-        conf_rank, conf_score = "B+", 89
         wide_o, wide_p = _combo_wide(h1, hs)
         if wide_o >= 4.0 and hs != h1:
             punch_group = _make_group(f"【ワイド穴】{h1} - {hs}", [(wide_o, wide_p)])
@@ -1449,7 +1535,6 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
         )
     else:
         strategy_name = "堅実・中配当型"
-        conf_rank, conf_score = "A", 92
         col2 = _uniq([x for x in [h2, h3] if x != h1])[:2]
         col3_target = 4 if n_horses <= 9 else 5
         col3 = _uniq([x for x in col2 + [h4, hs, h5] + opps_ordered if x != h1])[:col3_target]
@@ -1467,6 +1552,9 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
             f"展開予測は【{pace_label} / {sim_summary}】。道中で好位を確保できる◎{h1}番{honmei['name']}({honmei['style']}・試走3着内率{honmei['simPlaceRate']}%)が軸。"
             f"【馬連本線・対抗】へダッチング＆ケリー傾斜配分しつつ、実力上位馬と穴☆を押さえた【三連複F({len(trio_combos)}点)】で確実な回収を狙う。"
         )
+
+    if conf_score < 35:
+        comment += f"（※上位の能力差が極めて小さい大混戦・信頼度{conf_score}点のため、無理な厚張りは禁物）"
 
     video_notes = []
     for fh in [honmei, taikou, tanana, star_horse]:
@@ -1615,7 +1703,7 @@ def build_win5_prediction(races, all_win5_sets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（定性DB連携＋アーカイブ保存＋黄金ポートフォリオ）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（正直な信頼度＋定性DB＋黄金ポートフォリオ）を開始します...")
     stats_obj = build_complete_stats()
     horse_features = load_horse_features()
 
