@@ -1485,6 +1485,16 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
     # 正直な信頼度を算出（10〜95点）
     conf_rank, conf_score = calc_honest_confidence(horses, ranked, pace_pct, is_upset_race)
 
+    # 信頼度90点以上（Sランク）のときだけ追加購入推奨フラグを付与
+    is_extra_buy = (conf_rank == "S" and conf_score >= 90)
+    extra_buy_reason = ""
+    if is_extra_buy:
+        extra_buy_reason = (
+            f"🔥【追加購入推奨・ジェミ特選】信頼度S({conf_score}点)の絶対的自信レース！"
+            f"◎{h1}番{honmei['name']}の試走3着内率({honmei['simPlaceRate']}%)・"
+            f"能力指数({honmei['indexScore']})が抜けており、通常予算(1,000円)に加えての追加購入をおすすめします。"
+        )
+
     bet_groups = []
     if is_dominant_1strong:
         strategy_name = "1強・頭固定型"
@@ -1600,6 +1610,8 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
     race_data["strategyTag"] = strategy_tag
     race_data["confidence"] = conf_rank
     race_data["confidenceScore"] = conf_score
+    race_data["extraBuyRecommended"] = is_extra_buy
+    race_data["extraBuyReason"] = extra_buy_reason
     race_data["videoNotes"] = video_notes
     race_data["dangerPop"] = danger_pop_lines
     race_data["dangerPopText"] = " / ".join(danger_pop_lines)
