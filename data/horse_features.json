@@ -3,8 +3,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/23 福島10R(五色沼特別): 上がり3位(37.0秒)も4着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/23 福島10R(五色沼特別): 上がり3位(37.0秒)も4着・不発・ドスロー(PCI:100.5)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -12,8 +12,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 2.5,
-    "memo": "11/23 福島10R(五色沼特別): 上がり最速(36.1秒)も5着・脚余し",
+    "video_bonus": 4.0,
+    "memo": "11/23 福島10R(五色沼特別): 上がり最速(36.1秒)も5着・脚余し・ドスロー(PCI:104.1)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -21,8 +21,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/23 福島10R(五色沼特別): 上がり2位(36.9秒)も11着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/23 福島10R(五色沼特別): 上がり2位(36.9秒)も11着・不発・ドスロー(PCI:101.4)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -39,8 +39,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/23 福島11R(奥羽S): 上がり3位(36.8秒)も9着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/23 福島11R(奥羽S): 上がり3位(36.8秒)も9着・不発・ドスロー(PCI:100.2)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -57,8 +57,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.5,
     "finish_effort": 1.0,
-    "video_bonus": 3.2,
-    "memo": "11/23 東京11R(東スポ杯2歳S): 上がり3位(32.7秒)も6着・不発・8枠外回りロスも0.4秒差",
+    "video_bonus": 4.0,
+    "memo": "11/23 東京11R(東スポ杯2歳S): 上がり3位(32.7秒)も6着・不発・ドスロー(PCI:114.4)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -66,8 +66,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり3位(32.9秒)も4着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり3位(32.9秒)も4着・不発・ドスロー(PCI:114.3)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -75,8 +75,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.5,
     "finish_effort": 1.0,
-    "video_bonus": 3.2,
-    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり2位(32.8秒)も5着・不発・8枠外回りロスも0.5秒差",
+    "video_bonus": 4.0,
+    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり2位(32.8秒)も5着・不発・ドスロー(PCI:115.1)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -84,8 +84,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 2.5,
-    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり最速(32.7秒)も6着・脚余し",
+    "video_bonus": 4.0,
+    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり最速(32.7秒)も6着・脚余し・ドスロー(PCI:115.8)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -93,8 +93,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり3位(32.9秒)も12着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/23 東京12R(3歳以上1勝クラス): 上がり3位(32.9秒)も12着・不発・ドスロー(PCI:115.1)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-23"
   },
@@ -111,8 +111,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 2.5,
-    "memo": "11/22 東京10R(秋色S): 上がり最速(32.9秒)も5着・脚余し",
+    "video_bonus": 4.0,
+    "memo": "11/22 東京10R(秋色S): 上がり最速(32.9秒)も5着・脚余し・ドスロー(PCI:110.9)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -120,8 +120,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 2.5,
-    "memo": "11/22 東京10R(秋色S): 上がり最速(32.9秒)も10着・脚余し",
+    "video_bonus": 4.0,
+    "memo": "11/22 東京10R(秋色S): 上がり最速(32.9秒)も10着・脚余し・ドスロー(PCI:111.4)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -129,8 +129,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 東京10R(秋色S): 上がり3位(33.3秒)も11着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 東京10R(秋色S): 上がり3位(33.3秒)も11着・不発・ドスロー(PCI:109.4)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -138,8 +138,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 東京10R(秋色S): 上がり2位(33.1秒)も12着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 東京10R(秋色S): 上がり2位(33.1秒)も12着・不発・ドスロー(PCI:110.6)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -147,8 +147,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 東京11R(霜月S): 上がり1位(34.6秒)も4着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 東京11R(霜月S): 上がり1位(34.6秒)も4着・不発・ドスロー(PCI:107.3)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -156,8 +156,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 2.5,
-    "memo": "11/22 東京11R(霜月S): 上がり最速(34.6秒)も5着・脚余し",
+    "video_bonus": 4.0,
+    "memo": "11/22 東京11R(霜月S): 上がり最速(34.6秒)も5着・脚余し・ドスロー(PCI:107.3)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -174,8 +174,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 東京12R(3歳以上2勝クラス): 上がり1位(32.9秒)も4着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 東京12R(3歳以上2勝クラス): 上がり1位(32.9秒)も4着・不発・ドスロー(PCI:109.7)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -183,17 +183,17 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 東京12R(3歳以上2勝クラス): 上がり3位(33.3秒)も5着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 東京12R(3歳以上2勝クラス): 上がり3位(33.3秒)も5着・不発・ドスロー(PCI:107.7)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
   "ロジャリーマイン": {
     "traffic_disadvantage": 0,
     "corner_radius": 1.5,
-    "finish_effort": 0.0,
-    "video_bonus": 1.4,
-    "memo": "11/22 東京12R(3歳以上2勝クラス): 8枠外回りロスも0.3秒差",
+    "finish_effort": 1.0,
+    "video_bonus": 3.4,
+    "memo": "11/22 東京12R(3歳以上2勝クラス): ドスロー(PCI:106.6)後方届かず・8枠外回りロスも0.3秒差",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -201,8 +201,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 東京12R(3歳以上2勝クラス): 上がり2位(33.0秒)も9着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 東京12R(3歳以上2勝クラス): 上がり2位(33.0秒)も9着・不発・ドスロー(PCI:109.5)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -210,8 +210,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 京都9R(花見小路特別): 上がり3位(33.2秒)も5着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 京都9R(花見小路特別): 上がり3位(33.2秒)も5着・不発・ドスロー(PCI:109.7)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -219,8 +219,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 京都9R(花見小路特別): 上がり3位(33.2秒)も7着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 京都9R(花見小路特別): 上がり3位(33.2秒)も7着・不発・ドスロー(PCI:109.9)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -228,8 +228,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 京都10R(西陣S): 上がり2位(36.4秒)も5着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 京都10R(西陣S): 上がり2位(36.4秒)も5着・不発・ドスロー(PCI:98.9)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -237,8 +237,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 京都10R(西陣S): 上がり3位(37.4秒)も6着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 京都10R(西陣S): 上がり3位(37.4秒)も6着・不発・ドスロー(PCI:94.3)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -246,8 +246,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.5,
     "finish_effort": 1.0,
-    "video_bonus": 3.2,
-    "memo": "11/22 京都11R(マイルCS): 上がり2位(32.8秒)も4着・不発・8枠外回りロスも0.1秒差",
+    "video_bonus": 4.0,
+    "memo": "11/22 京都11R(マイルCS): 上がり2位(32.8秒)も4着・不発・ドスロー(PCI:108.1)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -255,8 +255,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.5,
     "finish_effort": 1.0,
-    "video_bonus": 3.9,
-    "memo": "11/22 京都11R(マイルCS): 上がり最速(32.6秒)も5着・脚余し・8枠外回りロスも0.2秒差",
+    "video_bonus": 4.0,
+    "memo": "11/22 京都11R(マイルCS): 上がり最速(32.6秒)も5着・脚余し・ドスロー(PCI:109.3)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -273,8 +273,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/22 京都12R(醍醐S): 上がり2位(32.9秒)も11着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/22 京都12R(醍醐S): 上がり2位(32.9秒)も11着・不発・ドスロー(PCI:107.3)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-22"
   },
@@ -282,17 +282,17 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/21 福島9R(高湯温泉特別): 上がり2位(37.5秒)も4着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/21 福島9R(高湯温泉特別): 上がり2位(37.5秒)も4着・不発・ドスロー(PCI:98.4)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
   "ミッションルース": {
     "traffic_disadvantage": 0,
     "corner_radius": 1.5,
-    "finish_effort": 0.0,
-    "video_bonus": 1.4,
-    "memo": "11/21 福島9R(高湯温泉特別): 7枠外回りロスも0.5秒差",
+    "finish_effort": 1.0,
+    "video_bonus": 3.4,
+    "memo": "11/21 福島9R(高湯温泉特別): ドスロー(PCI:97.0)後方届かず・7枠外回りロスも0.5秒差",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
@@ -309,8 +309,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 2.5,
-    "memo": "11/21 福島10R(福島放送賞): 上がり最速(35.7秒)も6着・脚余し",
+    "video_bonus": 4.0,
+    "memo": "11/21 福島10R(福島放送賞): 上がり最速(35.7秒)も6着・脚余し・ドスロー(PCI:96.9)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
@@ -318,17 +318,17 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/21 福島11R(福島記念): 上がり1位(35.9秒)も4着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/21 福島11R(福島記念): 上がり1位(35.9秒)も4着・不発・ドスロー(PCI:104.8)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
   "キャントウェイト": {
     "traffic_disadvantage": 0,
     "corner_radius": 1.5,
-    "finish_effort": 0.0,
-    "video_bonus": 1.4,
-    "memo": "11/21 福島11R(福島記念): 8枠外回りロスも0.5秒差",
+    "finish_effort": 1.0,
+    "video_bonus": 3.4,
+    "memo": "11/21 福島11R(福島記念): ドスロー(PCI:102.4)後方届かず・8枠外回りロスも0.5秒差",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
@@ -336,8 +336,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/21 福島12R(3歳以上1勝クラス): 上がり3位(36.0秒)も5着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/21 福島12R(3歳以上1勝クラス): 上がり3位(36.0秒)も5着・不発・ドスロー(PCI:98.1)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
@@ -345,8 +345,8 @@
     "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 2.5,
-    "memo": "11/21 福島12R(3歳以上1勝クラス): 上がり最速(35.6秒)も6着・脚余し",
+    "video_bonus": 4.0,
+    "memo": "11/21 福島12R(3歳以上1勝クラス): 上がり最速(35.6秒)も6着・脚余し・ドスロー(PCI:100.3)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
@@ -354,17 +354,17 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "11/21 京都10R(比叡S): 上がり3位(34.3秒)も4着・不発",
+    "video_bonus": 3.8,
+    "memo": "11/21 京都10R(比叡S): 上がり3位(34.3秒)も4着・不発・ドスロー(PCI:106.1)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
   "クルミナーレ": {
     "traffic_disadvantage": 0,
     "corner_radius": 1.5,
-    "finish_effort": 0.0,
-    "video_bonus": 1.4,
-    "memo": "11/21 京都10R(比叡S): 8枠外回りロスも0.3秒差",
+    "finish_effort": 1.0,
+    "video_bonus": 3.4,
+    "memo": "11/21 京都10R(比叡S): ドスロー(PCI:104.5)後方届かず・8枠外回りロスも0.3秒差",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
@@ -372,8 +372,8 @@
     "traffic_disadvantage": 1,
     "corner_radius": 1.5,
     "finish_effort": 1.0,
-    "video_bonus": 3.2,
-    "memo": "11/21 京都12R(3歳以上2勝クラス): 上がり1位(33.1秒)も4着・不発・7枠外回りロスも0.1秒差",
+    "video_bonus": 4.0,
+    "memo": "11/21 京都12R(3歳以上2勝クラス): 上がり1位(33.1秒)も4着・不発・ドスロー(PCI:113.0)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
   },
@@ -1336,9 +1336,9 @@
     "corner_radius": 1.0,
     "finish_effort": 1.0,
     "video_bonus": 2.0,
-    "memo": "10/17 東京11R(富士S): ドスロー(PCI:101.6)後方届かず",
+    "memo": "11/22 京都11R(マイルCS): ドスロー(PCI:105.3)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-10-17"
+    "updated_at": "2026-11-22"
   },
   "ディマイザキッド": {
     "traffic_disadvantage": 2,
@@ -1395,13 +1395,13 @@
     "updated_at": "2026-10-12"
   },
   "レザベーション": {
-    "traffic_disadvantage": 1,
+    "traffic_disadvantage": 0,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 3.8,
-    "memo": "10/12 京都11R(スワンS): 上がり2位(33.0秒)も10着・不発・ドスロー(PCI:105.7)後方届かず",
+    "video_bonus": 2.0,
+    "memo": "11/22 京都11R(マイルCS): ドスロー(PCI:105.0)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-10-12"
+    "updated_at": "2026-11-22"
   },
   "ミニトランザット": {
     "traffic_disadvantage": 0,
@@ -1912,9 +1912,9 @@
     "corner_radius": 1.0,
     "finish_effort": 1.0,
     "video_bonus": 2.0,
-    "memo": "09/20 阪神11R(道頓堀S): ドスロー(PCI:101.2)後方届かず",
+    "memo": "11/22 京都12R(醍醐S): ドスロー(PCI:106.0)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-09-20"
+    "updated_at": "2026-11-22"
   },
   "ミカッテヨンデイイ": {
     "traffic_disadvantage": 0,
@@ -2493,13 +2493,13 @@
     "updated_at": "2026-08-22"
   },
   "スピードリッチ": {
-    "traffic_disadvantage": 1,
+    "traffic_disadvantage": 0,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "08/22 札幌11R(WASJ第2戦): 上がり3位(36.5秒)も5着・不発",
+    "video_bonus": 2.0,
+    "memo": "11/21 京都10R(比叡S): ドスロー(PCI:104.0)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-08-22"
+    "updated_at": "2026-11-21"
   },
   "ピンクジン": {
     "traffic_disadvantage": 1,
@@ -2916,13 +2916,13 @@
     "updated_at": "2026-08-08"
   },
   "パーティーガール": {
-    "traffic_disadvantage": 1,
+    "traffic_disadvantage": 0,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 3.8,
-    "memo": "08/08 新潟11R(3歳以上1勝クラス): 上がり3位(32.4秒)も6着・不発・ドスロー(PCI:106.0)後方届かず",
+    "video_bonus": 2.0,
+    "memo": "11/22 東京12R(3歳以上2勝クラス): ドスロー(PCI:103.9)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-08-08"
+    "updated_at": "2026-11-22"
   },
   "シャンクス": {
     "traffic_disadvantage": 1,
@@ -3636,13 +3636,13 @@
     "updated_at": "2026-06-27"
   },
   "ルーフ": {
-    "traffic_disadvantage": 1,
+    "traffic_disadvantage": 0,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 3.8,
-    "memo": "06/21 函館11R(UHB杯): 上がり3位(34.4秒)も5着・不発・ドスロー(PCI:98.3)後方届かず",
+    "video_bonus": 2.0,
+    "memo": "11/22 京都12R(醍醐S): ドスロー(PCI:104.2)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-06-21"
+    "updated_at": "2026-11-22"
   },
   "マカナ": {
     "traffic_disadvantage": 1,
@@ -4266,13 +4266,13 @@
     "updated_at": "2026-05-17"
   },
   "ココナッツブラウン": {
-    "traffic_disadvantage": 1,
+    "traffic_disadvantage": 0,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 3.8,
-    "memo": "05/17 東京11R(ヴィクトリアマイル): 上がり2位(32.9秒)も5着・不発・ドスロー(PCI:106.7)後方届かず",
+    "video_bonus": 2.0,
+    "memo": "11/22 京都11R(マイルCS): ドスロー(PCI:105.4)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-05-17"
+    "updated_at": "2026-11-22"
   },
   "ラヴァンダ": {
     "traffic_disadvantage": 0,
@@ -5202,13 +5202,13 @@
     "updated_at": "2026-03-21"
   },
   "タイセイアストロ": {
-    "traffic_disadvantage": 1,
+    "traffic_disadvantage": 0,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "03/21 中京11R(ファルコンS): 上がり2位(33.5秒)も10着・不発",
+    "video_bonus": 2.0,
+    "memo": "11/23 東京12R(3歳以上1勝クラス): ドスロー(PCI:113.5)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-03-21"
+    "updated_at": "2026-11-23"
   },
   "コレオシークエンス": {
     "traffic_disadvantage": 1,
@@ -5251,9 +5251,9 @@
     "corner_radius": 1.0,
     "finish_effort": 1.0,
     "video_bonus": 2.0,
-    "memo": "03/15 中山11R(スプリングS): ドスロー(PCI:103.4)後方届かず",
+    "memo": "11/21 福島9R(高湯温泉特別): ドスロー(PCI:97.9)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-03-15"
+    "updated_at": "2026-11-21"
   },
   "メイショウソラフネ": {
     "traffic_disadvantage": 0,
@@ -5449,9 +5449,9 @@
     "corner_radius": 1.0,
     "finish_effort": 1.0,
     "video_bonus": 2.0,
-    "memo": "03/01 小倉11R(関門橋S): ドスロー(PCI:99.7)後方届かず",
+    "memo": "11/21 京都10R(比叡S): ドスロー(PCI:104.1)後方届かず",
     "source": "auto_result",
-    "updated_at": "2026-03-01"
+    "updated_at": "2026-11-21"
   },
   "ママコチャ": {
     "traffic_disadvantage": 0,
@@ -6802,5 +6802,284 @@
     "memo": "11/24 福島11R(奥羽S): 上がり3位(37.5秒)も6着・不発・ドスロー(PCI:100.7)後方届かず",
     "source": "auto_result",
     "updated_at": "2025-11-24"
+  },
+  "トレミニョン": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 福島10R(五色沼特別): ドスロー(PCI:100.0)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "ヴォワラクテ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 福島10R(五色沼特別): ドスロー(PCI:99.7)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "デファイ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 福島10R(五色沼特別): ドスロー(PCI:100.5)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "ホウオウシンデレラ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 福島10R(五色沼特別): ドスロー(PCI:99.7)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "グランカンタンテ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 福島10R(五色沼特別): ドスロー(PCI:100.8)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "モリノアミーゴ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 福島11R(奥羽S): ドスロー(PCI:97.4)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "プルートマスター": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 福島11R(奥羽S): ドスロー(PCI:98.5)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "カレンラップスター": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 東京9R(Lジョッキーカップ): ドスロー(PCI:102.3)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "タイセイカイザー": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 東京10R(Lトレーナーカップ): ドスロー(PCI:99.1)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "ニースケンス": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 東京11R(東スポ杯2歳S): ドスロー(PCI:114.2)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "モティスフォント": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 東京12R(3歳以上1勝クラス): ドスロー(PCI:113.1)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "ルクスアドラー": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/23 東京12R(3歳以上1勝クラス): ドスロー(PCI:112.3)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-23"
+  },
+  "レッドアトレーヴ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 東京10R(秋色S): ドスロー(PCI:108.5)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "ヴィヴァン": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 東京11R(霜月S): ドスロー(PCI:105.6)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "スマートジュリアス": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 東京11R(霜月S): ドスロー(PCI:104.0)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "メランジェ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 東京12R(3歳以上2勝クラス): ドスロー(PCI:107.3)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "アドマイヤジェイ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 東京12R(3歳以上2勝クラス): ドスロー(PCI:105.7)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "ネッタイヤライ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都9R(花見小路特別): ドスロー(PCI:108.8)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "バガン": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都9R(花見小路特別): ドスロー(PCI:108.0)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "ペルフェツィオーネ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都9R(花見小路特別): ドスロー(PCI:107.2)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "ガイアフォース": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都11R(マイルCS): ドスロー(PCI:105.0)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "ジューンテイク": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都11R(マイルCS): ドスロー(PCI:105.0)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "エコロブルーム": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都11R(マイルCS): ドスロー(PCI:104.0)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "トーラスシャイン": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都12R(醍醐S): ドスロー(PCI:105.7)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "トーセントラム": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/22 京都12R(醍醐S): ドスロー(PCI:106.6)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-22"
+  },
+  "コックピットサイト": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/21 福島10R(福島放送賞): ドスロー(PCI:93.8)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-21"
+  },
+  "レッドカメリア": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/21 福島12R(3歳以上1勝クラス): ドスロー(PCI:98.6)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-21"
+  },
+  "アットアブラスト": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/21 京都10R(比叡S): ドスロー(PCI:103.2)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-21"
+  },
+  "キントリヒ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/21 京都10R(比叡S): ドスロー(PCI:104.4)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-21"
+  },
+  "ワンモアスマイル": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/21 京都12R(3歳以上2勝クラス): ドスロー(PCI:110.9)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-21"
+  },
+  "ヤマニンループ": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.0,
+    "memo": "11/21 京都12R(3歳以上2勝クラス): ドスロー(PCI:111.9)後方届かず",
+    "source": "auto_result",
+    "updated_at": "2026-11-21"
   }
 }
