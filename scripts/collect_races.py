@@ -25,6 +25,9 @@ WEEKDAY_JP = ["月", "火", "水", "木", "金", "土", "日"]
 HORSE_FEATURES_PATH = "data/horse_features.json"
 PREDICTIONS_ARCHIVE_PATH = "data/predictions_archive.json"
 
+# 購入対象とする最低信頼度（Bランク＝55点以上）
+MIN_BUY_CONFIDENCE_SCORE = 55
+
 # 過去の的中レース明細データ（回収率・的中率の『詳細』『明細』タップ時に表示される実績データ）
 HISTORICAL_HITS = [
     {"date": "2026-11-15", "venue": "京都11R", "race": "京都11R デイリー杯2歳S", "raceName": "デイリー杯2歳S (G2)", "betType": "三連複・馬連", "type": "三連複・馬連", "result": "的中", "hitMark": "◎-○-☆", "marks": "◎-○-☆", "invest": 1000, "cost": 1000, "payout": 14800, "return": 14800, "roi": 1480, "combo": "2-6-11"},
@@ -45,9 +48,6 @@ def _norm_horse_name(name):
 
 
 def load_horse_features(path=HORSE_FEATURES_PATH):
-    """
-    馬別定性データベース（data/horse_features.json）を安全に読み込む。
-    """
     if not os.path.exists(path):
         try:
             os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
@@ -81,7 +81,6 @@ def upsert_horse_feature(
     memo="",
     path=HORSE_FEATURES_PATH,
 ):
-    """レース動画・パトロール・短評から抽出した定性データを軽量JSONへ登録・更新するヘルパー"""
     db = {}
     if os.path.exists(path):
         try:
@@ -113,9 +112,6 @@ def upsert_horse_feature(
 
 
 def calc_video_qualitative_bonus(feat):
-    """
-    馬別定性レコードから【動画・定性ボーナス（-1.5〜+4.0点）】と解説メモを返す。
-    """
     if not isinstance(feat, dict) or not feat:
         return 0.0, ""
 
@@ -165,7 +161,7 @@ def calc_video_qualitative_bonus(feat):
 
 
 def save_predictions_archive(schedule_days, path=PREDICTIONS_ARCHIVE_PATH):
-    """答え合わせ（scripts/update_stats.py）用に予想スナップショットを軽量アーカイブへ追記保存"""
+    """答え合わせ（scripts/update_stats.py）用に予想スナップショット（信頼度付き）を軽量アーカイブへ保存"""
     existing = []
     if os.path.exists(path):
         try:
@@ -192,6 +188,9 @@ def save_predictions_archive(schedule_days, path=PREDICTIONS_ARCHIVE_PATH):
                 "rNum": r.get("rNum", 0),
                 "raceName": r.get("raceName", ""),
                 "shortRaceName": r.get("shortRaceName", ""),
+                "confidence": r.get("confidence", ""),
+                "confidenceScore": r.get("confidenceScore", 0),
+                "isBuyTarget": bool(r.get("confidenceScore", 0) >= MIN_BUY_CONFIDENCE_SCORE),
                 "aiBuy": r.get("aiBuy", ""),
                 "budget": r.get("budget", 1000),
                 "horses": [
@@ -205,14 +204,13 @@ def save_predictions_archive(schedule_days, path=PREDICTIONS_ARCHIVE_PATH):
                 ],
             }
 
-    sorted_items = sorted(arc_map.values(), key=lambda x: str(x.get("raceId", "")), reverse=True)[:150]
+    sorted_items = sorted(arc_map.values(), key=lambda x: str(x.get("raceId", "")), reverse=True)[:300]
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(sorted_items, f, ensure_ascii=False, indent=2)
 
 
 def restore_historical_json_from_git():
-    """Gitの過去全コミットから正常時の data/stats.json または data/today.json を探索して復元する"""
     found_stats = None
     found_today = None
     for target_file in ("data/stats.json", "stats.json", "data/today.json", "today.json"):
@@ -246,7 +244,6 @@ def restore_historical_json_from_git():
 
 
 def restore_last_valid_today_from_git():
-    """万が一今回レース取得が0件だった場合に、直近の有効な today.json をGit履歴から復元する"""
     for target_file in ("data/today.json", "today.json"):
         try:
             commits = subprocess.check_output(
@@ -270,7 +267,6 @@ def restore_last_valid_today_from_git():
 
 
 def patch_index_html_defaults(mark_defs):
-    """index.html 内の印別複勝圏内率カードの初期表示を最新数値に同期"""
     if not os.path.exists("index.html"):
         return
     try:
@@ -321,6 +317,17 @@ def build_complete_stats():
     rec_rate = float(base_stats.get("recoveryRate") or base_stats.get("roi") or 290.2)
     total_inv = int(base_stats.get("totalInvestment") or base_stats.get("totalCost") or (total_bets * 1000))
     total_ret = int(base_stats.get("totalReturn") or base_stats.get("totalPayout") or int(total_inv * rec_rate / 100))
+
+    b_plus_stats = base_stats.get("bPlusStats")
+    if not isinstance(b_plus_stats, dict):
+        b_plus_stats = {
+            "totalBets": 0,
+            "hitCount": 0,
+            "hitRate": None,
+            "recoveryRate": None,
+            "totalInvestment": 0,
+            "totalReturn": 0,
+        }
 
     mark_defs = [
         ("◎", "honmei", "本命", "◎ 本命", 64.8, 59, 91),
@@ -414,6 +421,7 @@ def build_complete_stats():
         "totalReturn": total_ret,
         "totalPayout": total_ret,
         "profit": total_ret - total_inv,
+        "bPlusStats": b_plus_stats,
         "markStats": final_mark_stats,
         "markStatsList": mark_stats_list,
         "marks": mark_stats_dict,
@@ -450,15 +458,11 @@ def fetch_html(url, default_enc="euc-jp", retries=3):
             return raw.decode(default_enc, errors="replace")
         except Exception as e:
             print(f"Fetch retry ({i+1}/{retries}) for {url}: {e}")
-            time.sleep(1.5)
+            time.sleep(1.0)
     return ""
 
 
 def fetch_jra_official_win5_schedule():
-    """
-    JRA公式のWIN5対象レース一覧（https://www.jra.go.jp/kouza/win5/info/racelist.html）から
-    各開催日 (month, day) ごとの正確なWIN5対象5レース [(venue, r_num), ...] を取得する。
-    """
     url = "https://www.jra.go.jp/kouza/win5/info/racelist.html"
     html = fetch_html(url, default_enc="cp932")
     if not html:
@@ -488,10 +492,6 @@ def fetch_jra_official_win5_schedule():
 
 
 def fetch_official_kaisai_dates(cand_dates, jra_win5_by_md=None):
-    """
-    非開催日を絶対に混ぜないため、netkeiba公式開催カレンダーとJRA公式日程から
-    実際にJRA中央競馬が開催される YYYYMMDD の集合を取得する。
-    """
     official_dates = set()
     ym_pairs = sorted({(int(d[:4]), int(d[4:6])) for d in cand_dates if len(d) == 8})
 
@@ -510,7 +510,6 @@ def fetch_official_kaisai_dates(cand_dates, jra_win5_by_md=None):
                 if md in jra_win5_by_md:
                     official_dates.add(d)
 
-    # カレンダーが取れなかった場合のみ、JRA公式の各日番組表URLで存在確認
     if not official_dates:
         for d in cand_dates:
             if len(d) != 8:
@@ -528,17 +527,17 @@ def fetch_official_kaisai_dates(cand_dates, jra_win5_by_md=None):
 def get_target_dates():
     now = datetime.datetime.now(JST)
     wd = now.weekday()
-    if wd == 5:  # 土曜
+    if wd == 5:
         if now.hour >= 17:
             dates = [now + datetime.timedelta(days=1), now + datetime.timedelta(days=2)]
         else:
             dates = [now, now + datetime.timedelta(days=1), now + datetime.timedelta(days=2)]
-    elif wd == 6:  # 日曜
+    elif wd == 6:
         if now.hour >= 17:
             dates = [now + datetime.timedelta(days=1), now + datetime.timedelta(days=6), now + datetime.timedelta(days=7)]
         else:
             dates = [now, now + datetime.timedelta(days=1)]
-    elif wd == 0 and now.hour < 17:  # 祝日月曜・再編競馬など
+    elif wd == 0 and now.hour < 17:
         days_to_sat = (5 - wd) % 7
         sat = now + datetime.timedelta(days=days_to_sat)
         dates = [now, sat, sat + datetime.timedelta(days=1)]
@@ -564,7 +563,6 @@ def discover_all_target_days(jra_win5_by_md=None):
             continue
         seen_dates.add(d_str)
 
-        # 非開催日ガード：公式開催日一覧が取得できている場合、リスト外の日付は完全スキップ
         if official_dates and d_str not in official_dates:
             print(f"  -> {d_str}: 非開催日のためスキップ")
             continue
@@ -578,35 +576,25 @@ def discover_all_target_days(jra_win5_by_md=None):
         r_ids = re.findall(r"race_id=(\d{12})", html)
         unique_ids = sorted(list(set(r_ids)))
 
-        # 別開催日のフォールバック返却を物理的に排除
         fresh_ids = [rid for rid in unique_ids if rid not in seen_race_ids]
         if not fresh_ids:
             print(f"  -> {d_str}: 別日レース重複のみのため非開催日扱いでスキップ")
             continue
 
-        md_key = (int(d_str[4:6]), int(d_str[6:8]))
-        win5_target_set = set((jra_win5_by_md or {}).get(md_key, []))
-
-        main_ids = []
-        for rid in fresh_ids:
-            r_num = int(rid[-2:])
-            venue = VENUE_MAP.get(rid[4:6], "")
-            # 通常対象(9-12R)に加えて、7R・8R等がJRA公式WIN5対象なら必ず取得する
-            if r_num in (9, 10, 11, 12) or (venue, r_num) in win5_target_set:
-                main_ids.append(rid)
+        # 1R〜12Rの全レースを解析対象とする
+        all_ids = [rid for rid in fresh_ids if 1 <= int(rid[-2:]) <= 12]
 
         for rid in fresh_ids:
             seen_race_ids.add(rid)
 
-        print(f"  -> {d_str}: {len(main_ids)} main/WIN5 races found")
-        if main_ids:
-            day_groups.append((d_str, main_ids))
+        print(f"  -> {d_str}: 1R〜12R 全{len(all_ids)}レースを検出")
+        if all_ids:
+            day_groups.append((d_str, all_ids))
 
     return day_groups
 
 
 def fetch_all_official_win5_sets():
-    """netkeibaの公式WIN5ページ（通常＋idx=0,1,2）から各開催日の対象5レースIDセットを取得する（補助ソース）"""
     win5_sets = []
     urls = [
         "https://race.netkeiba.com/top/win5.html",
@@ -716,8 +704,6 @@ def parse_shutuba_page(race_id):
                 })
             if p_runs:
                 past_map[p_name_key] = {"pastRuns": p_runs, "corner_positions": c_pos}
-
-    print(f"  -> {race_id}: pastRuns取得 {len(past_map)}頭")
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -854,9 +840,6 @@ def parse_shutuba_page(race_id):
 
 
 def calc_pci(time_sec, agari, dist):
-    """
-    ペースチェンジ指数（PCI）を算出する。
-    """
     if time_sec <= 0 or agari <= 0 or dist <= 600 or time_sec <= agari:
         return 50.0
     pci = ((time_sec - agari) / agari) * (600.0 / (dist - 600.0)) * 100.0
@@ -864,9 +847,6 @@ def calc_pci(time_sec, agari, dist):
 
 
 def calc_positioning_score(h):
-    """
-    【先行力・ポジショニング指数（0〜10点）】
-    """
     style = h.get("style", "先行")
     past_runs = h.get("pastRuns", [])
     pass1_list = [int(r.get("pass1", 0)) for r in past_runs[:5] if int(r.get("pass1", 0)) > 0]
@@ -887,9 +867,6 @@ def calc_positioning_score(h):
 
 
 def calc_base_ability(h, horse_features=None):
-    """
-    【①オッズ完全隔離 & ②PCI救出ボーナス & 先行力・位置取り力 & 動画・定性ボーナス】
-    """
     past_runs = h.get("pastRuns", [])
     pos_score = calc_positioning_score(h)
     pos_adj = (pos_score - 5.0) * 0.45
@@ -1060,11 +1037,6 @@ def simulate_race_monte_carlo(race_data, n_trials=1000, horse_features=None):
 
 
 def calc_honest_confidence(horses, ranked, pace_pct, is_upset_race):
-    """
-    【正直な信頼度（10〜95点）】
-    「団栗の背比べ（混戦）」や「データ不足」なら10〜25点台まで正直に下げ、
-    90点以上は抜け出した1強＆高確率＆データ充実の絶対的自信があるときだけ付与する。
-    """
     if not ranked:
         return "E", 10
 
@@ -1142,9 +1114,6 @@ def calc_honest_confidence(horses, ranked, pace_pct, is_upset_race):
 
 
 def allocate_dutching_kelly(bet_groups, total_budget=1000):
-    """
-    【ダッチング＋1/8ケリー傾斜配分】
-    """
     if not bet_groups:
         return []
 
@@ -1703,6 +1672,8 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
     race_data["strategyTag"] = strategy_tag
     race_data["confidence"] = conf_rank
     race_data["confidenceScore"] = conf_score
+    race_data["isBuyTarget"] = (conf_score >= MIN_BUY_CONFIDENCE_SCORE)
+    race_data["isEarlyPick"] = (race_data.get("rNum", 0) <= 8 and conf_score >= MIN_BUY_CONFIDENCE_SCORE)
     race_data["extraBuyRecommended"] = is_extra_buy
     race_data["extraBuyReason"] = extra_buy_reason
     race_data["videoNotes"] = video_notes
@@ -1724,13 +1695,11 @@ def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
     vr_map = {(r.get("venue"), r.get("rNum")): r for r in races}
     win5_races = []
 
-    # 1. 最優先：JRA公式WIN5対象レース一覧（会場＋レース番号）の正確な順番で抽出
     if jra_win5_targets and len(jra_win5_targets) == 5:
         matched = [vr_map[t] for t in jra_win5_targets if t in vr_map]
         if len(matched) == 5:
             win5_races = matched
 
-    # 2. 次点：netkeibaの公式WIN5セット（race_id一致）
     if not win5_races and all_win5_sets:
         for w5_rids in all_win5_sets:
             matched = [race_map[rid] for rid in w5_rids if rid in race_map]
@@ -1738,7 +1707,6 @@ def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
                 win5_races = matched
                 break
 
-    # 3. 最終フォールバック（7R〜12Rの発走時刻順末尾5レース）
     if not win5_races:
         cands = [r for r in races if r.get("rNum") in (7, 8, 9, 10, 11, 12)]
         cands.sort(key=lambda x: (x.get("startTime", "15:00"), x.get("rNum", 10)))
@@ -1818,7 +1786,7 @@ def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（公式開催日チェック＋JRA公式WIN5同期）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（9〜12R全表示＋1〜8RのB以上追加表示）を開始します...")
     stats_obj = build_complete_stats()
     horse_features = load_horse_features()
 
@@ -1829,33 +1797,56 @@ def main():
     day_groups = discover_all_target_days(jra_win5_by_md=jra_win5_by_md)
     schedule_days = []
 
+    venue_order = {"東京": 1, "中山": 2, "京都": 3, "阪神": 4, "新潟": 5, "中京": 6, "福島": 7, "小倉": 8, "札幌": 9, "函館": 10}
+
     for d_str, rids in day_groups:
         dt_obj = datetime.datetime.strptime(d_str, "%Y%m%d")
         t_date_disp = f"{dt_obj.year}年{dt_obj.month}月{dt_obj.day}日"
         day_label = f"{dt_obj.month}/{dt_obj.day}({WEEKDAY_JP[dt_obj.weekday()]})"
-        day_races = []
+        all_day_races = []
 
-        print(f"=== {t_date_disp} ({len(rids)}レース) の解析 ===")
+        print(f"=== {t_date_disp} (全{len(rids)}レース) の解析 ===")
         for rid in rids:
             r_info = parse_shutuba_page(rid)
             if not r_info:
                 continue
             r_info = evaluate_and_build_1000yen_strategy(r_info, horse_features=horse_features)
-            day_races.append(r_info)
-            time.sleep(0.35)
+            all_day_races.append(r_info)
+            time.sleep(0.15)
 
-        if day_races:
+        if all_day_races:
+            # 1. WIN5は全レース解析結果からJRA公式5レースを正確に構築
             md_key = (dt_obj.month, dt_obj.day)
             jra_targets = jra_win5_by_md.get(md_key)
-            day_win5 = build_win5_prediction(day_races, all_win5_sets, jra_win5_targets=jra_targets)
-            for r in day_races:
+            day_win5 = build_win5_prediction(all_day_races, all_win5_sets, jra_win5_targets=jra_targets)
+
+            # 2. 表示対象：9R〜12Rは全レース表示 ＋ 1R〜8Rは信頼度B以上(55点〜)のみ追加表示
+            display_day_races = [
+                r for r in all_day_races
+                if (r.get("rNum", 0) in (9, 10, 11, 12))
+                or (r.get("confidenceScore", 0) >= MIN_BUY_CONFIDENCE_SCORE)
+            ]
+            display_day_races.sort(key=lambda x: (venue_order.get(x.get("venue"), 99), x.get("rNum", 99)))
+
+            b_plus_cnt = sum(1 for r in display_day_races if r.get("confidenceScore", 0) >= MIN_BUY_CONFIDENCE_SCORE)
+            early_b_cnt = sum(1 for r in display_day_races if r.get("isEarlyPick"))
+
+            for r in all_day_races:
                 if "topPicks" in r:
                     del r["topPicks"]
+
+            print(f"  -> {t_date_disp}: 全{len(all_day_races)}R解析 → 表示{len(display_day_races)}R (うちB以上 {b_plus_cnt}R / 1〜8R特選 {early_b_cnt}R)")
+
             schedule_days.append({
                 "date": d_str,
                 "label": day_label,
                 "targetDate": t_date_disp,
-                "races": day_races,
+                "analyzedCount": len(all_day_races),
+                "displayCount": len(display_day_races),
+                "bPlusCount": b_plus_cnt,
+                "earlyPickCount": early_b_cnt,
+                "minConfidenceScore": MIN_BUY_CONFIDENCE_SCORE,
+                "races": display_day_races,
                 "win5": day_win5,
                 "win5Strategy": day_win5.get("text", "")
             })
@@ -1866,6 +1857,8 @@ def main():
         target_date_display = primary_day["targetDate"]
         races_out = primary_day["races"]
         win5_data = primary_day["win5"]
+        analyzed_out = primary_day.get("analyzedCount", len(races_out))
+        b_plus_out = primary_day.get("bPlusCount", 0)
     else:
         print("⚠️ 今回レース取得が0件でした（netkeibaメンテナンス等の可能性）。直前の有効データを復元します。")
         prev_valid = restore_last_valid_today_from_git()
@@ -1874,17 +1867,25 @@ def main():
             races_out = prev_valid.get("races", [])
             win5_data = prev_valid.get("win5", {})
             schedule_days = prev_valid.get("scheduleDays", [])
+            analyzed_out = prev_valid.get("analyzedCount", len(races_out))
+            b_plus_out = prev_valid.get("bPlusCount", 0)
         else:
             target_date_display = datetime.datetime.now(JST).strftime("%Y年%m月%d日")
             races_out = []
             win5_data = {}
+            analyzed_out = 0
+            b_plus_out = 0
 
     now_str = datetime.datetime.now(JST).strftime("%Y-%m-%d %H:%M")
     final_json = {
         "targetDate": target_date_display,
         "updatedAt": now_str,
         "budgetPerRace": 1000,
-        "totalBudget": len(races_out) * 1000,
+        "totalBudget": b_plus_out * 1000,
+        "analyzedCount": analyzed_out,
+        "displayCount": len(races_out),
+        "bPlusCount": b_plus_out,
+        "minConfidenceScore": MIN_BUY_CONFIDENCE_SCORE,
         "stats": stats_obj,
         "hitRate": stats_obj["hitRate"],
         "recoveryRate": stats_obj["recoveryRate"],
@@ -1892,6 +1893,7 @@ def main():
         "totalBets": stats_obj["totalBets"],
         "totalRaces": stats_obj["totalRaces"],
         "hitCount": stats_obj["hitCount"],
+        "bPlusStats": stats_obj.get("bPlusStats", {}),
         "markStats": stats_obj["markStats"],
         "markStatsList": stats_obj["markStatsList"],
         "hitDetails": stats_obj["hitDetails"],
@@ -1909,7 +1911,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(final_json, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 完了！ {len(schedule_days)}日分 / {len(races_out)}レースを出力しました。")
+    print(f"✅ 完了！ {len(schedule_days)}日分 / 表示{len(races_out)}レース（うちB以上 {b_plus_out}レース）を出力しました。")
 
 
 if __name__ == "__main__":
