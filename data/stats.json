@@ -69253,5 +69253,13 @@
     "202608050610",
     "202608050611",
     "202608050612"
-  ]
+  ],
+  "bPlusStats": {
+    "totalBets": 0,
+    "hitCount": 0,
+    "hitRate": null,
+    "recoveryRate": null,
+    "totalInvestment": 0,
+    "totalReturn": 0
+  }
 }
