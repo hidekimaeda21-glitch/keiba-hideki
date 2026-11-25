@@ -18,6 +18,9 @@ STATS_PATHS = ("data/stats.json", "stats.json")
 TODAY_PATHS = ("data/today.json", "today.json")
 ARCHIVE_PATH = "data/predictions_archive.json"
 
+# 信頼度B以上の判定しきい値（55点以上＝S/A/Bランク）
+MIN_B_PLUS_SCORE = 55
+
 
 def fetch_html(url, default_enc="euc-jp", retries=3):
     for i in range(retries):
@@ -219,7 +222,6 @@ def collect_candidate_races():
     today = load_json(TODAY_PATHS, default={})
     _extract_races_from_today_obj(today, candidates)
 
-    # Git履歴のdata/today.jsonからも過去週（11/21〜11/23等）の予想を発掘する
     try:
         commits = subprocess.check_output(
             ["git", "log", "--format=%H", "-n", "40", "--", "data/today.json"],
@@ -255,6 +257,13 @@ def main():
     hit_count = int(stats.get("hitCount") or 33)
     total_inv = int(stats.get("totalInvestment") or (total_bets * 1000))
     total_ret = int(stats.get("totalReturn") or int(total_inv * float(stats.get("recoveryRate") or 290.2) / 100))
+
+    # 信頼度B以上（55点〜）専用の実績カウンター
+    bp = stats.get("bPlusStats") if isinstance(stats.get("bPlusStats"), dict) else {}
+    bp_total_bets = int(bp.get("totalBets") or 0)
+    bp_hit_count = int(bp.get("hitCount") or 0)
+    bp_total_inv = int(bp.get("totalInvestment") or 0)
+    bp_total_ret = int(bp.get("totalReturn") or 0)
 
     hit_details = list(stats.get("hitDetails") or [])
     all_bet_races = list(stats.get("allBetRaces") or [])
@@ -305,11 +314,23 @@ def main():
                     if t["type"] not in hit_types:
                         hit_types.append(t["type"])
 
+        # 全体実績へ加算
         total_bets += 1
         total_inv += race_cost
         total_ret += race_payout
         if race_payout > 0:
             hit_count += 1
+
+        # 信頼度B以上（55点〜）実績へ加算
+        conf_score = int(race.get("confidenceScore") or 0)
+        conf_rank = str(race.get("confidence") or "")
+        is_b_plus = bool(race.get("isBuyTarget")) or (conf_score >= MIN_B_PLUS_SCORE)
+        if is_b_plus:
+            bp_total_bets += 1
+            bp_total_inv += race_cost
+            bp_total_ret += race_payout
+            if race_payout > 0:
+                bp_hit_count += 1
 
         for h in race.get("horses", []):
             mk = str(h.get("markJemi") or h.get("mark") or "-")
@@ -327,6 +348,9 @@ def main():
             "venue": f"{venue}{r_num}R",
             "race": f"{venue}{r_num}R {r_name}",
             "raceName": r_name,
+            "confidence": conf_rank,
+            "confidenceScore": conf_score,
+            "isBPlus": is_b_plus,
             "betType": "・".join(hit_types) if hit_types else "予想",
             "result": "的中" if race_payout > 0 else "不的中",
             "invest": race_cost,
@@ -341,11 +365,23 @@ def main():
 
         evaluated_ids.add(rid)
         new_count += 1
-        print(f"  ✅ 集計: {r_date} {venue}{r_num}R | 投資 {race_cost}円 -> 払戻 {race_payout}円")
+        b_tag = "[B以上]" if is_b_plus else "[C以下]"
+        print(f"  ✅ 集計{b_tag}: {r_date} {venue}{r_num}R | 投資 {race_cost}円 -> 払戻 {race_payout}円")
         time.sleep(0.25)
 
     hit_rate = round(hit_count * 100.0 / max(1, total_bets), 1)
     rec_rate = round(total_ret * 100.0 / max(1, total_inv), 1)
+
+    bp_hit_rate = round(bp_hit_count * 100.0 / bp_total_bets, 1) if bp_total_bets > 0 else None
+    bp_rec_rate = round(bp_total_ret * 100.0 / max(1, bp_total_inv), 1) if bp_total_bets > 0 else None
+    b_plus_stats = {
+        "totalBets": bp_total_bets,
+        "hitCount": bp_hit_count,
+        "hitRate": bp_hit_rate,
+        "recoveryRate": bp_rec_rate,
+        "totalInvestment": bp_total_inv,
+        "totalReturn": bp_total_ret,
+    }
 
     mark_stats_dict = {}
     mark_stats_list = []
@@ -375,6 +411,7 @@ def main():
         "totalReturn": total_ret,
         "totalPayout": total_ret,
         "profit": total_ret - total_inv,
+        "bPlusStats": b_plus_stats,
         "markStats": mark_stats_dict,
         "markStatsList": mark_stats_list,
         "markRates": mark_stats_dict,
@@ -402,6 +439,7 @@ def main():
                     td["roi"] = rec_rate
                     td["totalBets"] = total_bets
                     td["hitCount"] = hit_count
+                    td["bPlusStats"] = b_plus_stats
                     td["hitDetails"] = stats["hitDetails"]
                     td["allBetRaces"] = stats["allBetRaces"]
                     with open(tp, "w", encoding="utf-8") as f:
@@ -409,7 +447,11 @@ def main():
             except Exception:
                 pass
 
-    print(f"🏁 答え合わせ完了: 新規 {new_count}レース集計 | 的中率 {hit_rate}% ({hit_count}/{total_bets}) | 回収率 {rec_rate}%")
+    print(
+        f"🏁 答え合わせ完了: 新規 {new_count}R | "
+        f"全体: 的中率 {hit_rate}% ({hit_count}/{total_bets})・回収率 {rec_rate}% | "
+        f"B以上: 的中率 {bp_hit_rate}% ({bp_hit_count}/{bp_total_bets})・回収率 {bp_rec_rate}%"
+    )
 
 
 if __name__ == "__main__":
