@@ -66,7 +66,7 @@
     .stats-bar {
       display: flex;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .stat-card {
       flex: 1;
@@ -76,6 +76,11 @@
       padding: 10px;
       text-align: center;
       cursor: pointer;
+    }
+    .stat-card.bplus-card {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.14), rgba(15, 23, 42, 0.92));
+      border: 1px solid rgba(16, 185, 129, 0.42);
+      cursor: default;
     }
     .stat-label {
       font-size: 10px;
@@ -94,12 +99,18 @@
       padding: 1px 4px;
       border-radius: 3px;
     }
+    .stat-label span.bplus-tag {
+      color: #6ee7b7;
+      background: rgba(16, 185, 129, 0.22);
+    }
     .stat-value {
       font-size: 18px;
       font-weight: 800;
     }
     .val-hit { color: #60a5fa; }
     .val-rec { color: var(--gold-color); }
+    .val-bplus-hit { color: #34d399; }
+    .val-bplus-rec { color: #fde047; }
     .stat-sub {
       font-size: 9px;
       color: #6b7280;
@@ -224,7 +235,7 @@
     .venue-tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       overflow-x: auto;
       padding-bottom: 2px;
     }
@@ -245,6 +256,18 @@
       background: var(--accent-color);
       color: #fff;
       border-color: var(--accent-color);
+    }
+
+    .filter-info-bar {
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      font-size: 11px;
+      font-weight: bold;
+      color: #bfdbfe;
+      text-align: center;
     }
 
     .bulk-ipat-wrap {
@@ -277,6 +300,7 @@
       border-radius: 4px;
       font-size: 10px;
       font-weight: bold;
+      margin-bottom: 2px;
     }
     .badge-win5 { background: #8b5cf6; color: #fff; }
     .badge-grade { background: var(--red-color); color: #fff; }
@@ -292,6 +316,21 @@
       font-weight: 800;
       box-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
     }
+    .badge-bplus {
+      background: rgba(16, 185, 129, 0.22);
+      color: #6ee7b7;
+      border: 1px solid #10b981;
+    }
+    .badge-early {
+      background: rgba(56, 189, 248, 0.22);
+      color: #7dd3fc;
+      border: 1px solid #38bdf8;
+    }
+    .badge-skip {
+      background: rgba(107, 114, 128, 0.22);
+      color: #9ca3af;
+      border: 1px solid #4b5563;
+    }
 
     .race-card {
       background: var(--card-bg);
@@ -303,6 +342,9 @@
     .race-card.extra-buy-card {
       border: 1.5px solid #f59e0b;
       box-shadow: 0 0 14px rgba(245, 158, 11, 0.2);
+    }
+    .race-card.bplus-race-card {
+      border: 1px solid rgba(16, 185, 129, 0.55);
     }
     .race-header {
       padding: 12px 14px;
@@ -856,16 +898,31 @@
     <button class="reload-btn" onclick="loadData()">更新 ⟳</button>
   </header>
 
+  <!-- 実績1段目：全体 -->
   <div class="stats-bar">
     <div class="stat-card" onclick="openHitModal()">
-      <div class="stat-label">AI 的中率 <span>詳細</span></div>
+      <div class="stat-label">AI 的中率 (全体) <span>詳細</span></div>
       <div class="stat-value val-hit" id="hitRateDisplay">--%</div>
       <div class="stat-sub" id="hitCountDisplay">--R 的中</div>
     </div>
     <div class="stat-card" onclick="openPayoutModal()">
-      <div class="stat-label">AI 通算回収率 (ROI) <span>明細</span></div>
+      <div class="stat-label">AI 回収率 (全体) <span>明細</span></div>
       <div class="stat-value val-rec" id="recoveryRateDisplay">--%</div>
-      <div class="stat-sub">ケリー基準・EV特化</div>
+      <div class="stat-sub">全予想レース通算</div>
+    </div>
+  </div>
+
+  <!-- 実績2段目：信頼度B以上のみ -->
+  <div class="stats-bar" style="margin-bottom: 10px;">
+    <div class="stat-card bplus-card">
+      <div class="stat-label">🎯 的中率 (信頼度B以上) <span class="bplus-tag">厳選</span></div>
+      <div class="stat-value val-bplus-hit" id="bPlusHitRateDisplay">--%</div>
+      <div class="stat-sub" id="bPlusHitCountDisplay">今週末から自動集計</div>
+    </div>
+    <div class="stat-card bplus-card">
+      <div class="stat-label">🎯 回収率 (信頼度B以上) <span class="bplus-tag">55点〜</span></div>
+      <div class="stat-value val-bplus-rec" id="bPlusRecRateDisplay">--%</div>
+      <div class="stat-sub" id="bPlusRecSubDisplay">投資 0円 → 払戻 0円</div>
     </div>
   </div>
 
@@ -919,9 +976,11 @@
     <div class="tab-btn active" onclick="filterVenue('ALL')">全会場</div>
   </div>
 
+  <div class="filter-info-bar" id="filterInfoBar" style="display: none;"></div>
+
   <div class="bulk-ipat-wrap" id="bulkIpatWrap" style="display: none;">
     <button class="bulk-ipat-btn" id="bulkIpatBtn" onclick="requestIpatAction('ALL', null)">
-      🟢 表示中レースの買い目を一括コピーしてJRA IPATへ
+      🟢 信頼度B以上の買い目を一括コピーしてJRA IPATへ
     </button>
   </div>
 
@@ -932,6 +991,7 @@
     const OWNER_PIN = '2026';
     const REQUIRE_PIN_ON_MOBILE_ONLY = true;
     const IPAT_SP_URL = 'https://www.ipat.jra.go.jp/sp/';
+    const MIN_BUY_CONFIDENCE_SCORE = 55;
 
     let globalRaces = [];
     let currentFilter = 'ALL';
@@ -940,6 +1000,7 @@
     let currentWin5Obj = null;
     let scheduleDays = [];
     let currentDayIdx = 0;
+    let currentAnalyzedCount = 0;
     let lastUpdatedAt = '未更新';
     let toastTimer = null;
     let pendingIpatAction = null;
@@ -951,6 +1012,10 @@
 
     function isMobileDevice() {
       return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    }
+
+    function isBPlusRace(r) {
+      return Number(r && r.confidenceScore || 0) >= MIN_BUY_CONFIDENCE_SCORE;
     }
 
     function showToast(msg) {
@@ -987,7 +1052,7 @@
 
     function buildRaceIpatText(r) {
       const lines = [
-        `【${r.venue} ${r.raceName}】(${r.startTime || ''}発走)`,
+        `【${r.venue} ${r.raceName}】(${r.startTime || ''}発走 / 信頼度${r.confidence || ''}:${r.confidenceScore || ''}点)`,
         `予算: ${(r.budget || 1000).toLocaleString()}円`,
         ...String(r.aiBuy || '')
           .replace(/\s*\[計[^\]]+\]/g, '')
@@ -1030,13 +1095,13 @@
         showToast(`🏆 WIN5（${pts}点 / ${Number(cost).toLocaleString()}円）をコピーしました。IPAT画面を開きます`);
         window.open(IPAT_SP_URL, '_blank', 'noopener');
       } else {
-        const visibleRaces = globalRaces.filter(r => currentFilter === 'ALL' || r.venue === currentFilter);
-        if (visibleRaces.length === 0) return;
-        const totalYen = visibleRaces.reduce((sum, r) => sum + (r.budget || 1000), 0);
-        const blocks = visibleRaces.map(r => buildRaceIpatText(r));
-        const fullText = `【ジェミ予想 一括買い目リスト (${visibleRaces.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
+        const visibleBPlus = globalRaces.filter(r => (currentFilter === 'ALL' || r.venue === currentFilter) && isBPlusRace(r));
+        if (visibleBPlus.length === 0) return;
+        const totalYen = visibleBPlus.reduce((sum, r) => sum + (r.budget || 1000), 0);
+        const blocks = visibleBPlus.map(r => buildRaceIpatText(r));
+        const fullText = `【ジェミ予想 信頼度B以上一括リスト (${visibleBPlus.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
         copyTextToClipboard(fullText);
-        showToast(`✅ ${visibleRaces.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPAT画面を開きます`);
+        showToast(`✅ 信頼度B以上 ${visibleBPlus.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPATを開きます`);
         window.open(IPAT_SP_URL, '_blank', 'noopener');
       }
     }
@@ -1056,7 +1121,7 @@
       } else if (mode === 'WIN5') {
         descEl.textContent = `【WIN5（5重勝単勝式）】の買い目転送を実行します。オーナー用パスコードを入力してください。`;
       } else {
-        descEl.textContent = `表示中レースの買い目を一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
+        descEl.textContent = `信頼度B以上の対象レースを一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
       }
 
       const inp = document.getElementById('pinInputField');
@@ -1089,16 +1154,16 @@
     function updateBulkIpatButton() {
       const wrap = document.getElementById('bulkIpatWrap');
       const btn = document.getElementById('bulkIpatBtn');
-      const visibleRaces = globalRaces.filter(r => currentFilter === 'ALL' || r.venue === currentFilter);
+      const visibleBPlus = globalRaces.filter(r => (currentFilter === 'ALL' || r.venue === currentFilter) && isBPlusRace(r));
       if (!wrap || !btn) return;
-      if (visibleRaces.length === 0) {
+      if (visibleBPlus.length === 0) {
         wrap.style.display = 'none';
         return;
       }
-      const totalYen = visibleRaces.reduce((sum, r) => sum + (r.budget || 1000), 0);
-      const scopeLabel = currentFilter === 'ALL' ? `全${visibleRaces.length}R` : `${currentFilter} ${visibleRaces.length}R`;
+      const totalYen = visibleBPlus.reduce((sum, r) => sum + (r.budget || 1000), 0);
+      const scopeLabel = currentFilter === 'ALL' ? `信頼度B以上 ${visibleBPlus.length}R` : `${currentFilter} B以上 ${visibleBPlus.length}R`;
       const lockIcon = isMobileDevice() ? '🔒 ' : '';
-      btn.textContent = `🟢 ${lockIcon}${scopeLabel}の買い目を一括コピーしてJRA IPATへ（計${totalYen.toLocaleString()}円）`;
+      btn.textContent = `🟢 ${lockIcon}${scopeLabel}を一括コピーしてJRA IPATへ（計${totalYen.toLocaleString()}円）`;
       wrap.style.display = 'block';
     }
 
@@ -1843,6 +1908,16 @@
       renderRaces();
     }
 
+    function updateFilterInfoBar() {
+      const infoBar = document.getElementById('filterInfoBar');
+      if (!infoBar) return;
+      const bPlusCnt = globalRaces.filter(isBPlusRace).length;
+      const earlyCnt = globalRaces.filter(r => r.isEarlyPick).length;
+      const earlyTxt = earlyCnt > 0 ? `（1〜8R特選 ${earlyCnt}R含む）` : '';
+      infoBar.textContent = `📊 全${currentAnalyzedCount}R解析 → ${globalRaces.length}R表示${earlyTxt} / うち購入対象(B以上) ${bPlusCnt}R`;
+      infoBar.style.display = 'block';
+    }
+
     function selectScheduleDay(dayIdx) {
       currentDayIdx = dayIdx;
       const dayObj = scheduleDays[dayIdx];
@@ -1853,7 +1928,9 @@
       });
 
       globalRaces = dayObj.races || [];
+      currentAnalyzedCount = Number(dayObj.analyzedCount || globalRaces.length);
       document.getElementById('updateTime').textContent = `${dayObj.targetDate || ''} | 更新: ${lastUpdatedAt}`;
+      updateFilterInfoBar();
 
       currentWin5Obj = dayObj.win5 || null;
       const rawW5 = String(dayObj.win5Strategy || (currentWin5Obj && currentWin5Obj.text) || '');
@@ -1926,12 +2003,23 @@
         if (currentFilter !== 'ALL' && r.venue !== currentFilter) return;
 
         const confScoreNum = Number(r.confidenceScore || 0);
+        const bPlus = isBPlusRace(r);
         const isExtraBuy = Boolean(r.extraBuyRecommended) || (r.confidence === 'S' && confScoreNum >= 90);
 
         const card = document.createElement('div');
-        card.className = isExtraBuy ? 'race-card extra-buy-card' : 'race-card';
+        card.className = isExtraBuy
+          ? 'race-card extra-buy-card'
+          : (bPlus ? 'race-card bplus-race-card' : 'race-card');
+
         const badges = [];
-        if (isExtraBuy) badges.push('<span class="badge badge-extra-buy">🔥 追加購入推奨</span>');
+        if (isExtraBuy) {
+          badges.push('<span class="badge badge-extra-buy">🔥 追加購入推奨</span>');
+        } else if (bPlus) {
+          badges.push('<span class="badge badge-bplus">✅ 購入対象(B以上)</span>');
+        } else {
+          badges.push('<span class="badge badge-skip">⏸ 見送り目安</span>');
+        }
+        if (r.isEarlyPick) badges.push('<span class="badge badge-early">⭐ 1〜8R特選</span>');
         if (r.isGraded) badges.push('<span class="badge badge-grade">重賞</span>');
         if (r.isWin5) badges.push('<span class="badge badge-win5">WIN5対象</span>');
         if (r.raceType) badges.push(`<span class="badge badge-type">${r.raceType}</span>`);
@@ -1946,7 +2034,9 @@
           ? `<div class="extra-buy-box">${escapeHtml(extraBuyMsg)}</div>`
           : '';
 
-        const confColorStyle = isExtraBuy ? 'style="color:#fbbf24;"' : '';
+        const confColorStyle = isExtraBuy
+          ? 'style="color:#fbbf24;"'
+          : (bPlus ? 'style="color:#34d399;"' : 'style="color:#9ca3af;"');
 
         const horses = r.horses || [];
         let horseRows = '';
@@ -2049,6 +2139,33 @@
       });
     }
 
+    function renderBPlusStats(bp) {
+      const hitEl = document.getElementById('bPlusHitRateDisplay');
+      const cntEl = document.getElementById('bPlusHitCountDisplay');
+      const recEl = document.getElementById('bPlusRecRateDisplay');
+      const subEl = document.getElementById('bPlusRecSubDisplay');
+      if (!hitEl || !cntEl || !recEl || !subEl) return;
+
+      const totalBets = Number((bp && bp.totalBets) || 0);
+      if (totalBets <= 0) {
+        hitEl.textContent = '--%';
+        cntEl.textContent = '今週末から自動集計';
+        recEl.textContent = '--%';
+        subEl.textContent = '投資 0円 → 払戻 0円';
+        return;
+      }
+      const hitCount = Number(bp.hitCount || 0);
+      const hitRate = bp.hitRate != null ? Number(bp.hitRate).toFixed(1) : ((hitCount * 100) / totalBets).toFixed(1);
+      const inv = Number(bp.totalInvestment || totalBets * 1000);
+      const ret = Number(bp.totalReturn || 0);
+      const recRate = bp.recoveryRate != null ? Number(bp.recoveryRate).toFixed(1) : (inv > 0 ? ((ret * 100) / inv).toFixed(1) : '0.0');
+
+      hitEl.textContent = `${hitRate}%`;
+      cntEl.textContent = `${totalBets}戦 ${hitCount}的中`;
+      recEl.textContent = `${recRate}%`;
+      subEl.textContent = `投資 ${inv.toLocaleString()}円 → 払戻 ${ret.toLocaleString()}円`;
+    }
+
     async function loadData() {
       try {
         const res = await fetch(`data/today.json?nocache=${new Date().getTime()}`, { cache: 'no-store' });
@@ -2063,6 +2180,7 @@
           document.getElementById('hitRateDisplay').textContent = `${data.stats.hitRate}%`;
           document.getElementById('hitCountDisplay').textContent = `${data.stats.totalBets}戦 ${data.stats.hitCount}的中`;
           document.getElementById('recoveryRateDisplay').textContent = `${data.stats.recoveryRate}%`;
+          renderBPlusStats(data.stats.bPlusStats || data.bPlusStats);
 
           const mr = data.stats.markRates || data.stats.markStats || {};
           if (mr['◎']) {
@@ -2105,7 +2223,9 @@
 
         document.getElementById('dateTabs').style.display = 'none';
         globalRaces = data.races || [];
+        currentAnalyzedCount = Number(data.analyzedCount || globalRaces.length);
         currentWin5Obj = data.win5 || null;
+        updateFilterInfoBar();
 
         const rawW5 = String(data.win5Strategy || (currentWin5Obj && currentWin5Obj.text) || '');
         if (!rawW5 || rawW5.includes('確定次第')) {
