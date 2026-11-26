@@ -54,7 +54,8 @@ def expand_ai_buy(ai_buy_str):
     main_p = re.sub(r"\[[^\]]*計\d+点[^\]]*\]", "", str(ai_buy_str).split("★")[0]).strip()
     tickets = []
 
-    for seg in [s.strip() for s in main_p.split("/") if s.strip()]:
+    # 「(2点/200円)」の中の「/」で切らないよう、次の「【」の直前の「/」のみで分割する
+    for seg in [s.strip() for s in re.split(r"\s*/\s*(?=【)", main_p) if s.strip()]:
         m_pt = re.search(r"(\d+)\s*点\s*/\s*(?:各)?\s*(\d+)\s*円", seg)
         unit_yen = int(m_pt.group(2)) if m_pt else 100
         unit_yen = max(100, (unit_yen // 100) * 100)
