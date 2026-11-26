@@ -1,6 +1,6 @@
 {
   "targetDate": "2026年11月28日",
-  "updatedAt": "2026-11-26 20:49",
+  "updatedAt": "2026-11-26 21:14",
   "budgetPerRace": 1000,
   "totalBudget": 10000,
   "analyzedCount": 24,
@@ -111209,7 +111209,7 @@
               "name": "オンブズマン",
               "sexAge": "牡5",
               "jockey": "Ｗ．ビュ",
-              "odds": 4.5,
+              "odds": 4.4,
               "style": "逃げ",
               "runningStyle": "逃げ",
               "pastRuns": [
@@ -111270,7 +111270,7 @@
               "score": 97.2,
               "totalScore": 97.19266666666668,
               "zScore": 71.4,
-              "ev": 1.36,
+              "ev": 1.33,
               "mark": "◎",
               "markJemi": "◎",
               "markAna": "▲",
@@ -111373,7 +111373,7 @@
               "name": "ミニーホーク",
               "sexAge": "牝4",
               "jockey": "Ｒ．ムー",
-              "odds": 24.7,
+              "odds": 24.3,
               "style": "先行",
               "runningStyle": "先行",
               "pastRuns": [
@@ -111537,7 +111537,7 @@
               "name": "テアオ",
               "sexAge": "牡4",
               "jockey": "Ｌ．トー",
-              "odds": 75.1,
+              "odds": 74.0,
               "style": "差し",
               "runningStyle": "差し",
               "pastRuns": [
@@ -111911,7 +111911,7 @@
               "name": "ゴリアット",
               "sexAge": "セ6",
               "jockey": "Ｃ．スミ",
-              "odds": 107.6,
+              "odds": 108.5,
               "style": "差し",
               "runningStyle": "差し",
               "pastRuns": [
@@ -111993,7 +111993,7 @@
               "name": "エシカルダイヤモンド",
               "sexAge": "セ6",
               "jockey": "坂井瑠星",
-              "odds": 260.5,
+              "odds": 262.0,
               "style": "差し",
               "runningStyle": "差し",
               "pastRuns": [
@@ -120798,8 +120798,8 @@
                 "umaban": 8,
                 "name": "オンブズマン",
                 "horseName": "オンブズマン",
-                "odds": 4.5,
-                "ev": 1.36,
+                "odds": 4.4,
+                "ev": 1.33,
                 "mark": "◎"
               }
             ],
@@ -120810,8 +120810,8 @@
                 "umaban": 8,
                 "name": "オンブズマン",
                 "horseName": "オンブズマン",
-                "odds": 4.5,
-                "ev": 1.36,
+                "odds": 4.4,
+                "ev": 1.33,
                 "mark": "◎"
               }
             ],
@@ -120822,8 +120822,8 @@
                 "umaban": 8,
                 "name": "オンブズマン",
                 "horseName": "オンブズマン",
-                "odds": 4.5,
-                "ev": 1.36,
+                "odds": 4.4,
+                "ev": 1.33,
                 "mark": "◎"
               }
             ],
@@ -121161,8 +121161,8 @@
                 "umaban": 8,
                 "name": "オンブズマン",
                 "horseName": "オンブズマン",
-                "odds": 4.5,
-                "ev": 1.36,
+                "odds": 4.4,
+                "ev": 1.33,
                 "mark": "◎"
               }
             ],
@@ -121173,8 +121173,8 @@
                 "umaban": 8,
                 "name": "オンブズマン",
                 "horseName": "オンブズマン",
-                "odds": 4.5,
-                "ev": 1.36,
+                "odds": 4.4,
+                "ev": 1.33,
                 "mark": "◎"
               }
             ],
@@ -121185,8 +121185,8 @@
                 "umaban": 8,
                 "name": "オンブズマン",
                 "horseName": "オンブズマン",
-                "odds": 4.5,
-                "ev": 1.36,
+                "odds": 4.4,
+                "ev": 1.33,
                 "mark": "◎"
               }
             ],
