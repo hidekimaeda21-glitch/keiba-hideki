@@ -591,7 +591,16 @@
       cursor: pointer;
       font-weight: bold;
     }
-    .horse-sub { font-size: 10px; color: var(--text-sub); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+    .horse-sub { font-size: 10px; color: var(--text-sub); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+    .sex-age-tag {
+      font-size: 9px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+    .sex-male { background: rgba(59, 130, 246, 0.22); color: #93c5fd; }
+    .sex-female { background: rgba(244, 114, 182, 0.22); color: #f9a8d4; }
+    .sex-gelding { background: rgba(16, 185, 129, 0.22); color: #6ee7b7; }
     .style-tag {
       font-size: 9px;
       padding: 1px 4px;
@@ -1016,6 +1025,14 @@
 
     function isBPlusRace(r) {
       return Number(r && r.confidenceScore || 0) >= MIN_BUY_CONFIDENCE_SCORE;
+    }
+
+    function getSexAgeBadge(sexAge) {
+      const sa = String(sexAge || '').trim();
+      if (!sa) return '';
+      if (sa.startsWith('牝')) return `<span class="sex-age-tag sex-female">${escapeHtml(sa)}</span>`;
+      if (sa.startsWith('セ')) return `<span class="sex-age-tag sex-gelding">${escapeHtml(sa)}</span>`;
+      return `<span class="sex-age-tag sex-male">${escapeHtml(sa)}</span>`;
     }
 
     function showToast(msg) {
@@ -1856,13 +1873,14 @@
         });
 
         const unfavNote = h.hasUnfavorable ? '<span class="unfav-tag">⚠️不利条件注意</span>' : '';
+        const saPrefix = h.sexAge ? `${h.sexAge} / ` : '';
 
         listEl.innerHTML += `
           <div class="past3-horse-card" style="${highlightStyle}">
             <div class="past3-horse-header">
               <div>
                 <span style="font-weight:800; color:#fff; font-size:13px;">${h.num}番 ${h.name}</span>
-                <span style="font-size:11px; color:#9ca3af; margin-left:4px;">(${h.jockey} / ${h.odds ? h.odds.toFixed(1) + '倍' : '-'})</span>
+                <span style="font-size:11px; color:#9ca3af; margin-left:4px;">(${saPrefix}${h.jockey} / ${h.odds ? h.odds.toFixed(1) + '倍' : '-'})</span>
                 ${unfavNote}
               </div>
               <div style="font-size:11px; font-weight:bold;">
@@ -2041,6 +2059,7 @@
         const horses = r.horses || [];
         let horseRows = '';
         horses.forEach(h => {
+          const sexAgeBadge = getSexAgeBadge(h.sexAge);
           const styleBadge = getStyleBadge(h.runningStyle);
           const evVal = h.ev ? Number(h.ev).toFixed(2) : '0.85';
           const evClass = Number(evVal) >= 1.10 ? 'ev-high' : 'ev-normal';
@@ -2061,7 +2080,7 @@
                   <span class="horse-name" onclick="openPast3Modal(${rIdx}, ${h.num})">${h.name}</span>
                   <span class="past3-mini-btn" onclick="openPast3Modal(${rIdx}, ${h.num})">過去3走↗</span>
                 </div>
-                <div class="horse-sub"><span>${h.jockey}</span> ${styleBadge} ${unfavHtml}</div>
+                <div class="horse-sub">${sexAgeBadge}<span>${h.jockey}</span> ${styleBadge} ${unfavHtml}</div>
               </td>
               <td style="text-align:center;">
                 <div class="ai-compare-grid" onclick="openPast3Modal(${rIdx}, ${h.num})">
@@ -2128,7 +2147,7 @@
             <thead>
               <tr>
                 <th style="width:22px; text-align:center;">番</th>
-                <th>馬名 / 騎手・脚質 (タップで3走)</th>
+                <th>馬名 / 性齢・騎手・脚質 (タップで3走)</th>
                 <th style="width:108px; text-align:center;">4AI予想比較</th>
                 <th style="width:68px; text-align:right;">オッズ/EV</th>
               </tr>
