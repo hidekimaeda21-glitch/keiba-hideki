@@ -637,6 +637,26 @@ def fetch_realtime_odds(race_id):
     return odds_map
 
 
+def _extract_sex_age(tr_el):
+    """出馬表の行から性齢（例: 牡4, 牝3, セ5）を確実に抽出する"""
+    barei_el = tr_el.select_one("td.Barei, td[class*='Barei'], .Barei")
+    if barei_el:
+        m = re.search(r"(牡|牝|セ|せん)\s*(\d{1,2})", barei_el.get_text(" ", strip=True))
+        if m:
+            sex = "セ" if m.group(1) == "せん" else m.group(1)
+            return f"{sex}{m.group(2)}"
+    for td_el in tr_el.select("td"):
+        txt = td_el.get_text(strip=True)
+        m = re.match(r"^(牡|牝|セ|せん)\s*(\d{1,2})$", txt)
+        if m:
+            sex = "セ" if m.group(1) == "せん" else m.group(1)
+            return f"{sex}{m.group(2)}"
+    m = re.search(r"(牡|牝|セ)\s*(\d{1,2})", tr_el.get_text(" ", strip=True))
+    if m:
+        return f"{m.group(1)}{m.group(2)}"
+    return ""
+
+
 def parse_shutuba_page(race_id):
     url_basic = f"https://race.netkeiba.com/race/shutuba.html?race_id={race_id}"
     html = fetch_html(url_basic, default_enc="euc_jp")
@@ -660,6 +680,7 @@ def parse_shutuba_page(race_id):
             p_name_key = _norm_horse_name(p_name)
             if not p_name_key:
                 continue
+            p_sex_age = _extract_sex_age(ptr)
             p_runs = []
             c_pos = []
             for p_td in ptr.select("td.Past")[:5]:
@@ -702,8 +723,12 @@ def parse_shutuba_page(race_id):
                     "pass1": pass1_val,
                     "summary": p_txt[:45]
                 })
-            if p_runs:
-                past_map[p_name_key] = {"pastRuns": p_runs, "corner_positions": c_pos}
+            if p_runs or p_sex_age:
+                past_map[p_name_key] = {
+                    "pastRuns": p_runs,
+                    "corner_positions": c_pos,
+                    "sexAge": p_sex_age
+                }
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -769,12 +794,14 @@ def parse_shutuba_page(race_id):
                 parsed_odds = 0.0
 
         h_name_key = _norm_horse_name(h_name)
-        p_info = past_map.get(h_name_key, {"pastRuns": [], "corner_positions": []})
+        p_info = past_map.get(h_name_key, {"pastRuns": [], "corner_positions": [], "sexAge": ""})
+        sex_age = _extract_sex_age(tr) or p_info.get("sexAge", "")
 
         raw_rows_data.append({
             "umaban": umaban,
             "waku": waku,
             "name": h_name,
+            "sexAge": sex_age,
             "jockey": jockey,
             "parsed_odds": parsed_odds,
             "pastRuns": p_info["pastRuns"],
@@ -818,6 +845,7 @@ def parse_shutuba_page(race_id):
             "umaban": umaban,
             "waku": waku,
             "name": h_name,
+            "sexAge": item.get("sexAge", ""),
             "jockey": item["jockey"],
             "odds": round(odds_val, 1),
             "style": style,
@@ -1786,7 +1814,7 @@ def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（9〜12R全表示＋1〜8RのB以上追加表示）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（9〜12R全表示＋1〜8RのB以上追加表示＋性齢対応）を開始します...")
     stats_obj = build_complete_stats()
     horse_features = load_horse_features()
 
@@ -1815,12 +1843,10 @@ def main():
             time.sleep(0.15)
 
         if all_day_races:
-            # 1. WIN5は全レース解析結果からJRA公式5レースを正確に構築
             md_key = (dt_obj.month, dt_obj.day)
             jra_targets = jra_win5_by_md.get(md_key)
             day_win5 = build_win5_prediction(all_day_races, all_win5_sets, jra_win5_targets=jra_targets)
 
-            # 2. 表示対象：9R〜12Rは全レース表示 ＋ 1R〜8Rは信頼度B以上(55点〜)のみ追加表示
             display_day_races = [
                 r for r in all_day_races
                 if (r.get("rNum", 0) in (9, 10, 11, 12))
