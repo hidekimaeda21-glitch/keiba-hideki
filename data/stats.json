@@ -69261,5 +69261,21 @@
     "recoveryRate": null,
     "totalInvestment": 0,
     "totalReturn": 0
+  },
+  "aPlusStats": {
+    "totalBets": 0,
+    "hitCount": 0,
+    "hitRate": null,
+    "recoveryRate": null,
+    "totalInvestment": 0,
+    "totalReturn": 0
+  },
+  "sStats": {
+    "totalBets": 0,
+    "hitCount": 0,
+    "hitRate": null,
+    "recoveryRate": null,
+    "totalInvestment": 0,
+    "totalReturn": 0
   }
 }
