@@ -25,8 +25,9 @@ WEEKDAY_JP = ["月", "火", "水", "木", "金", "土", "日"]
 HORSE_FEATURES_PATH = "data/horse_features.json"
 PREDICTIONS_ARCHIVE_PATH = "data/predictions_archive.json"
 
-# 購入対象とする最低信頼度（Aランク85点以上＝85〜95点）
-MIN_BUY_CONFIDENCE_SCORE = 85
+# 購入対象の最低信頼度スコア
+MIN_BUY_SCORE_LATE = 85    # 9〜12R: Aランク85点以上（85〜95点）
+MIN_BUY_SCORE_EARLY = 90   # 1〜8R:  Sランク（90点以上）のみ表示＆購入対象
 
 # 過去の的中レース明細データ（回収率・的中率の『詳細』『明細』タップ時に表示される実績データ）
 HISTORICAL_HITS = [
@@ -41,6 +42,14 @@ HISTORICAL_HITS = [
     {"date": "2026-10-25", "venue": "京都11R", "race": "京都11R 菊花賞", "raceName": "菊花賞 (G1)", "betType": "馬連本線・三連複2頭軸", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-△", "marks": "◎-○-△", "invest": 1000, "cost": 1000, "payout": 16400, "return": 16400, "roi": 1640, "combo": "9-13-4"},
     {"date": "2026-10-18", "venue": "京都11R", "race": "京都11R 秋華賞", "raceName": "秋華賞 (G1)", "betType": "馬連本線・三連複F", "type": "馬連・三連複", "result": "的中", "hitMark": "◎-○-▲", "marks": "◎-○-▲", "invest": 1000, "cost": 1000, "payout": 12800, "return": 12800, "roi": 1280, "combo": "5-14-2"}
 ]
+
+
+def is_buy_target_race(r_num, conf_score):
+    rn = int(r_num or 0)
+    sc = int(conf_score or 0)
+    if rn <= 8:
+        return sc >= MIN_BUY_SCORE_EARLY
+    return sc >= MIN_BUY_SCORE_LATE
 
 
 def _default_tier_stats():
@@ -192,16 +201,18 @@ def save_predictions_archive(schedule_days, path=PREDICTIONS_ARCHIVE_PATH):
             rid = str(r.get("raceId", ""))
             if not rid:
                 continue
+            r_num = r.get("rNum", 0)
+            c_sc = r.get("confidenceScore", 0)
             arc_map[rid] = {
                 "raceId": rid,
                 "raceDate": d_iso,
                 "venue": r.get("venue", ""),
-                "rNum": r.get("rNum", 0),
+                "rNum": r_num,
                 "raceName": r.get("raceName", ""),
                 "shortRaceName": r.get("shortRaceName", ""),
                 "confidence": r.get("confidence", ""),
-                "confidenceScore": r.get("confidenceScore", 0),
-                "isBuyTarget": bool(r.get("confidenceScore", 0) >= MIN_BUY_CONFIDENCE_SCORE),
+                "confidenceScore": c_sc,
+                "isBuyTarget": is_buy_target_race(r_num, c_sc),
                 "aiBuy": r.get("aiBuy", ""),
                 "budget": r.get("budget", 1000),
                 "horses": [
@@ -1709,13 +1720,14 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
     clean_v = re.sub(r"[（\(].*?[）\)]", "", race_data.get("venue", "")).strip()
     race_data["venue"] = clean_v or race_data.get("venueBase", "京都")
 
+    r_num_val = int(race_data.get("rNum", 0) or 0)
     race_data["horses"] = sorted(horses, key=lambda x: x["num"])
     race_data["strategyName"] = strategy_name
     race_data["strategyTag"] = strategy_tag
     race_data["confidence"] = conf_rank
     race_data["confidenceScore"] = conf_score
-    race_data["isBuyTarget"] = (conf_score >= MIN_BUY_CONFIDENCE_SCORE)
-    race_data["isEarlyPick"] = (race_data.get("rNum", 0) <= 8 and conf_score >= MIN_BUY_CONFIDENCE_SCORE)
+    race_data["isBuyTarget"] = is_buy_target_race(r_num_val, conf_score)
+    race_data["isEarlyPick"] = (r_num_val <= 8 and conf_score >= MIN_BUY_SCORE_EARLY)
     race_data["extraBuyRecommended"] = is_extra_buy
     race_data["extraBuyReason"] = extra_buy_reason
     race_data["videoNotes"] = video_notes
@@ -1828,7 +1840,7 @@ def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（9〜12R全表示＋1〜8Rの85点以上追加表示＋性齢対応）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（9〜12R全表示＋1〜8RはS90点以上のみ追加表示＋性齢対応）を開始します...")
     stats_obj = build_complete_stats()
     horse_features = load_horse_features()
 
@@ -1861,22 +1873,23 @@ def main():
             jra_targets = jra_win5_by_md.get(md_key)
             day_win5 = build_win5_prediction(all_day_races, all_win5_sets, jra_win5_targets=jra_targets)
 
+            # 9〜12Rは全表示、1〜8RはSランク（90点以上）のみ表示
             display_day_races = [
                 r for r in all_day_races
                 if (r.get("rNum", 0) in (9, 10, 11, 12))
-                or (r.get("confidenceScore", 0) >= MIN_BUY_CONFIDENCE_SCORE)
+                or (r.get("rNum", 0) <= 8 and r.get("confidenceScore", 0) >= MIN_BUY_SCORE_EARLY)
             ]
             display_day_races.sort(key=lambda x: (venue_order.get(x.get("venue"), 99), x.get("rNum", 99)))
 
-            a_plus_cnt = sum(1 for r in display_day_races if r.get("confidenceScore", 0) >= MIN_BUY_CONFIDENCE_SCORE)
+            buy_target_cnt = sum(1 for r in display_day_races if r.get("isBuyTarget"))
             b_plus_cnt = sum(1 for r in display_day_races if r.get("confidenceScore", 0) >= 55)
-            early_a_cnt = sum(1 for r in display_day_races if r.get("isEarlyPick"))
+            early_s_cnt = sum(1 for r in display_day_races if r.get("isEarlyPick"))
 
             for r in all_day_races:
                 if "topPicks" in r:
                     del r["topPicks"]
 
-            print(f"  -> {t_date_disp}: 全{len(all_day_races)}R解析 → 表示{len(display_day_races)}R (うち85点以上 {a_plus_cnt}R / 1〜8R特選 {early_a_cnt}R)")
+            print(f"  -> {t_date_disp}: 全{len(all_day_races)}R解析 → 表示{len(display_day_races)}R (購入対象 {buy_target_cnt}R / うち1〜8R特選S {early_s_cnt}R)")
 
             schedule_days.append({
                 "date": d_str,
@@ -1884,11 +1897,12 @@ def main():
                 "targetDate": t_date_disp,
                 "analyzedCount": len(all_day_races),
                 "displayCount": len(display_day_races),
-                "aPlusCount": a_plus_cnt,
-                "buyTargetCount": a_plus_cnt,
+                "aPlusCount": buy_target_cnt,
+                "buyTargetCount": buy_target_cnt,
                 "bPlusCount": b_plus_cnt,
-                "earlyPickCount": early_a_cnt,
-                "minConfidenceScore": MIN_BUY_CONFIDENCE_SCORE,
+                "earlyPickCount": early_s_cnt,
+                "minConfidenceScoreLate": MIN_BUY_SCORE_LATE,
+                "minConfidenceScoreEarly": MIN_BUY_SCORE_EARLY,
                 "races": display_day_races,
                 "win5": day_win5,
                 "win5Strategy": day_win5.get("text", "")
@@ -1901,7 +1915,7 @@ def main():
         races_out = primary_day["races"]
         win5_data = primary_day["win5"]
         analyzed_out = primary_day.get("analyzedCount", len(races_out))
-        a_plus_out = primary_day.get("aPlusCount", 0)
+        buy_target_out = primary_day.get("buyTargetCount", 0)
         b_plus_out = primary_day.get("bPlusCount", 0)
     else:
         print("⚠️ 今回レース取得が0件でした（netkeibaメンテナンス等の可能性）。直前の有効データを復元します。")
@@ -1912,14 +1926,14 @@ def main():
             win5_data = prev_valid.get("win5", {})
             schedule_days = prev_valid.get("scheduleDays", [])
             analyzed_out = prev_valid.get("analyzedCount", len(races_out))
-            a_plus_out = prev_valid.get("aPlusCount", 0)
+            buy_target_out = prev_valid.get("buyTargetCount", 0)
             b_plus_out = prev_valid.get("bPlusCount", 0)
         else:
             target_date_display = datetime.datetime.now(JST).strftime("%Y年%m月%d日")
             races_out = []
             win5_data = {}
             analyzed_out = 0
-            a_plus_out = 0
+            buy_target_out = 0
             b_plus_out = 0
 
     now_str = datetime.datetime.now(JST).strftime("%Y-%m-%d %H:%M")
@@ -1927,13 +1941,14 @@ def main():
         "targetDate": target_date_display,
         "updatedAt": now_str,
         "budgetPerRace": 1000,
-        "totalBudget": a_plus_out * 1000,
+        "totalBudget": buy_target_out * 1000,
         "analyzedCount": analyzed_out,
         "displayCount": len(races_out),
-        "aPlusCount": a_plus_out,
-        "buyTargetCount": a_plus_out,
+        "aPlusCount": buy_target_out,
+        "buyTargetCount": buy_target_out,
         "bPlusCount": b_plus_out,
-        "minConfidenceScore": MIN_BUY_CONFIDENCE_SCORE,
+        "minConfidenceScoreLate": MIN_BUY_SCORE_LATE,
+        "minConfidenceScoreEarly": MIN_BUY_SCORE_EARLY,
         "stats": stats_obj,
         "hitRate": stats_obj["hitRate"],
         "recoveryRate": stats_obj["recoveryRate"],
@@ -1961,7 +1976,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(final_json, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 完了！ {len(schedule_days)}日分 / 表示{len(races_out)}レース（うち85点以上 {a_plus_out}レース）を出力しました。")
+    print(f"✅ 完了！ {len(schedule_days)}日分 / 表示{len(races_out)}レース（うち購入対象 {buy_target_out}レース）を出力しました。")
 
 
 if __name__ == "__main__":
