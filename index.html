@@ -1069,7 +1069,7 @@
 
   <div class="bulk-ipat-wrap" id="bulkIpatWrap" style="display: none;">
     <button class="bulk-ipat-btn" id="bulkIpatBtn" onclick="requestIpatAction('ALL', null)">
-      🟢 信頼度85点以上の買い目を一括コピーしてJRA IPATへ
+      🟢 購入対象レースを一括コピーしてJRA IPATへ
     </button>
   </div>
 
@@ -1080,7 +1080,8 @@
     const OWNER_PIN = '2026';
     const REQUIRE_PIN_ON_MOBILE_ONLY = true;
     const IPAT_SP_URL = 'https://www.ipat.jra.go.jp/sp/';
-    const MIN_BUY_CONFIDENCE_SCORE = 85;
+    const MIN_BUY_SCORE_LATE = 85;   // 9〜12R: 85点以上
+    const MIN_BUY_SCORE_EARLY = 90;  // 1〜8R: Sランク(90点以上)のみ
 
     let globalRaces = [];
     let currentFilter = 'ALL';
@@ -1104,7 +1105,10 @@
     }
 
     function isBuyTargetRace(r) {
-      return Number(r && r.confidenceScore || 0) >= MIN_BUY_CONFIDENCE_SCORE;
+      if (!r) return false;
+      const rn = Number(r.rNum || parseRaceNum(r.raceName) || 9);
+      const sc = Number(r.confidenceScore || 0);
+      return rn <= 8 ? (sc >= MIN_BUY_SCORE_EARLY) : (sc >= MIN_BUY_SCORE_LATE);
     }
 
     function getSexAgeBadge(sexAge) {
@@ -1192,13 +1196,13 @@
         showToast(`🏆 WIN5（${pts}点 / ${Number(cost).toLocaleString()}円）をコピーしました。IPAT画面を開きます`);
         window.open(IPAT_SP_URL, '_blank', 'noopener');
       } else {
-        const visibleAPlus = globalRaces.filter(r => (currentFilter === 'ALL' || r.venue === currentFilter) && isBuyTargetRace(r));
-        if (visibleAPlus.length === 0) return;
-        const totalYen = visibleAPlus.reduce((sum, r) => sum + (r.budget || 1000), 0);
-        const blocks = visibleAPlus.map(r => buildRaceIpatText(r));
-        const fullText = `【ジェミ予想 信頼度85点以上一括リスト (${visibleAPlus.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
+        const visibleTargets = globalRaces.filter(r => (currentFilter === 'ALL' || r.venue === currentFilter) && isBuyTargetRace(r));
+        if (visibleTargets.length === 0) return;
+        const totalYen = visibleTargets.reduce((sum, r) => sum + (r.budget || 1000), 0);
+        const blocks = visibleTargets.map(r => buildRaceIpatText(r));
+        const fullText = `【ジェミ予想 購入対象一括リスト (${visibleTargets.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
         copyTextToClipboard(fullText);
-        showToast(`✅ 信頼度85点以上 ${visibleAPlus.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPATを開きます`);
+        showToast(`✅ 購入対象 ${visibleTargets.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPATを開きます`);
         window.open(IPAT_SP_URL, '_blank', 'noopener');
       }
     }
@@ -1218,7 +1222,7 @@
       } else if (mode === 'WIN5') {
         descEl.textContent = `【WIN5（5重勝単勝式）】の買い目転送を実行します。オーナー用パスコードを入力してください。`;
       } else {
-        descEl.textContent = `信頼度85点以上の対象レースを一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
+        descEl.textContent = `購入対象（9〜12R:85点〜／1〜8R:S）を一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
       }
 
       const inp = document.getElementById('pinInputField');
@@ -1251,14 +1255,14 @@
     function updateBulkIpatButton() {
       const wrap = document.getElementById('bulkIpatWrap');
       const btn = document.getElementById('bulkIpatBtn');
-      const visibleAPlus = globalRaces.filter(r => (currentFilter === 'ALL' || r.venue === currentFilter) && isBuyTargetRace(r));
+      const visibleTargets = globalRaces.filter(r => (currentFilter === 'ALL' || r.venue === currentFilter) && isBuyTargetRace(r));
       if (!wrap || !btn) return;
-      if (visibleAPlus.length === 0) {
+      if (visibleTargets.length === 0) {
         wrap.style.display = 'none';
         return;
       }
-      const totalYen = visibleAPlus.reduce((sum, r) => sum + (r.budget || 1000), 0);
-      const scopeLabel = currentFilter === 'ALL' ? `信頼度85点以上 ${visibleAPlus.length}R` : `${currentFilter} 85点以上 ${visibleAPlus.length}R`;
+      const totalYen = visibleTargets.reduce((sum, r) => sum + (r.budget || 1000), 0);
+      const scopeLabel = currentFilter === 'ALL' ? `購入対象 ${visibleTargets.length}R` : `${currentFilter} 購入対象 ${visibleTargets.length}R`;
       const lockIcon = isMobileDevice() ? '🔒 ' : '';
       btn.textContent = `🟢 ${lockIcon}${scopeLabel}を一括コピーしてJRA IPATへ（計${totalYen.toLocaleString()}円）`;
       wrap.style.display = 'block';
@@ -2009,10 +2013,10 @@
     function updateFilterInfoBar() {
       const infoBar = document.getElementById('filterInfoBar');
       if (!infoBar) return;
-      const aPlusCnt = globalRaces.filter(isBuyTargetRace).length;
+      const buyCnt = globalRaces.filter(isBuyTargetRace).length;
       const earlyCnt = globalRaces.filter(r => r.isEarlyPick).length;
-      const earlyTxt = earlyCnt > 0 ? `（1〜8R特選 ${earlyCnt}R含む）` : '';
-      infoBar.textContent = `📊 全${currentAnalyzedCount}R解析 → ${globalRaces.length}R表示${earlyTxt} / うち購入対象(85点〜) ${aPlusCnt}R`;
+      const earlyTxt = earlyCnt > 0 ? `（1〜8R特選S ${earlyCnt}R含む）` : '';
+      infoBar.textContent = `📊 全${currentAnalyzedCount}R解析 → ${globalRaces.length}R表示${earlyTxt} / 購入対象(9〜12R:85〜・1〜8R:S) ${buyCnt}R`;
       infoBar.style.display = 'block';
     }
 
@@ -2101,23 +2105,23 @@
         if (currentFilter !== 'ALL' && r.venue !== currentFilter) return;
 
         const confScoreNum = Number(r.confidenceScore || 0);
-        const aPlus = isBuyTargetRace(r);
+        const buyTarget = isBuyTargetRace(r);
         const isExtraBuy = Boolean(r.extraBuyRecommended) || (r.confidence === 'S' && confScoreNum >= 90);
 
         const card = document.createElement('div');
         card.className = isExtraBuy
           ? 'race-card extra-buy-card'
-          : (aPlus ? 'race-card aplus-race-card' : 'race-card');
+          : (buyTarget ? 'race-card aplus-race-card' : 'race-card');
 
         const badges = [];
         if (isExtraBuy) {
           badges.push('<span class="badge badge-extra-buy">🔥 追加購入推奨</span>');
-        } else if (aPlus) {
+        } else if (buyTarget) {
           badges.push('<span class="badge badge-aplus">✅ 購入対象(85点〜)</span>');
         } else {
           badges.push('<span class="badge badge-skip">⏸ 見送り目安</span>');
         }
-        if (r.isEarlyPick) badges.push('<span class="badge badge-early">⭐ 1〜8R特選</span>');
+        if (r.isEarlyPick) badges.push('<span class="badge badge-early">⭐ 1〜8R特選S</span>');
         if (r.isGraded) badges.push('<span class="badge badge-grade">重賞</span>');
         if (r.isWin5) badges.push('<span class="badge badge-win5">WIN5対象</span>');
         if (r.raceType) badges.push(`<span class="badge badge-type">${r.raceType}</span>`);
@@ -2134,7 +2138,7 @@
 
         const confColorStyle = isExtraBuy
           ? 'style="color:#fbbf24;"'
-          : (aPlus ? 'style="color:#34d399;"' : 'style="color:#9ca3af;"');
+          : (buyTarget ? 'style="color:#34d399;"' : 'style="color:#9ca3af;"');
 
         const horses = r.horses || [];
         let horseRows = '';
