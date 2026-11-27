@@ -998,7 +998,7 @@
         <span class="tier-row-label">回収</span>
         <span class="tier-row-val tier-rec-val" id="aPlusRecRateDisplay">--%</span>
       </div>
-      <div class="tier-sub" id="aPlusSubDisplay">購入対象・集計待</div>
+      <div class="tier-sub" id="aPlusSubDisplay">75点〜・集計待</div>
     </div>
 
     <div class="tier-card tier-s">
@@ -1069,7 +1069,7 @@
 
   <div class="bulk-ipat-wrap" id="bulkIpatWrap" style="display: none;">
     <button class="bulk-ipat-btn" id="bulkIpatBtn" onclick="requestIpatAction('ALL', null)">
-      🟢 信頼度A以上の買い目を一括コピーしてJRA IPATへ
+      🟢 信頼度85点以上の買い目を一括コピーしてJRA IPATへ
     </button>
   </div>
 
@@ -1080,7 +1080,7 @@
     const OWNER_PIN = '2026';
     const REQUIRE_PIN_ON_MOBILE_ONLY = true;
     const IPAT_SP_URL = 'https://www.ipat.jra.go.jp/sp/';
-    const MIN_BUY_CONFIDENCE_SCORE = 75;
+    const MIN_BUY_CONFIDENCE_SCORE = 85;
 
     let globalRaces = [];
     let currentFilter = 'ALL';
@@ -1196,9 +1196,9 @@
         if (visibleAPlus.length === 0) return;
         const totalYen = visibleAPlus.reduce((sum, r) => sum + (r.budget || 1000), 0);
         const blocks = visibleAPlus.map(r => buildRaceIpatText(r));
-        const fullText = `【ジェミ予想 信頼度A以上一括リスト (${visibleAPlus.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
+        const fullText = `【ジェミ予想 信頼度85点以上一括リスト (${visibleAPlus.length}R / 計${totalYen.toLocaleString()}円)】\n\n` + blocks.join('\n\n');
         copyTextToClipboard(fullText);
-        showToast(`✅ 信頼度A以上 ${visibleAPlus.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPATを開きます`);
+        showToast(`✅ 信頼度85点以上 ${visibleAPlus.length}レース分（計${totalYen.toLocaleString()}円）をコピーしました。IPATを開きます`);
         window.open(IPAT_SP_URL, '_blank', 'noopener');
       }
     }
@@ -1218,7 +1218,7 @@
       } else if (mode === 'WIN5') {
         descEl.textContent = `【WIN5（5重勝単勝式）】の買い目転送を実行します。オーナー用パスコードを入力してください。`;
       } else {
-        descEl.textContent = `信頼度A以上の対象レースを一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
+        descEl.textContent = `信頼度85点以上の対象レースを一括コピーしてIPATを開きます。オーナー用パスコードを入力してください。`;
       }
 
       const inp = document.getElementById('pinInputField');
@@ -1258,7 +1258,7 @@
         return;
       }
       const totalYen = visibleAPlus.reduce((sum, r) => sum + (r.budget || 1000), 0);
-      const scopeLabel = currentFilter === 'ALL' ? `信頼度A以上 ${visibleAPlus.length}R` : `${currentFilter} A以上 ${visibleAPlus.length}R`;
+      const scopeLabel = currentFilter === 'ALL' ? `信頼度85点以上 ${visibleAPlus.length}R` : `${currentFilter} 85点以上 ${visibleAPlus.length}R`;
       const lockIcon = isMobileDevice() ? '🔒 ' : '';
       btn.textContent = `🟢 ${lockIcon}${scopeLabel}を一括コピーしてJRA IPATへ（計${totalYen.toLocaleString()}円）`;
       wrap.style.display = 'block';
@@ -2012,7 +2012,7 @@
       const aPlusCnt = globalRaces.filter(isBuyTargetRace).length;
       const earlyCnt = globalRaces.filter(r => r.isEarlyPick).length;
       const earlyTxt = earlyCnt > 0 ? `（1〜8R特選 ${earlyCnt}R含む）` : '';
-      infoBar.textContent = `📊 全${currentAnalyzedCount}R解析 → ${globalRaces.length}R表示${earlyTxt} / うち購入対象(A以上) ${aPlusCnt}R`;
+      infoBar.textContent = `📊 全${currentAnalyzedCount}R解析 → ${globalRaces.length}R表示${earlyTxt} / うち購入対象(85点〜) ${aPlusCnt}R`;
       infoBar.style.display = 'block';
     }
 
@@ -2113,7 +2113,7 @@
         if (isExtraBuy) {
           badges.push('<span class="badge badge-extra-buy">🔥 追加購入推奨</span>');
         } else if (aPlus) {
-          badges.push('<span class="badge badge-aplus">✅ 購入対象(A以上)</span>');
+          badges.push('<span class="badge badge-aplus">✅ 購入対象(85点〜)</span>');
         } else {
           badges.push('<span class="badge badge-skip">⏸ 見送り目安</span>');
         }
@@ -2278,7 +2278,7 @@
           document.getElementById('recoveryRateDisplay').textContent = `${data.stats.recoveryRate}%`;
 
           renderTierStats('bPlus', data.stats.bPlusStats || data.bPlusStats, '今週末から集計');
-          renderTierStats('aPlus', data.stats.aPlusStats || data.aPlusStats, '購入対象・集計待');
+          renderTierStats('aPlus', data.stats.aPlusStats || data.aPlusStats, '75点〜・集計待');
           renderTierStats('s', data.stats.sStats || data.sStats, '特選・集計待');
 
           const mr = data.stats.markRates || data.stats.markStats || {};
