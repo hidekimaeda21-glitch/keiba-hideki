@@ -25,8 +25,8 @@ WEEKDAY_JP = ["月", "火", "水", "木", "金", "土", "日"]
 HORSE_FEATURES_PATH = "data/horse_features.json"
 PREDICTIONS_ARCHIVE_PATH = "data/predictions_archive.json"
 
-# 購入対象とする最低信頼度（Aランク＝75点以上）
-MIN_BUY_CONFIDENCE_SCORE = 75
+# 購入対象とする最低信頼度（Aランク85点以上＝85〜95点）
+MIN_BUY_CONFIDENCE_SCORE = 85
 
 # 過去の的中レース明細データ（回収率・的中率の『詳細』『明細』タップ時に表示される実績データ）
 HISTORICAL_HITS = [
@@ -1828,7 +1828,7 @@ def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（9〜12R全表示＋1〜8RのA以上追加表示＋性齢対応）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（9〜12R全表示＋1〜8Rの85点以上追加表示＋性齢対応）を開始します...")
     stats_obj = build_complete_stats()
     horse_features = load_horse_features()
 
@@ -1876,7 +1876,7 @@ def main():
                 if "topPicks" in r:
                     del r["topPicks"]
 
-            print(f"  -> {t_date_disp}: 全{len(all_day_races)}R解析 → 表示{len(display_day_races)}R (うちA以上 {a_plus_cnt}R / 1〜8R特選 {early_a_cnt}R)")
+            print(f"  -> {t_date_disp}: 全{len(all_day_races)}R解析 → 表示{len(display_day_races)}R (うち85点以上 {a_plus_cnt}R / 1〜8R特選 {early_a_cnt}R)")
 
             schedule_days.append({
                 "date": d_str,
@@ -1961,7 +1961,7 @@ def main():
         with open(path, "w", encoding="utf-8") as f:
             json.dump(final_json, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 完了！ {len(schedule_days)}日分 / 表示{len(races_out)}レース（うちA以上 {a_plus_out}レース）を出力しました。")
+    print(f"✅ 完了！ {len(schedule_days)}日分 / 表示{len(races_out)}レース（うち85点以上 {a_plus_out}レース）を出力しました。")
 
 
 if __name__ == "__main__":
