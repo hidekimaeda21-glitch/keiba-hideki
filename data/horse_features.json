@@ -4590,13 +4590,13 @@
     "updated_at": "2026-05-02"
   },
   "ウイントワイライト": {
-    "traffic_disadvantage": 1,
+    "traffic_disadvantage": 2,
     "corner_radius": 1.0,
     "finish_effort": 1.0,
-    "video_bonus": 1.8,
-    "memo": "05/02 東京11R(京王杯SC): 上がり1位(32.1秒)も16着・不発",
+    "video_bonus": 2.5,
+    "memo": "11/28 東京11R(キャピタルS): 上がり最速(33.8秒)も9着・脚余し",
     "source": "auto_result",
-    "updated_at": "2026-05-02"
+    "updated_at": "2026-11-28"
   },
   "ショウナンハクラク": {
     "traffic_disadvantage": 2,
@@ -5067,13 +5067,13 @@
     "updated_at": "2026-03-28"
   },
   "キタサンダムール": {
-    "traffic_disadvantage": 0,
-    "corner_radius": 1.0,
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.5,
     "finish_effort": 1.0,
-    "video_bonus": 2.0,
-    "memo": "03/28 中京11R(マレーシアC): ドスロー(PCI:102.2)後方届かず",
+    "video_bonus": 3.2,
+    "memo": "11/28 京都10R(東山S): 上がり3位(32.8秒)も6着・不発・7枠外回りロスも0.5秒差",
     "source": "auto_result",
-    "updated_at": "2026-03-28"
+    "updated_at": "2026-11-28"
   },
   "ウップヘリーア": {
     "traffic_disadvantage": 1,
@@ -6785,24 +6785,6 @@
     "source": "auto_result",
     "updated_at": "2025-11-29"
   },
-  "ゴールドアローン": {
-    "traffic_disadvantage": 0,
-    "corner_radius": 1.5,
-    "finish_effort": 0.0,
-    "video_bonus": 1.4,
-    "memo": "11/24 福島11R(奥羽S): 8枠外回りロスも0.5秒差",
-    "source": "auto_result",
-    "updated_at": "2025-11-24"
-  },
-  "ホウオウスーペリア": {
-    "traffic_disadvantage": 1,
-    "corner_radius": 1.5,
-    "finish_effort": 1.0,
-    "video_bonus": 4.0,
-    "memo": "11/24 福島11R(奥羽S): 上がり3位(37.5秒)も6着・不発・ドスロー(PCI:100.7)後方届かず",
-    "source": "auto_result",
-    "updated_at": "2025-11-24"
-  },
   "トレミニョン": {
     "traffic_disadvantage": 0,
     "corner_radius": 1.0,
@@ -7081,5 +7063,104 @@
     "memo": "11/21 京都12R(3歳以上2勝クラス): ドスロー(PCI:111.9)後方届かず",
     "source": "auto_result",
     "updated_at": "2026-11-21"
+  },
+  "ローズマイスター": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 東京9R(セレブレイション賞): 上がり3位(36.0秒)も6着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "トゥーザムーン": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 東京9R(セレブレイション賞): 上がり1位(35.7秒)も8着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "バルダンツァ": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 東京10R(シャングリラS): 上がり1位(34.7秒)も4着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "ブルーミンデザイン": {
+    "traffic_disadvantage": 0,
+    "corner_radius": 1.5,
+    "finish_effort": 0.0,
+    "video_bonus": 1.4,
+    "memo": "11/28 東京11R(キャピタルS): 7枠外回りロスも0.3秒差",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "マイネルアウルム": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 東京12R(3歳以上1勝クラス): 上がり3位(34.3秒)も4着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "ディヒターリーベ": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 東京12R(3歳以上1勝クラス): 上がり3位(34.3秒)も7着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "リメンバーヒム": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 京都9R(栂尾特別): 上がり2位(37.0秒)も4着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "サンタンカ": {
+    "traffic_disadvantage": 2,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 2.5,
+    "memo": "11/28 京都10R(東山S): 上がり最速(32.6秒)も8着・脚余し",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "フライングブレード": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 京都10R(東山S): 上がり3位(32.8秒)も9着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "スネーフリンガ": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 京都12R(3歳以上2勝クラス): 上がり2位(33.5秒)も5着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
+  },
+  "ピースフルナイト": {
+    "traffic_disadvantage": 1,
+    "corner_radius": 1.0,
+    "finish_effort": 1.0,
+    "video_bonus": 1.8,
+    "memo": "11/28 京都12R(3歳以上2勝クラス): 上がり3位(33.6秒)も7着・不発",
+    "source": "auto_result",
+    "updated_at": "2026-11-28"
   }
 }
