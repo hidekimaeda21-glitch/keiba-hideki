@@ -760,12 +760,63 @@ def _extract_sex_age(tr_el):
 
 
 def _extract_corner_pass(p_txt):
-    """過去走テキストから通過順位列（例: 10-10-8-6）の1角・4角位置を抽出"""
+    """過去走テキストから通過順位列（例: 10-10-8-6）の1角・4角位置と文字列を抽出"""
     for m in re.finditer(r"(?<![0-9./-])(\d{1,2}(?:-\d{1,2}){1,3})(?![0-9./-])", str(p_txt or "")):
         parts = [int(x) for x in m.group(1).split("-")]
         if all(1 <= x <= 18 for x in parts):
-            return parts[0], parts[-1]
-    return 0, 0
+            return parts[0], parts[-1], m.group(1)
+    return 0, 0, ""
+
+
+def _build_real_past3_entry(p_td, idx, p_txt, rank_num, pass_str, agari_val):
+    """netkeibaのtd.Past要素から本物の直近走表示用オブジェクトを作る"""
+    d1_el = p_td.select_one(".Data01")
+    d2_el = p_td.select_one(".Data02")
+    d3_el = p_td.select_one(".Data03")
+    d5_el = p_td.select_one(".Data05")
+
+    date_venue = ""
+    if d1_el:
+        d1_spans = d1_el.select("span")
+        if d1_spans:
+            date_venue = d1_spans[0].get_text(" ", strip=True)
+        else:
+            date_venue = re.sub(r"\s+\d{1,2}$", "", d1_el.get_text(" ", strip=True)).strip()
+    if not date_venue:
+        m_dv = re.search(r"(\d{4}\.\d{2}\.\d{2}\s*[^\s\d]+)", p_txt)
+        date_venue = m_dv.group(1) if m_dv else ""
+
+    race_name = ""
+    if d2_el:
+        race_name = re.sub(r"\s+", " ", d2_el.get_text(" ", strip=True))
+    if not race_name:
+        race_name = p_txt[:24]
+
+    condition = ""
+    if d5_el:
+        condition = re.sub(r"\s+", " ", d5_el.get_text(" ", strip=True))
+    else:
+        m_c = re.search(r"((?:芝|ダ|障)\s*\d{3,4}[^\s]*(?:\s*\d:\d{2}\.\d)?(?:\s*[良稍重不])?)", p_txt)
+        condition = m_c.group(1) if m_c else ""
+
+    detail_parts = []
+    if d3_el:
+        d3_txt = re.sub(r"\s+", " ", d3_el.get_text(" ", strip=True))
+        if d3_txt:
+            detail_parts.append(d3_txt)
+    if pass_str:
+        detail_parts.append(f"通過:{pass_str}")
+    if agari_val > 0:
+        detail_parts.append(f"上り{agari_val:.1f}")
+
+    return {
+        "label": f"{idx}走前",
+        "dateVenue": date_venue,
+        "raceName": race_name,
+        "rank": f"{rank_num}着" if rank_num > 0 else "-",
+        "condition": condition,
+        "detail": " / ".join(detail_parts) if detail_parts else p_txt[:60],
+    }
 
 
 def parse_shutuba_page(race_id):
@@ -793,13 +844,14 @@ def parse_shutuba_page(race_id):
                 continue
             p_sex_age = _extract_sex_age(ptr)
             p_runs = []
+            p_past3 = []
             c_pos = []
             for p_td in ptr.select("td.Past")[:5]:
                 p_txt = p_td.get_text(" ", strip=True)
-                if not p_txt:
+                if not p_txt or len(p_txt) < 6:
                     continue
 
-                rank_num = 6
+                rank_num = 0
                 rank_el = p_td.select_one(".Num")
                 if rank_el and rank_el.get_text(strip=True).isdigit():
                     rank_num = int(rank_el.get_text(strip=True))
@@ -820,26 +872,34 @@ def parse_shutuba_page(race_id):
                 m_margin = re.search(r"\((-?\d\.\d)\)", p_txt)
                 margin_val = float(m_margin.group(1)) if m_margin else 0.3
 
-                pass1_val, pass4_val = _extract_corner_pass(p_txt)
+                pass1_val, pass4_val, pass_str = _extract_corner_pass(p_txt)
                 if pass1_val > 0:
                     c_pos.append(pass1_val)
 
                 class_bonus = _infer_past_class_bonus(p_txt)
 
                 p_runs.append({
-                    "rank": rank_num,
+                    "rank": rank_num if rank_num > 0 else 6,
                     "dist": dist_val,
                     "timeSec": time_sec,
                     "agari": agari_val,
                     "margin": margin_val,
                     "pass1": pass1_val,
                     "pass4": pass4_val,
+                    "passStr": pass_str,
                     "classBonus": class_bonus,
-                    "summary": p_txt[:45]
+                    "summary": p_txt[:60]
                 })
+
+                if len(p_past3) < 3:
+                    p_past3.append(
+                        _build_real_past3_entry(p_td, len(p_past3) + 1, p_txt, rank_num, pass_str, agari_val)
+                    )
+
             if p_runs or p_sex_age:
                 past_map[p_name_key] = {
                     "pastRuns": p_runs,
+                    "past3Races": p_past3,
                     "corner_positions": c_pos,
                     "sexAge": p_sex_age
                 }
@@ -908,7 +968,7 @@ def parse_shutuba_page(race_id):
                 parsed_odds = 0.0
 
         h_name_key = _norm_horse_name(h_name)
-        p_info = past_map.get(h_name_key, {"pastRuns": [], "corner_positions": [], "sexAge": ""})
+        p_info = past_map.get(h_name_key, {"pastRuns": [], "past3Races": [], "corner_positions": [], "sexAge": ""})
         sex_age = _extract_sex_age(tr) or p_info.get("sexAge", "")
 
         raw_rows_data.append({
@@ -919,6 +979,7 @@ def parse_shutuba_page(race_id):
             "jockey": jockey,
             "parsed_odds": parsed_odds,
             "pastRuns": p_info["pastRuns"],
+            "past3Races": p_info.get("past3Races", []),
             "corner_positions": p_info["corner_positions"]
         })
 
@@ -964,7 +1025,8 @@ def parse_shutuba_page(race_id):
             "odds": round(odds_val, 1),
             "style": style,
             "runningStyle": style,
-            "pastRuns": item["pastRuns"]
+            "pastRuns": item["pastRuns"],
+            "past3Races": item.get("past3Races", [])
         })
 
     return {
@@ -991,9 +1053,6 @@ def calc_pci(time_sec, agari, dist):
 def calc_stretch_momentum(h, straight_type="middle", is_dirt=False):
     """
     4コーナー通過後からゴールまでの「勢い（直線で伸びる力・粘る力）」を評価（0〜10点、基準5.0）。
-    - 直線での伸び（4角順位 - 確定着順 >= 2 かつ 上がり3F優秀）を高評価（特に直線が長いコースで増幅）
-    - 4角好位からの粘り（4角4番手以内 → 3着内 or 着差0.4秒以内）も高評価（小回り・ダートで特に重視）
-    - 4角好位から直線で失速（4角4番手以内 → 7着以下 or 着差1.0秒以上）は減点
     """
     past_runs = h.get("pastRuns", [])
     if not past_runs:
@@ -1016,7 +1075,7 @@ def calc_stretch_momentum(h, straight_type="middle", is_dirt=False):
 
         run_pt = 5.0
         if p4 > 0:
-            gain = p4 - rk  # 正なら直線で抜いた頭数、負なら抜かれた頭数
+            gain = p4 - rk
             if gain >= 4:
                 run_pt += 2.6 if straight_type == "long" else 1.8
                 surge_hits += 1
@@ -1024,11 +1083,9 @@ def calc_stretch_momentum(h, straight_type="middle", is_dirt=False):
                 run_pt += 1.6 if straight_type == "long" else 1.1
                 surge_hits += 1
             elif p4 <= 4 and (rk <= 3 or mg <= 0.4):
-                # 4角好位から直線でしっかり粘り込んだ
                 run_pt += 2.2 if straight_type == "short" else 1.6
                 hold_hits += 1
             elif p4 <= 4 and (rk >= 7 or mg >= 1.0):
-                # 4角好位から直線で失速
                 run_pt -= 2.4
                 fade_hits += 1
             elif gain <= -4:
@@ -1036,7 +1093,7 @@ def calc_stretch_momentum(h, straight_type="middle", is_dirt=False):
                 fade_hits += 1
 
         if 28.0 <= ag <= 46.0:
-            ag_diff = agari_ref - ag  # 正なら上がり速い
+            ag_diff = agari_ref - ag
             ag_mult = 1.35 if straight_type == "long" else 0.85
             run_pt += max(-1.8, min(2.4, ag_diff * ag_mult))
 
@@ -1084,7 +1141,6 @@ def calc_base_ability(h, horse_features=None, straight_type="middle", is_dirt=Fa
         ag = float(run.get("agari", 0.0))
         cb = float(run.get("classBonus", 0.0))
 
-        # 上位クラスでの善戦は満額評価、大敗は割引評価
         if cb > 0:
             if rk <= 5 or mg <= 0.8:
                 eff_cb = cb
@@ -1265,7 +1321,6 @@ def calc_honest_confidence(horses, ranked, pace_pct, is_upset_race):
     elif dom_pace_pct <= 40:
         score -= 6.0
 
-    # 4角以降の勢い（伸びる・粘る力）を信頼度に反映
     stretch_sc = float(honmei.get("stretchScore", 5.0))
     if stretch_sc >= 7.0:
         score += 5.0
@@ -1422,7 +1477,6 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
         pace_label = "平均ミドルペース"
         pace_favor = {"逃げ": +0.2, "先行": +0.6, "差し": +0.9, "追込": +0.3}
 
-    # コース直線長さによる有利不利をpace_favorに加味
     pace_favor["逃げ"] = round(pace_favor["逃げ"] - closer_bias * 0.65, 2)
     pace_favor["先行"] = round(pace_favor["先行"] - closer_bias * 0.35, 2)
     pace_favor["差し"] = round(pace_favor["差し"] + closer_bias * 0.75, 2)
@@ -1502,10 +1556,8 @@ def evaluate_and_build_1000yen_strategy(race_data, horse_features=None):
 
     is_high_pace_collapse = (front_cnt >= 4) and (pace_pct["high"] >= 35 or pace_label == "差し有利ハイペース")
 
-    # 総合スコア順（無理な先行◎繰り上げは行わず、4角以降の勢い・コース適性・クラス格を素直に反映）
     ranked = sorted(horses, key=lambda x: x["totalScore"], reverse=True)
 
-    # 過剰人気でEV極小の僅差1位のみ2位と入れ替え
     if len(ranked) >= 2 and ranked[0]["ev"] < 0.70 and (ranked[0]["totalScore"] - ranked[1]["totalScore"]) <= 1.2:
         if ranked[1]["ev"] >= 0.92 and ranked[1]["simPlaceRate"] >= 22.0:
             ranked[0], ranked[1] = ranked[1], ranked[0]
@@ -1987,7 +2039,7 @@ def build_win5_prediction(races, all_win5_sets=None, jra_win5_targets=None):
 
 
 def main():
-    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（直線勢い評価＋コース直線補正＋クラス格補正）を開始します...")
+    print("🚀 ジェミ予想 AI Predictor 完全版データ生成（実過去3走＋直線勢い評価＋コース直線補正＋クラス格補正）を開始します...")
     stats_obj = build_complete_stats()
     horse_features = load_horse_features()
 
@@ -2020,7 +2072,6 @@ def main():
             jra_targets = jra_win5_by_md.get(md_key)
             day_win5 = build_win5_prediction(all_day_races, all_win5_sets, jra_win5_targets=jra_targets)
 
-            # 9〜12Rは全表示、1〜8RはSランク（90点以上）のみ表示
             display_day_races = [
                 r for r in all_day_races
                 if (r.get("rNum", 0) in (9, 10, 11, 12))
